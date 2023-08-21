@@ -1,3 +1,14 @@
 .homeTitle{
     text-align: center;
+    color: #333;
+}
+
+.homeContainer{
+    width: 80%;
+    margin: auto;
+}
+
+.homeSecondaryTitle{
+    font-weight: 600;
+    color: #333;
 }
