@@ -1,14 +1,36 @@
+/* Titre de la page d'accueil */
 .homeTitle{
     text-align: center;
     color: #333;
 }
 
+/* Contenu de toute la page */
 .homeContainer{
     width: 80%;
     margin: auto;
 }
 
+/* Les titres secondaires */
 .homeSecondaryTitle{
     font-weight: 600;
     color: #333;
+}
+
+/* Liste des animé d'une section */
+.homeMultipleAnimes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Une image d'un animé */
+.homeOneAnimeImage{
+    border-radius: 10px;
+}
+
+/* Le titre de l'animé en dessous de l'image de l'animé */
+.homeOneAnimeTitle{
+    text-transform: uppercase;
+    color: #333;
+    font-weight: 600;
 }
