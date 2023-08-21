@@ -5,6 +5,7 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* Barre de navigation */
 .navBar{
     height: 4em;
     background-color: #48466D;
@@ -16,6 +17,7 @@
     list-style-type: none;
 }
 
+/* Un élément de la liste de la barre de navigation */
 .navBarElement{
     height: 100%;
     width: 10em;
@@ -24,6 +26,7 @@
     background-color: #4169E1;
 }
 
+/* Le lien a l'intérieur d'un élément de la liste */
 .navBarElementLink{
     width: 100%;
     height: 100%;
@@ -36,6 +39,7 @@
     align-items: center;
 }
 
+/* Un élément de la liste de la barre de navigation qui est un menu déroulant */
 .navBarElementDropdown{
     height: 100%;
     width: 10em;
@@ -44,7 +48,11 @@
 .navBarElementDropdown:hover{
     background-color: #4169E1;
 }
+.navBarElementDropdown:hover .navBarElementDropdownContent{
+    display: block;
+}
 
+/* Le bouton de la barre de navigation qui servira à ouvrir le menu déroulant */
 .navBarElementDropdownButton{
     height: 100%;
     width: 100%;
@@ -56,7 +64,9 @@
     cursor: pointer;
 }
 
+/* Le contenu du menu déroulant */
 .navBarElementDropdownContent{
+    display: none;
     position: absolute;
     text-align: center;
     background-color: #4169E1;
@@ -65,6 +75,7 @@
     border-bottom-right-radius: 10px;
 }
 
+/* Un lien du menu déroulant */
 .navBarElementDropdownLink{
     height: 2.5em;
 }
@@ -72,6 +83,7 @@
     background-color: #00BFFF;
 }
 
+/* Le dernier lien du menu déroulant */
 .navBarElementDropdownLink.last{
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
