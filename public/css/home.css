@@ -19,7 +19,7 @@
 /* Liste des animé d'une section */
 .homeMultipleAnimes{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -31,6 +31,7 @@
 /* Le titre de l'animé en dessous de l'image de l'animé */
 .homeOneAnimeTitle{
     text-transform: uppercase;
+    text-align: center;
     color: #333;
     font-weight: 600;
 }
