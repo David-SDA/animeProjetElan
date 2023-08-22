@@ -25,12 +25,22 @@
     align-items: center;
 }
 
+.homeHoverContent{
+    position: absolute;
+    width: inherit;
+    background-color: black;
+    opacity: 0.7;
+    z-index: 1;
+}
+
 /* Une image d'un animé */
 .homeOneAnimeImage{
+    position: relative;
     max-width: 100%;
     height: auto;
     border-radius: 10px;
 }
+
 
 /* Le titre de l'animé en dessous de l'image de l'animé */
 .homeOneAnimeTitle{
