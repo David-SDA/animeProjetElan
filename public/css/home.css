@@ -25,22 +25,65 @@
     align-items: center;
 }
 
-.homeHoverContent{
-    position: absolute;
-    width: inherit;
-    background-color: black;
-    opacity: 0.7;
-    z-index: 1;
+/* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
+.homeOneAnimeImageInfo{
+    position: relative;
 }
 
 /* Une image d'un animé */
 .homeOneAnimeImage{
-    position: relative;
     max-width: 100%;
-    height: auto;
     border-radius: 10px;
+    display: block;
 }
 
+/* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
+.homeHoverContent{
+    position: absolute;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.70);
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+}
+
+/* Titre de l'animé dans la partie des informations supplémentaires */
+.homeOneAnimeInfoTitle{
+    font-size: 1.25em;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+/* Informations de plus petite taille de l'animé dans la partie des informations supplémentaires */
+.homeOneAnimeInfoSmallerInfos{
+    font-size: 0.875em;
+    font-weight: 500;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Partie qui contient les genres de l'animé dans la partie des informations supplémentaires */
+.homeOneAnimeInfoGenres{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0.5em;
+    padding: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Un genre de l'animé dans la partie des informations supplémentaires */
+.homeOneAnimeInfoOneGenre{
+    background-color: #5d86e4;
+    width: fit-content;
+    border-radius: 10px;
+    padding: 0.4em;
+    margin-top: 0.5em;
+}
 
 /* Le titre de l'animé en dessous de l'image de l'animé */
 .homeOneAnimeTitle{
