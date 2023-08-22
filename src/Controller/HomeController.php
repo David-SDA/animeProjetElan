@@ -13,7 +13,7 @@ class HomeController extends AbstractController
     public function index(HomeCallApiService $homeCallApiService): Response
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'dataBestAnimeThisSeason' => $homeCallApiService->getBestAnimeThisSeason(),
         ]);
     }
 }

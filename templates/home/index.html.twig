@@ -8,42 +8,32 @@
         <section>
             <h2 class="homeSecondaryTitle">BEST THIS SEASON</h2>
             <section class="homeMultipleAnimes">
-                <figure class="homeOneAnime">
-                    <div class="homeOneAnimeImageInfo">
-                        <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                        <section class="homeHoverContent">
-                            <p class="homeOneAnimeInfoTitle">Jujutsu Kaisen 2nd Season</p>
-                            <p class="homeOneAnimeInfoSmallerInfos">23 episodes - TV</p>
-                            <p class="homeOneAnimeInfoSmallerInfos">MAPPA</p>
-                            <div class="homeOneAnimeInfoGenres">
-                                <p class="homeOneAnimeInfoOneGenre">Action</p>
-                                <p class="homeOneAnimeInfoOneGenre">Drama</p>
-                                <p class="homeOneAnimeInfoOneGenre">Supernatural</p>
-                            </div>
-                        </section>
-                    </div>
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
-                <figure>
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
-                <figure>
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
-                <figure>
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
-                <figure>
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
-                <figure>
-                    <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx145064-5fa4ZBbW4dqA.jpg" alt="Cover Image of Jujutsu Kaisen 2nd Season" class="homeOneAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">Jujutsu Kaisen 2nd Season</figcaption>
-                </figure>
+                {% for media in dataBestAnimeThisSeason.data.Page.media %}
+                    <figure class="homeOneAnime">
+                        <div class="homeOneAnimeImageInfo">
+                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                            <section class="homeHoverContent">
+                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                <p class="homeOneAnimeInfoSmallerInfos">{{ media.episodes }} episodes - {{ media.format }}</p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% set mainStudios = [] %}
+                                    {% for studio in media.studios.edges %}
+                                        {% if studio.isMain %}
+                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ mainStudios|join(' - ') }}
+                                </p>
+                                <div class="homeOneAnimeInfoGenres">
+                                    {% for genre in media.genres %}
+                                        <p class="homeOneAnimeInfoOneGenre">{{ genre }}</p>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        </div>
+                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             </section>
         </section>
         <section>

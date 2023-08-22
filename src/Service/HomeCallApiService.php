@@ -42,7 +42,6 @@ class HomeCallApiService{
                         title {
                             romaji
                         }
-                        meanScore
                         coverImage {
                             large
                             color
@@ -50,6 +49,14 @@ class HomeCallApiService{
                         genres
                         episodes
                         format
+                        studios {
+                            edges {
+                                isMain
+                                node {
+                                    name
+                                }
+                            }
+                        }
                     }
                 }
             }
