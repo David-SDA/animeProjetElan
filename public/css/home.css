@@ -25,6 +25,12 @@
     align-items: center;
 }
 
+/*  */
+.homeOneAnime:hover .homeHoverContent{
+    opacity: 1;
+    top: 0;
+}
+
 /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
 .homeOneAnimeImageInfo{
     position: relative;
@@ -37,6 +43,7 @@
     display: block;
 }
 
+
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
 .homeHoverContent{
     position: absolute;
@@ -46,6 +53,8 @@
     width: 100%;
     height: 100%;
     color: #fff;
+    opacity: 0;
+    transition: all 0.5s ease;
 }
 
 /* Titre de l'animé dans la partie des informations supplémentaires */
