@@ -12,6 +12,8 @@
 
 /* Les titres secondaires */
 .homeSecondaryTitle{
+    margin-top: 1em;
+    margin-bottom: 0.5em;
     font-weight: 600;
     color: #333;
 }
@@ -25,13 +27,16 @@
 
 /* Une image d'un animé */
 .homeOneAnimeImage{
+    max-width: 100%;
+    height: auto;
     border-radius: 10px;
 }
 
 /* Le titre de l'animé en dessous de l'image de l'animé */
 .homeOneAnimeTitle{
-    text-transform: uppercase;
+    max-width: 230px;
     text-align: center;
+    padding: 5px;
     color: #333;
     font-weight: 600;
 }
