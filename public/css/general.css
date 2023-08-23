@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
 }
+body{
+    background-color: #F5F5F5;
+}
 
 /* Barre de navigation */
 .navBar{
@@ -73,6 +76,7 @@
     width: 100%;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    z-index: 1;
 }
 
 /* Un lien du menu déroulant */
