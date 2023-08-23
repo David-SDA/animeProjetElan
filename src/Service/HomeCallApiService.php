@@ -37,7 +37,7 @@ class HomeCallApiService{
         $query = '
             query($currentSeason: MediaSeason, $currentYear: Int){
                 Page(page: 1, perPage: 6){
-                    media(season: $currentSeason, seasonYear: $currentYear, sort: SCORE_DESC){
+                    media(season: $currentSeason, seasonYear: $currentYear, type: ANIME, sort: SCORE_DESC){
                         id
                         title{
                             romaji
@@ -108,7 +108,7 @@ class HomeCallApiService{
         $query = '
             query($nextSeason: MediaSeason, $nextSeasonYear: Int){
                 Page(page: 1, perPage: 6){
-                    media(season: $nextSeason, seasonYear: $nextSeasonYear, sort: POPULARITY_DESC){
+                    media(season: $nextSeason, seasonYear: $nextSeasonYear, type: ANIME, sort: POPULARITY_DESC){
                         id
                         title{
                             romaji
@@ -158,7 +158,7 @@ class HomeCallApiService{
         $query = '
             query{
                 Page(page: 1, perPage: 6){
-                    media(sort: POPULARITY_DESC){
+                    media(type: ANIME, sort: POPULARITY_DESC){
                         id
                         title{
                             romaji
@@ -183,6 +183,49 @@ class HomeCallApiService{
             }
         ';
 
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
+
+    /**
+     * Fonction permettant d'appeler l'API pour obtenir le top 10 des animés selon l'API
+     */
+    public function getTopTenAnime(): array{
+        // Définition de la query
+        $query = '
+            query{
+                Page(page: 1, perPage: 10){
+                    media(type: ANIME, sort: SCORE_DESC){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                            color
+                        }
+                        genres
+                        episodes
+                        format
+                        studios{
+                            edges{
+                                isMain
+                                node{
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+        
         // Appel à l'API
         $response = $this->client->request('POST', 'https://graphql.anilist.co', [
             'json' => [

@@ -16,6 +16,7 @@ class HomeController extends AbstractController
             'dataBestAnimeThisSeason' => $homeCallApiService->getBestAnimeThisSeason(),
             'dataNextSeasonAnime' => $homeCallApiService->getNextSeasonAnime(),
             'dataPopularAnime' => $homeCallApiService->getPopularAnime(),
+            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(),
         ]);
     }
 }
