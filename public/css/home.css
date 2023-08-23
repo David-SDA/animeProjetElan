@@ -25,7 +25,14 @@
     flex-wrap: wrap;
 }
 
-/*  */
+/* Partie qui représente un animé */
+.homeOneAnime.topTen{
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 .homeOneAnime:hover .homeHoverContent{
     opacity: 1;
     top: 0;
@@ -35,12 +42,14 @@
 .homeOneAnimeImageInfo{
     position: relative;
     border-radius: 10px;
+    width: max-content;
 }
 
 /* Une image d'un animé */
 .homeOneAnimeImage{
     border-radius: 10px;
     display: block;
+    height: 300px;
 }
 
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */

@@ -154,7 +154,7 @@
             <h2 class="homeSecondaryTitle">TOP 10</h2>
             <section class="homeMultipleAnimes">
                 {% for media in dataTopTenAnime.data.Page.media %}
-                    <figure class="homeOneAnime">
+                    <figure class="homeOneAnime topTen">
                         <div class="homeOneAnimeImageInfo">
                             <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
