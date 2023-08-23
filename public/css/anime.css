@@ -1,0 +1,91 @@
+/* Contenu de toute la page d'un animé */
+.animeContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Partie du haut de la page d'un animé */
+.animeTopContainer{
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 10px -20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Contenu de la partie du haut de la page d'un animé */
+.animeTopContent{
+    width: 80%;
+    margin: 1.5em 0;
+    display: flex;
+}
+
+/* La première partie du contenu du haut de la page d'un animé */
+.animeTopLeftContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1.5em;
+}
+
+/* L'image de l'animé */
+.animeImage{
+    display: block;
+    height: 300px;
+    border-radius: 10px;
+}
+
+/* Les boutons de la partie du haut */
+.animeButtonAddTo{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.animeButtonAddTo:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
+/* Le bouton pour ajouter l'animé à sa liste */
+.animeButtonAddTo.list{
+    margin: 1em 0 0.5em 0;
+    background-color: #00BFFF;
+}
+
+/* Le bouton pour ajouter l'animé à ses favoris */
+.animeButtonAddTo.favorites{
+    margin-top: 0.5em;
+    background-color: #FF4136;
+}
+
+/* La deuxième partie du contenu du haut de la page d'un animé */
+.animeTopRightContent{
+    margin-left: 1.5em;
+}
+
+/* Le titre de l'animé */
+.animeTitle{
+    font-size: 2em;
+    font-weight: 600;
+    color: #636363;
+    margin-bottom: 0.75em;
+}
+
+/* Le titre de la description de l'animé */
+.animeSynopsisTitle{
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 0.25em;
+}
+
+/* Le contenu de la description de l'animé */
+.animeSynopsisContent{
+    font-size: 1.25em;
+    font-weight: 500;
+    color: #636363;
+}
