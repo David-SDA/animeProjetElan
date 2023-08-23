@@ -26,12 +26,13 @@
 }
 
 /* Partie qui représente un animé */
-.homeOneAnime.topTen{
-    flex-basis: 20%;
+.homeOneAnime{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+.homeOneAnime.topTen{
+    flex-basis: 20%;
 }
 .homeOneAnime:hover .homeHoverContent{
     opacity: 1;
