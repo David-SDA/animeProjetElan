@@ -14,7 +14,23 @@
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
                                 <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
-                                <p class="homeOneAnimeInfoSmallerInfos">{{ media.episodes }} episodes - {{ media.format }}</p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% if media.episodes %}
+                                        {% if media.episodes < 2 %}
+                                            {{ media.episodes }} episode
+                                        {% else %}
+                                            {{ media.episodes }} episodes
+                                        {% endif %}
+                                    {% else %}    
+                                        ? episodes
+                                    {% endif %}
+                                    - 
+                                    {% if media.format %}
+                                        {{ media.format }}
+                                    {% else %}
+                                        ?
+                                    {% endif %}
+                                </p>
                                 <p class="homeOneAnimeInfoSmallerInfos">
                                     {% set mainStudios = [] %}
                                     {% for studio in media.studios.edges %}
@@ -38,6 +54,50 @@
         </section>
         <section>
             <h2 class="homeSecondaryTitle">NEXT SEASON</h2>
+            <section class="homeMultipleAnimes">
+                {% for media in dateNextSeasonAnime.data.Page.media %}
+                    <figure class="homeOneAnime">
+                        <div class="homeOneAnimeImageInfo">
+                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                            <section class="homeHoverContent">
+                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% if media.episodes %}
+                                        {% if media.episodes < 2 %}
+                                            {{ media.episodes }} episode
+                                        {% else %}
+                                            {{ media.episodes }} episodes
+                                        {% endif %}
+                                    {% else %}    
+                                        ? episodes
+                                    {% endif %}
+                                    - 
+                                    {% if media.format %}
+                                        {{ media.format }}
+                                    {% else %}
+                                        ?
+                                    {% endif %}
+                                </p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% set mainStudios = [] %}
+                                    {% for studio in media.studios.edges %}
+                                        {% if studio.isMain %}
+                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ mainStudios|join(' - ') }}
+                                </p>
+                                <div class="homeOneAnimeInfoGenres">
+                                    {% for genre in media.genres %}
+                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        </div>
+                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
+            </section>
         </section>
         <section>
             <h2 class="homeSecondaryTitle">POPULAR</h2>
