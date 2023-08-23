@@ -12,7 +12,7 @@ class HomeCallApiService{
     }
 
     /**
-     * Fonction permettant d'appeler l'API pour obtenir les meilleurs animés de cette saison
+     * Fonction permettant d'appeler l'API pour obtenir les meilleurs animés de cette saison (limite fixée à 6)
      */
     public function getBestAnimeThisSeason(): array{
         $currentMonth = date('n'); // Mois actuel
@@ -35,24 +35,24 @@ class HomeCallApiService{
 
         // Définition de la query
         $query = '
-            query ($currentSeason: MediaSeason, $currentYear: Int) {
-                Page(page: 1, perPage: 6) {
+            query($currentSeason: MediaSeason, $currentYear: Int){
+                Page(page: 1, perPage: 6){
                     media(season: $currentSeason, seasonYear: $currentYear, sort: SCORE_DESC){
                         id
-                        title {
+                        title{
                             romaji
                         }
-                        coverImage {
+                        coverImage{
                             large
                             color
                         }
                         genres
                         episodes
                         format
-                        studios {
-                            edges {
+                        studios{
+                            edges{
                                 isMain
-                                node {
+                                node{
                                     name
                                 }
                             }
@@ -79,6 +79,9 @@ class HomeCallApiService{
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
 
+    /**
+     * Fonction permettant d'appeler l'API pour obtenir les animés de la saison prochaine (limite fixée à 6)
+     */
     public function getNextSeasonAnime(): array{
         $currentMonth = date('n'); // Mois actuel
         $currentYear = date('Y'); // Année actuelle
@@ -103,24 +106,24 @@ class HomeCallApiService{
 
         // Définition de la query
         $query = '
-            query ($nextSeason: MediaSeason, $nextSeasonYear: Int) {
-                Page(page: 1, perPage: 6) {
+            query($nextSeason: MediaSeason, $nextSeasonYear: Int){
+                Page(page: 1, perPage: 6){
                     media(season: $nextSeason, seasonYear: $nextSeasonYear, sort: POPULARITY_DESC){
                         id
-                        title {
+                        title{
                             romaji
                         }
-                        coverImage {
+                        coverImage{
                             large
                             color
                         }
                         genres
                         episodes
                         format
-                        studios {
-                            edges {
+                        studios{
+                            edges{
                                 isMain
-                                node {
+                                node{
                                     name
                                 }
                             }
@@ -141,6 +144,49 @@ class HomeCallApiService{
             'json' => [
                 'query' => $query,
                 'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
+
+    /**
+     * Fonction permettant d'appeler l'API pour obtenir les animés les plus populaires selon l'API (limite fixée à 6)
+     */
+    public function getPopularAnime(): array{
+        // Définition de la query
+        $query = '
+            query{
+                Page(page: 1, perPage: 6){
+                    media(sort: POPULARITY_DESC){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                            color
+                        }
+                        genres
+                        episodes
+                        format
+                        studios{
+                            edges{
+                                isMain
+                                node{
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
             ]
         ]);
 
