@@ -24,47 +24,47 @@
             <div class="animeRemainingContent">
                 <div class="animeRemainingLeftContent">
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">TV</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">RELEASING</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Airing Dates</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Airing Dates</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">07/06/2023</p>
                         <p class="animeRemainingLeftContentInfoContent">to</p>
                         <p class="animeRemainingLeftContentInfoContent">?</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">SUMMER 2023</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">23</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Episodes Duration</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes Duration</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">24 mins</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">Manga</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">&nbsp;&bull; Action</p>
                         <p class="animeRemainingLeftContentInfoContent">&nbsp;&bull; Drama</p>
                         <p class="animeRemainingLeftContentInfoContent">&nbsp;&bull; Supernatural</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">MAPPA</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h3>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
                         <p class="animeRemainingLeftContentInfoContent">Toho</p>
                         <p class="animeRemainingLeftContentInfoContent">Shueisha</p>
                         <p class="animeRemainingLeftContentInfoContent">Sumzap</p>
@@ -72,7 +72,35 @@
                     </section>
                 </div>
                 <div class="animeRemainingRightContent">
-                    next...
+                    <h2 class="animeRemainingRightContentTimeBeforeEpisode"><i>Time before next episode (episode 6) : 7 days, 6 hours, 51 mins</i></h2>
+                    <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
+                    <div class="animeRemainingRightContentPartCardsContainer">
+                        {% for i in range(1, 6) %}
+                            <section class="animeRemainingRightContentPartCardsContent">
+                                <figure>
+                                    <img src="https://s4.anilist.co/file/anilistcdn/character/medium/b127691-6m4hNwL2vLML.png" alt="Satoru Gojou" class="animeRemainingRightContentPartCardsImage">
+                                </figure>
+                                <div class="animeRemainingRightContentPartCardsTextContainer">
+                                    <h2 class="animeRemainingRightContentPartCardsFullName">Satoru Gojou</h2>
+                                    <p class="animeRemainingRightContentPartCardsRole"><i>MAIN</i></p>
+                                </div>
+                            </section>
+                        {% endfor %}
+                    </div>
+                    <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
+                    <div class="animeRemainingRightContentPartCardsContainer">
+                        {% for i in range(1, 6) %}
+                            <section class="animeRemainingRightContentPartCardsContent">
+                                <figure>
+                                    <img src="https://s4.anilist.co/file/anilistcdn/staff/medium/n125415-B1o6NtIImcCK.png" alt="Satoru Gojou" class="animeRemainingRightContentPartCardsImage">
+                                </figure>
+                                <div class="animeRemainingRightContentPartCardsTextContainer">
+                                    <h2 class="animeRemainingRightContentPartCardsFullName">Gege Akutami</h2>
+                                    <p class="animeRemainingRightContentPartCardsRole"><i>Original Creator</i></p>
+                                </div>
+                            </section>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

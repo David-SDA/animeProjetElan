@@ -101,7 +101,6 @@
 .animeRemainingContent{
     width: 80%;
     display: flex;
-    justify-content: space-between;
 }
 
 /* Contenu à gauche de la partie restante de la page d'un animé */
@@ -140,7 +139,70 @@
 
 /* Contenu à droite de la partie restante de la page d'un animé */
 .animeRemainingRightContent{
-    width: 100%;
+    border: black solid 1px;
     margin-left: 1.5em;
+}
+
+/* Temps avant le prochain épisode de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentTimeBeforeEpisode{
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #333333;
+    margin-bottom: 0.5em;
+}
+
+/* Titre d'une partie de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartTitle{
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #333333;
+    margin-bottom: 0.5em;
+}
+.animeRemainingRightContentPartTitle:not(:first-child){
+    margin-top: 1em;
+}
+
+/* Partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsContainer{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Contenu de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsContent{
+    height: 150px;
+    margin-bottom: 1.5em;
     background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-basis: 30%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* Image d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsImage{
+    border-radius: 10px;
+}
+
+/* Partie du texte d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsTextContainer{
+    margin: 0 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+/* Nom complet d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsFullName{
+    font-weight: 500;
+    font-size: 1.5em;
+    color: #636363;
+}
+
+/* Rôle d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsRole{
+    font-weight: 400;
+    font-size: 1.5em;
+    color: #636363;
 }
