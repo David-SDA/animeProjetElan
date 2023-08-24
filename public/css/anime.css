@@ -174,6 +174,10 @@
     font-weight: 500;
     font-size: 1.25em;
     color: #333333;
+    text-decoration: none;
+}
+.animeRemainingRightContentPartMore:hover{
+    color: #00BFFF;
 }
 
 /* Le titre de la partie (de la partie droite de la partie restante de la page d'un animé) */
@@ -185,6 +189,7 @@
 }
 
 /* Partie qui contient des cartes (de la partie droite de la partie restante de la page d'un animé) */
+/* (Page characters) Partie qui contient les cartes des personnages d'un animé */
 .animeRemainingRightContentPartCardsContainer{
     display: flex;
     justify-content: space-between;
@@ -378,4 +383,23 @@
     font-weight: 500;
     font-size: 1em;
     color: #ff0000;
+}
+
+
+/******************************************************
+    PARTIE DÉDIÉ À LA PAGE DES PERSONNAGES D'UN ANIMÉ
+******************************************************/
+/* Contenu de toute la page des personnages d'un animé */
+.animeCharactersContainer{
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Titre de la page des personnages d'un animé */
+.animeCharactersTitle{
+    font-weight: 600;
+    font-size: 2em;
+    color: #636363;
+    text-align: center;
+    margin: 0.5em 0;
 }

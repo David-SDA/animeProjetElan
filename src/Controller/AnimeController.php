@@ -23,4 +23,9 @@ class AnimeController extends AbstractController
             'dataOneAnime' => $animeCallApiService->getAnimeDetails($id),
         ]);
     }
+
+    #[Route('/anime/{id}/characters', name: 'characters_anime')]
+    public function characters(int $id): Response{
+        return $this->render('anime/characters.html.twig');
+    }
 }

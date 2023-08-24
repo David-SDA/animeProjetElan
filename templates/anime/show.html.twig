@@ -75,7 +75,7 @@
                     <h2 class="animeRemainingRightContentTimeBeforeEpisode"><i>Time before next episode (episode 6) : 7 days, 6 hours, 51 mins</i></h2>
                     <div class="animeRemainingRightContentPartTitleContainer">
                         <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                        <p class="animeRemainingRightContentPartMore">View more</p>
+                        <a href="{{ path('characters_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
                     </div>
                     <div class="animeRemainingRightContentPartCardsContainer">
                         {% for i in range(1, 6) %}
