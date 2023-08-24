@@ -151,6 +151,16 @@
     margin-bottom: 0.5em;
 }
 
+/* La partie qui contient le titre d'une partie */
+.animeRemainingRightContentPartTitleContainer{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+}
+.animeRemainingRightContentPartTitleContainer:not(:first-child){
+    margin-top: 1em;
+}
+
 /* Titre d'une partie (de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartTitle{
     font-weight: 600;
@@ -158,8 +168,20 @@
     color: #333333;
     margin-bottom: 0.5em;
 }
+
+/* Le texte qui permet de voir plus (de la partie droite de la partie restante de la page d'un animé) */
+.animeRemainingRightContentPartMore{
+    font-weight: 500;
+    font-size: 1.25em;
+    color: #333333;
+}
+
+/* Le titre de la partie (de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartTitle:not(:first-child){
     margin-top: 1em;
+}
+.animeRemainingRightContentPartTitle:last-of-type{
+    margin-bottom: 0;
 }
 
 /* Partie qui contient des cartes (de la partie droite de la partie restante de la page d'un animé) */
@@ -272,6 +294,21 @@
 .animeRemainingRightContentPartYourOpinionSubmit:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
+}
+
+/* Texte qui contient les filtres dans la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+.animeRemainingRightContentPartOpinionsFilter{
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+    font-size: 1em;
+    color: #333333;
+}
+
+/* Un choix de filtre dans la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+.animeRemainingRightContentPartOpinionsFilterOption{
+    cursor: pointer;
 }
 
 /* Partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
