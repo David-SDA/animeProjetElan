@@ -105,7 +105,8 @@
 
 /* Contenu à gauche de la partie restante de la page d'un animé */
 .animeRemainingLeftContent{
-    width: 200px;
+    min-width: 200px;
+    height: fit-content;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 10px;
@@ -139,7 +140,6 @@
 
 /* Contenu à droite de la partie restante de la page d'un animé */
 .animeRemainingRightContent{
-    border: black solid 1px;
     margin-left: 1.5em;
 }
 
@@ -233,4 +233,45 @@
     font-weight: 400;
     font-size: 0.875em;
     vertical-align: text-top;
+}
+
+/* Partie qui permet de commenter un animé de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartOpinion{
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 10em;
+}
+
+/* L'input pour donner une opinion sur un animé de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartOpinionInput{
+    width: 100%;
+    min-height: 10em;
+    border-radius: 10px;
+    padding: 1em;
+    resize: vertical;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+}
+.animeRemainingRightContentPartOpinionInput::placeholder{
+    font-style: italic;
+}
+
+/* L'input pour publier l'opinion sur un animé de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartOpinionSubmit{
+    align-self: end;
+    margin-top: 1em;
+    padding: 0.75em 1.5em;
+    border: none;
+    font-weight: 500;
+    font-size: 1.25em;
+    background-color: #4169E1;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.animeRemainingRightContentPartOpinionSubmit:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
 }
