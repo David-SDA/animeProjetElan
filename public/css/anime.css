@@ -162,14 +162,14 @@
     margin-top: 1em;
 }
 
-/* Partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+/* Partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
 .animeRemainingRightContentPartCardsContainer{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-/* Contenu de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+/* Contenu de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
 .animeRemainingRightContentPartCardsContent{
     height: 150px;
     margin-bottom: 1.5em;
@@ -179,13 +179,18 @@
     flex-basis: 30%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.animeRemainingRightContentPartCardsContent.talk{
+    flex-basis: 48%;
+    display: flex;
+    justify-content: space-between;
+}
 
-/* Image d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+/* Image d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
 .animeRemainingRightContentPartCardsImage{
     border-radius: 10px;
 }
 
-/* Partie du texte d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
+/* Partie du texte d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
 .animeRemainingRightContentPartCardsTextContainer{
     margin: 0 1em;
     display: flex;
@@ -193,16 +198,39 @@
     justify-content: space-around;
 }
 
-/* Nom complet d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
-.animeRemainingRightContentPartCardsFullName{
+/* Nom complet d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsTop{
     font-weight: 500;
     font-size: 1.5em;
     color: #636363;
 }
 
-/* Rôle d'une carte de la partie qui contient des cartes (image, nom, rôle) de la partie droite de la partie restante de la page d'un animé */
-.animeRemainingRightContentPartCardsRole{
+/* Rôle d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsBottom{
     font-weight: 400;
     font-size: 1.5em;
     color: #636363;
+}
+
+/* Partie qui contient le nombre de commentaires d'une discussion d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsCommentContainer{
+    margin-top: 1em;
+    margin-right: 1em;
+}
+
+/* Texte du nombre de commentaires d'une discussion d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsCommentText{
+    color: #636363;
+}
+
+/* Icône du nombre de commentaires d'une discussion d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsCommentTextIcon{
+    font-size: 1.5em;
+}
+
+/* Nombre de commentaires d'une discussion d'une carte de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé */
+.animeRemainingRightContentPartCardsCommentTextNumber{
+    font-weight: 400;
+    font-size: 0.875em;
+    vertical-align: text-top;
 }
