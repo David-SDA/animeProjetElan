@@ -192,7 +192,7 @@
 /* (Page characters) Partie qui contient les cartes des personnages d'un animé */
 .animeRemainingRightContentPartCardsContainer{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
 }
 
