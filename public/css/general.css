@@ -7,6 +7,9 @@
 body{
     background-color: #F5F5F5;
 }
+a{
+    text-decoration: none;
+}
 
 /* Barre de navigation */
 .navBar{

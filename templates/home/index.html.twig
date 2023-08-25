@@ -10,44 +10,46 @@
             <section class="homeMultipleAnimes">
                 {% for media in dataBestAnimeThisSeason.data.Page.media %}
                     <figure class="homeOneAnime">
-                        <div class="homeOneAnimeImageInfo">
-                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% if media.episodes %}
-                                        {% if media.episodes < 2 %}
-                                            {{ media.episodes }} episode
+                        <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% if media.episodes %}
+                                            {% if media.episodes < 2 %}
+                                                {{ media.episodes }} episode
+                                            {% else %}
+                                                {{ media.episodes }} episodes
+                                            {% endif %}
+                                        {% else %}    
+                                            ? episodes
+                                        {% endif %}
+                                        - 
+                                        {% if media.format %}
+                                            {{ media.format }}
                                         {% else %}
-                                            {{ media.episodes }} episodes
+                                            ?
                                         {% endif %}
-                                    {% else %}    
-                                        ? episodes
-                                    {% endif %}
-                                    - 
-                                    {% if media.format %}
-                                        {{ media.format }}
-                                    {% else %}
-                                        ?
-                                    {% endif %}
-                                </p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% set mainStudios = [] %}
-                                    {% for studio in media.studios.edges %}
-                                        {% if studio.isMain %}
-                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {{ mainStudios|join(' - ') }}
-                                </p>
-                                <div class="homeOneAnimeInfoGenres">
-                                    {% for genre in media.genres %}
-                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
-                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                                    </p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% set mainStudios = [] %}
+                                        {% for studio in media.studios.edges %}
+                                            {% if studio.isMain %}
+                                                {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ mainStudios|join(' - ') }}
+                                    </p>
+                                    <div class="homeOneAnimeInfoGenres">
+                                        {% for genre in media.genres %}
+                                            <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                            <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                        </a>
                     </figure>
                 {% endfor %}
             </section>
@@ -57,43 +59,45 @@
             <section class="homeMultipleAnimes">
                 {% for media in dataNextSeasonAnime.data.Page.media %}
                     <figure class="homeOneAnime">
-                        <div class="homeOneAnimeImageInfo">
-                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% if media.episodes %}
-                                        {% if media.episodes < 2 %}
-                                            {{ media.episodes }} episode
+                        <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% if media.episodes %}
+                                            {% if media.episodes < 2 %}
+                                                {{ media.episodes }} episode
+                                            {% else %}
+                                                {{ media.episodes }} episodes
+                                            {% endif %}
+                                        {% else %}    
+                                            ? episodes
+                                        {% endif %}
+                                        - 
+                                        {% if media.format %}
+                                            {{ media.format }}
                                         {% else %}
-                                            {{ media.episodes }} episodes
+                                            ?
                                         {% endif %}
-                                    {% else %}    
-                                        ? episodes
-                                    {% endif %}
-                                    - 
-                                    {% if media.format %}
-                                        {{ media.format }}
-                                    {% else %}
-                                        ?
-                                    {% endif %}
-                                </p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% set mainStudios = [] %}
-                                    {% for studio in media.studios.edges %}
-                                        {% if studio.isMain %}
-                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {{ mainStudios|join(' - ') }}
-                                </p>
-                                <div class="homeOneAnimeInfoGenres">
-                                    {% for genre in media.genres %}
-                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
+                                    </p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% set mainStudios = [] %}
+                                        {% for studio in media.studios.edges %}
+                                            {% if studio.isMain %}
+                                                {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ mainStudios|join(' - ') }}
+                                    </p>
+                                    <div class="homeOneAnimeInfoGenres">
+                                        {% for genre in media.genres %}
+                                            <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                        </a>
                         <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
                     </figure>
                 {% endfor %}
@@ -104,43 +108,45 @@
             <section class="homeMultipleAnimes">
                 {% for media in dataPopularAnime.data.Page.media %}
                     <figure class="homeOneAnime">
-                        <div class="homeOneAnimeImageInfo">
-                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% if media.episodes %}
-                                        {% if media.episodes < 2 %}
-                                            {{ media.episodes }} episode
+                        <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% if media.episodes %}
+                                            {% if media.episodes < 2 %}
+                                                {{ media.episodes }} episode
+                                            {% else %}
+                                                {{ media.episodes }} episodes
+                                            {% endif %}
+                                        {% else %}    
+                                            ? episodes
+                                        {% endif %}
+                                        - 
+                                        {% if media.format %}
+                                            {{ media.format }}
                                         {% else %}
-                                            {{ media.episodes }} episodes
+                                            ?
                                         {% endif %}
-                                    {% else %}    
-                                        ? episodes
-                                    {% endif %}
-                                    - 
-                                    {% if media.format %}
-                                        {{ media.format }}
-                                    {% else %}
-                                        ?
-                                    {% endif %}
-                                </p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% set mainStudios = [] %}
-                                    {% for studio in media.studios.edges %}
-                                        {% if studio.isMain %}
-                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {{ mainStudios|join(' - ') }}
-                                </p>
-                                <div class="homeOneAnimeInfoGenres">
-                                    {% for genre in media.genres %}
-                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
+                                    </p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% set mainStudios = [] %}
+                                        {% for studio in media.studios.edges %}
+                                            {% if studio.isMain %}
+                                                {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ mainStudios|join(' - ') }}
+                                    </p>
+                                    <div class="homeOneAnimeInfoGenres">
+                                        {% for genre in media.genres %}
+                                            <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                        </a>
                         <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
                     </figure>
                 {% endfor %}
@@ -155,44 +161,46 @@
             <section class="homeMultipleAnimes">
                 {% for media in dataTopTenAnime.data.Page.media %}
                     <figure class="homeOneAnime topTen">
-                        <div class="homeOneAnimeImageInfo">
-                            <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
-                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% if media.episodes %}
-                                        {% if media.episodes < 2 %}
-                                            {{ media.episodes }} episode
+                        <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
+                                <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% if media.episodes %}
+                                            {% if media.episodes < 2 %}
+                                                {{ media.episodes }} episode
+                                            {% else %}
+                                                {{ media.episodes }} episodes
+                                            {% endif %}
+                                        {% else %}    
+                                            ? episodes
+                                        {% endif %}
+                                        - 
+                                        {% if media.format %}
+                                            {{ media.format }}
                                         {% else %}
-                                            {{ media.episodes }} episodes
+                                            ?
                                         {% endif %}
-                                    {% else %}    
-                                        ? episodes
-                                    {% endif %}
-                                    - 
-                                    {% if media.format %}
-                                        {{ media.format }}
-                                    {% else %}
-                                        ?
-                                    {% endif %}
-                                </p>
-                                <p class="homeOneAnimeInfoSmallerInfos">
-                                    {% set mainStudios = [] %}
-                                    {% for studio in media.studios.edges %}
-                                        {% if studio.isMain %}
-                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {{ mainStudios|join(' - ') }}
-                                </p>
-                                <div class="homeOneAnimeInfoGenres">
-                                    {% for genre in media.genres %}
-                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
+                                    </p>
+                                    <p class="homeOneAnimeInfoSmallerInfos">
+                                        {% set mainStudios = [] %}
+                                        {% for studio in media.studios.edges %}
+                                            {% if studio.isMain %}
+                                                {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ mainStudios|join(' - ') }}
+                                    </p>
+                                    <div class="homeOneAnimeInfoGenres">
+                                        {% for genre in media.genres %}
+                                            <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                        </a>
                         <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
                     </figure>
                 {% endfor %}
