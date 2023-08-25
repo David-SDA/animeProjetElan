@@ -7,6 +7,7 @@
 /* Partie qui contient le haut de la page d'un personnage */
 .characterTopContainer{
     background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 10px -20px;
 }
 
 /* Contenu du haut de la page d'un personnage */
@@ -35,8 +36,8 @@
     margin-left: 3em;
 }
 
-/* Nom du personnage (centre du haut de la page d'un personnage) */
-.characterTopContentCenterName{
+/* Titre d'un partie */
+.characterPartTitle{
     font-weight: 600;
     font-size: 2em;
     color: #636363;
@@ -56,4 +57,19 @@
 .characterTopContentRegularText{
     font-weight: 400;
     color: #333333;
+}
+
+/* Partie qui contient le reste de la page */
+.characterRemainingContainer{
+    width: 80%;
+    margin: 1em auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Partie qui contient les animés dans lequel le personnage apparaît */
+.characterMultipleAnimes{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
