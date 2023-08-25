@@ -73,3 +73,22 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+
+/* Partie qui contient un doubleur (japonais) du personnage dans un animé */
+.characterRemainingVoiceActorContainer{
+    display: flex;
+    align-items: center;
+}
+
+/* Image du doubleur (japonais) du personnage dans un animé */
+.characterRemainingVoiceActorImage{
+    width: 50px;
+    border-radius: 10px;
+}
+
+/* Nom du doubleur (japonais) du personnage dans un animé */
+.characterRemainingVoiceActorName{
+    font-weight: 600;
+    font-size: 1.25em;
+    margin-left: 0.25em;
+}
