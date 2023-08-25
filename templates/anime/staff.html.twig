@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Staff of Jujutsu Kaisen 2nd Season{% endblock %}
+
+{% block body %}
+    <main class="animeCharactersContainer">
+        <h1 class="animeCharactersTitle">Staff of Jujutsu Kaisen 2nd Season</h1>
+        <div class="animeRemainingRightContentPartCardsContainer">
+            {% for i in range(1, 20) %}
+                <section class="animeRemainingRightContentPartCardsContent">
+                    <figure>
+                        <img src="https://s4.anilist.co/file/anilistcdn/staff/medium/n125415-B1o6NtIImcCK.png" alt="Gege Akutami" class="animeRemainingRightContentPartCardsImage">
+                    </figure>
+                    <div class="animeRemainingRightContentPartCardsTextContainer">
+                        <h2 class="animeRemainingRightContentPartCardsTop">Gege Akutami</h2>
+                        <p class="animeRemainingRightContentPartCardsBottom"><i>Original Creator</i></p>
+                    </div>
+                </section>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}

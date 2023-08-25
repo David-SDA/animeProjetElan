@@ -28,4 +28,9 @@ class AnimeController extends AbstractController
     public function characters(int $id): Response{
         return $this->render('anime/characters.html.twig');
     }
+
+    #[Route('/anime/{id}/staff', name: 'staff_anime')]
+    public function staff(int $id): Response{
+        return $this->render('anime/staff.html.twig');
+    }
 }
