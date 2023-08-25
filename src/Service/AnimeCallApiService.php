@@ -15,6 +15,104 @@ class AnimeCallApiService{
      * Fonction qui permet d'obtenir toutes les informations d'un animé
      */
     public function getAnimeDetails(int $id): array{
-        return ['test1', 'test2', $id];
+        // Définition de la query
+        $query = '
+            query($id: Int){
+                Media(id: $id){
+                    id
+                    title{
+                        romaji
+                    }
+                    description
+                    coverImage{
+                        large
+                        color
+                    }
+                    format
+                    status
+                    startDate{
+                        year
+                        month
+                        day
+                    }
+                    endDate{
+                        year
+                        month
+                        day
+                    }
+                    season
+                    seasonYear
+                    episodes
+                    source
+                    genres
+                    studios{
+                        edges{
+                            isMain
+                            node{
+                                id
+                                name
+                            }
+                        }
+                    }
+                    nextAiringEpisode{
+                        episode
+                        airingAt
+                        timeUntilAiring
+                    }
+                    characters{
+                        edges{
+                            role
+                            node{
+                                id
+                                name{
+                                    full
+                                    userPreferred
+                                }
+                                image{
+                                    medium
+                                }
+                            }
+                            voiceActors{
+                                id
+                                name{
+                                    full
+                                }
+                                languageV2
+                            }
+                        }
+                    }
+                    staff{
+                        edges{
+                            role
+                            node{
+                                id
+                                name{
+                                    full
+                                    userPreferred
+                                }
+                                image{
+                                    medium
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'id' => $id,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
     }
 }
