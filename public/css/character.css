@@ -1,0 +1,59 @@
+/* Partie qui contient toute la page d'un personnage */
+.characterContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Partie qui contient le haut de la page d'un personnage */
+.characterTopContainer{
+    background-color: #fff;
+}
+
+/* Contenu du haut de la page d'un personnage */
+.characterTopContent{
+    margin: 1em auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
+}
+
+.characterTopLeftContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Image du personnage (du haut de la page d'un personnage) */
+.characterTopContentImage{
+    display: block;
+    width: 200px;
+    border-radius: 10px;
+}
+
+/* Partie du centre (du haut de la page d'un personnage) */
+.characterTopContentCenterContainer{
+    margin-left: 3em;
+}
+
+/* Nom du personnage (centre du haut de la page d'un personnage) */
+.characterTopContentCenterName{
+    font-weight: 600;
+    font-size: 2em;
+    color: #636363;
+    margin-bottom: 0.5em;
+}
+
+/* Caractéristiques du personnage (centre du haut de la page d'un personnage) */
+.characterTopContentTraitText{
+    font-weight: 600;
+    font-size: 1.25em;
+    color: #333333;
+    margin-bottom: 0.25em;
+}
+
+/* Donnée de l'api pour la caractéristique du personnage (centre du haut de la page d'un personnage) */
+/* Description du personnage (centre du haut de la page) */
+.characterTopContentRegularText{
+    font-weight: 400;
+    color: #333333;
+}

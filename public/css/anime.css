@@ -35,6 +35,7 @@
 }
 
 /* Les boutons (de la partie gauche du contenu du haut de la page d'un animé) */
+/* (Utilisé dans la page description d'un personnage) */
 .animeButtonAddTo{
     padding: 10px;
     border: none;
@@ -57,6 +58,7 @@
 }
 
 /* Le bouton pour ajouter l'animé à ses favoris (de la partie gauche du contenu du haut de la page d'un animé) */
+/* (Utilisé dans la page description d'un personnage) */
 .animeButtonAddTo.favorites{
     margin-top: 0.5em;
     background-color: #FF4136;
@@ -189,7 +191,7 @@
 }
 
 /* Partie qui contient des cartes (de la partie droite de la partie restante de la page d'un animé) */
-/* (Page characters) Partie qui contient les cartes des personnages d'un animé */
+/* (Utilisé dans la page des personnages d'un animé)*/
 .animeRemainingRightContentPartCardsContainer{
     display: flex;
     justify-content: space-around;
