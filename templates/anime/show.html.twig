@@ -50,11 +50,12 @@
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Airing Dates</i></h2>
-                        {# Différentes vérification par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage 
-                           Si il n'y a aucune date on met TBA (To Be Annouced), sinon pour la date de début et de fin, on vérifie si il y a que l'année, si il y a l'année et le mois,
-                           si il y a l'année, le mois et le jour ou si il n'y a rien #}
+                        {# Différentes vérification par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage #}
+                        {# Si on n'a pas de date de début et de fin, on affiche TBA #}
                         {% if dataThisAnime.startDate.year == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null and dataThisAnime.endDate.year == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
                             <p class="animeRemainingLeftContentInfoContent">TBA</p>
+                        {% elseif dataThisAnime.startDate.year == dataThisAnime.endDate.year and dataThisAnime.startDate.month == dataThisAnime.endDate.month and dataThisAnime.startDate.day == dataThisAnime.endDate.day %}
+                            <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.month ? dataThisAnime.startDate.month ~ "/" : "" }}{{ dataThisAnime.startDate.day ? dataThisAnime.startDate.day ~ "/" : "" }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : "" }}</p>
                         {% else %}
                             {% if dataThisAnime.startDate.year and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.year }}</p>
@@ -219,26 +220,28 @@
                             <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? days ~ " " ~ daysText : "" }}{{ hours >= 1 ? hours ~ " " ~ hoursText : "" }}{{ minutes >= 1 ? minutes ~ " " ~ minText : "" }}</i>
                         </h2>
                     {% endif %}
-                    <div class="animeRemainingRightContentPartTitleContainer">
-                        <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                        <a href="{{ path('characters_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
-                    </div>
-                    <div class="animeRemainingRightContentPartCardsContainer">
-                        {% for i in range(1, 6) %}
-                            <section class="animeRemainingRightContentPartCardsContent">
-                                <figure>
-                                    <img src="https://s4.anilist.co/file/anilistcdn/character/medium/b127691-6m4hNwL2vLML.png" alt="Satoru Gojou" class="animeRemainingRightContentPartCardsImage">
-                                </figure>
-                                <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop">Satoru Gojou</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom"><i>MAIN</i></p>
-                                </div>
-                            </section>
-                        {% endfor %}
-                    </div>
+                    {% if dataThisAnime.characters.edges %}
+                        <div class="animeRemainingRightContentPartTitleContainer">
+                            <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
+                            <a href="{{ path('characters_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                        </div>
+                        <div class="animeRemainingRightContentPartCardsContainer">
+                            {% for i in range(1, 6) %}
+                                <section class="animeRemainingRightContentPartCardsContent">
+                                    <figure>
+                                        <img src="https://s4.anilist.co/file/anilistcdn/character/medium/b127691-6m4hNwL2vLML.png" alt="Satoru Gojou" class="animeRemainingRightContentPartCardsImage">
+                                    </figure>
+                                    <div class="animeRemainingRightContentPartCardsTextContainer">
+                                        <h2 class="animeRemainingRightContentPartCardsTop">Satoru Gojou</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>MAIN</i></p>
+                                    </div>
+                                </section>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <div class="animeRemainingRightContentPartTitleContainer">
                         <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
-                        <p class="animeRemainingRightContentPartMore">View more</p>
+                        <a href="{{ path('staff_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
                     </div>
                     <div class="animeRemainingRightContentPartCardsContainer">
                         {% for i in range(1, 6) %}
