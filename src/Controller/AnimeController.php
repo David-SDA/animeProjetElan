@@ -25,8 +25,10 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/anime/{id}/characters', name: 'characters_anime')]
-    public function characters(int $id): Response{
-        return $this->render('anime/characters.html.twig');
+    public function characters(int $id, AnimeCallApiService $animeCallApiService): Response{
+        return $this->render('anime/characters.html.twig', [
+            'dataAllCharactersOneAnime' => $animeCallApiService->getAllCharactersAnime($id),
+        ]);
     }
 
     #[Route('/anime/{id}/staff', name: 'staff_anime')]
