@@ -28,25 +28,11 @@
                 <div class="animeRemainingLeftContent">
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format : "<i>TBA</i>" }}</p>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : "<i>TBA</i>" }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">
-                            {% if dataThisAnime.status == "FINISHED" %}
-                                Finished
-                            {% elseif dataThisAnime.status == "RELEASING" %}
-                                Releasing
-                            {% elseif dataThisAnime.status == "NOT_YET_RELEASED" %}
-                                Not yet released
-                            {% elseif dataThisAnime.status == "CANCELLED" %}
-                                Cancelled
-                            {% elseif dataThisAnime.status == "HIATUS" %}
-                                On Hiatus
-                            {% else %}
-                                ?
-                            {% endif %}
-                        </p>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.status ? dataThisAnime.status|title|replace({'_' : ' '}) }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Airing Dates</i></h2>
@@ -55,14 +41,16 @@
                         {% if dataThisAnime.startDate.year == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null and dataThisAnime.endDate.year == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
                             <p class="animeRemainingLeftContentInfoContent">TBA</p>
                         {% elseif dataThisAnime.startDate.year == dataThisAnime.endDate.year and dataThisAnime.startDate.month == dataThisAnime.endDate.month and dataThisAnime.startDate.day == dataThisAnime.endDate.day %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.month ? dataThisAnime.startDate.month ~ "/" : "" }}{{ dataThisAnime.startDate.day ? dataThisAnime.startDate.day ~ "/" : "" }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : "" }}</p>
+                            <p class="animeRemainingLeftContentInfoContent">
+                                {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month ~ "/" : "" }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? "0" : "") ~ dataThisAnime.startDate.day ~ "/" : "" }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : "" }}
+                            </p>
                         {% else %}
                             {% if dataThisAnime.startDate.year and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.year }}</p>
                             {% elseif dataThisAnime.startDate.year and dataThisAnime.startDate.month and dataThisAnime.startDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.month }}/{{ dataThisAnime.startDate.year }}</p>
+                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month }}/{{ dataThisAnime.startDate.year }}</p>
                             {% elseif dataThisAnime.startDate.year and dataThisAnime.startDate.month and dataThisAnime.startDate.day %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.month }}/{{ dataThisAnime.startDate.day }}/{{ dataThisAnime.startDate.year }}</p>
+                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month }}/{{ (dataThisAnime.startDate.day < 10 ? "0" : "") ~ dataThisAnime.startDate.day }}/{{ dataThisAnime.startDate.year }}</p>
                             {% else %}
                                 <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                             {% endif %}
@@ -70,9 +58,9 @@
                             {% if dataThisAnime.endDate.year and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.year }}</p>
                             {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.month }}/{{ dataThisAnime.endDate.year }}</p>
+                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.endDate.month < 10 ? "0" : "" ) ~ dataThisAnime.endDate.month }}/{{ dataThisAnime.endDate.year }}</p>
                             {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.month }}/{{ dataThisAnime.endDate.day }}/{{ dataThisAnime.endDate.year }}</p>
+                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.month }}/{{ (dataThisAnime.endDate.day < 10 ? "0" : "") ~ dataThisAnime.endDate.day }}/{{ dataThisAnime.endDate.year }}</p>
                             {% else %}
                                 <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                             {% endif %}
@@ -82,7 +70,7 @@
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
                         {# Si jamais il n'y a pas de seasonYear, il n'y a pas de season. On adapte l'affichage en fonction de cela #}
                         {% if dataThisAnime.season and dataThisAnime.seasonYear %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.season }} {{ dataThisAnime.seasonYear }}</p>
+                            <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.season|title }} {{ dataThisAnime.seasonYear }}</p>
                         {% elseif dataThisAnime.seasonYear %}
                             <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.seasonYear }}</p>
                         {% else %}
