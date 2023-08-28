@@ -16,7 +16,7 @@
                     </figure>
                     <div class="animeRemainingRightContentPartCardsTextContainer">
                         <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full ? character.node.name.full : "Unknown" }}</h2>
-                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role : "Unknown" }}</i></p>
+                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : "Unknown" }}</i></p>
                     </div>
                 </section>
             {% endfor %}
