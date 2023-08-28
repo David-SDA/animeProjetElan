@@ -18,7 +18,7 @@ class AnimeCallApiService{
         // Définition de la query
         $query = '
             query($id: Int){
-                Media(id: $id){
+                Media(id: $id, type: ANIME){
                     id
                     title{
                         romaji
@@ -43,13 +43,13 @@ class AnimeCallApiService{
                     season
                     seasonYear
                     episodes
+                    duration
                     source
                     genres
                     studios{
                         edges{
                             isMain
                             node{
-                                id
                                 name
                             }
                         }

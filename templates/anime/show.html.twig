@@ -16,7 +16,7 @@
                 <div class="animeTopRightContent">
                     <h1 class="animeTitle">{{ dataOneAnime.data.Media.title.romaji ? dataOneAnime.data.Media.title.romaji : "?" }}</h1>
                     <h3 class="animeSynopsisTitle"><i>Synopsis</i></h3>
-                    <p class="animeSynopsisContent">{{ dataOneAnime.data.Media.description ? dataOneAnime.data.Media.description : "No synopsis yet" }}</p>
+                    <p class="animeSynopsisContent">{{ dataOneAnime.data.Media.description ? dataOneAnime.data.Media.description|raw|nl2br : "No synopsis yet" }}</p>
                 </div>
             </div>
         </section>
@@ -25,7 +25,7 @@
                 <div class="animeRemainingLeftContent">
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.format }}</p>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.format ? dataOneAnime.data.Media.format : "<i>TBA</i>" }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
@@ -60,7 +60,7 @@
                             {% elseif dataOneAnime.data.Media.startDate.year and dataOneAnime.data.Media.startDate.month and dataOneAnime.data.Media.startDate.day %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.startDate.month }}/{{ dataOneAnime.data.Media.startDate.day }}/{{ dataOneAnime.data.Media.startDate.year }}</p>
                             {% else %}
-                                <p class="animeRemainingLeftContentInfoContent">TBA</p>
+                                <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                             {% endif %}
                             <p class="animeRemainingLeftContentInfoContent">to</p>
                             {% if dataOneAnime.data.Media.endDate.year and dataOneAnime.data.Media.endDate.month == null and dataOneAnime.data.Media.endDate.day == null %}
@@ -70,45 +70,103 @@
                             {% elseif dataOneAnime.data.Media.endDate.year and dataOneAnime.data.Media.endDate.month and dataOneAnime.data.Media.endDate.day %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.endDate.month }}/{{ dataOneAnime.data.Media.endDate.day }}/{{ dataOneAnime.data.Media.endDate.year }}</p>
                             {% else %}
-                                <p class="animeRemainingLeftContentInfoContent">TBA</p>
+                                <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                             {% endif %}
                         {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">
-                            <i>API data...</i>
-                        </p>
+                        {# Si jamais il n'y a pas de seasonYear, il n'y a pas de season. On adapte l'affichage en fonction de cela #}
+                        {% if dataOneAnime.data.Media.season and dataOneAnime.data.Media.seasonYear %}
+                            <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.season }} {{ dataOneAnime.data.Media.seasonYear }}</p>
+                        {% elseif dataOneAnime.data.Media.seasonYear %}
+                            <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.seasonYear }}</p>
+                        {% else %}
+                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">23</p>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.episodes ? dataOneAnime.data.Media.episodes : "<i>TBA</i>" }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes Duration</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">24 mins</p>
+                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h2>
+                        {# On effectue la conversion de minutes en heures si nécessaires et adaptations de l'affichage en fonction de cela #}
+                        {% if dataOneAnime.data.Media.duration %}
+                            {% set duration = dataOneAnime.data.Media.duration %}
+                            {% if duration >= 60 %}
+                                {% set hours = duration // 60 %}
+                                {% set minutes = duration % 60 %}
+                                {% if hours > 1 %}
+                                    {% set hoursText = "hours" %}
+                                {% else %}
+                                    {% set hoursText = "hour" %}
+                                {% endif %}
+                                {% if minutes > 1 %}
+                                    {% set minText = "mins" %}
+                                {% else %}
+                                    {% set minText = "min" %}
+                                {% endif %}
+                                <p class="animeRemainingLeftContentInfoContent">{{ hours }} {{ hoursText }} {{ minutes }} {{ minText }}</p>
+                            {% else %}
+                                {% if duration > 1 %}
+                                    <p class="animeRemainingLeftContentInfoContent">{{ duration }} mins</p>
+                                {% else %}
+                                    <p class="animeRemainingLeftContentInfoContent">{{ duration }} min</p>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">Manga</p>
+                        {# Si il y a une source, on affiche de telle manière à ce que les underscores soient replacés par un espace et que chaque mot ait une majuscule au début ce celui-ci #}
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataOneAnime.data.Media.source ? dataOneAnime.data.Media.source|title|replace({'_' : ' '}) : "<i>TBA</i>" }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Action</p>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Drama</p>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Supernatural</p>
+                        {% if dataOneAnime.data.Media.genres %}
+                            {% for genre in dataOneAnime.data.Media.genres %}
+                                <p class="animeRemainingLeftContentInfoContent">&bull; {{ genre }}</p>
+                            {% endfor %}
+                        {% else %}
+                        <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
                         <h2 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">MAPPA</p>
+                        {# Un animé a souvent 1 seul studio d'animation, mais il peut en avoir plusieurs, donc on prends cela en compte pour les mettre dans un tableau #}
+                        {% if dataOneAnime.data.Media.studios %}
+                            {% set mainStudios = [] %}
+                            {% for studio in dataOneAnime.data.Media.studios.edges %}
+                                {% if studio.isMain %}
+                                    {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                {% endif %}
+                            {% endfor %}
+                            {% for mainStudio in mainStudios %}
+                                <p class="animeRemainingLeftContentInfoContent">&bull; {{ mainStudio }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        {% endif %}
                     </section>
-                    <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Toho</p>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Shueisha</p>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Sumzap</p>
-                        <p class="animeRemainingLeftContentInfoContent">&bull; Mainichi Broadcasting System</p>
-                    </section>
+                    {% if dataOneAnime.data.Media.studios %}
+                        {% set producers = [] %}
+                        {% for studio in dataOneAnime.data.Media.studios.edges %}
+                            {% if studio.isMain == false %}
+                                {% set producers = producers|merge([studio.node.name]) %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if producers|length > 0 %}
+                            <section class="animeRemainingLeftContentInfo">
+                                <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
+                                {% for producer in producers %}
+                                    <p class="animeRemainingLeftContentInfoContent">&bull; {{ producer }}</p>
+                                {% endfor %}
+                            </section>
+                        {% endif %}
+                    {% endif %}
                 </div>
                 <div class="animeRemainingRightContent">
                     <h2 class="animeRemainingRightContentTimeBeforeEpisode"><i>Time before next episode (episode 6) : 7 days, 6 hours, 51 mins</i></h2>
