@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\CharacterCallApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,9 @@ class CharacterController extends AbstractController
     }
 
     #[Route('/character/{id}', name:'show_character')]
-    public function show(int $id): Response{
-        return $this->render('character/show.html.twig');
+    public function show(int $id, CharacterCallApiService $characterCallApiService): Response{
+        return $this->render('character/show.html.twig', [
+            'dataOneCharacter' => $characterCallApiService->getCharacterDetails($id),
+        ]);
     }
 }

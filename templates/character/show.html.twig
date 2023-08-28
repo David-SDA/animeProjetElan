@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Satoru Gojou{% endblock %}
+{# Permet de rendre la récuperation des données plus pratique #}
+{% set dataThisCharacter = dataOneCharacter.data.Character %}
+
+{% block title %}{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "?" }}{% endblock %}
 
 {% block body %}
     <main class="characterContainer">
@@ -8,16 +11,17 @@
             <div class="characterTopContent">
                 <div class="characterTopLeftContainer">
                     <figure>
-                        <img src="https://s4.anilist.co/file/anilistcdn/character/large/b127691-6m4hNwL2vLML.png" alt="Satoru Gojou" class="characterTopContentImage">
+                        <img src="{{ dataThisCharacter.image.large ? dataThisCharacter.image.large : dataThisCharacter.image.medium }}" alt="{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "Unknown" }}" class="characterTopContentImage">
                     </figure>
                     <button class="animeButtonAddTo favorites">Add to your favorites</button>
                 </div>
                 <div class="characterTopContentCenterContainer">
-                    <h1 class="characterPartTitle">Satoru Gojou</h1>
-                    <p class="characterTopContentTraitText">Age : <span class="characterTopContentTraitApi">28</span></p>
-                    <p class="characterTopContentTraitText">Gender : <span class="characterTopContentTraitApi">Male</span></p>
+                    <h1 class="characterPartTitle">{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "?" }}</h1>
+                    <p class="characterTopContentTraitText">Age : <span class="characterTopContentTraitApi">{{ dataThisCharacter.age ? dataThisCharacter.age : "?" }}</span></p>
+                    <p class="characterTopContentTraitText">Gender : <span class="characterTopContentTraitApi">{{ dataThisCharacter.gender ? dataThisCharacter.gender : "?" }}</span></p>
+                    {# Voir les différents contenu des description pour adapter l'affichage #}
                     <p class="characterTopContentRegularText">
-                        __Height:__ >190 cm (6'3\")\n__Occupation:__ Jujutsu Sorcerer, Teacher\n__Affiliation:__ Tokyo Metropolitan Curse Technical College, Gojo Family\n__Grade:__ Special Grade Sorcerer\n__Cursed Technique:__ Six Eyes, Limitless\n\nSatoru Gojo is one of the main protagonists of the Jujutsu Kaisen series. He is a special-grade jujutsu sorcerer and is widely recognized as the strongest in the world. Satoru is the pride of the Gojo Family, the first person to inherit both the Limitless and the Six Eyes in four hundred years. He works as a teacher at the Tokyo Jujutsu High and uses his influence to protect and train strong young allies.\n\nManga Spoiler \n\n~!During the Shibuya incident, Gojo is led into a trap and is sealed in a box where he's incapable of doing anything and is later deemed a criminal by the higher-ups and exiled from the Jujutsu world, furthermore removing the seal on Gojo will be considered a criminal act no matter who does it.!~
+                        {{ dataThisCharacter.description ? dataThisCharacter.description|replace({'__': '' })|raw|nl2br : "No description yet" }}
                     </p>
                 </div>
             </div>
@@ -25,10 +29,10 @@
         <div class="characterRemainingContainer">
             <h2 class="characterPartTitle">APPEARANCES</h2>
             <div class="characterMultipleAnimes">
-                {% for i in range(1, 10) %}
+                {% for anime in dataThisCharacter.media.nodes %}
                     <figure class="homeOneAnime">
                         <div class="homeOneAnimeImageInfo">
-                            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx159322-Sp1GflRhE6Po.jpg" alt="Cover Image of BLEACH: Sennen Kessen-hen - Ketsubetsu-tan" class="homeOneAnimeImage">
+                            <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji ? anime.title.romaji : "Unknown" }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
                                 <div class="characterRemainingVoiceActorContainer">
                                     <img src="https://s4.anilist.co/file/anilistcdn/staff/large/n95513-up9ZDuocHgRs.png" alt="Yuuichi Nakamura" class="characterRemainingVoiceActorImage">
@@ -36,7 +40,7 @@
                                 </div>
                             </section>
                         </div>
-                        <figcaption class="homeOneAnimeTitle">BLEACH: Sennen Kessen-hen - Ketsubetsu-tan</figcaption>
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji ? anime.title.romaji : "Unknown" }}</figcaption>
                     </figure>
                 {% endfor %}
             </div>
