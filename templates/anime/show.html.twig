@@ -217,11 +217,11 @@
                             {% for character in dataThisAnime.characters.edges|slice(0, 6) %}
                                 <section class="animeRemainingRightContentPartCardsContent">
                                     <figure>
-                                        <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full }}" class="animeRemainingRightContentPartCardsImage">
+                                        <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full ? character.node.name.full : "Image of the character" }}" class="animeRemainingRightContentPartCardsImage">
                                     </figure>
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role|title }}</i></p>
+                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full ? character.node.name.full : "Unknown" }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : "Unknown" }}</i></p>
                                     </div>
                                 </section>
                             {% endfor %}
@@ -236,11 +236,11 @@
                             {% for staff in dataThisAnime.staff.edges|slice(0, 6) %}
                                 <section class="animeRemainingRightContentPartCardsContent">
                                     <figure>
-                                        <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full }}" class="animeRemainingRightContentPartCardsImage">
+                                        <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full ? staff.node.name.full : "Image of the staff member" }}" class="animeRemainingRightContentPartCardsImage">
                                     </figure>
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role }}</i></p>
+                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full ? staff.node.name.full : "Unknown" }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role ? staff.role : "Unknown" }}</i></p>
                                     </div>
                                 </section>
                             {% endfor %}
