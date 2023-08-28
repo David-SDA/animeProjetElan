@@ -173,7 +173,52 @@
                     {% endif %}
                 </div>
                 <div class="animeRemainingRightContent">
-                    <h2 class="animeRemainingRightContentTimeBeforeEpisode"><i>Time before next episode (episode 6) : 7 days, 6 hours, 51 mins</i></h2>
+                    {# Si il y a un prochain episode prévu, on affiche le temps qu'il manque avant celui-ci #}
+                    {% if dataThisAnime.nextAiringEpisode %}
+                        {% set episodeNumber = dataThisAnime.nextAiringEpisode.episode %}
+                        {% set airingAt = dataThisAnime.nextAiringEpisode.airingAt %}
+                        {% set totalSeconds = dataThisAnime.nextAiringEpisode.timeUntilAiring %}
+
+                        {# Calcul des jours, heures et minutes avant le prochain épisode #}
+                        {% set days = totalSeconds // 86400 %}
+                        {% set hours = (totalSeconds % 86400) // 3600 %}
+                        {% set minutes = ((totalSeconds % 86400) % 3600) // 60 %}
+
+                        {# Adapation de l'affichage de chaque données en fonction de celles-ci #}
+                        {# Pour le numéro du prochain épsiode #}
+                        {% if episodeNumber %}
+                            {% set episodeText = " (episode #{episodeNumber}) " %}
+                        {% else %}
+                            {% set episodeText = " " %}
+                        {% endif %}
+
+                        {# Pour les jours manquant #}
+                        {% if days > 1 %}
+                            {% set daysText = "days, " %}
+                        {% else %}
+                            {% set daysText = "day, " %}
+                        {% endif %}
+
+                        {# Pour les heures manquantes #}
+                        {% if hours > 1 %}
+                            {% set hoursText = "hours, " %}
+                        {% else %}
+                            {% set hoursText = "hour, " %}
+                        {% endif %}
+
+                        {# Pour les minutes manquantes #}
+                        {% if minutes > 1 %}
+                            {% set minText = "mins" %}
+                        {% else %}
+                            {% set minText = "min" %}
+                        {% endif %}
+
+
+                        {% set GMTDate = airingAt|date("D, d M Y,  H:i", "GMT") %}
+                        <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ airingAt ? "#{GMTDate} (GMT)" : "Airing at" }}">
+                            <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? days ~ " " ~ daysText : "" }}{{ hours >= 1 ? hours ~ " " ~ hoursText : "" }}{{ minutes >= 1 ? minutes ~ " " ~ minText : "" }}</i>
+                        </h2>
+                    {% endif %}
                     <div class="animeRemainingRightContentPartTitleContainer">
                         <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
                         <a href="{{ path('characters_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
