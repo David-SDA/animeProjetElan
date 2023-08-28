@@ -66,7 +66,6 @@ class AnimeCallApiService{
                                 id
                                 name{
                                     full
-                                    userPreferred
                                 }
                                 image{
                                     medium
@@ -88,7 +87,6 @@ class AnimeCallApiService{
                                 id
                                 name{
                                     full
-                                    userPreferred
                                 }
                                 image{
                                     medium

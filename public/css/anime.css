@@ -217,6 +217,8 @@
 /* Image d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartCardsImage{
     border-radius: 10px;
+    width: 100px;
+    height: 150px;
 }
 
 /* Partie du texte d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */

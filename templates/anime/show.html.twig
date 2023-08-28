@@ -60,7 +60,7 @@
                             {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day == null %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.endDate.month < 10 ? "0" : "" ) ~ dataThisAnime.endDate.month }}/{{ dataThisAnime.endDate.year }}</p>
                             {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.month }}/{{ (dataThisAnime.endDate.day < 10 ? "0" : "") ~ dataThisAnime.endDate.day }}/{{ dataThisAnime.endDate.year }}</p>
+                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.endDate.month < 10 ? "0" : "" ) ~ dataThisAnime.endDate.month }}/{{ (dataThisAnime.endDate.day < 10 ? "0" : "") ~ dataThisAnime.endDate.day }}/{{ dataThisAnime.endDate.year }}</p>
                             {% else %}
                                 <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                             {% endif %}
@@ -211,42 +211,44 @@
                     {% if dataThisAnime.characters.edges %}
                         <div class="animeRemainingRightContentPartTitleContainer">
                             <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                            <a href="{{ path('characters_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                            <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
                         </div>
                         <div class="animeRemainingRightContentPartCardsContainer">
-                            {% for i in range(1, 6) %}
+                            {% for character in dataThisAnime.characters.edges|slice(0, 6) %}
                                 <section class="animeRemainingRightContentPartCardsContent">
                                     <figure>
-                                        <img src="https://s4.anilist.co/file/anilistcdn/character/medium/b127691-6m4hNwL2vLML.png" alt="Satoru Gojou" class="animeRemainingRightContentPartCardsImage">
+                                        <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full }}" class="animeRemainingRightContentPartCardsImage">
                                     </figure>
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">Satoru Gojou</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>MAIN</i></p>
+                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role|title }}</i></p>
+                                    </div>
+                                </section>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if dataThisAnime.staff.edges %}
+                        <div class="animeRemainingRightContentPartTitleContainer">
+                            <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
+                            <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                        </div>
+                        <div class="animeRemainingRightContentPartCardsContainer">
+                            {% for staff in dataThisAnime.staff.edges|slice(0, 6) %}
+                                <section class="animeRemainingRightContentPartCardsContent">
+                                    <figure>
+                                        <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full }}" class="animeRemainingRightContentPartCardsImage">
+                                    </figure>
+                                    <div class="animeRemainingRightContentPartCardsTextContainer">
+                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role }}</i></p>
                                     </div>
                                 </section>
                             {% endfor %}
                         </div>
                     {% endif %}
                     <div class="animeRemainingRightContentPartTitleContainer">
-                        <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
-                        <a href="{{ path('staff_anime', { 'id' : 5 }) }}" class="animeRemainingRightContentPartMore">View more</a>
-                    </div>
-                    <div class="animeRemainingRightContentPartCardsContainer">
-                        {% for i in range(1, 6) %}
-                            <section class="animeRemainingRightContentPartCardsContent">
-                                <figure>
-                                    <img src="https://s4.anilist.co/file/anilistcdn/staff/medium/n125415-B1o6NtIImcCK.png" alt="Gege Akutami" class="animeRemainingRightContentPartCardsImage">
-                                </figure>
-                                <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop">Gege Akutami</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom"><i>Original Creator</i></p>
-                                </div>
-                            </section>
-                        {% endfor %}
-                    </div>
-                    <div class="animeRemainingRightContentPartTitleContainer">
                         <h2 class="animeRemainingRightContentPartTitle">Talks</h2>
-                        <p class="animeRemainingRightContentPartMore">View more</p>
+                        <a href="#" class="animeRemainingRightContentPartMore">View more</a>
                     </div>
                     <div class="animeRemainingRightContentPartCardsContainer">
                         {% for i in range(1, 4) %}
