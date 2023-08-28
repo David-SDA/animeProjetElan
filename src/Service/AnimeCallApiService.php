@@ -115,7 +115,7 @@ class AnimeCallApiService{
     }
 
     /**
-     * Fonction qui permet d'obtenir toute les personnages d'un animé
+     * Fonction qui permet d'obtenir tout les personnages d'un animé
      */
     public function getAllCharactersAnime(int $id){
         // Définition de la query
@@ -127,6 +127,52 @@ class AnimeCallApiService{
                         romaji
                     }
                     characters{
+                        edges{
+                            role
+                            node{
+                                id
+                                name{
+                                    full
+                                }
+                                image{
+                                    medium
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'id' => $id,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
+
+    /**
+     * Fonction qui permet d'obtenir tout le staff d'un animé
+     */
+    public function getAllStaffAnime(int $id){
+        // Définition de la query
+        $query = '
+            query($id: Int){
+                Media(id: $id, type: ANIME){
+                    id
+                    title{
+                        romaji
+                    }
+                    staff{
                         edges{
                             role
                             node{
