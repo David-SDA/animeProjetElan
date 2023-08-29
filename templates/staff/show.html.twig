@@ -1,9 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Staff member{% endblock %}
+{# Permet de rendre la récuperation des données plus pratique #}
+{% set dataThisStaff = dataOneStaff.data.Staff %}
+
+{% block title %}{{ dataThisStaff.name.full ? dataThisStaff.name.full : "?" }}{% endblock %}
 
 {% block body %}
-    <main>
-        <p>test</p>
+    <main class="characterContainer">
+        <div class="characterTopContainer">
+            <div class="characterTopContent">
+                <div class="characterTopLeftContainer">
+                    <figure>
+                        <img src="{{ dataThisStaff.image.large ? dataThisStaff.image.large : dataThisStaff.image.medium }}" alt="{{ dataThisStaff.name.full ? dataThisStaff.name.full : "Unknown" }}" class="characterTopContentImage">
+                    </figure>
+                </div>
+                <div class="characterTopContentCenterContainer">
+                    <h1 class="characterPartTitle">{{ dataThisStaff.name.full ? dataThisStaff.name.full : "?" }}</h1>
+                    <p class="characterTopContentTraitText">Age : <span class="characterTopContentTraitApi">{{ dataThisStaff.age ? dataThisStaff.age : "?" }}</span></p>
+                    <p class="characterTopContentTraitText">Gender : <span class="characterTopContentTraitApi">{{ dataThisStaff.gender ? dataThisStaff.gender : "?" }}</span></p>
+                    {# Voir les différents contenu des description pour adapter l'affichage #}
+                    <p class="characterTopContentRegularText">
+                        {{ dataThisStaff.description ? dataThisStaff.description|raw|nl2br : "No description yet" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="characterRemainingContainer">
+            <h2 class="characterPartTitle">WORKS</h2>
+            <div class="characterMultipleAnimes">
+                {# On va créer un tableau pour regrouper les animés où le membre du staff a eu plusieurs rôles #}
+                {% set mediaRoles = {} %}
+                {% for media in dataThisStaff.staffMedia.edges %}
+                {# On récupère les données que l'ont veut (id, title, coverImage et staffRole) #}
+                    {% set mediaId = media.node.id %}
+                    {% set mediaTitle = media.node.title.romaji %}
+                    {% set mediaCover = media.node.coverImage.large %}
+                    {% set role = media.staffRole %}
+                    {# On crée une variable pour déterminer si l'animé est dans notre variable mediaRoles #}
+                    {% set existingMedia = mediaRoles|filter(item => item.id == mediaId)|first %}
+                    {% if not existingMedia %}
+                        {# Si le media n'existe pas dans mediaRoles, on l'ajoute à celui-ci #}
+                        {% set newMedia = {'id': mediaId, 'title': mediaTitle, 'cover': mediaCover, 'roles': [role]} %}
+                        {% set mediaRoles = mediaRoles|merge([newMedia]) %}
+                    {% else %}
+                        {# Sinon on ajoute le rôle à l'animé correspondant #}
+                        {% set existingMediaRoles = existingMedia.roles %}
+                        {% set existingMedia = existingMedia|merge({'roles': existingMediaRoles|merge([role])}) %}
+                        
+                    {% endif %}
+                {% endfor %}
+                {{ dump(mediaRoles) }}
+                
+                {% for i in range(1, 10) %}
+                    <figure class="homeOneAnime">
+                        <div class="homeOneAnimeImageInfo">
+                            <img src="#" alt="Cover Image of #" class="homeOneAnimeImage">
+                            <section class="homeHoverContent">
+                                <div class="characterRemainingVoiceActorContainer">
+                                    <img src="#" alt="Yuuichi Nakamura" class="characterRemainingVoiceActorImage">
+                                    <p class="characterRemainingVoiceActorName">Yuuichi Nakamura</p>
+                                </div>
+                            </section>
+                        </div>
+                        <figcaption class="homeOneAnimeTitle">#</figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+        </div>
     </main>
 {% endblock %}
