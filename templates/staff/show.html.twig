@@ -29,40 +29,36 @@
             <h2 class="characterPartTitle">WORKS</h2>
             <div class="characterMultipleAnimes">
                 {# On va créer un tableau pour regrouper les animés où le membre du staff a eu plusieurs rôles #}
-                {% set mediaRoles = {} %}
+                {% set animeRoles = {} %}
                 {% for media in dataThisStaff.staffMedia.edges %}
-                {# On récupère les données que l'ont veut (id, title, coverImage et staffRole) #}
-                    {% set mediaId = media.node.id %}
-                    {% set mediaTitle = media.node.title.romaji %}
-                    {% set mediaCover = media.node.coverImage.large %}
+                    {# On récupère les données que l'ont veut (id, title, coverImage et staffRole) #}
+                    {% set id = media.node.id %}
+                    {% set title = media.node.title.romaji %}
+                    {% set coverImage = media.node.coverImage.large %}
                     {% set role = media.staffRole %}
-                    {# On crée une variable pour déterminer si l'animé est dans notre variable mediaRoles #}
-                    {% set existingMedia = mediaRoles|filter(item => item.id == mediaId)|first %}
-                    {% if not existingMedia %}
-                        {# Si le media n'existe pas dans mediaRoles, on l'ajoute à celui-ci #}
-                        {% set newMedia = {'id': mediaId, 'title': mediaTitle, 'cover': mediaCover, 'roles': [role]} %}
-                        {% set mediaRoles = mediaRoles|merge([newMedia]) %}
+                    {# On vérifie si l'anime est défini dans animeRoles #}
+                    {% if animeRoles[title] is not defined %}
+                        {# Si l'animé n'est pas définie, on la crée #}
+                        {% set animeRoles = animeRoles|merge({(title): {'id': id, 'title': title, 'coverImage': coverImage, 'roles': [role]}}) %}
                     {% else %}
-                        {# Sinon on ajoute le rôle à l'animé correspondant #}
-                        {% set existingMediaRoles = existingMedia.roles %}
-                        {% set existingMedia = existingMedia|merge({'roles': existingMediaRoles|merge([role])}) %}
-                        
+                        {# Sinon on le crée #}
+                        {% set animeRoles = animeRoles|merge({(title): animeRoles[title]|merge({'roles': animeRoles[title].roles|merge([role])})}) %}
                     {% endif %}
                 {% endfor %}
-                {{ dump(mediaRoles) }}
-                
-                {% for i in range(1, 10) %}
+                {# On fait l'affichage grâce a animeRoles #}
+                {% for anime in animeRoles %}
                     <figure class="homeOneAnime">
                         <div class="homeOneAnimeImageInfo">
-                            <img src="#" alt="Cover Image of #" class="homeOneAnimeImage">
+                            <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title ? anime.title : "Unknown" }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
-                                <div class="characterRemainingVoiceActorContainer">
-                                    <img src="#" alt="Yuuichi Nakamura" class="characterRemainingVoiceActorImage">
-                                    <p class="characterRemainingVoiceActorName">Yuuichi Nakamura</p>
+                                <div class="characterRemainingVoiceActorContainer roles">
+                                    {% for role in anime.roles %}
+                                        <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
+                                    {% endfor %}
                                 </div>
                             </section>
                         </div>
-                        <figcaption class="homeOneAnimeTitle">#</figcaption>
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title ? anime.title : "Unknown" }}</figcaption>
                     </figure>
                 {% endfor %}
             </div>

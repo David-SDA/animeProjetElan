@@ -30,7 +30,7 @@ class StaffCallApiService{
                     gender
                     description
                     primaryOccupations
-                    staffMedia(type: ANIME){
+                    staffMedia(type: ANIME, sort: START_DATE_DESC){
                         edges{
                             staffRole
                             roleNotes

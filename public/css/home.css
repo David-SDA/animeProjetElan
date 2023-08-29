@@ -54,6 +54,8 @@
     border-radius: 10px;
     display: block;
     height: 300px;
+    max-width: 215px;
+    object-fit: cover;
 }
 
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */

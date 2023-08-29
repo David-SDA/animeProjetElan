@@ -81,6 +81,10 @@
     display: flex;
     align-items: center;
 }
+.characterRemainingVoiceActorContainer.roles{
+    display: flex;
+    flex-direction: column;
+}
 
 /* Image du doubleur (japonais) du personnage dans un animé */
 .characterRemainingVoiceActorImage{
