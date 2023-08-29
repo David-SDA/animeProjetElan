@@ -29,7 +29,30 @@ class StaffCallApiService{
                     age
                     gender
                     description
-                    primaryOccupations
+                    characters{
+                        edges{
+                            node{
+                                id
+                                name{
+                                    full
+                                }
+                                image{
+                                    medium
+                                }
+                                media(type: ANIME, sort: START_DATE_DESC){
+                                    nodes{
+                                        id
+                                        title{
+                                            romaji
+                                        }
+                                        coverImage{
+                                            large
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     staffMedia(type: ANIME, sort: START_DATE_DESC){
                         edges{
                             staffRole
