@@ -234,7 +234,7 @@
                         </div>
                         <div class="animeRemainingRightContentPartCardsContainer">
                             {% for staff in dataThisAnime.staff.edges|slice(0, 6) %}
-                                <section class="animeRemainingRightContentPartCardsContent">
+                                <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
                                     <figure>
                                         <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full ? staff.node.name.full : "Image of the staff member" }}" class="animeRemainingRightContentPartCardsImage">
                                     </figure>
@@ -242,7 +242,7 @@
                                         <h2 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full ? staff.node.name.full : "Unknown" }}</h2>
                                         <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role ? staff.role : "Unknown" }}</i></p>
                                     </div>
-                                </section>
+                                </a>
                             {% endfor %}
                         </div>
                     {% endif %}

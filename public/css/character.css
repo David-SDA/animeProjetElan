@@ -84,6 +84,7 @@
 .characterRemainingVoiceActorContainer.roles{
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
 /* Image du doubleur (japonais) du personnage dans un animé */

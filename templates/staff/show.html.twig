@@ -48,17 +48,19 @@
                 {# On fait l'affichage grâce a animeRoles #}
                 {% for anime in animeRoles %}
                     <figure class="homeOneAnime">
-                        <div class="homeOneAnimeImageInfo">
-                            <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title ? anime.title : "Unknown" }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <div class="characterRemainingVoiceActorContainer roles">
-                                    {% for role in anime.roles %}
-                                        <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
-                                    {% endfor %}
-                                </div>
-                            </section>
-                        </div>
-                        <figcaption class="homeOneAnimeTitle">{{ anime.title ? anime.title : "Unknown" }}</figcaption>
+                        <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title ? anime.title : "Unknown" }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <div class="characterRemainingVoiceActorContainer roles">
+                                        {% for role in anime.roles %}
+                                            <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </div>
+                            <figcaption class="homeOneAnimeTitle">{{ anime.title ? anime.title : "Unknown" }}</figcaption>
+                        </a>
                     </figure>
                 {% endfor %}
             </div>
