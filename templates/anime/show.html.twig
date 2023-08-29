@@ -215,15 +215,15 @@
                         </div>
                         <div class="animeRemainingRightContentPartCardsContainer">
                             {% for character in dataThisAnime.characters.edges|slice(0, 6) %}
-                                <section class="animeRemainingRightContentPartCardsContent">
+                                <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
                                     <figure>
                                         <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full ? character.node.name.full : "Image of the character" }}" class="animeRemainingRightContentPartCardsImage">
                                     </figure>
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
                                         <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full ? character.node.name.full : "Unknown" }}</h2>
                                         <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : "Unknown" }}</i></p>
-                                    </div>
-                                </section>
+                                    </div>                                
+                                </a>
                             {% endfor %}
                         </div>
                     {% endif %}

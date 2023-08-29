@@ -207,11 +207,15 @@
     display: flex;
     flex-basis: 30%;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: all 0.25s ease;
 }
 .animeRemainingRightContentPartCardsContent.talk{
     flex-basis: 48%;
     display: flex;
     justify-content: space-between;
+}
+.animeRemainingRightContentPartCardsContent:hover{
+    transform: translateY(-2px);
 }
 
 /* Image d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
