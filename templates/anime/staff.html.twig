@@ -10,7 +10,7 @@
         <h1 class="animeCharactersTitle">Staff of {{ dataAllStaffThisAnime.title.romaji ? dataAllStaffThisAnime.title.romaji : "?" }}</h1>
         <div class="animeRemainingRightContentPartCardsContainer">
             {% for staffMember in dataAllStaffThisAnime.staff.edges %}
-                <section class="animeRemainingRightContentPartCardsContent">
+                <a href="{{ path('show_staff', { 'id' : staffMember.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
                     <figure>
                         <img src="{{ staffMember.node.image.medium }}" alt="{{ staffMember.node.name.full ? staffMember.node.name.full : "Unknown" }}" class="animeRemainingRightContentPartCardsImage">
                     </figure>
@@ -18,7 +18,7 @@
                         <h2 class="animeRemainingRightContentPartCardsTop">{{ staffMember.node.name.full ? staffMember.node.name.full : "Unknown" }}</h2>
                         <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staffMember.role ? staffMember.role : "Unknown" }}</i></p>
                     </div>
-                </section>
+                </a>
             {% endfor %}
         </div>
     </main>
