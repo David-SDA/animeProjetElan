@@ -47,13 +47,16 @@
 /* Caractéristiques du personnage (centre du haut de la page d'un personnage) */
 .characterTopContentTraitText{
     font-weight: 600;
-    font-size: 1.25em;
     color: #333333;
     margin-bottom: 0.25em;
 }
 
-/* Donnée de l'api pour la caractéristique du personnage (centre du haut de la page d'un personnage) */
-/* Description du personnage (centre du haut de la page) */
+/* Caractéristiques du personnage venant de l'API (centre du haut de la page d'un personnage) */
+.characterTopContentTraitApi{
+    font-weight: normal;
+}
+
+/* Description du personnage (centre du haut de la page d'un personnage) */
 .characterTopContentRegularText{
     font-weight: 400;
     color: #333333;

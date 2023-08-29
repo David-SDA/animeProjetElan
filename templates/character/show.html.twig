@@ -21,7 +21,7 @@
                     <p class="characterTopContentTraitText">Gender : <span class="characterTopContentTraitApi">{{ dataThisCharacter.gender ? dataThisCharacter.gender : "?" }}</span></p>
                     {# Voir les différents contenu des description pour adapter l'affichage #}
                     <p class="characterTopContentRegularText">
-                        {{ dataThisCharacter.description ? dataThisCharacter.description|replace({'__': '' })|raw|nl2br : "No description yet" }}
+                        {{ dataThisCharacter.description ? dataThisCharacter.description|raw|nl2br : "No description yet" }}
                     </p>
                 </div>
             </div>
