@@ -27,32 +27,37 @@
         </div>
         <div class="characterRemainingContainer">
             {# Si ce membre de staff a doublé des personnages, alors on l'affiche #}
-            {% if dataThisStaff.characters %}
+            {% if dataThisStaff.characters.edges %}
                 <h2 class="characterPartTitle">APPEARANCES</h2>
                 <div class="characterMultipleAnimes">
+                    {# Pour chaque personnage incarné par le doubleur #}
                     {% for character in dataThisStaff.characters.edges %}
+                        {# On définit des variables pour manipuler les données de l'API plus facilement #}
                         {% set characterId = character.node.id %}
                         {% set characterName = character.node.name.full %}
                         {% set characterImage = character.node.image.medium %}
                         
+                        {# Pour chaque anime dans lequel le personnage apparaît, on affiche cette animé #}
                         {% for anime in character.node.media.nodes %}
+                            {# On définit des variables pour manipuler les données de l'API plus facilement #}
                             {% set animeId = anime.id %}
                             {% set animeTitle = anime.title.romaji %}
                             {% set animeCoverImage = anime.coverImage.large %}
                             <figure class="homeOneAnime">
-                                <div class="homeOneAnimeImageInfo">
-                                    <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
-                                    <section class="homeHoverContent">
-                                        <div class="characterRemainingVoiceActorContainer">
-                                            <img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage">
-                                            <p class="characterRemainingVoiceActorName">{{ characterName }}</p>
-                                        </div>
-                                    </section>
-                                </div>
-                                <figcaption class="homeOneAnimeTitle">{{ animeTitle }}</figcaption>
+                                <a href="{{ path('show_anime', { 'id' : animeId }) }}">
+                                    <div class="homeOneAnimeImageInfo">
+                                        <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
+                                        <section class="homeHoverContent">
+                                            <div class="characterRemainingVoiceActorContainer">
+                                                <img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage">
+                                                <p class="characterRemainingVoiceActorName">{{ characterName }}</p>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <figcaption class="homeOneAnimeTitle">{{ animeTitle }}</figcaption>
+                                </a>
                             </figure>
                         {% endfor %}
-
                     {% endfor %}
                 </div>
             {% endif %}

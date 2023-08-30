@@ -70,7 +70,6 @@ class StaffCallApiService{
                     }
                 }
             }
-          
         ';
 
         // Définition des variables utilisées dans la query

@@ -98,4 +98,8 @@
     font-weight: 600;
     font-size: 1.25em;
     margin-left: 0.25em;
+    color: #fff;
+}
+.characterRemainingVoiceActorName.link:hover{
+    color: #00BFFF;
 }
