@@ -4,7 +4,19 @@
 
 {% block body %}
     <main class="homeContainer">
-        <h1 class="homeTitle">ANIME THIS SEASON</h1>
+        {# On définit le saison et l'année pour le titre de la page #}
+        {% set currentMonth = "now"|date("m") %}
+        {% set currentYear = "now"|date("Y") %}
+        {% if currentMonth >= 1 and currentMonth <= 3 %}
+            {% set currentSeason = "WINTER" %}
+        {% elseif currentMonth >= 4 and currentMonth <= 6 %}
+            {% set currentSeason = "SPRING" %}
+        {% elseif currentMonth >= 7 and currentMonth <= 9 %}
+            {% set currentSeason = "SUMMER" %}
+        {% else %}
+            {% set currentSeason = "FALL" %}
+        {% endif %}
+        <h1 class="homeTitle">{{ currentSeason }} {{ currentYear }}</h1>
         <section class="homeMultipleAnimes">
             {% for media in dataSeasonalAnimes.data.Page.media %}
                 <figure class="homeOneAnime top">
