@@ -16,6 +16,13 @@ class AnimeController extends AbstractController
             'controller_name' => 'AnimeController',
         ]);
     }
+    
+    #[Route('/anime/top', name: 'top_anime')]
+    public function top(AnimeCallApiService $animeCallApiService): Response{
+        return $this->render('anime/top.html.twig', [
+            'dataTopAnimes' => $animeCallApiService->getTopAnimes(),
+        ]);
+    }
 
     #[Route('/anime/{id}', name: 'show_anime')]
     public function show(int $id, AnimeCallApiService $animeCallApiService): Response{
@@ -37,4 +44,5 @@ class AnimeController extends AbstractController
             'dataAllStaffOneAnime' => $animeCallApiService->getAllStaffAnime($id),
         ]);
     }
+
 }

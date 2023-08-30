@@ -205,4 +205,47 @@ class AnimeCallApiService{
 
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
+
+    /**
+     * Fonction qui permet d'obtenir les meilleurs animés selon l'API
+     */
+    public function getTopAnimes(){
+        // Définition de la query
+        $query = '
+            query{
+                Page(page: 1, perPage: 50){
+                    media(type: ANIME, sort: SCORE_DESC){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                            color
+                        }
+                        genres
+                        episodes
+                        format
+                        studios{
+                            edges{
+                                isMain
+                                node{
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+        
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
 }

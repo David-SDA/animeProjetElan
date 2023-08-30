@@ -2,6 +2,7 @@
 .homeTitle{
     text-align: center;
     color: #333;
+    margin: 1em 0;
 }
 
 /* Contenu de toute la page */
@@ -31,9 +32,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: min-content;
 }
 .homeOneAnime.topTen{
     flex-basis: 20%;
+}
+.homeOneAnime.top{
+    margin: 1em;
 }
 .homeOneAnime:hover .homeHoverContent{
     opacity: 1;
@@ -116,7 +121,7 @@
 .homeOneAnimeTitle{
     max-width: 230px;
     text-align: center;
-    padding: 5px;
+    margin-top: 5px;
     color: #333;
     font-weight: 600;
 }
