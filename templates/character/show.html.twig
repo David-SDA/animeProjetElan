@@ -11,7 +11,7 @@
             <div class="characterTopContent">
                 <div class="characterTopLeftContainer">
                     <figure>
-                        <img src="{{ dataThisCharacter.image.large ? dataThisCharacter.image.large : dataThisCharacter.image.medium }}" alt="{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "Unknown" }}" class="characterTopContentImage">
+                        <img src="{{ dataThisCharacter.image.large }}" alt="{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "Unknown" }}" class="characterTopContentImage">
                     </figure>
                     <button class="animeButtonAddTo favorites">Add to your favorites</button>
                 </div>
@@ -29,18 +29,20 @@
         <div class="characterRemainingContainer">
             <h2 class="characterPartTitle">APPEARANCES</h2>
             <div class="characterMultipleAnimes">
-                {% for anime in dataThisCharacter.media.nodes %}
+                {% for anime in dataThisCharacter.media.edges %}
                     <figure class="homeOneAnime">
-                        <div class="homeOneAnimeImageInfo">
-                            <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji ? anime.title.romaji : "Unknown" }}" class="homeOneAnimeImage">
-                            <section class="homeHoverContent">
-                                <div class="characterRemainingVoiceActorContainer">
-                                    <img src="https://s4.anilist.co/file/anilistcdn/staff/large/n95513-up9ZDuocHgRs.png" alt="Yuuichi Nakamura" class="characterRemainingVoiceActorImage">
-                                    <p class="characterRemainingVoiceActorName">Yuuichi Nakamura</p>
-                                </div>
-                            </section>
-                        </div>
-                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji ? anime.title.romaji : "Unknown" }}</figcaption>
+                        <a href="{{ path('show_anime', { 'id' : anime.node.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ anime.node.coverImage.large }}" alt="Cover Image of {{ anime.node.title.romaji ? anime.node.title.romaji : "Unknown" }}" class="homeOneAnimeImage">
+                                <section class="homeHoverContent">
+                                    <div class="characterRemainingVoiceActorContainer">
+                                        <img src="{{ anime.voiceActors[0].image.medium }}" alt="{{ anime.voiceActors[0].name.full }}" class="characterRemainingVoiceActorImage">
+                                        <p class="characterRemainingVoiceActorName">{{ anime.voiceActors[0].name.full }}</p>
+                                    </div>
+                                </section>
+                            </div>
+                            <figcaption class="homeOneAnimeTitle">{{ anime.node.title.romaji ? anime.node.title.romaji : "Unknown" }}</figcaption>
+                        </a>
                     </figure>
                 {% endfor %}
             </div>

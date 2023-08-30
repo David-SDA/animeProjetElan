@@ -25,19 +25,29 @@ class CharacterCallApiService{
                     }
                     image{
                         large
-                        medium
                     }
                     age
                     gender
                     description
-                    media(type: ANIME){
-                        nodes{
-                            id
-                            title{
-                                romaji
+                    media(type: ANIME, sort: START_DATE_DESC){
+                        edges{
+                            node{
+                                id
+                                title{
+                                    romaji
+                                }
+                                coverImage{
+                                    large
+                                }
                             }
-                            coverImage{
-                                large
+                            voiceActors(language: JAPANESE){
+                                id
+                                name{
+                                    full
+                                }
+                                image{
+                                    medium
+                                }
                             }
                         }
                     }
