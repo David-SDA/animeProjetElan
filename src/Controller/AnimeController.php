@@ -31,6 +31,13 @@ class AnimeController extends AbstractController
         ]);
     }
 
+    #[Route('anime/all', name: 'all_anime')]
+    public function all(AnimeCallApiService $animeCallApiService): Response{
+        return $this->render('anime/all.html.twig', [
+            'dataAllAnimes' => $animeCallApiService->getAllAnimes(1),
+        ]);
+    }
+
     #[Route('/anime/{id}', name: 'show_anime')]
     public function show(int $id, AnimeCallApiService $animeCallApiService): Response{
         return $this->render('anime/show.html.twig', [

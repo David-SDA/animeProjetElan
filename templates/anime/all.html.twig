@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Top Animes{% endblock %}
+{% block title %}All Animes{% endblock %}
 
 {% block body %}
     <main class="homeContainer">
-        <h1 class="homeTitle">TOP ANIME</h1>
+        <h1 class="homeTitle">ALL ANIME</h1>
         <section class="homeMultipleAnimes">
-            {% for media in dataTopAnimes.data.Page.media %}
+            {% for media in dataAllAnimes.data.Page.media %}
                 <figure class="homeOneAnime top">
                     <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                         <div class="homeOneAnimeImageInfo">
-                            <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
                                 <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
