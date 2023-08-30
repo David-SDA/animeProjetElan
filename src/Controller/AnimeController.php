@@ -24,6 +24,13 @@ class AnimeController extends AbstractController
         ]);
     }
 
+    #[Route('anime/seasonal', name: 'seasonal_anime')]
+    public function seasonal(AnimeCallApiService $animeCallApiService): Response{
+        return $this->render('anime/seasonal.html.twig', [
+            'dataSeasonalAnimes' => $animeCallApiService->getSeasonalAnimes(1),
+        ]);
+    }
+
     #[Route('/anime/{id}', name: 'show_anime')]
     public function show(int $id, AnimeCallApiService $animeCallApiService): Response{
         return $this->render('anime/show.html.twig', [

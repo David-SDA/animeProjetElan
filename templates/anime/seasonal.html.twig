@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seasonal Anime{% endblock %}
+
+{% block body %}
+    <main class="homeContainer">
+        <h1 class="homeTitle">ANIME THIS SEASON</h1>
+        <section class="homeMultipleAnimes">
+            {% for media in dataSeasonalAnimes.data.Page.media %}
+                <figure class="homeOneAnime top">
+                    <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                        <div class="homeOneAnimeImageInfo">
+                            <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
+                            <section class="homeHoverContent">
+                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% if media.episodes %}
+                                        {% if media.episodes < 2 %}
+                                            {{ media.episodes }} episode
+                                        {% else %}
+                                            {{ media.episodes }} episodes
+                                        {% endif %}
+                                    {% else %}    
+                                        ? episodes
+                                    {% endif %}
+                                    - 
+                                    {% if media.format %}
+                                        {{ media.format }}
+                                    {% else %}
+                                        ?
+                                    {% endif %}
+                                </p>
+                                <p class="homeOneAnimeInfoSmallerInfos">
+                                    {% set mainStudios = [] %}
+                                    {% for studio in media.studios.edges %}
+                                        {% if studio.isMain %}
+                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {{ mainStudios|join(' - ') }}
+                                </p>
+                                <div class="homeOneAnimeInfoGenres">
+                                    {% for genre in media.genres %}
+                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        </div>
+                    </a>
+                    <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}
