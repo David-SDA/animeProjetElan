@@ -177,6 +177,7 @@
     font-size: 1.25em;
     color: #333333;
     text-decoration: none;
+    align-self: end;
 }
 .animeRemainingRightContentPartMore:hover{
     color: #00BFFF;

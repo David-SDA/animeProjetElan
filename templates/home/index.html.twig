@@ -153,11 +153,10 @@
             </section>
         </section>
         <section>
-            <h2 class="homeSecondaryTitle">ADMIN SELECTION</h2>
-            <p><i>À venir</i></p>
-        </section>
-        <section>
-            <h2 class="homeSecondaryTitle">TOP 10</h2>
+            <div class="animeRemainingRightContentPartTitleContainer">
+                <h2 class="homeSecondaryTitle">TOP 10</h2>
+                <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore">View more</a>
+            </div>
             <section class="homeMultipleAnimes">
                 {% for media in dataTopTenAnime.data.Page.media %}
                     <figure class="homeOneAnime topTen">

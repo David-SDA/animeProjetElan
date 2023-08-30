@@ -43,7 +43,7 @@
                             {% set animeId = anime.id %}
                             {% set animeTitle = anime.title.romaji %}
                             {% set animeCoverImage = anime.coverImage.large %}
-                            <figure class="homeOneAnime">
+                            <figure class="homeOneAnime top">
                                 <a href="{{ path('show_anime', { 'id' : animeId }) }}">
                                     <div class="homeOneAnimeImageInfo">
                                         <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
@@ -86,7 +86,7 @@
                 <div class="characterMultipleAnimes">
                     {# On fait l'affichage grâce a animeRoles #}
                     {% for anime in animeRoles %}
-                        <figure class="homeOneAnime">
+                        <figure class="homeOneAnime top">
                             <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
                                 <div class="homeOneAnimeImageInfo">
                                     <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title ? anime.title : "Unknown" }}" class="homeOneAnimeImage">
