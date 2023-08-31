@@ -21,9 +21,13 @@ class Anime
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'animes')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Discussion::class, inversedBy: 'animes')]
+    private Collection $discussions;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,6 +70,30 @@ class Anime
         if ($this->users->removeElement($user)) {
             $user->removeAnime($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Discussion>
+     */
+    public function getDiscussions(): Collection
+    {
+        return $this->discussions;
+    }
+
+    public function addDiscussion(Discussion $discussion): static
+    {
+        if (!$this->discussions->contains($discussion)) {
+            $this->discussions->add($discussion);
+        }
+
+        return $this;
+    }
+
+    public function removeDiscussion(Discussion $discussion): static
+    {
+        $this->discussions->removeElement($discussion);
 
         return $this;
     }

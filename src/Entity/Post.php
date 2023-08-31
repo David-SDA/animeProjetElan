@@ -31,6 +31,10 @@ class Post
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'likePosts')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Discussion $discussion = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -112,6 +116,18 @@ class Post
         if ($this->users->removeElement($user)) {
             $user->removeLikePost($this);
         }
+
+        return $this;
+    }
+
+    public function getDiscussion(): ?Discussion
+    {
+        return $this->discussion;
+    }
+
+    public function setDiscussion(?Discussion $discussion): static
+    {
+        $this->discussion = $discussion;
 
         return $this;
     }
