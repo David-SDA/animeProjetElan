@@ -24,10 +24,14 @@ class Anime
     #[ORM\ManyToMany(targetEntity: Discussion::class, inversedBy: 'animes')]
     private Collection $discussions;
 
+    #[ORM\OneToMany(mappedBy: 'anime', targetEntity: UserRegarderAnime::class, orphanRemoval: true)]
+    private Collection $userRegarderAnimes;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->discussions = new ArrayCollection();
+        $this->userRegarderAnimes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,6 +98,36 @@ class Anime
     public function removeDiscussion(Discussion $discussion): static
     {
         $this->discussions->removeElement($discussion);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserRegarderAnime>
+     */
+    public function getUserRegarderAnimes(): Collection
+    {
+        return $this->userRegarderAnimes;
+    }
+
+    public function addUserRegarderAnime(UserRegarderAnime $userRegarderAnime): static
+    {
+        if (!$this->userRegarderAnimes->contains($userRegarderAnime)) {
+            $this->userRegarderAnimes->add($userRegarderAnime);
+            $userRegarderAnime->setAnime($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRegarderAnime(UserRegarderAnime $userRegarderAnime): static
+    {
+        if ($this->userRegarderAnimes->removeElement($userRegarderAnime)) {
+            // set the owning side to null (unless already changed)
+            if ($userRegarderAnime->getAnime() === $this) {
+                $userRegarderAnime->setAnime(null);
+            }
+        }
 
         return $this;
     }

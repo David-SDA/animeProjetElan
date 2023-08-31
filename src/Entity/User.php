@@ -75,6 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'users')]
     private Collection $likePosts;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserRegarderAnime::class, orphanRemoval: true)]
+    private Collection $userRegarderAnimes;
+
     public function __construct()
     {
         $this->personnages = new ArrayCollection();
@@ -83,6 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->discussions = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->likePosts = new ArrayCollection();
+        $this->userRegarderAnimes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -421,6 +425,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeLikePost(Post $likePost): static
     {
         $this->likePosts->removeElement($likePost);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserRegarderAnime>
+     */
+    public function getUserRegarderAnimes(): Collection
+    {
+        return $this->userRegarderAnimes;
+    }
+
+    public function addUserRegarderAnime(UserRegarderAnime $userRegarderAnime): static
+    {
+        if (!$this->userRegarderAnimes->contains($userRegarderAnime)) {
+            $this->userRegarderAnimes->add($userRegarderAnime);
+            $userRegarderAnime->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRegarderAnime(UserRegarderAnime $userRegarderAnime): static
+    {
+        if ($this->userRegarderAnimes->removeElement($userRegarderAnime)) {
+            // set the owning side to null (unless already changed)
+            if ($userRegarderAnime->getUser() === $this) {
+                $userRegarderAnime->setUser(null);
+            }
+        }
 
         return $this;
     }
