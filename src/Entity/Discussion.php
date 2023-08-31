@@ -23,6 +23,9 @@ class Discussion
     #[ORM\Column]
     private ?bool $estVerrouiller = null;
 
+    #[ORM\ManyToOne(inversedBy: 'discussions')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Discussion
     public function setEstVerrouiller(bool $estVerrouiller): static
     {
         $this->estVerrouiller = $estVerrouiller;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

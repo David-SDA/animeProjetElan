@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimeRepository::class)]
@@ -15,6 +17,14 @@ class Anime
 
     #[ORM\Column]
     private ?int $idApi = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'animes')]
+    private Collection $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +39,33 @@ class Anime
     public function setIdApi(int $idApi): static
     {
         $this->idApi = $idApi;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addAnime($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeAnime($this);
+        }
 
         return $this;
     }
