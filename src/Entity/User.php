@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 40)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateInscription = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -53,10 +53,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options:["default" => "true"])]
     private ?bool $estVisible = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options:["default" => "false"])]
     private ?bool $estBanni = null;
 
     #[ORM\ManyToMany(targetEntity: Personnage::class, inversedBy: 'users')]
