@@ -7,44 +7,44 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
-
     {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        <div>
-            {{ form_label(registrationForm.pseudo, 'Username*') }}
-            {{ form_widget(registrationForm.pseudo) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.email, 'Email*') }}
-            {{ form_widget(registrationForm.email) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.pays, 'Country') }}
-            {{ form_widget(registrationForm.pays) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.ville, 'City') }}
-            {{ form_widget(registrationForm.ville) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.dateNaissance, 'Date of birth') }}
-            {{ form_widget(registrationForm.dateNaissance) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.plainPassword.first, 'Password*') }}
-            {{ form_widget(registrationForm.plainPassword.first) }}
-        </div>
-        <div>
-            {{ form_label(registrationForm.plainPassword.second, 'Confirm Password*') }}
-            {{ form_widget(registrationForm.plainPassword.second) }}
-        </div>
-        <div>
-            {{ form_widget(registrationForm.agreeTerms) }}
-            {{ form_label(registrationForm.agreeTerms, 'Agree Terms of Use') }}
-        </div>
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="securityFormContainer">
+        {{ form_start(registrationForm) }}
+            <h1 class="securityFormTitle">Register</h1>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.pseudo, 'Username*') }}
+                {{ form_widget(registrationForm.pseudo) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.email, 'Email*') }}
+                {{ form_widget(registrationForm.email) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.pays, 'Country') }}
+                {{ form_widget(registrationForm.pays) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.ville, 'City') }}
+                {{ form_widget(registrationForm.ville) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.dateNaissance, 'Date of birth') }}
+                {{ form_widget(registrationForm.dateNaissance) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.plainPassword.first, 'Password*') }}
+                {{ form_widget(registrationForm.plainPassword.first) }}
+            </div>
+            <div class="securityFormRow">
+                {{ form_label(registrationForm.plainPassword.second, 'Confirm Password*') }}
+                {{ form_widget(registrationForm.plainPassword.second) }}
+            </div>
+            <div class="securityFormRowTerms">
+                {{ form_widget(registrationForm.agreeTerms) }}
+                {{ form_label(registrationForm.agreeTerms, 'Agree Terms of Use') }}
+            </div>
+    
+            <button type="submit" class="securityFormSubmitButton">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

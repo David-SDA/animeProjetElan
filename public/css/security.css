@@ -1,0 +1,78 @@
+/* Le conteneur des formulaires liés à la sécurité */
+.securityFormContainer{
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.securityFormContainer form{
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Le titre des formulaires liés à la sécurité */
+.securityFormTitle{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Une ligne (label + input) des formulaires liés à la sécurité */
+.securityFormRow{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em 0;
+}
+.securityFormRow label{
+    font-weight: 600;
+    font-size: 1em;
+    color: #333333;
+    margin-bottom: 0.3em;
+}
+.securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"], .securityFormRow input[type="password"]{
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #B4B4B4;
+    padding: 0 10px;
+}
+.securityFormRow input[type="date"]{
+    width: 150px;
+    text-align: center;
+}
+
+/* Une ligne qui contient les terms of use */
+.securityFormRowTerms{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1.5em;
+}
+.securityFormRowTerms label{
+    font-weight: 600;
+    font-size: 1em;
+    color: #333333;
+    margin-left: 1em;
+}
+.securityFormRowTerms input[type="checkbox"]{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #B4B4B4;
+}
+
+/* Le bouton de submit des formulaires liés à la sécurité */
+.securityFormSubmitButton{
+    align-self: center;
+    width: 150px;
+    height: 44px;
+    border: none;
+    font-weight: 600;
+    font-size: 1em;
+    color: #fff;
+    background-color: #00BFFF;
+    border-radius: 10px;
+    cursor: pointer;
+}
