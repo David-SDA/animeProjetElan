@@ -1,0 +1,20 @@
+@media screen and (max-width: 767px) {
+    .securityFormContainer form{
+        width: 300px;
+        padding: 20px 10px;
+    }
+
+    .securityFormLinkEnd{
+        margin-top: 2em;
+    }
+    .securityFormLinkEnd:last-child{
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .securityFormContainer form{
+        width: 600px;
+        padding: 20px 15px;
+    }
+}

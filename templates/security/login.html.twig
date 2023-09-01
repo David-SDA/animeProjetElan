@@ -15,7 +15,7 @@
                 </div>
             {% endif %}
     
-            <h1 class="securityFormTitle">Login</h1>
+            <h1 class="securityFormTitle">Log in</h1>
             <div class="securityFormRow">
                 <label for="inputEmail">Email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -29,7 +29,7 @@
                 value="{{ csrf_token('authenticate') }}"
             >
     
-            <button type="submit" class="securityFormSubmitButton">LOGIN</button>
+            <button type="submit" class="securityFormSubmitButton">LOG IN</button>
             <div class="securityFormLinksEnd">
                 <a href="#" class="securityFormLinkEnd">Forgot password ?</a>
                 <a href="{{ path('app_register') }}" class="securityFormLinkEnd">No account ? Register here !</a>
