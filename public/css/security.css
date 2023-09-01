@@ -49,6 +49,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 0.5em;
     margin-bottom: 1.5em;
 }
 .securityFormRowTerms label{
@@ -75,4 +76,22 @@
     background-color: #00BFFF;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.securityFormSubmitButton:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
+/* Texte de lien en dessous du bouton de submit */
+.securityFormLinkEnd{
+    font-weight: 400;
+    font-size: 0.875em;
+    color: #636363;
+    margin-top: 1em;
+    align-self: flex-end;
+}
+.securityFormLinkEnd:hover{
+    text-decoration: underline;
 }
