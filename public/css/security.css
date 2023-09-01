@@ -17,8 +17,11 @@
 
 /* Le titre des formulaires liés à la sécurité */
 .securityFormTitle{
-    margin-bottom: 20px;
     text-align: center;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #333333;
+    margin-bottom: 20px;
 }
 
 /* Une ligne (label + input) des formulaires liés à la sécurité */
@@ -50,7 +53,6 @@
     justify-content: flex-start;
     align-items: center;
     margin-top: 0.5em;
-    margin-bottom: 1.5em;
 }
 .securityFormRowTerms label{
     font-weight: 600;
@@ -69,6 +71,7 @@
     align-self: center;
     width: 150px;
     height: 44px;
+    margin-top: 1.5em;
     border: none;
     font-weight: 600;
     font-size: 1em;
@@ -94,4 +97,10 @@
 }
 .securityFormLinkEnd:hover{
     text-decoration: underline;
+}
+
+/* Les textes de liens en dessous du bouton de submit */
+.securityFormLinksEnd{
+    display: flex;
+    justify-content: space-between;
 }
