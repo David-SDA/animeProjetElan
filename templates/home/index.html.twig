@@ -3,7 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <h1 class="homeTitle">Welcome Back "user"</h1>
+    {% if app.user %}
+        <h1 class="homeTitle">Welcome {{ app.user.pseudo }} !</h1>
+    {% else %}
+        <h1 class="homeTitle">Welcome !</h1>
+    {% endif %}
     <main class="homeContainer">
         <section>
             <h2 class="homeSecondaryTitle">BEST THIS SEASON</h2>

@@ -22,7 +22,8 @@
         {% endblock %}
     </head>
     <body>
-        <nav>
+        <nav class="navBarContainer">
+            <div></div>
             <ul class="navBar">
                 <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
                 <li class="navBarElementDropdown">
@@ -36,6 +37,16 @@
                 <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
                 <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>
                 <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li>
+                {% if app.user %}
+                    <div class="navBarButtons">
+                        <a href="{{ path('app_logout') }}" class="navBarButton">LOGOUT</a>
+                    </div>
+                {% else %}
+                    <div class="navBarButtons">
+                        <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
+                        <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
+                    </div>
+                {% endif %}
             </ul>
         </nav>
         {% block body %}
