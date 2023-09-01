@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -32,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 40)]
+    #[ORM\Column(length: 40, unique: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
@@ -85,6 +86,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->dateInscription = new DateTime();
+        $this->estVisible = true;
+        $this->estBanni = false;
         $this->personnages = new ArrayCollection();
         $this->animes = new ArrayCollection();
         $this->evenements = new ArrayCollection();
