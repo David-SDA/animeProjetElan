@@ -23,10 +23,15 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('pseudo', TextType::class)
-            ->add('pays', TextType::class)
-            ->add('ville', TextType::class)
+            ->add('pays', TextType::class, [
+                'required' => false,
+            ])
+            ->add('ville', TextType::class, [
+                'required' => false,
+            ])
             ->add('dateNaissance', DateType::class,[
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
