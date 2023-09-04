@@ -23,7 +23,11 @@
     </head>
     <body>
         <nav class="navBarContainer">
-            <div></div>
+            <div>
+                {% if app.user %}
+                    <a href="{{ path('user_change_password') }}">Change password</a>
+                {% endif %}
+            </div>
             <ul class="navBar">
                 <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
                 <li class="navBarElementDropdown">
