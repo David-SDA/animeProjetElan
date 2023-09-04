@@ -42,11 +42,11 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            if($hasher->isPasswordValid($currentUser, $form->getData()['password'])){
+            if($hasher->isPasswordValid($currentUser, $form->get('password')->getData())){
                 $currentUser->setPassword(
                     $hasher->hashPassword(
                         $currentUser,
-                        $form->getData()['plainPassword']
+                        $form->get('plainPassword')->getData()
                     )
                 );
 
