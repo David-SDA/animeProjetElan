@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Form\ChangePasswordFormType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -30,8 +35,38 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    #[Route(path: '/changePassword', name: 'user_change_password')]
-    public function changePassword(): Response{
-        return $this->render('security/changePassword.html.twig');
+    #[Route(path: '/changePassword/{id}', name: 'user_change_password', methods: ['GET', 'POST'])]
+    public function changePassword(User $currentUser, Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
+        $form = $this->createForm(ChangePasswordFormType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            if($hasher->isPasswordValid($currentUser, $form->getData()['password'])){
+                $currentUser->setPassword(
+                    $hasher->hashPassword(
+                        $currentUser,
+                        $form->getData()['plainPassword']
+                    )
+                );
+
+                $entityManagerInterface->persist($currentUser);
+                $entityManagerInterface->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Password has been modified'
+                );
+            }
+            else{
+                $this->addFlash(
+                    'warning',
+                    'Wrong password'
+                );
+            }
+        }
+
+        return $this->render('security/changePassword.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
