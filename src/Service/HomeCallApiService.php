@@ -37,7 +37,7 @@ class HomeCallApiService{
         $query = '
             query($currentSeason: MediaSeason, $currentYear: Int){
                 Page(page: 1, perPage: 6){
-                    media(season: $currentSeason, seasonYear: $currentYear, type: ANIME, sort: SCORE_DESC){
+                    media(season: $currentSeason, seasonYear: $currentYear, type: ANIME, sort: SCORE_DESC, isAdult: false){
                         id
                         title{
                             romaji
@@ -108,7 +108,7 @@ class HomeCallApiService{
         $query = '
             query($nextSeason: MediaSeason, $nextSeasonYear: Int){
                 Page(page: 1, perPage: 6){
-                    media(season: $nextSeason, seasonYear: $nextSeasonYear, type: ANIME, sort: POPULARITY_DESC){
+                    media(season: $nextSeason, seasonYear: $nextSeasonYear, type: ANIME, sort: POPULARITY_DESC, isAdult: false){
                         id
                         title{
                             romaji
@@ -158,7 +158,7 @@ class HomeCallApiService{
         $query = '
             query{
                 Page(page: 1, perPage: 6){
-                    media(type: ANIME, sort: POPULARITY_DESC){
+                    media(type: ANIME, sort: POPULARITY_DESC, isAdult: false){
                         id
                         title{
                             romaji
@@ -201,7 +201,7 @@ class HomeCallApiService{
         $query = '
             query{
                 Page(page: 1, perPage: 10){
-                    media(type: ANIME, sort: SCORE_DESC){
+                    media(type: ANIME, sort: SCORE_DESC, isAdult: false){
                         id
                         title{
                             romaji

@@ -18,7 +18,7 @@ class AnimeCallApiService{
         // Définition de la query
         $query = '
             query($id: Int){
-                Media(id: $id, type: ANIME){
+                Media(id: $id, type: ANIME, isAdult: false){
                     id
                     title{
                         romaji
@@ -121,7 +121,7 @@ class AnimeCallApiService{
         // Définition de la query
         $query = '
             query($id: Int){
-                Media(id: $id, type: ANIME){
+                Media(id: $id, type: ANIME, isAdult: false){
                     id
                     title{
                         romaji
@@ -167,7 +167,7 @@ class AnimeCallApiService{
         // Définition de la query
         $query = '
             query($id: Int){
-                Media(id: $id, type: ANIME){
+                Media(id: $id, type: ANIME, isAdult: false){
                     id
                     title{
                         romaji
@@ -214,7 +214,7 @@ class AnimeCallApiService{
         $query = '
             query{
                 Page(page: 1, perPage: 50){
-                    media(type: ANIME, sort: SCORE_DESC){
+                    media(type: ANIME, sort: SCORE_DESC, isAdult: false){
                         id
                         title{
                             romaji
@@ -275,7 +275,7 @@ class AnimeCallApiService{
         $query = '
             query($currentSeason: MediaSeason, $currentYear: Int, $pageNumber: Int){
                 Page(page: $pageNumber, perPage: 50){
-                    media(type: ANIME, sort: POPULARITY_DESC, season: $currentSeason, seasonYear: $currentYear, isAdult: false){
+                    media(type: ANIME, sort: SCORE_DESC, season: $currentSeason, seasonYear: $currentYear, isAdult: false){
                         id
                         title{
                             romaji
