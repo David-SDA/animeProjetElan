@@ -3,5 +3,44 @@
 {% block title %}{{ user.pseudo }}{% endblock %}
 
 {% block body %}
-    <h1>{{ user.pseudo }}</h1>
+    <main class="animeContainer">
+        <section class="animeTopContainer">
+            <div class="animeTopContent">
+                <div class="animeTopLeftContent">
+                    <figure>
+                        <img src="{{ asset('uploads/' ~ user.imageProfil) }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+                    </figure>
+                </div>
+                <div class="animeTopRightContent">
+                    <h1 class="profilePseudo">{{ user.pseudo }}</h1>
+                    <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
+                </div>
+            </div>
+        </section>
+        <div class="animeRemainingContainer">
+            <div class="profileRemainingContent">
+                <div class="profileInfosLine">
+                    <div class="profileInfos">
+                        <h2 class="profileInfosTitle">Details</h2>
+                        <p class="profileInfo"><span class="profileInfoTitle">Joined : </span>{{ user.dateInscription|date("m/d/Y H:i:s") }} <i>(UTC)</i></p>
+                        <p class="profileInfo"><span class="profileInfoTitle">Date of birth : </span>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : "<i>Not specified</i>" }}</p>
+                        {% if user.pays and user.ville %}
+                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays }}, {{ user.ville }}</p>
+                        {% elseif user.pays and not user.ville or not user.pays and user.ville %}
+                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays ? user.pays : user.ville }}</p>
+                        {% else %}
+                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span><i>Not specified</i></p>
+                        {% endif %}
+                    </div>
+                    <div class="profileInfos">
+                        <p>test</p>
+                    </div>
+                    <div class="profileInfos">
+                        <a href="#" class="profileInfosButton">ANIME LIST</a>
+                        <a href="#" class="profileInfosButton">CALENDAR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}
