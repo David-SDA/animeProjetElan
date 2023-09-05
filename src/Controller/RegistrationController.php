@@ -8,11 +8,13 @@ use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -26,7 +28,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -44,6 +46,29 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            /* On récupère le possible fichier */
+            $profilePicture = $form->get('imageProfil')->getData();
+
+            /* Et on le traite si il y a bien un fichier à upload */
+            if($profilePicture){
+                $originalFileName = pathinfo($profilePicture->getClientOriginalName(), PATHINFO_FILENAME);
+                /* Pour inclure le nom du fichier dans l'url de manière sécurisé */
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFilename = $safeFileName . '-' . uniqid() . '.' . $profilePicture->guessExtension();
+                
+                /* On deplace le fichier vers le dossier uploads */
+                try{
+                    $profilePicture->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e){
+                    error_log($e->getMessage());
+                }
+                /* On stocke le nom du fichier */
+                $user->setImageProfil($newFilename);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
