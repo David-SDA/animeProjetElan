@@ -48,7 +48,7 @@
                         {# <div class="navBarButtons">
                             <a href="{{ path('app_logout') }}" class="navBarButton">LOGOUT</a>
                         </div> #}
-                        <a href="#" class="navBarProfileContainer">
+                        <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
                             <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
                             <img src="{{ asset('uploads/' ~ app.user.imageProfil) }}" alt="Your Profile Picture" class="navBarProfilePicture">
                         </a>
