@@ -11,11 +11,44 @@ a{
     text-decoration: none;
 }
 
-/* Barre de navigation */
-.navBar{
+/* Le contenu complet de la barre de navigation */
+.navBarContainer{
     height: 4em;
     background-color: #48466D;
     color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
+.navBarAdmin{
+    width: 200px;
+    background-color: #D32F2F;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.25em;
+    margin-left: 1em;
+    text-align: center;
+    color: #fff;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.navBarAdmin:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
+.navBarNoAdmin{
+    width: 200px;
+    margin-left: 1em;
+}
+
+/* Barre de navigation */
+.navBar{
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -96,12 +129,53 @@ a{
     border-bottom-right-radius: 10px;
 }
 
+
 /* Les boutons de connexion/inscription */
 .navBarButtons{
-
+    
 }
 
 /* Un bouton de connexion/inscription */
 .navBarButton{
 
+}
+
+/* La partie de profile (partie droite de la barre de navigation) */
+.navBarProfile{
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 1em;
+}
+
+/* Le contenu de la partie en haut à droite de la page pour accéder au profil */
+.navBarProfileContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3em;
+    border-radius: 5px;
+    transition: all 0.25s ease;
+}
+.navBarProfileContainer:hover{
+    background-color: rgba(211, 211, 211, 0.2);
+}
+
+/* Le pseudo de l'utilisateur connecté */
+.navBarProfilePseudo{
+    font-weight: 600;
+    font-size: 1em;
+    font-style: italic;
+    color: #fff;
+    margin-right: 0.5em;
+}
+
+/* L'image de profil de l'utilisateur connecté */
+.navBarProfilePicture{
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
 }
