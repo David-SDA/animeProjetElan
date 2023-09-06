@@ -143,6 +143,7 @@
 /* Les bouton dans les options */
 .profileInfosButton.settings{
     font-weight: 600;
+    margin-bottom: 0;
 }
 .profileInfosButton.settings.large{
     width: 250px;
