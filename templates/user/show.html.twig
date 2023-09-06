@@ -40,7 +40,7 @@
                         <a href="#" class="profileInfosButton">CALENDAR</a>
                     </div>
                 </div>
-                {% if user.personnages == null %}
+                {% if user.animes is not empty %}
                 {# Visuel/responsive à refaire, noms à modifier et gestion de l'appel à l'API #}
                     <div class="profileInfos">
                         <h2 class="profileInfosTitle">Favorites Animes</h2>
@@ -88,6 +88,21 @@
                                     </a>
                                     <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
                                 </figure>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if user.personnages is not empty %}
+                    <div class="profileInfos">
+                        <h2 class="profileInfosTitle">Favorites Characters</h2>
+                        <div class="profileInfoFavoritesCharacters">
+                            {% for i in range(1, 10) %}
+                                <a href="{{ path('show_character', { id: "66173" }) }}">
+                                    <figure class="favoriteCharacter">
+                                        <img src="https://s4.anilist.co/file/anilistcdn/character/medium/b66173-g8eU1LGWPB8O.png" alt="Image of Izumi Miyamura" class="favoriteCharacterImage">
+                                        <figcaption class="homeOneAnimeTitle">Izumi Miyamura</figcaption>
+                                    </figure>
+                                </a>
                             {% endfor %}
                         </div>
                     </div>
