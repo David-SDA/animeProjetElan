@@ -41,6 +41,15 @@
                         <a href="{{ path('change_password_user', { id: user.id }) }}" class="profileInfosButton settings large">CHANGE PASSWORD</a>
                     </div>
                 </div>
+                <div class="settingsOne">
+                    <h2 class="settingsTitle">Email</h2>
+                    <div>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ user.pays ? user.pays : "Not specified" }}</i></p>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ user.ville ? user.ville : "Not specified" }}</i></p>
+                        <a href="#" class="profileInfosButton settings medium">CHANGE INFOS</a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
