@@ -8,11 +8,14 @@
             <div class="animeTopContent">
                 <div class="animeTopLeftContent">
                     <figure>
-                        <img src="{{ asset('uploads/' ~ user.imageProfil) }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+                        <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
                     </figure>
                 </div>
                 <div class="animeTopRightContent">
                     <h1 class="profilePseudo">{{ user.pseudo }}</h1>
+                    {% if app.user == user %}
+                        <a href="{{ path('settings_user', { id: user.id }) }}" style="margin-left: 100%;">SETTINGS</a>
+                    {% endif %}
                     <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
                 </div>
             </div>
@@ -37,7 +40,9 @@
                     </div>
                     <div class="profileInfos">
                         <a href="#" class="profileInfosButton">ANIME LIST</a>
-                        <a href="#" class="profileInfosButton">CALENDAR</a>
+                        {% if app.user == user %}
+                            <a href="#" class="profileInfosButton">CALENDAR</a>
+                        {% endif %}
                     </div>
                 </div>
                 {% if user.animes is empty %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block body %}
+    <main class="animeContainer">
+        <section class="animeTopContainer">
+            <div class="animeTopContent">
+                <div class="animeTopLeftContent">
+                    <figure>
+                        <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+                    </figure>
+                </div>
+                <div class="animeTopRightContent">
+                    <h1 class="profilePseudo">{{ user.pseudo }} <a href="#" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
+                    <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

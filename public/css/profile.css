@@ -127,3 +127,11 @@
     grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
     justify-items: center;
 }
+
+/* Le lien qui sert à changer de pseudo */
+.settingsChangePseudo{
+    color: #00BFFF;
+}
+.settingsChangePseudo:hover{
+    filter: saturate(150%);
+}
