@@ -40,11 +40,11 @@
                         <a href="#" class="profileInfosButton">CALENDAR</a>
                     </div>
                 </div>
-                {% if user.animes is not empty %}
+                {% if user.animes is empty %}
                 {# Visuel/responsive à refaire, noms à modifier et gestion de l'appel à l'API #}
                     <div class="profileInfos">
                         <h2 class="profileInfosTitle">Favorites Animes</h2>
-                        <div class="profileInfoFavoritesAnimes">
+                        <div class="profileInfosFavoritesAnimes">
                             {% for media in dataTopTenAnime.data.Page.media %}
                                 <figure class="homeOneAnime topTen">
                                     <a href="{{ path('show_anime', { 'id' : media.id }) }}">
@@ -92,10 +92,10 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if user.personnages is not empty %}
+                {% if user.personnages is empty %}
                     <div class="profileInfos">
                         <h2 class="profileInfosTitle">Favorites Characters</h2>
-                        <div class="profileInfoFavoritesCharacters">
+                        <div class="profileInfosFavoritesCharacters">
                             {% for i in range(1, 10) %}
                                 <a href="{{ path('show_character', { id: "66173" }) }}">
                                     <figure class="favoriteCharacter">
@@ -103,6 +103,24 @@
                                         <figcaption class="homeOneAnimeTitle">Izumi Miyamura</figcaption>
                                     </figure>
                                 </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if user.discussions is empty %}
+                    <div class="profileInfos">
+                        <h2 class="profileInfosTitle">Talks participated</h2>
+                        <div class="profileInfosTalks">
+                            {% for i in range(1, 7) %}
+                                <section class="animeRemainingRightContentPartCardsContent talk">
+                                    <div class="animeRemainingRightContentPartCardsTextContainer">
+                                        <h2 class="animeRemainingRightContentPartCardsTop">(Spoiler Alert !) Episode 5 Talk</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
+                                    </div>
+                                    <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                        <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
+                                    </div>
+                                </section>
                             {% endfor %}
                         </div>
                     </div>
