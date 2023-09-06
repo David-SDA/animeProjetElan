@@ -46,6 +46,10 @@
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
 }
+.profileInfos.settings{
+    width: 60%;
+    padding: 0 1.5em;
+}
 
 /* Le titre d'une partie des infos de l'utilisateur */
 .profileInfosTitle{
@@ -134,4 +138,68 @@
 }
 .settingsChangePseudo:hover{
     filter: saturate(150%);
+}
+
+/* Les bouton dans les options */
+.profileInfosButton.settings{
+    font-weight: 600;
+}
+.profileInfosButton.settings.large{
+    width: 250px;
+}
+.profileInfosButton.settings.medium{
+    width: 200px;
+}
+
+/* Une partie de paramètre */
+.settingsOne{
+    display: flex;
+    flex-direction: column;
+    margin: 1em 0;
+}
+
+/* Les titres de paramètres */
+.settingsTitle{
+    font-weight: 600;
+    font-size: 1.25em;
+    color: #333333;
+    margin-left: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+/* Paramètre du thème */
+.settingsThemes{
+    display: flex;
+}
+
+/* Un choix de thème */
+.settingsTheme{
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.25em;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.settingsTheme.light{
+    color: #333333;
+    background-color: #fff;
+}
+.settingsTheme.dark{
+    color: #E6EDF3;
+    background-color: #1E1E1E;
+    margin-left: 1em;
+}
+
+/* Un texte classique dans les paramètres */
+.settingsNormalText{
+    color: #333333;
+}
+
+/* Un text semi bold dans les paramètres */
+.settingsSemiBoldText{
+    font-weight: 600;
 }
