@@ -46,6 +46,22 @@
     width: 150px;
     text-align: center;
 }
+.securityFormRow input[type="file"]{
+    cursor: pointer;
+    width: fit-content;
+    height: 46px;
+}
+.securityFormRow input[type="file"]::file-selector-button{
+    width: 150px;
+    height: 44px;
+    border: none;
+    font-weight: 600;
+    font-size: 1em;
+    color: #fff;
+    background-color: #00BFFF;
+    border-radius: 20px;
+    cursor: pointer;
+}
 
 /* Une ligne qui contient les terms of use */
 .securityFormRowTerms{
