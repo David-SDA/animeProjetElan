@@ -167,7 +167,7 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`,
 	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 0),
 	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 0),
 	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, NULL, NULL, NULL, 1, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 0),
-	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-000-64f6dbbb70bfc.jpg', '2023-09-05', '', '', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!', 1, '[]', '$2y$13$3A0SnhMYPj02KRAx/1K6WOADod/HU63U4rjy1EKcVCCAdWU8IHFJO', 1, 0),
+	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-000-64f6dbbb70bfc.jpg', '2023-09-05', '', '', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!', 1, '[]', '$2y$13$RdEM1uRe3srjRnCbglT3ouI02V9pppgQtbu8mMMhz68AJnnZydZYu', 1, 0),
 	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 'France', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0);
 
 -- Listage de la structure de table animeprojetelan. user_anime
