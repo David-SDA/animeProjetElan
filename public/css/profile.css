@@ -31,6 +31,8 @@
 .profileInfosLine{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
 }
 
 /* La partie des infos de l'utilisateur */
@@ -40,6 +42,7 @@
     height: fit-content;
     background-color: #fff;
     border-radius: 10px;
+    margin-bottom: 1em;
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
 }
@@ -65,6 +68,7 @@
     font-weight: 500;
 }
 
+/* Un bouton de la page de profil */
 .profileInfosButton{
     display: flex;
     justify-content: center;
@@ -85,4 +89,12 @@
 .profileInfosButton:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
+}
+
+/* La partie des animes favoris d'un utilisateur */
+.profileInfoFavoritesAnimes{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 0px 20px;
+    justify-items: center;
 }
