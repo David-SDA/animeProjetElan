@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangeDescriptionFormType;
 use App\Form\ChangeUsernameFormType;
-use App\Service\HomeCallApiService;
 use App\Form\ChangePasswordFormType;
+use App\Service\HomeCallApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,6 +143,59 @@ class UserController extends AbstractController
 
         /* On affiche la page de changement d'un pseudo avec son formulaire */
         return $this->render('user/changeUsername.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /* Changement de la description de l'utilisateur connecté */
+    #[Route(path: 'user/{id}/settings/changeDescription', name: 'change_description_user')]
+    public function changeDescription(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement de description */
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeDescriptionFormType::class, null, [
+            'currentDescription' => $user->getDescription(),
+        ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère la description du formulaire */
+            $newDescription = $form->get('description')->getData();
+
+            /* On vérifie si la desciption indiqué est le même ou pas que celui actuelle */
+            if($newDescription === $user->getDescription()){
+                $this->addFlash(
+                    'error',
+                    'The new description cannot be the same as the current one'
+                );
+            }
+            else{
+                /* On change la description actuel par la nouvelle */
+                $user->setDescription($newDescription);
+
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($user);
+                $entityManagerInterface->flush();
+        
+                /* On crée un message de succès */
+                $this->addFlash(
+                    'success',
+                    'Description has been modified successfully'
+                );
+            }
+
+        }
+
+        /* On affiche la page de changement de la description avec son formulaire */
+        return $this->render('user/changeDescription.html.twig', [
             'form' => $form->createView(),
         ]);
     }

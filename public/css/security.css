@@ -62,6 +62,14 @@
     border-radius: 20px;
     cursor: pointer;
 }
+.securityFormRow textarea{
+    resize: vertical;
+    min-height: 100px;
+    max-height: 500px;
+    border-radius: 10px;
+    border: 1px solid #B4B4B4;
+    padding: 10px;
+}
 
 /* Une ligne qui contient les terms of use */
 .securityFormRowTerms{

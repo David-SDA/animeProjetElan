@@ -15,7 +15,7 @@
                 <div class="animeTopRightContent">
                     <h1 class="profilePseudo">{{ user.pseudo }} <a href="{{ path('change_username_user', { id: user.id }) }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
                     <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
-                    <a href="#" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
+                    <a href="{{ path('change_description_user', { id: user.id }) }}" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
                 </div>
             </div>
         </section>

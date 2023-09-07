@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Change your description{% endblock %}
+
+{% block body %}
+    <main>
+        {# Affichage des messages flash en fonction de comment se passe le traitement du formulaire #}
+        {% for messages in app.flashes %}
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+        
+        {# Affichage du formulaire de changement de description #}
+        <div class="securityFormContainer">
+            {{ form_start(form) }}
+                <h1 class="securityFormTitle">Change your description</h1>
+                <div class="securityFormRow">
+                    {{ form_label(form.description, 'Description') }}
+                    {{ form_widget(form.description) }}
+                </div>
+                <button type="submit" class="securityFormSubmitButton large">Change Description</button>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
