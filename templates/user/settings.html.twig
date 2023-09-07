@@ -4,6 +4,14 @@
 
 {% block body %}
     <main class="animeContainer">
+        {# Affichage des messages flash en fonction de comment se passe le traitement des formulaires #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <p>
+                    {{ label }} {{ message }}
+                </p>
+            {% endfor %}
+        {% endfor %}
         <section class="animeTopContainer">
             <div class="animeTopContent">
                 <div class="animeTopLeftContent">

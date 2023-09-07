@@ -68,6 +68,7 @@ class UserController extends AbstractController
                     'success',
                     'Password has been modified successfully'
                 );
+                return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
             }
             else{
                 $this->addFlash(
@@ -136,6 +137,8 @@ class UserController extends AbstractController
                         'success',
                         'Username has been modified successfully'
                     );
+
+                    return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
                 }
             }
 
@@ -190,6 +193,8 @@ class UserController extends AbstractController
                     'success',
                     'Description has been modified successfully'
                 );
+                
+                return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
             }
 
         }

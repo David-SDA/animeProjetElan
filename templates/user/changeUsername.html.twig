@@ -7,12 +7,11 @@
         {# Affichage des messages flash en fonction de comment se passe le traitement du formulaire #}
         {% for messages in app.flashes %}
             {% for message in messages %}
-                <div>
+                <p>
                     {{ message }}
-                </div>
+                </p>
             {% endfor %}
         {% endfor %}
-        
         
         {# Affichage du formulaire de changement de pseudo #}
         <div class="securityFormContainer">
