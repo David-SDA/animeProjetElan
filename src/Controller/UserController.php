@@ -104,18 +104,40 @@ class UserController extends AbstractController
             /* On récupère le pseudo du formulaire */
             $newUsername = $form->get('pseudo')->getData();
 
-            /* On change le pseudo actuel par le nouveau pseudo */
-            $user->setPseudo($newUsername);
+            /* On vérifie si le pseudo indiqué est le même ou pas que celui actuelle */
+            if($newUsername === $user->getPseudo()){
+                $this->addFlash(
+                    'error',
+                    'The new username cannot be the same as the current one'
+                );
+            }
+            else{
+                /* On chercher l'existance du pseudo indiqué */
+                $existingUser = $entityManagerInterface->getRepository(User::class)->findOneBy(['pseudo' => $newUsername]);
 
-            /* On sauvegarde ces changements dans la base de données */
-            $entityManagerInterface->persist($user);
-            $entityManagerInterface->flush();
+                /* On vérifie que le pseudo existe ou pas */
+                if($existingUser){
+                    $this->addFlash(
+                        'error',
+                        'Username already exists. Please choose a different one'
+                    );
+                }
+                else{
+                    /* On change le pseudo actuel par le nouveau pseudo */
+                    $user->setPseudo($newUsername);
+        
+                    /* On sauvegarde ces changements dans la base de données */
+                    $entityManagerInterface->persist($user);
+                    $entityManagerInterface->flush();
+        
+                    /* On crée un message de succès */
+                    $this->addFlash(
+                        'success',
+                        'Username has been modified successfully'
+                    );
+                }
+            }
 
-            /* On crée un message de succès */
-            $this->addFlash(
-                'success',
-                'Username has been modified successfully'
-            );
         }
 
         /* On affiche la page de changement d'un pseudo avec son formulaire */
