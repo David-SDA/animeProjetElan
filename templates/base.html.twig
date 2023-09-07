@@ -51,7 +51,7 @@
                         </div> #}
                         <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
                             <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
-                            <img src="{{ asset('uploads/' ~ app.user.imageProfil) }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                            <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
                         </a>
                     {% else %}
                         <div class="navBarButtons">
