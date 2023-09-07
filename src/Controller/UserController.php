@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangeInfosFormType;
 use App\Service\HomeCallApiService;
 use App\Form\ChangePasswordFormType;
 use App\Form\ChangeUsernameFormType;
@@ -176,7 +177,7 @@ class UserController extends AbstractController
             /* On récupère la description du formulaire */
             $newDescription = $form->get('description')->getData();
 
-            /* On vérifie si la desciption indiqué est le même ou pas que celui actuelle */
+            /* On vérifie si la description indiqué est le même ou pas que celui actuelle */
             if($newDescription === $user->getDescription()){
                 $this->addFlash(
                     'error',
@@ -277,6 +278,80 @@ class UserController extends AbstractController
 
         /* On affiche la page de changement de l'image de profil avec son formulaire */
         return $this->render('user/changeProfilePicture.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /* Changement des infos de l'utilisateur connecté */
+    #[Route(path: 'user/{id}/settings/changeInfos', name: 'change_infos_user')]
+    public function changeInfos(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement des infos */
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeInfosFormType::class, null, [
+            'currentDateOfBirth' => $user->getDateNaissance(),
+            'currentCountry' => $user->getPays(),
+            'currentCity' => $user->getVille(),
+        ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère les différentes données du formulaire */
+            $newDateOfBirth = $form->get('dateNaissance')->getData();
+            $newCountry = $form->get('pays')->getData();
+            $newCity = $form->get('ville')->getData();
+
+            /* On vérifie si les infos indiquées sont tous les même ou pas que ceux actuellement */
+            if($newDateOfBirth === $user->getDateNaissance() && $newCountry === $user->getPays() && $newCity === $user->getVille()){
+                $this->addFlash(
+                    'error',
+                    'All infos cannot be the same as the current ones'
+                );
+            }
+            else{
+                /* Si on a une date de naissance différente qu'actuellement */
+                if($newDateOfBirth !== $user->getDateNaissance()){
+                    /* On change la date de naissance actuelle par la nouvelle */
+                    $user->setDateNaissance($newDateOfBirth);
+                }
+
+                /* Si on a un pays différent qu'actuellement */
+                if($newCountry !== $user->getPays()){
+                    /* On change le pays actuel par le nouveau */
+                    $user->setPays($newCountry);
+                }
+
+                /* Si on a une ville différente qu'actuellement */
+                if($newCity !== $user->getVille()){
+                    /* On change la ville actuelle par la nouvelle */
+                    $user->setVille($newCity);
+                }
+
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($user);
+                $entityManagerInterface->flush();
+        
+                /* On crée un message de succès */
+                $this->addFlash(
+                    'success',
+                    'Infos have been modified successfully'
+                );
+
+                return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
+            }
+
+        }
+
+        /* On affiche la page de changement des infos avec son formulaire */
+        return $this->render('user/changeInfos.html.twig', [
             'form' => $form->createView(),
         ]);
     }
