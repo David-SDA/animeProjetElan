@@ -102,6 +102,9 @@
     transform: translateY(-2px);
     filter: saturate(150%);
 }
+.securityFormSubmitButton.large{
+    width: 200px;
+}
 
 /* Texte de lien en dessous du bouton de submit */
 .securityFormLinkEnd{
