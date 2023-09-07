@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
 use App\Service\HomeCallApiService;
 use App\Form\ChangePasswordFormType;
@@ -347,11 +348,32 @@ class UserController extends AbstractController
 
                 return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
             }
-
         }
 
         /* On affiche la page de changement des infos avec son formulaire */
         return $this->render('user/changeInfos.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /* Changement de l'email de l'utilisateur connecté */
+    #[Route(path: 'user/{id}/settings/changeEmail', name: 'change_email_user')]
+    public function changeEmail(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement d'email */
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeEmailFormType::class, null, [
+            'currentEmail' => $user->getEmail(),
+        ]);
+
+        /* On affiche la page de changement d'email avec son formulaire */
+        return $this->render('user/changeEmail.html.twig', [
             'form' => $form->createView(),
         ]);
     }

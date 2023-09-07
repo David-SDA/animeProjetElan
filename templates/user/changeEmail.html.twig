@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Change your Email{% endblock %}
+
+{% block body %}
+    <main>
+        {# Affichage des messages flash en fonction de comment se passe le traitement du formulaire #}
+        {% for messages in app.flashes %}
+            {% for message in messages %}
+                <p>
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endfor %}
+        
+        {# Affichage du formulaire de changement d'email #}
+        <div class="securityFormContainer">
+            {{ form_start(form) }}
+                <h1 class="securityFormTitle">Change your Email</h1>
+                <div class="securityFormRow">
+                    {{ form_label(form.email, 'Email') }}
+                    {{ form_widget(form.email) }}
+                </div>
+                <button type="submit" class="securityFormSubmitButton large">Change Email</button>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
