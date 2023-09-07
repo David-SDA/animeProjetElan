@@ -65,7 +65,7 @@ class UserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Password has been modified'
+                    'Password has been modified successfully'
                 );
             }
             else{
@@ -81,16 +81,44 @@ class UserController extends AbstractController
         ]);
     }
 
+    /* Changement du pseudo de l'utilisateur connecté */
     #[Route(path: 'user/{id}/settings/changeUsername', name: 'change_username_user')]
     public function changeUsername(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
+
+        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement de pseudo */
         if($currentUser !== $user){
             throw new AccessDeniedException();
         }
+
+        /* Création du formulaire */
         $form = $this->createForm(ChangeUsernameFormType::class, null, [
             'currentUsername' => $user->getPseudo(),
         ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
 
+        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère le pseudo du formulaire */
+            $newUsername = $form->get('pseudo')->getData();
+
+            /* On change le pseudo actuel par le nouveau pseudo */
+            $user->setPseudo($newUsername);
+
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+
+            /* On crée un message de succès */
+            $this->addFlash(
+                'success',
+                'Username has been modified successfully'
+            );
+        }
+
+        /* On affiche la page de changement d'un pseudo avec son formulaire */
         return $this->render('user/changeUsername.html.twig', [
             'form' => $form->createView(),
         ]);
