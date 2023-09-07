@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangeUsernameFormType;
 use App\Service\HomeCallApiService;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,8 +43,11 @@ class UserController extends AbstractController
     }
 
     #[Route(path: 'user/{id}/settings/changePassword', name: 'change_password_user')]
-    public function changePassword(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
+    public function changePassword(Request $request, User $user, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
         $currentUser = $this->getUser();
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
 
@@ -73,6 +77,21 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/changePassword.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: 'user/{id}/settings/changeUsername', name: 'change_username_user')]
+    public function changeUsername(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+        $currentUser = $this->getUser();
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
+        $form = $this->createForm(ChangeUsernameFormType::class, null, [
+            'currentUsername' => $user->getPseudo(),
+        ]);
+
+        return $this->render('user/changeUsername.html.twig', [
             'form' => $form->createView(),
         ]);
     }
