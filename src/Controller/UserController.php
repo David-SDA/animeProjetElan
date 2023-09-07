@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangeDescriptionFormType;
-use App\Form\ChangeUsernameFormType;
-use App\Form\ChangePasswordFormType;
 use App\Service\HomeCallApiService;
+use App\Form\ChangePasswordFormType;
+use App\Form\ChangeUsernameFormType;
+use App\Form\ChangeDescriptionFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\ChangeProfilePictureFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -193,7 +196,7 @@ class UserController extends AbstractController
                     'success',
                     'Description has been modified successfully'
                 );
-                
+
                 return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
             }
 
@@ -201,6 +204,79 @@ class UserController extends AbstractController
 
         /* On affiche la page de changement de la description avec son formulaire */
         return $this->render('user/changeDescription.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /* Changement de l'image de profil de l'utilisateur connecté */
+    #[Route(path: 'user/{id}/settings/changeProfilePicture', name: 'change_profile_picture_user')]
+    public function changeProfilePicture(Request $request, User $user, EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement d'image de profil */
+        if($currentUser !== $user){
+            throw new AccessDeniedException();
+        }
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeProfilePictureFormType::class);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère l'image de profil actuelle */
+            $currentProfilePicture = $user->getImageProfil();
+
+            /* On supprime l'image actuel dans le stockage local */
+            if($currentProfilePicture){
+                unlink($this->getParameter('uploads_directory') . "/" . $currentProfilePicture);
+            }
+
+            /* On récupère le possible fichier */
+            $submittedProfilePicture = $form->get('imageProfil')->getData();
+
+            /* Et on le traite si il y a bien un fichier à upload */
+            if($submittedProfilePicture){
+                /* On récupère le chemein de fichier */
+                $originalFileName = pathinfo($submittedProfilePicture->getClientOriginalName(), PATHINFO_FILENAME);
+                /* Pour inclure le nom du fichier dans l'url de manière sécurisé */
+                $safeFileName = $slugger->slug($originalFileName);
+                /* On crée un nom unique de fichier */
+                $newFilename = $safeFileName . '-' . uniqid() . '.' . $submittedProfilePicture->guessExtension();
+
+                /* On deplace le fichier vers le dossier uploads */
+                try{
+                    $submittedProfilePicture->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e){
+                    error_log($e->getMessage());
+                }
+                /* On stocke le nom du fichier */
+                $user->setImageProfil($newFilename);
+            }
+            else{
+                /* On ne met pas d'image */
+                $user->setImageProfil(null);
+            }
+
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+
+            /* On crée un message de succès */
+            $this->addFlash(
+                'success',
+                'Profile Picture has been modified successfully'
+            );
+
+            return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
+        }
+
+        /* On affiche la page de changement de l'image de profil avec son formulaire */
+        return $this->render('user/changeProfilePicture.html.twig', [
             'form' => $form->createView(),
         ]);
     }
