@@ -170,6 +170,79 @@ class UserController extends AbstractController
         ]);
     }
 
+    /* Changement de l'image de profil de l'utilisateur connecté */
+    #[Route(path: 'user/settings/changeProfilePicture', name: 'change_profile_picture_user')]
+    public function changeProfilePicture(Request $request, EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement d'image de profil */
+        if(!$currentUser){
+            return $this->redirectToRoute('app_home');
+        }
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeProfilePictureFormType::class);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère l'image de profil actuelle */
+            $currentProfilePicture = $currentUser->getImageProfil();
+
+            /* On supprime l'image actuel dans le stockage local */
+            if($currentProfilePicture){
+                unlink($this->getParameter('uploads_directory') . "/" . $currentProfilePicture);
+            }
+
+            /* On récupère le possible fichier */
+            $submittedProfilePicture = $form->get('imageProfil')->getData();
+
+            /* Et on le traite si il y a bien un fichier à upload */
+            if($submittedProfilePicture){
+                /* On récupère le chemin de fichier */
+                $originalFileName = pathinfo($submittedProfilePicture->getClientOriginalName(), PATHINFO_FILENAME);
+                /* Pour inclure le nom du fichier dans l'url de manière sécurisé */
+                $safeFileName = $slugger->slug($originalFileName);
+                /* On crée un nom unique de fichier */
+                $newFilename = $safeFileName . '-' . uniqid() . '.' . $submittedProfilePicture->guessExtension();
+
+                /* On deplace le fichier vers le dossier uploads */
+                try{
+                    $submittedProfilePicture->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e){
+                    error_log($e->getMessage());
+                }
+                /* On stocke le nom du fichier */
+                $currentUser->setImageProfil($newFilename);
+            }
+            else{
+                /* On ne met pas d'image */
+                $currentUser->setImageProfil(null);
+            }
+
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($currentUser);
+            $entityManagerInterface->flush();
+
+            /* On crée un message de succès */
+            $this->addFlash(
+                'success',
+                'Profile Picture has been modified successfully'
+            );
+
+            return $this->redirectToRoute('settings_user');
+        }
+
+        /* On affiche la page de changement de l'image de profil avec son formulaire */
+        return $this->render('user/changeProfilePicture.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/user/{id}', name: 'show_user')]
     public function show(User $user, HomeCallApiService $homeCallApiService): Response{
         return $this->render('user/show.html.twig',  [
@@ -203,7 +276,7 @@ class UserController extends AbstractController
                     'success',
                     'Password has been modified successfully'
                 );
-                return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
+                return $this->redirectToRoute('app_logout');
             }
             else{
                 $this->addFlash(
@@ -214,79 +287,6 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/changePassword.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /* Changement de l'image de profil de l'utilisateur connecté */
-    #[Route(path: 'user/{id}/settings/changeProfilePicture', name: 'change_profile_picture_user')]
-    public function changeProfilePicture(Request $request, User $user, EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response{
-        /* On recupère l'utilisateur actuel */
-        $currentUser = $this->getUser();
-
-        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement d'image de profil */
-        if($currentUser !== $user){
-            throw new AccessDeniedException();
-        }
-        /* Création du formulaire */
-        $form = $this->createForm(ChangeProfilePictureFormType::class);
-        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
-        $form->handleRequest($request);
-
-        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
-        if($form->isSubmitted() && $form->isValid()){
-            /* On récupère l'image de profil actuelle */
-            $currentProfilePicture = $user->getImageProfil();
-
-            /* On supprime l'image actuel dans le stockage local */
-            if($currentProfilePicture){
-                unlink($this->getParameter('uploads_directory') . "/" . $currentProfilePicture);
-            }
-
-            /* On récupère le possible fichier */
-            $submittedProfilePicture = $form->get('imageProfil')->getData();
-
-            /* Et on le traite si il y a bien un fichier à upload */
-            if($submittedProfilePicture){
-                /* On récupère le chemein de fichier */
-                $originalFileName = pathinfo($submittedProfilePicture->getClientOriginalName(), PATHINFO_FILENAME);
-                /* Pour inclure le nom du fichier dans l'url de manière sécurisé */
-                $safeFileName = $slugger->slug($originalFileName);
-                /* On crée un nom unique de fichier */
-                $newFilename = $safeFileName . '-' . uniqid() . '.' . $submittedProfilePicture->guessExtension();
-
-                /* On deplace le fichier vers le dossier uploads */
-                try{
-                    $submittedProfilePicture->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                }catch(FileException $e){
-                    error_log($e->getMessage());
-                }
-                /* On stocke le nom du fichier */
-                $user->setImageProfil($newFilename);
-            }
-            else{
-                /* On ne met pas d'image */
-                $user->setImageProfil(null);
-            }
-
-            /* On sauvegarde ces changements dans la base de données */
-            $entityManagerInterface->persist($user);
-            $entityManagerInterface->flush();
-
-            /* On crée un message de succès */
-            $this->addFlash(
-                'success',
-                'Profile Picture has been modified successfully'
-            );
-
-            return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
-        }
-
-        /* On affiche la page de changement de l'image de profil avec son formulaire */
-        return $this->render('user/changeProfilePicture.html.twig', [
             'form' => $form->createView(),
         ]);
     }

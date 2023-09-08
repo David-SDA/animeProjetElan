@@ -18,7 +18,7 @@
                     <figure>
                         <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.pseudo }}" class="profileImage">
                     </figure>
-                    <a href="{{ path('change_profile_picture_user', { id: app.user.id }) }}" class="profileInfosButton settings medium">CHANGE PICTURE</a>
+                    <a href="{{ path('change_profile_picture_user') }}" class="profileInfosButton settings medium">CHANGE PICTURE</a>
                 </div>
                 <div class="animeTopRightContent">
                     <h1 class="profilePseudo">{{ app.user.pseudo }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
