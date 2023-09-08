@@ -39,6 +39,15 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('user/settings', name: 'settings_user')]
+    public function settings(): Response{
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('user/settings.html.twig');
+    }
+
     #[Route('/user/{id}', name: 'show_user')]
     public function show(User $user, HomeCallApiService $homeCallApiService): Response{
         return $this->render('user/show.html.twig',  [
@@ -46,16 +55,7 @@ class UserController extends AbstractController
             'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
         ]);
     }
-
-    #[Route('user/{id}/settings', name: 'settings_user')]
-    public function settings(User $user): Response{
-        if($this->getUser() !== $user){
-            throw new AccessDeniedException();
-        }
-        return $this->render('user/settings.html.twig', [
-            'user' => $user,
-        ]);
-    }
+    
 
     #[Route(path: 'user/{id}/settings/changePassword', name: 'change_password_user')]
     public function changePassword(Request $request, User $user, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{

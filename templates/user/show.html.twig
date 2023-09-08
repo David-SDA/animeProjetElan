@@ -14,7 +14,7 @@
                 <div class="animeTopRightContent">
                     <h1 class="profilePseudo">{{ user.pseudo }}</h1>
                     {% if app.user == user %}
-                        <a href="{{ path('settings_user', { id: user.id }) }}" style="margin-left: 100%;">SETTINGS</a>
+                        <a href="{{ path('settings_user') }}" style="margin-left: 100%;">SETTINGS</a>
                     {% endif %}
                     <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
                 </div>

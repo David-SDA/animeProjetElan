@@ -16,14 +16,14 @@
             <div class="animeTopContent">
                 <div class="animeTopLeftContent">
                     <figure>
-                        <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+                        <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.pseudo }}" class="profileImage">
                     </figure>
-                    <a href="{{ path('change_profile_picture_user', { id: user.id }) }}" class="profileInfosButton settings medium">CHANGE PICTURE</a>
+                    <a href="{{ path('change_profile_picture_user', { id: app.user.id }) }}" class="profileInfosButton settings medium">CHANGE PICTURE</a>
                 </div>
                 <div class="animeTopRightContent">
-                    <h1 class="profilePseudo">{{ user.pseudo }} <a href="{{ path('change_username_user', { id: user.id }) }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
-                    <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
-                    <a href="{{ path('change_description_user', { id: user.id }) }}" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
+                    <h1 class="profilePseudo">{{ app.user.pseudo }} <a href="{{ path('change_username_user', { id: app.user.id }) }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
+                    <p class="profileDescription">{{ app.user.description ? app.user.description : "<i>No description yet ...</i>" }}</p>
+                    <a href="{{ path('change_description_user', { id: app.user.id }) }}" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
                 </div>
             </div>
         </section>
@@ -39,23 +39,23 @@
                 <div class="settingsOne">
                     <h2 class="settingsTitle">Email</h2>
                     <div>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Email : </span><i>{{ user.email }}</i></p>
-                        <a href="{{ path('change_email_user', { id: user.id }) }}" class="profileInfosButton settings medium">CHANGE EMAIL</a>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Email : </span><i>{{ app.user.email }}</i></p>
+                        <a href="{{ path('change_email_user', { id: app.user.id }) }}" class="profileInfosButton settings medium">CHANGE EMAIL</a>
                     </div>
                 </div>
                 <div class="settingsOne">
                     <h2 class="settingsTitle">Password</h2>
                     <div>
-                        <a href="{{ path('change_password_user', { id: user.id }) }}" class="profileInfosButton settings large">CHANGE PASSWORD</a>
+                        <a href="{{ path('change_password_user', { id: app.user.id }) }}" class="profileInfosButton settings large">CHANGE PASSWORD</a>
                     </div>
                 </div>
                 <div class="settingsOne">
                     <h2 class="settingsTitle">Infos</h2>
                     <div>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ user.pays ? user.pays : "Not specified" }}</i></p>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ user.ville ? user.ville : "Not specified" }}</i></p>
-                        <a href="{{ path('change_infos_user', { id: user.id }) }}" class="profileInfosButton settings medium">CHANGE INFOS</a>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ app.user.dateNaissance ? app.user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ app.user.pays ? app.user.pays : "Not specified" }}</i></p>
+                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ app.user.ville ? app.user.ville : "Not specified" }}</i></p>
+                        <a href="{{ path('change_infos_user', { id: app.user.id }) }}" class="profileInfosButton settings medium">CHANGE INFOS</a>
                     </div>
                 </div>
                 <div class="settingsOne">
