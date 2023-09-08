@@ -372,30 +372,22 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, HomeCallApiService $homeCallApiService): Response{
-        return $this->render('user/show.html.twig',  [
-            'user' => $user,
-            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
-        ]);
-    }
-
-    /* Changement des infos de l'utilisateur connecté */
-    #[Route(path: 'user/{id}/settings/changeInfos', name: 'change_infos_user')]
-    public function changeInfos(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
+/* Changement des infos de l'utilisateur connecté */
+    #[Route(path: 'user/settings/changeInfos', name: 'change_infos_user')]
+    public function changeInfos(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
 
-        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement des infos */
-        if($currentUser !== $user){
-            throw new AccessDeniedException();
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement des infos */
+        if(!$currentUser){
+            return $this->redirectToRoute('app_home');
         }
 
         /* Création du formulaire */
         $form = $this->createForm(ChangeInfosFormType::class, null, [
-            'currentDateOfBirth' => $user->getDateNaissance(),
-            'currentCountry' => $user->getPays(),
-            'currentCity' => $user->getVille(),
+            'currentDateOfBirth' => $currentUser->getDateNaissance(),
+            'currentCountry' => $currentUser->getPays(),
+            'currentCity' => $currentUser->getVille(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
@@ -407,8 +399,8 @@ class UserController extends AbstractController
             $newCountry = $form->get('pays')->getData();
             $newCity = $form->get('ville')->getData();
 
-            /* On vérifie si les infos indiquées sont tous les même ou pas que ceux actuellement */
-            if($newDateOfBirth === $user->getDateNaissance() && $newCountry === $user->getPays() && $newCity === $user->getVille()){
+            /* On vérifie si les infos indiquées sont tous les même ou pas que ceux actuelles */
+            if($newDateOfBirth === $currentUser->getDateNaissance() && $newCountry === $currentUser->getPays() && $newCity === $currentUser->getVille()){
                 $this->addFlash(
                     'error',
                     'All infos cannot be the same as the current ones'
@@ -416,25 +408,25 @@ class UserController extends AbstractController
             }
             else{
                 /* Si on a une date de naissance différente qu'actuellement */
-                if($newDateOfBirth !== $user->getDateNaissance()){
+                if($newDateOfBirth !== $currentUser->getDateNaissance()){
                     /* On change la date de naissance actuelle par la nouvelle */
-                    $user->setDateNaissance($newDateOfBirth);
+                    $currentUser->setDateNaissance($newDateOfBirth);
                 }
 
                 /* Si on a un pays différent qu'actuellement */
-                if($newCountry !== $user->getPays()){
+                if($newCountry !== $currentUser->getPays()){
                     /* On change le pays actuel par le nouveau */
-                    $user->setPays($newCountry);
+                    $currentUser->setPays($newCountry);
                 }
 
                 /* Si on a une ville différente qu'actuellement */
-                if($newCity !== $user->getVille()){
+                if($newCity !== $currentUser->getVille()){
                     /* On change la ville actuelle par la nouvelle */
-                    $user->setVille($newCity);
+                    $currentUser->setVille($newCity);
                 }
 
                 /* On sauvegarde ces changements dans la base de données */
-                $entityManagerInterface->persist($user);
+                $entityManagerInterface->persist($currentUser);
                 $entityManagerInterface->flush();
         
                 /* On crée un message de succès */
@@ -443,13 +435,21 @@ class UserController extends AbstractController
                     'Infos have been modified successfully'
                 );
 
-                return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
+                return $this->redirectToRoute('settings_user');
             }
         }
 
         /* On affiche la page de changement des infos avec son formulaire */
         return $this->render('user/changeInfos.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(User $user, HomeCallApiService $homeCallApiService): Response{
+        return $this->render('user/show.html.twig',  [
+            'user' => $user,
+            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
         ]);
     }
 }

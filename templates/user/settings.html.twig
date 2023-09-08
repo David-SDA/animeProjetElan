@@ -55,7 +55,7 @@
                         <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ app.user.dateNaissance ? app.user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
                         <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ app.user.pays ? app.user.pays : "Not specified" }}</i></p>
                         <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ app.user.ville ? app.user.ville : "Not specified" }}</i></p>
-                        <a href="{{ path('change_infos_user', { id: app.user.id }) }}" class="profileInfosButton settings medium">CHANGE INFOS</a>
+                        <a href="{{ path('change_infos_user') }}" class="profileInfosButton settings medium">CHANGE INFOS</a>
                     </div>
                 </div>
                 <div class="settingsOne">
