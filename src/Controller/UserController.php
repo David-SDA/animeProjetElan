@@ -318,35 +318,40 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, HomeCallApiService $homeCallApiService): Response{
-        return $this->render('user/show.html.twig',  [
-            'user' => $user,
-            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
-        ]);
-    }
-    
-    #[Route(path: 'user/{id}/settings/changePassword', name: 'change_password_user')]
-    public function changePassword(Request $request, User $user, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
+    #[Route(path: 'user/settings/changePassword', name: 'change_password_user')]
+    public function changePassword(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
+        /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
-        if($currentUser !== $user){
-            throw new AccessDeniedException();
+        
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement de mot de passe */
+        if(!$currentUser){
+            return $this->redirectToRoute('app_home');
         }
+
+        /* Création du formulaire */
         $form = $this->createForm(ChangePasswordFormType::class);
+
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
+            /* Si le mot de passe actuel est bien celui indiqué dans le formulaire, on peut commencer la modification du mot de passe */
             if($hasher->isPasswordValid($currentUser, $form->get('password')->getData())){
+                /* On change le mot de passe actuel par le nouveau mot de passe */
                 $currentUser->setPassword(
+                    /* On hash le mot de passe */
                     $hasher->hashPassword(
                         $currentUser,
                         $form->get('plainPassword')->getData()
                     )
                 );
 
+                /* On sauvegarde ces changements dans la base de données */
                 $entityManagerInterface->persist($currentUser);
                 $entityManagerInterface->flush();
 
+                /* On crée un message de succès */
                 $this->addFlash(
                     'success',
                     'Password has been modified successfully'
@@ -354,6 +359,7 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('app_logout');
             }
             else{
+                /* On crée un message d'echec */
                 $this->addFlash(
                     'warning',
                     'Wrong password'
@@ -363,6 +369,14 @@ class UserController extends AbstractController
 
         return $this->render('user/changePassword.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(User $user, HomeCallApiService $homeCallApiService): Response{
+        return $this->render('user/show.html.twig',  [
+            'user' => $user,
+            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
         ]);
     }
 
