@@ -243,6 +243,81 @@ class UserController extends AbstractController
         ]);
     }
 
+    /* Changement de l'email de l'utilisateur connecté */
+    #[Route(path: 'user/settings/changeEmail', name: 'change_email_user')]
+    public function changeEmail(Request $request, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement d'email */
+        if(!$currentUser){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeEmailFormType::class, null, [
+            'currentEmail' => $currentUser->getEmail(),
+        ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère l'email du formulaire */
+            $newEmail = $form->get('newEmail')->getData();
+
+            /* On vérifie si l'email indiqué est le même ou pas que celui actuel */
+            if($newEmail === $currentUser->getEmail()){
+                $this->addFlash(
+                    'error',
+                    'The new email cannot be the same as the current one'
+                );
+            }
+            else{
+                /* On chercher l'existance de l'email indiqué */
+                $existingEmail = $entityManagerInterface->getRepository(User::class)->findOneBy(['email' => $newEmail]);
+
+                /* On vérifie que l'email existe ou pas */
+                if($existingEmail){
+                    $this->addFlash(
+                        'error',
+                        'Email already exists. Please choose a different one'
+                    );
+                }
+                else{
+                    /* On change l'email actuel par le nouvel email et l'utilisateur n'est plus vérifié */
+                    $currentUser->setEmail($newEmail);
+                    $currentUser->setIsVerified(false);
+        
+                    /* On sauvegarde ces changements dans la base de données */
+                    $entityManagerInterface->persist($currentUser);
+                    $entityManagerInterface->flush();
+        
+                    /* On crée un message de succès */
+                    $this->addFlash(
+                        'success',
+                        'Email has been modified successfully, please confirm that email'
+                    );
+
+                    $this->emailVerifier->sendEmailConfirmation('app_verify_email', $currentUser,
+                        (new TemplatedEmail())
+                            ->from(new Address('admin@AnimeProjetElan.com', 'Admin Anime Projet Elan'))
+                            ->to($currentUser->getEmail())
+                            ->subject('Please Confirm your New Email')
+                            ->htmlTemplate('registration/confirmation_email.html.twig')
+                    );
+
+                    return $this->redirectToRoute('app_logout');
+                }
+            }
+        }
+
+        /* On affiche la page de changement d'email avec son formulaire */
+        return $this->render('user/changeEmail.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/user/{id}', name: 'show_user')]
     public function show(User $user, HomeCallApiService $homeCallApiService): Response{
         return $this->render('user/show.html.twig',  [
@@ -360,81 +435,6 @@ class UserController extends AbstractController
 
         /* On affiche la page de changement des infos avec son formulaire */
         return $this->render('user/changeInfos.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /* Changement de l'email de l'utilisateur connecté */
-    #[Route(path: 'user/{id}/settings/changeEmail', name: 'change_email_user')]
-    public function changeEmail(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
-        /* On recupère l'utilisateur actuel */
-        $currentUser = $this->getUser();
-
-        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement d'email */
-        if($currentUser !== $user){
-            throw new AccessDeniedException();
-        }
-
-        /* Création du formulaire */
-        $form = $this->createForm(ChangeEmailFormType::class, null, [
-            'currentEmail' => $user->getEmail(),
-        ]);
-        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
-        $form->handleRequest($request);
-
-        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
-        if($form->isSubmitted() && $form->isValid()){
-            /* On récupère l'email du formulaire */
-            $newEmail = $form->get('newEmail')->getData();
-
-            /* On vérifie si l'email indiqué est le même ou pas que celui actuelle */
-            if($newEmail === $user->getEmail()){
-                $this->addFlash(
-                    'error',
-                    'The new email cannot be the same as the current one'
-                );
-            }
-            else{
-                /* On chercher l'existance de l'email indiqué */
-                $existingEmail = $entityManagerInterface->getRepository(User::class)->findOneBy(['email' => $newEmail]);
-
-                /* On vérifie que l'email existe ou pas */
-                if($existingEmail){
-                    $this->addFlash(
-                        'error',
-                        'Email already exists. Please choose a different one'
-                    );
-                }
-                else{
-                    /* On change l'email actuel par le nouvelle email et l'utilisateur n'est plus vérifié */
-                    $user->setEmail($newEmail);
-                    $user->setIsVerified(false);
-        
-                    /* On sauvegarde ces changements dans la base de données */
-                    $entityManagerInterface->persist($user);
-                    $entityManagerInterface->flush();
-        
-                    /* On crée un message de succès */
-                    $this->addFlash(
-                        'success',
-                        'Email has been modified successfully, please confirm that email'
-                    );
-
-                    $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                        (new TemplatedEmail())
-                            ->from(new Address('admin@AnimeProjetElan.com', 'Admin Anime Projet Elan'))
-                            ->to($user->getEmail())
-                            ->subject('Please Confirm your New Email')
-                            ->htmlTemplate('registration/confirmation_email.html.twig')
-                    );
-
-                    return $this->redirectToRoute('app_logout');
-                }
-            }
-        }
-
-        /* On affiche la page de changement d'email avec son formulaire */
-        return $this->render('user/changeEmail.html.twig', [
             'form' => $form->createView(),
         ]);
     }
