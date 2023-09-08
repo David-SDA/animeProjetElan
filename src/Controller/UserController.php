@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
 use App\Service\HomeCallApiService;
+use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use App\Form\ChangeUsernameFormType;
 use App\Form\ChangeDescriptionFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ChangeProfilePictureFormType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +25,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier){
+        $this->emailVerifier = $emailVerifier;
+    }
+
     #[Route('/user', name: 'app_user')]
     public function index(): Response
     {
@@ -146,7 +155,6 @@ class UserController extends AbstractController
                     return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
                 }
             }
-
         }
 
         /* On affiche la page de changement d'un pseudo avec son formulaire */
@@ -371,6 +379,59 @@ class UserController extends AbstractController
         $form = $this->createForm(ChangeEmailFormType::class, null, [
             'currentEmail' => $user->getEmail(),
         ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère l'email du formulaire */
+            $newEmail = $form->get('newEmail')->getData();
+
+            /* On vérifie si l'email indiqué est le même ou pas que celui actuelle */
+            if($newEmail === $user->getEmail()){
+                $this->addFlash(
+                    'error',
+                    'The new email cannot be the same as the current one'
+                );
+            }
+            else{
+                /* On chercher l'existance de l'email indiqué */
+                $existingEmail = $entityManagerInterface->getRepository(User::class)->findOneBy(['email' => $newEmail]);
+
+                /* On vérifie que l'email existe ou pas */
+                if($existingEmail){
+                    $this->addFlash(
+                        'error',
+                        'Email already exists. Please choose a different one'
+                    );
+                }
+                else{
+                    /* On change l'email actuel par le nouvelle email et l'utilisateur n'est plus vérifié */
+                    $user->setEmail($newEmail);
+                    $user->setIsVerified(false);
+        
+                    /* On sauvegarde ces changements dans la base de données */
+                    $entityManagerInterface->persist($user);
+                    $entityManagerInterface->flush();
+        
+                    /* On crée un message de succès */
+                    $this->addFlash(
+                        'success',
+                        'Email has been modified successfully, please confirm that email'
+                    );
+
+                    $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                        (new TemplatedEmail())
+                            ->from(new Address('admin@AnimeProjetElan.com', 'Admin Anime Projet Elan'))
+                            ->to($user->getEmail())
+                            ->subject('Please Confirm your New Email')
+                            ->htmlTemplate('registration/confirmation_email.html.twig')
+                    );
+
+                    return $this->redirectToRoute('app_logout');
+                }
+            }
+        }
 
         /* On affiche la page de changement d'email avec son formulaire */
         return $this->render('user/changeEmail.html.twig', [

@@ -122,7 +122,7 @@
     margin-top: 1em;
     align-self: flex-end;
 }
-.securityFormLinkEnd:hover{
+.securityFormLinkEnd a:hover{
     text-decoration: underline;
 }
 
