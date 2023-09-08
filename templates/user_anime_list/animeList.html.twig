@@ -5,5 +5,11 @@
 {% block body %}
     <main>
         <h1 class="homeTitle">{{ user.pseudo }}'s Anime List</h1>
+        <div class="animeListButtonsContainer">
+            <button class="animeListButton active">ALL</button>
+            <button class="animeListButton">WATCHING</button>
+            <button class="animeListButton">COMPLETED</button>
+            <button class="animeListButton">PLANNED TO WATCH</button>
+        </div>
     </main>
 {% endblock %}

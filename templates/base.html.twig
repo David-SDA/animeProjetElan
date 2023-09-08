@@ -16,6 +16,7 @@
             <link rel="stylesheet" href="{{ asset("css/character.css") }}">
             <link rel="stylesheet" href="{{ asset("css/security.css") }}">
             <link rel="stylesheet" href="{{ asset("css/profile.css") }}">
+            <link rel="stylesheet" href="{{ asset("css/animeList.css") }}">
             <link rel="stylesheet" href="{{ asset("css/responsive.css") }}">
         {% endblock %}
         
@@ -63,6 +64,9 @@
             </ul>
         </nav>
         {% block body %}
+        {% endblock %}
+        {% block script %}
+            <script src="{{ asset('js/script.js') }}"></script>
         {% endblock %}
     </body>
 </html>

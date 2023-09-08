@@ -1,0 +1,24 @@
+.animeListButtonsContainer{
+    width: 80vw;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.animeListButton{
+    width: 222px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4169E1;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.25em;
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.animeListButton.active{
+    background-color: #00BFFF;
+}
