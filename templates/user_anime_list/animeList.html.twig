@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ user.pseudo }}Anime list{% endblock %}
+{% block title %}{{ user.pseudo }}'s Anime List{% endblock %}
 
 {% set animesData = animes.data.Page.media %}
 
@@ -16,8 +16,14 @@
         <section class="animeListContainer">
             {% for anime in animesData %}
                 <figure>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}">
-                    <figcaption>{{ anime.title.romaji }}</figcaption>
+                    <i class="fa-solid fa-bars animeMenu"></i>
+                    <div class="animeEpisodesWatchedContainer">
+                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                        <p class="animeEpisodesWatched">5/13</p>
+                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                    </div>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>
             {% endfor %}
         </section>
