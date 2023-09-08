@@ -41,11 +41,78 @@ class UserController extends AbstractController
 
     #[Route('user/settings', name: 'settings_user')]
     public function settings(): Response{
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres */
         if(!$this->getUser()){
             return $this->redirectToRoute('app_home');
         }
 
         return $this->render('user/settings.html.twig');
+    }
+
+    /* Changement du pseudo de l'utilisateur connecté */
+    #[Route(path: 'user/settings/changeUsername', name: 'change_username_user')]
+    public function changeUsername(Request $request, EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement de pseudo */
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(ChangeUsernameFormType::class, null, [
+            'currentUsername' => $currentUser->getPseudo(),
+        ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère le pseudo du formulaire */
+            $newUsername = $form->get('pseudo')->getData();
+
+            /* On vérifie si le pseudo indiqué est le même ou pas que celui actuelle */
+            if($newUsername === $currentUser->getPseudo()){
+                $this->addFlash(
+                    'error',
+                    'The new username cannot be the same as the current one'
+                );
+            }
+            else{
+                /* On chercher l'existance du pseudo indiqué */
+                $existingUser = $entityManagerInterface->getRepository(User::class)->findOneBy(['pseudo' => $newUsername]);
+
+                /* On vérifie que le pseudo existe ou pas */
+                if($existingUser){
+                    $this->addFlash(
+                        'error',
+                        'Username already exists. Please choose a different one'
+                    );
+                }
+                else{
+                    /* On change le pseudo actuel par le nouveau pseudo */
+                    $currentUser->setPseudo($newUsername);
+        
+                    /* On sauvegarde ces changements dans la base de données */
+                    $entityManagerInterface->persist($currentUser);
+                    $entityManagerInterface->flush();
+        
+                    /* On crée un message de succès */
+                    $this->addFlash(
+                        'success',
+                        'Username has been modified successfully'
+                    );
+
+                    return $this->redirectToRoute('settings_user');
+                }
+            }
+        }
+
+        /* On affiche la page de changement d'un pseudo avec son formulaire */
+        return $this->render('user/changeUsername.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/user/{id}', name: 'show_user')]
@@ -56,7 +123,6 @@ class UserController extends AbstractController
         ]);
     }
     
-
     #[Route(path: 'user/{id}/settings/changePassword', name: 'change_password_user')]
     public function changePassword(Request $request, User $user, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
         $currentUser = $this->getUser();
@@ -97,71 +163,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /* Changement du pseudo de l'utilisateur connecté */
-    #[Route(path: 'user/{id}/settings/changeUsername', name: 'change_username_user')]
-    public function changeUsername(Request $request, User $user, EntityManagerInterface $entityManagerInterface): Response{
-        /* On recupère l'utilisateur actuel */
-        $currentUser = $this->getUser();
-
-        /* On vérifie que l'utilisateur actuel est bien celui qui accéde à sa page de changement de pseudo */
-        if($currentUser !== $user){
-            throw new AccessDeniedException();
-        }
-
-        /* Création du formulaire */
-        $form = $this->createForm(ChangeUsernameFormType::class, null, [
-            'currentUsername' => $user->getPseudo(),
-        ]);
-        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
-        $form->handleRequest($request);
-
-        /* Si le formulaire est soumis et est valide (données entré sont correct) */
-        if($form->isSubmitted() && $form->isValid()){
-            /* On récupère le pseudo du formulaire */
-            $newUsername = $form->get('pseudo')->getData();
-
-            /* On vérifie si le pseudo indiqué est le même ou pas que celui actuelle */
-            if($newUsername === $user->getPseudo()){
-                $this->addFlash(
-                    'error',
-                    'The new username cannot be the same as the current one'
-                );
-            }
-            else{
-                /* On chercher l'existance du pseudo indiqué */
-                $existingUser = $entityManagerInterface->getRepository(User::class)->findOneBy(['pseudo' => $newUsername]);
-
-                /* On vérifie que le pseudo existe ou pas */
-                if($existingUser){
-                    $this->addFlash(
-                        'error',
-                        'Username already exists. Please choose a different one'
-                    );
-                }
-                else{
-                    /* On change le pseudo actuel par le nouveau pseudo */
-                    $user->setPseudo($newUsername);
-        
-                    /* On sauvegarde ces changements dans la base de données */
-                    $entityManagerInterface->persist($user);
-                    $entityManagerInterface->flush();
-        
-                    /* On crée un message de succès */
-                    $this->addFlash(
-                        'success',
-                        'Username has been modified successfully'
-                    );
-
-                    return $this->redirectToRoute('settings_user', ['id' => $currentUser->getId()]);
-                }
-            }
-        }
-
-        /* On affiche la page de changement d'un pseudo avec son formulaire */
-        return $this->render('user/changeUsername.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 
     /* Changement de la description de l'utilisateur connecté */
     #[Route(path: 'user/{id}/settings/changeDescription', name: 'change_description_user')]
@@ -181,7 +182,7 @@ class UserController extends AbstractController
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
-        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère la description du formulaire */
             $newDescription = $form->get('description')->getData();
@@ -233,7 +234,7 @@ class UserController extends AbstractController
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
-        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère l'image de profil actuelle */
             $currentProfilePicture = $user->getImageProfil();
@@ -311,7 +312,7 @@ class UserController extends AbstractController
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
-        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère les différentes données du formulaire */
             $newDateOfBirth = $form->get('dateNaissance')->getData();
@@ -382,7 +383,7 @@ class UserController extends AbstractController
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
-        /* Si le formulaire est soumis et est valide (données entré sont correct) */
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère l'email du formulaire */
             $newEmail = $form->get('newEmail')->getData();
