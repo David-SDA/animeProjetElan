@@ -366,4 +366,42 @@ class AnimeCallApiService{
 
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
+
+    /**
+     * Fonction qui permet de récupérer tout les animés pour une liste donnée
+     */
+    public function getAnimesFromList(array $animeIds){
+        // Définition de la query
+        $query = '
+            query($animeIds: [Int]){
+                Page(page: 1, perPage: 50){
+                    media(id_in: $animeIds, type: ANIME, isAdult: false, sort: TITLE_ROMAJI){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                        }
+                        episodes
+                    } 
+                }
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'animeIds' => $animeIds,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
 }

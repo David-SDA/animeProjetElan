@@ -2,14 +2,24 @@
 
 {% block title %}{{ user.pseudo }}Anime list{% endblock %}
 
+{% set animesData = animes.data.Page.media %}
+
 {% block body %}
     <main>
         <h1 class="homeTitle">{{ user.pseudo }}'s Anime List</h1>
-        <div class="animeListButtonsContainer">
+        <section class="animeListButtonsContainer">
             <button class="animeListButton active">ALL</button>
             <button class="animeListButton">WATCHING</button>
             <button class="animeListButton">COMPLETED</button>
             <button class="animeListButton">PLANNED TO WATCH</button>
-        </div>
+        </section>
+        <section class="animeListContainer">
+            {% for anime in animesData %}
+                <figure>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}">
+                    <figcaption>{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+        </section>
     </main>
 {% endblock %}
