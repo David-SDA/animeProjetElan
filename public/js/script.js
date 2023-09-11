@@ -14,3 +14,32 @@ buttons.forEach((button) => {
         button.classList.add("active");
     });
 });
+
+// Récupération des boutons de manière distinctives
+const animeListButtonAll = document.getElementById("animeListButtonAll");
+const animeListButtonWatching = document.getElementById("animeListButtonWatching");
+const animeListButtonCompleted = document.getElementById("animeListButtonCompleted");
+const animeListButtonPlanned = document.getElementById("animeListButtonPlanned");
+
+// Récupération des sections de manières distinctives
+const animeListSectionAll = document.getElementById("animeListAll");
+const animeListSectionWatching = document.getElementById("animeListWatching");
+const animeListSectionCompleted = document.getElementById("animeListCompleted");
+const animeListSectionPlanned = document.getElementById("animeListPlanned");
+
+animeListButtonAll.addEventListener("click", () => showSection(animeListSectionAll));
+animeListButtonWatching.addEventListener("click", () => showSection(animeListSectionWatching));
+animeListButtonCompleted.addEventListener("click", () => showSection(animeListSectionCompleted));
+animeListButtonPlanned.addEventListener("click", () => showSection(animeListSectionPlanned));
+
+function showSection(selectedSection){
+    const sections = [animeListSectionAll, animeListSectionWatching, animeListSectionCompleted, animeListSectionPlanned];
+
+    sections.forEach(section => {
+        section.style.display = "none";
+    });
+
+    selectedSection.style.display = "grid";
+}
+
+showSection(animeListSectionAll);
