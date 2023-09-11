@@ -2,19 +2,21 @@
 
 {% block title %}{{ user.pseudo }}'s Anime List{% endblock %}
 
-{% set animesData = animes.data.Page.media %}
+{% set animesWatchingData = animesWatching.data.Page.media %}
+{% set animesCompletedData = animesCompleted.data.Page.media %}
+{% set animesPlannedData = animesPlanned.data.Page.media %}
 
 {% block body %}
     <main>
         <h1 class="homeTitle">{{ user.pseudo }}'s Anime List</h1>
         <section class="animeListButtonsContainer">
-            <button class="animeListButton active">ALL</button>
-            <button class="animeListButton">WATCHING</button>
-            <button class="animeListButton">COMPLETED</button>
-            <button class="animeListButton">PLANNED TO WATCH</button>
+            <button class="animeListButton active" id="animeListButtonAll">ALL</button>
+            <button class="animeListButton" id="animeListButtonWatching">WATCHING</button>
+            <button class="animeListButton" id="animeListButtonCompleted">COMPLETED</button>
+            <button class="animeListButton" id="animeListButtonPlanned">PLANNED TO WATCH</button>
         </section>
-        <section class="animeListContainer">
-            {% for anime in animesData %}
+        <section class="animeListContainer" id="animeListAll">
+            {% for anime in animesWatchingData %}
                 <figure>
                     <i class="fa-solid fa-bars animeMenu"></i>
                     <div class="animeEpisodesWatchedContainer">
@@ -22,6 +24,52 @@
                         <p class="animeEpisodesWatched">5/13</p>
                         <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
                     </div>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+            {% for anime in animesCompletedData %}
+                <figure>
+                    <i class="fa-solid fa-bars animeMenu"></i>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+            {% for anime in animesPlannedData %}
+                <figure>
+                    <i class="fa-solid fa-bars animeMenu"></i>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+        </section>
+        <section class="animeListContainer" id="animeListWatching">
+            {% for anime in animesWatchingData %}
+                <figure>
+                    <i class="fa-solid fa-bars animeMenu"></i>
+                    <div class="animeEpisodesWatchedContainer">
+                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                        <p class="animeEpisodesWatched">5/13</p>
+                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                    </div>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+        </section>
+        <section class="animeListContainer" id="animeListCompleted">
+            {% for anime in animesCompletedData %}
+                <figure>
+                    <i class="fa-solid fa-bars animeMenu"></i>
+                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                </figure>
+            {% endfor %}
+        </section>
+        <section class="animeListContainer" id="animeListPlanned">
+            {% for anime in animesPlannedData %}
+                <figure>
+                    <i class="fa-solid fa-bars animeMenu"></i>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>
