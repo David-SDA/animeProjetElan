@@ -2,10 +2,6 @@
 
 {% block title %}{{ user.pseudo }}'s Anime List{% endblock %}
 
-{% set animesWatchingData = animesWatching.data.Page.media %}
-{% set animesCompletedData = animesCompleted.data.Page.media %}
-{% set animesPlannedData = animesPlanned.data.Page.media %}
-
 {% block body %}
     <main>
         <h1 class="homeTitle">{{ user.pseudo }}'s Anime List</h1>
@@ -16,63 +12,75 @@
             <button class="animeListButton" id="animeListButtonPlanned">PLANNED TO WATCH</button>
         </section>
         <section class="animeListContainer" id="animeListAll">
-            {% for anime in animesWatchingData %}
-                <figure>
-                    <a href="#"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <div class="animeEpisodesWatchedContainer">
-                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
-                        <p class="animeEpisodesWatched">5/13</p>
-                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
-                    </div>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Watching"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <div class="animeEpisodesWatchedContainer">
+                            <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                            <p class="animeEpisodesWatched">5/13</p>
+                            <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                        </div>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
-            {% for anime in animesCompletedData %}
-                <figure>
-                    <i class="fa-solid fa-bars animeMenu"></i>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Completed"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
-            {% for anime in animesPlannedData %}
-                <figure>
-                    <i class="fa-solid fa-bars animeMenu"></i>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Plan to watch"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
         </section>
         <section class="animeListContainer" id="animeListWatching">
-            {% for anime in animesWatchingData %}
-                <figure>
-                    <i class="fa-solid fa-bars animeMenu"></i>
-                    <div class="animeEpisodesWatchedContainer">
-                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
-                        <p class="animeEpisodesWatched">5/13</p>
-                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
-                    </div>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Watching"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <div class="animeEpisodesWatchedContainer">
+                            <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                            <p class="animeEpisodesWatched">5/13</p>
+                            <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                        </div>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
         </section>
         <section class="animeListContainer" id="animeListCompleted">
-            {% for anime in animesCompletedData %}
-                <figure>
-                    <i class="fa-solid fa-bars animeMenu"></i>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Completed"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
         </section>
         <section class="animeListContainer" id="animeListPlanned">
-            {% for anime in animesPlannedData %}
-                <figure>
-                    <i class="fa-solid fa-bars animeMenu"></i>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            {% for key, animeData in animesDataByState["Plan to watch"] %}
+                {% for anime in animeData.data.Page.media %}
+                    <figure>
+                        <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                        <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+                        <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                    </figure>
+                {% endfor %}
             {% endfor %}
         </section>
     </main>
