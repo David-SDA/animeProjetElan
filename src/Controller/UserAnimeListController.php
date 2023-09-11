@@ -29,27 +29,40 @@ class UserAnimeListController extends AbstractController
         
         /* Création de la variable pour les données des animés */
         $animeDataByState = [];
-    
+        
         /* Pour chaque état dans le tableau ($state => $userAnimes : permet d'avoir accès aux clés, ici l'état) */
         foreach($animeByState as $state => $userAnimes){
             /* On crée un tableau d'ids (ids pour l'API) */
             $animeIds = [];
             
             /* Pour chaque animé d'un état */
-            foreach ($userAnimes as $userAnime){
+            foreach($userAnimes as $userAnime){
                 /* On stock l'id de l'API dans le tableau créer précedement */
                 $animeIds[] = $userAnime->getAnime()->getIdApi();
             }
-            
+
             /* On récupère les données de l'API grâce au tableau d'id */
             $animeData = $animeCallApiService->getAnimesFromList($animeIds);
-    
-            /* On crée un tableau associatifs entre état et donnée de l'API */
+            
+            /* On crée un tableau associatifs avec l'état et données de l'API */
             $animeDataByState[$state] = [];
     
-            /* Pour chaque animé dans la liste d'un utilisateur, on ajoute au tableau tout juste créé l'id de l'instance de la liste et les données de l'API */
-            foreach ($userAnimes as $userAnime){
-                $animeDataByState[$state][$userAnime->getId()] = $animeData;
+            /* Pour chaque animé dans la liste d'un utilisateur */
+            foreach($userAnimes as $userAnime){
+                /* Pour chaque animé dans un certain état */
+                foreach($animeData['data']['Page']['media'] as $anime){
+                    /* Si l'id de l'anime dans l'API est le même que l'idApi de l'animé dans l'instance de la liste, 
+                       on intègre les données de cette animé dans le tableau associé (ajout du nombre d'episodes vu aussi) */
+                    if($userAnime->getAnime()->getIdApi() === $anime['id']){
+                        $animeDataByState[$state][$userAnime->getId()] = [
+                            'id' => $anime['id'],
+                            'title' => $anime['title'],
+                            'coverImage' => $anime['coverImage'],
+                            'episodes' => $anime['episodes'],
+                            'episodesWatched' => $userAnime->getNombreEpisodeVu(),
+                        ];
+                    }
+                }
             }
         }
         
