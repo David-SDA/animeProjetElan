@@ -26,10 +26,10 @@ class UserAnimeListController extends AbstractController
         foreach($userAnimes as $userAnime){
             $etat = $userAnime->getEtat();
 
-            if($etat === 'WATCHING'){
+            if($etat === 'Watching'){
                 $animesWatching[] = $userAnime;
             }
-            elseif($etat === 'COMPLETED'){
+            elseif($etat === 'Completed'){
                 $animesCompleted[] = $userAnime;
             }
             else{
@@ -61,7 +61,7 @@ class UserAnimeListController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}/animeList/modify/{userRegarderAnime_id}')]
+    #[Route('user/{id}/animeList/modify/{userRegarderAnime_id}', name: 'change_anime_list_user')]
     public function modifyAnimeList(User $id, UserRegarderAnime $userRegarderAnime_id, AnimeCallApiService $animeCallApiService){
         if($id !== $this->getUser()){
             return $this->redirectToRoute('app_home');

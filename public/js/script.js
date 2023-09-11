@@ -27,11 +27,13 @@ const animeListSectionWatching = document.getElementById("animeListWatching");
 const animeListSectionCompleted = document.getElementById("animeListCompleted");
 const animeListSectionPlanned = document.getElementById("animeListPlanned");
 
+// Ajout d'écouteur d'evenement
 animeListButtonAll.addEventListener("click", () => showSection(animeListSectionAll));
 animeListButtonWatching.addEventListener("click", () => showSection(animeListSectionWatching));
 animeListButtonCompleted.addEventListener("click", () => showSection(animeListSectionCompleted));
 animeListButtonPlanned.addEventListener("click", () => showSection(animeListSectionPlanned));
 
+// Fonction qui gère le click d'un bouton pour faire afficher une section
 function showSection(selectedSection){
     const sections = [animeListSectionAll, animeListSectionWatching, animeListSectionCompleted, animeListSectionPlanned];
 
