@@ -1,27 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modify your list{% endblock %}
+{% set anime = animeData.data.Media %}
 
 {% block body %}
-    <main>
-        {{ form_start(form) }}
-            <div class="securityFormRow">
-                {{ form_label(form.dateDebutVisionnage, 'Started Watching') }}
-                {{ form_widget(form.dateDebutVisionnage) }}
+    <main class="animeListModifyContainer">
+        <figure>
+            <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="animeListAnimeImage">
+            <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+            <button class="animeButtonAddTo favorites">Add to your favorites</button>
+        </figure>
+        {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
+            <div class="animeListModifyFormLine">
+                <div class="securityFormRow">
+                    {{ form_label(form.dateDebutVisionnage, 'Started Watching') }}
+                    {{ form_widget(form.dateDebutVisionnage) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.dateFinVisionnage, 'Finished Watching') }}
+                    {{ form_widget(form.dateFinVisionnage) }}
+                </div>
             </div>
-            <div class="securityFormRow">
-                {{ form_label(form.dateFinVisionnage, 'Finished Watching') }}
-                {{ form_widget(form.dateFinVisionnage) }}
+            <div class="animeListModifyFormLine">
+                <div class="securityFormRow">
+                    {{ form_label(form.etat, 'Status') }}
+                    {{ form_widget(form.etat) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.nombreEpisodeVu, 'Episodes Watched') }}
+                    {{ form_widget(form.nombreEpisodeVu) }}
+                </div>
             </div>
-            <div class="securityFormRow">
-                {{ form_label(form.etat, 'Status') }}
-                {{ form_widget(form.etat) }}
+            <div class="animeListModifyFormLine">
+                <button class="animeButtonAddTo favorites">Delete</button>
+                <button type="submit" class="securityFormSubmitButton">Save</button>
             </div>
-            <div class="securityFormRow">
-                {{ form_label(form.nombreEpisodeVu, 'Episodes Watched') }}
-                {{ form_widget(form.nombreEpisodeVu) }}
-            </div>
-            <button type="submit" class="securityFormSubmitButton large">Save</button>
         {{ form_end(form) }}
     </main>
 {% endblock %}

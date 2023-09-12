@@ -79,7 +79,7 @@ class UserAnimeListController extends AbstractController
         }
 
         $animeApiId = $userRegarderAnime_id->getAnime()->getIdApi();
-        $animeData = $animeCallApiService->getAnimeDetails($animeApiId);
+        $animeData = $animeCallApiService->getAnimeDetailsForList($animeApiId);
 
         /* Création du formulaire */
         $form = $this->createForm(ModifyAnimeListFormType::class, null, [
@@ -91,6 +91,7 @@ class UserAnimeListController extends AbstractController
         ]);
         return $this->render('user_anime_list/modifyAnimeList.html.twig', [
             'form' => $form->createView(),
+            'animeData' => $animeData,
         ]);
     }
 }
