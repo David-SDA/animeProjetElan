@@ -14,10 +14,10 @@
         <section class="animeListContainer" id="animeListAll">
             {% for key, anime in animesDataByState["Watching"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <div class="animeEpisodesWatchedContainer">
                         <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
-                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes }}</p>
+                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
                         <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
                     </div>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
@@ -26,14 +26,14 @@
             {% endfor %}
             {% for key, anime in animesDataByState["Completed"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>
             {% endfor %}
             {% for key, anime in animesDataByState["Plan to watch"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>
@@ -42,10 +42,10 @@
         <section class="animeListContainer" id="animeListWatching">
             {% for key, anime in animesDataByState["Watching"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <div class="animeEpisodesWatchedContainer">
                         <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
-                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes }}</p>
+                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
                         <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
                     </div>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
@@ -56,7 +56,7 @@
         <section class="animeListContainer" id="animeListCompleted">
             {% for key, anime in animesDataByState["Completed"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>
@@ -65,7 +65,7 @@
         <section class="animeListContainer" id="animeListPlanned">
             {% for key, anime in animesDataByState["Plan to watch"] %}
                 <figure>
-                    <a href="{{ path('change_anime_list_user', { id: user.id, userRegarderAnime_id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
                 </figure>

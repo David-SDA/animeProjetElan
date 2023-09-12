@@ -8,8 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Range;
 
 class ModifyAnimeListFormType extends AbstractType
@@ -28,6 +26,7 @@ class ModifyAnimeListFormType extends AbstractType
                 'data' => $options['endDate'],
             ])
             ->add('etat', ChoiceType::class, [
+                'required' => true,
                 'choices' => [
                     'Watching' => 'Watching',
                     'Completed' => 'Completed',

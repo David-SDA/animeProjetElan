@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserRegarderAnime;
-use App\Form\ModifyAnimeListFormType;
 use App\Service\AnimeCallApiService;
+use App\Form\ModifyAnimeListFormType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,23 +74,80 @@ class UserAnimeListController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}/animeList/modify/{userRegarderAnime_id}', name: 'change_anime_list_user')]
-    public function modifyAnimeList(User $id, UserRegarderAnime $userRegarderAnime_id, AnimeCallApiService $animeCallApiService){
-        if($id !== $this->getUser()){
+    #[Route('user/animeList/modify/{id}', name: 'change_anime_list_user')]
+    public function modifyAnimeList(Request $request, UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur actuel n'est pas celui à qui appartient l'instance de la liste, il n'a pas accès au changement de celui-ci */
+        if($userRegarderAnime->getUser() !== $this->getUser()){
             return $this->redirectToRoute('app_home');
         }
 
-        $animeApiId = $userRegarderAnime_id->getAnime()->getIdApi();
+        /* On récupère l'id de l'API de l'animé puis ses données de l'API */
+        $animeApiId = $userRegarderAnime->getAnime()->getIdApi();
         $animeData = $animeCallApiService->getAnimeDetailsForList($animeApiId);
 
         /* Création du formulaire */
         $form = $this->createForm(ModifyAnimeListFormType::class, null, [
             'maxEpisodes' => $animeData['data']['Media']['episodes'],
-            'startDate' => $userRegarderAnime_id->getDateDebutVisionnage(),
-            'endDate' => $userRegarderAnime_id->getDateFinVisionnage(),
-            'status' => $userRegarderAnime_id->getEtat(),
-            'numberEpisodes' => $userRegarderAnime_id->getNombreEpisodeVu(),
+            'startDate' => $userRegarderAnime->getDateDebutVisionnage(),
+            'endDate' => $userRegarderAnime->getDateFinVisionnage(),
+            'status' => $userRegarderAnime->getEtat(),
+            'numberEpisodes' => $userRegarderAnime->getNombreEpisodeVu(),
         ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            $newStartDate = $form->get('dateDebutVisionnage')->getData();
+            $newEndDate = $form->get('dateFinVisionnage')->getData();
+            $newStatus = $form->get('etat')->getData();
+            $newEpisodesWatched = intval($form->get('nombreEpisodeVu')->getData());
+
+            /* Si toute les données sont le même qu'en base de données, alors on ne soumet pas le formulaire */
+            if($newStartDate === $userRegarderAnime->getDateDebutVisionnage() && $newEndDate === $userRegarderAnime->getDateFinVisionnage() && $newStatus === $userRegarderAnime->getEtat() && $newEpisodesWatched === $userRegarderAnime->getNombreEpisodeVu()){
+                $this->addFlash(
+                    'error',
+                    'The infos cannot be the same as the current ones'
+                );
+            }
+            /* Si la date de début et fin de visionnage existe et si la date de début de visionnage est après celle de fin, on indique l'erreur */
+            elseif($newStartDate && $newEndDate && $newStartDate > $newEndDate){
+                $this->addFlash(
+                    'error',
+                    'Start date cannot be after end date'
+                );
+            }
+            else{
+                /* Si la date de début de visionnage est différente que celle actuelle, on la modifie */
+                if($newStartDate !== $userRegarderAnime->getDateDebutVisionnage()){
+                    $userRegarderAnime->setDateDebutVisionnage($newStartDate);
+                }
+                /* Si la date de fin de visionnage est différente que celle actuelle, on la modifie */
+                if($newEndDate !== $userRegarderAnime->getDateFinVisionnage()){
+                    $userRegarderAnime->setDateFinVisionnage($newEndDate);
+                }
+                /* Si l'état est différent que celui actuel, on le modifie */
+                if($newStatus !== $userRegarderAnime->getEtat()){
+                    $userRegarderAnime->setEtat($newStatus);
+                }
+                /* Si le nombre d'épisodes vu est différent que celui actuel, on le modifie */
+                if($newEpisodesWatched !== $userRegarderAnime->getNombreEpisodeVu()){
+                    $userRegarderAnime->setNombreEpisodeVu($newEpisodesWatched);
+                }
+
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($userRegarderAnime);
+                $entityManagerInterface->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Changes have been saved'
+                );
+                
+                return $this->redirectToRoute('anime_list_user', ['id' => $this->getUser()->getId()]);
+            }
+        }
+
         return $this->render('user_anime_list/modifyAnimeList.html.twig', [
             'form' => $form->createView(),
             'animeData' => $animeData,
