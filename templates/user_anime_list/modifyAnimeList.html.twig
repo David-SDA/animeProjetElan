@@ -37,4 +37,34 @@
             </div>
         {{ form_end(form) }}
     </main>
+    {% block javascript %}
+        <script>
+            // On crée un écouteur quand la page est bien chargé
+            document.addEventListener("DOMContentLoaded", function (){
+                // On récupère les inputs concernés (état et nombre d'épisodes vu)
+                var statusField = document.getElementById("modify_anime_list_form_etat");
+                var episodesWatchedField = document.getElementById("modify_anime_list_form_nombreEpisodeVu");
+            
+                // On crée une fonction qui change l'input du nombre d'épisodes vu en fonction de l'état
+                function changeEpisodesWatchedField(){
+                    // On récupère la valeur de l'état
+                    var selectedState = statusField.value;
+                    // Si l'anime a été vu totalement, on ne peut plus changer le nombre d'épisodes vu et il reste au maximum d'épisodes de l'animé
+                    if(selectedState === "Completed"){
+                        episodesWatchedField.value = episodesWatchedField.getAttribute("max");
+                        episodesWatchedField.readOnly = true;
+                    }
+                    else{
+                        episodesWatchedField.readOnly = false;
+                    }
+                }
+                // On applique la fonction créée dès que la page est chargé
+                changeEpisodesWatchedField();
+                // On rajoute une écoute sur le changement de l'état de l'animé
+                statusField.addEventListener("change", function (){
+                    changeEpisodesWatchedField();
+                });
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

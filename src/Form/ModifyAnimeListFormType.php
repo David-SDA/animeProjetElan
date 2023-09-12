@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Range;
 
 class ModifyAnimeListFormType extends AbstractType
@@ -35,6 +37,10 @@ class ModifyAnimeListFormType extends AbstractType
             ])
             ->add('nombreEpisodeVu', NumberType::class, [
                 'html5' => true,
+                'attr' => [
+                    'min' => 0,
+                    'max' => $options['maxEpisodes']
+                ],
                 'constraints' => [
                     new Range([
                         'min' => 0,
