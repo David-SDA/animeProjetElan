@@ -13,7 +13,7 @@
                     <figure>
                         <img src="{{ dataThisAnime.coverImage.large }}" alt="Cover Image of {{ dataThisAnime.title.romaji ? dataThisAnime.title.romaji : "?" }}" class="animeImage">
                     </figure>
-                    <button class="animeButtonAddTo list">Add to your list</button>
+                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list">Add to your list</a>
                     <button class="animeButtonAddTo favorites">Add to your favorites</button>
                 </div>
                 <div class="animeTopRightContent">

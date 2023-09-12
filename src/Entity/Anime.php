@@ -15,7 +15,7 @@ class Anime
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(unique: true)]
     private ?int $idApi = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'animes')]

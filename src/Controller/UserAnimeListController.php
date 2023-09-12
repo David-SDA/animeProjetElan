@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Anime;
 use App\Entity\UserRegarderAnime;
 use App\Service\AnimeCallApiService;
 use App\Form\ModifyAnimeListFormType;
+use App\Repository\AnimeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,5 +154,43 @@ class UserAnimeListController extends AbstractController
             'form' => $form->createView(),
             'animeData' => $animeData,
         ]);
+    }
+
+    #[Route('user/animeList/addAnime/{idApi}', name: 'add_anime_to_list_user')]
+    public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        $animeDatabase = $animeRepository->findOneBy(['idApi' => $idApi]);
+        if(!$animeDatabase){
+            if($animeCallApiService->getApiResponse($idApi) === Response::HTTP_OK){
+                $animeDatabase = new Anime();
+                $animeDatabase->setIdApi($idApi);
+                $animeId = $animeDatabase->getId();
+                $entityManagerInterface->persist($animeDatabase);
+            }
+            else{
+                $this->addFlash(
+                    'error',
+                    'This anime does not exist'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
+        
+        $animeInList = new UserRegarderAnime();
+        $animeInList->setUser($this->getUser());
+        $animeInList->setAnime($animeDatabase);
+        $animeInList->setEtat("Watching");
+        $animeInList->setNombreEpisodeVu(0);
+        $entityManagerInterface->persist($animeInList);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }
 }
