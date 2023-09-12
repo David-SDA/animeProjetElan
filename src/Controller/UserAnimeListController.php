@@ -8,6 +8,7 @@ use App\Entity\UserRegarderAnime;
 use App\Service\AnimeCallApiService;
 use App\Form\ModifyAnimeListFormType;
 use App\Repository\AnimeRepository;
+use App\Repository\UserRegarderAnimeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -157,7 +158,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('user/animeList/addAnime/{idApi}', name: 'add_anime_to_list_user')]
-    public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+    public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -165,15 +166,19 @@ class UserAnimeListController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        /* On cherche si l'anime est déjà dans la base de données */
         $animeDatabase = $animeRepository->findOneBy(['idApi' => $idApi]);
+        /* Si l'animé n'est pas dans la base de données */
         if(!$animeDatabase){
+            /* Et si l'animé existe dans l'API */
             if($animeCallApiService->getApiResponse($idApi) === Response::HTTP_OK){
+                /* On crée une instance d'animé dans lequel on y définit l'id de l'API */
                 $animeDatabase = new Anime();
                 $animeDatabase->setIdApi($idApi);
-                $animeId = $animeDatabase->getId();
                 $entityManagerInterface->persist($animeDatabase);
             }
             else{
+                /* Sinon on indique que l'animé n'existe pas (dans l'API) */
                 $this->addFlash(
                     'error',
                     'This anime does not exist'
@@ -182,12 +187,27 @@ class UserAnimeListController extends AbstractController
                 return $this->redirectToRoute('show_anime', ['id' => $idApi]);
             }
         }
+        else{
+            /* Sinon on vérifie qu'il n'existe pas d'instance de UserRegarderAnime avec l'anime (qui donc existe déjà en base de donnée) et l'utilisateur actuel */
+            if($userRegarderAnimeRepository->findOneBy(['user' => $this->getUser(), 'anime' => $animeDatabase])){
+                /* Si il existe, on indique que l'animé est bien dans la liste de l'utilisateur */
+                $this->addFlash(
+                    'error',
+                    'You cannot add an anime that is already in your list'
+                );
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
         
+        /* On crée une instance de UserRegarderAnime */
         $animeInList = new UserRegarderAnime();
+        /* Et on y définit les informations nécessaires */
         $animeInList->setUser($this->getUser());
         $animeInList->setAnime($animeDatabase);
         $animeInList->setEtat("Watching");
         $animeInList->setNombreEpisodeVu(0);
+
+        /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($animeInList);
         $entityManagerInterface->flush();
 
