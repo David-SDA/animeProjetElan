@@ -23,15 +23,20 @@ USE `animeprojetelan`;
 CREATE TABLE IF NOT EXISTS `anime` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_api` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_1304594233A13055` (`id_api`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.anime : ~4 rows (environ)
+-- Listage des données de la table animeprojetelan.anime : ~8 rows (environ)
 INSERT INTO `anime` (`id`, `id_api`) VALUES
-	(1, 163132),
+	(4, 113415),
+	(9, 125367),
 	(2, 145064),
 	(3, 158927),
-	(4, 113415);
+	(5, 159322),
+	(8, 159831),
+	(1, 163132),
+	(6, 163263);
 
 -- Listage de la structure de table animeprojetelan. anime_discussion
 CREATE TABLE IF NOT EXISTS `anime_discussion` (
@@ -172,7 +177,7 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`,
 	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 0),
 	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 0),
 	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, NULL, NULL, NULL, 1, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 0),
-	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-64fae9a29d32c.jpg', '2023-09-05', 'France', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$oU2K0lXIlVcWHjcAz/NW.ei/YMp6NaU/GF03d6b6xFSQO2TnM2e8O', 1, 0),
+	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-6500060f322f6.jpg', '2023-09-05', 'France', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$oU2K0lXIlVcWHjcAz/NW.ei/YMp6NaU/GF03d6b6xFSQO2TnM2e8O', 1, 0),
 	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 'France', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0),
 	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 0);
 
@@ -229,14 +234,19 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
   KEY `IDX_57428AE9794BBE89` (`anime_id`),
   CONSTRAINT `FK_57428AE9794BBE89` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`),
   CONSTRAINT `FK_57428AE9A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_regarder_anime : ~4 rows (environ)
+-- Listage des données de la table animeprojetelan.user_regarder_anime : ~9 rows (environ)
 INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
-	(1, 13, 1, 'WATCHING', 5, NULL, NULL),
-	(2, 13, 2, 'WATCHING', 4, NULL, NULL),
-	(3, 13, 3, 'PLANNED TO WATCH', 0, NULL, NULL),
-	(4, 13, 4, 'COMPLETED', 24, NULL, NULL);
+	(1, 13, 1, 'Watching', 5, '2023-09-07', '2023-09-11'),
+	(2, 13, 2, 'Watching', 9, NULL, NULL),
+	(3, 13, 3, 'Plan to watch', 0, NULL, NULL),
+	(4, 13, 4, 'Completed', 24, NULL, NULL),
+	(5, 1, 1, 'Completed', 25, NULL, NULL),
+	(6, 13, 5, 'Watching', 8, NULL, NULL),
+	(7, 13, 6, 'Plan to watch', 0, NULL, NULL),
+	(8, 13, 8, 'Watching', 0, NULL, NULL),
+	(10, 13, 9, 'Completed', 13, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
