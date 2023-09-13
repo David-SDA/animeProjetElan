@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Anime;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
-use App\Service\AnimeCallApiService;
-use App\Service\HomeCallApiService;
+use App\Repository\AnimeRepository;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use App\Form\ChangeUsernameFormType;
+use App\Service\AnimeCallApiService;
 use App\Form\ChangeDescriptionFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ChangeProfilePictureFormType;
@@ -466,5 +467,39 @@ class UserController extends AbstractController
             'user' => $user,
             'favoritesAnimesData' => $favoritesAnimesData['data']['Page']['media'],
         ]);
+    }
+
+    #[Route('user/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
+    public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService){
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On cherche si l'anime est déjà dans la base de données */
+        $animeInDatabase = $animeRepository->findOneBy(['idApi' => $idApi]);
+        /* Si l'animé n'est pas dans la base de données */
+        if(!$animeInDatabase){
+            /* Et si l'animé existe dans l'API */
+            if($animeCallApiService->getApiResponse($idApi) === Response::HTTP_OK){
+                /* On crée une instance d'animé dans lequel on y définit l'id de l'API */
+                $animeInDatabase = new Anime();
+                $animeInDatabase->setIdApi($idApi);
+                $entityManagerInterface->persist($animeInDatabase);
+            }
+            else{
+                /* Sinon on indique que l'animé n'existe pas (dans l'API) */
+                $this->addFlash(
+                    'error',
+                    'This anime does not exist'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
+
+        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
 }

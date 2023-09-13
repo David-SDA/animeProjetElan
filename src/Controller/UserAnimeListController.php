@@ -168,15 +168,15 @@ class UserAnimeListController extends AbstractController
         }
 
         /* On cherche si l'anime est déjà dans la base de données */
-        $animeDatabase = $animeRepository->findOneBy(['idApi' => $idApi]);
+        $animeInDatabase = $animeRepository->findOneBy(['idApi' => $idApi]);
         /* Si l'animé n'est pas dans la base de données */
-        if(!$animeDatabase){
+        if(!$animeInDatabase){
             /* Et si l'animé existe dans l'API */
             if($animeCallApiService->getApiResponse($idApi) === Response::HTTP_OK){
                 /* On crée une instance d'animé dans lequel on y définit l'id de l'API */
-                $animeDatabase = new Anime();
-                $animeDatabase->setIdApi($idApi);
-                $entityManagerInterface->persist($animeDatabase);
+                $animeInDatabase = new Anime();
+                $animeInDatabase->setIdApi($idApi);
+                $entityManagerInterface->persist($animeInDatabase);
             }
             else{
                 /* Sinon on indique que l'animé n'existe pas (dans l'API) */
@@ -190,7 +190,7 @@ class UserAnimeListController extends AbstractController
         }
         else{
             /* Sinon on vérifie qu'il n'existe pas d'instance de UserRegarderAnime avec l'anime (qui donc existe déjà en base de donnée) et l'utilisateur actuel */
-            if($userRegarderAnimeRepository->findOneBy(['user' => $this->getUser(), 'anime' => $animeDatabase])){
+            if($userRegarderAnimeRepository->findOneBy(['user' => $this->getUser(), 'anime' => $animeInDatabase])){
                 /* Si il existe, on indique que l'animé est bien dans la liste de l'utilisateur */
                 $this->addFlash(
                     'error',
@@ -204,7 +204,7 @@ class UserAnimeListController extends AbstractController
         $animeInList = new UserRegarderAnime();
         /* Et on y définit les informations nécessaires */
         $animeInList->setUser($this->getUser());
-        $animeInList->setAnime($animeDatabase);
+        $animeInList->setAnime($animeInDatabase);
         $animeInList->setEtat("Watching");
         $animeInList->setNombreEpisodeVu(0);
 
