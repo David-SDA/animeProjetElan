@@ -499,6 +499,36 @@ class UserController extends AbstractController
                 return $this->redirectToRoute('show_anime', ['id' => $idApi]);
             }
         }
+        else{
+            /* On crée une variable pour déterminer si l'animé est dans les animés favoris de l'utilisateur, on définit que de base, il n'y est pas */
+            $animeIsInFavorites = false;
+            /* Pour chaque animés dans la collection d'animés de l'utilisateur (qui représente les animés favoris de l'utilisateur) */
+            foreach($user->getAnimes() as $anime){
+                /* On vérifie si l'id de l'API correspond à l'id de l'animé de la page actuelle */
+                if($anime->getIdApi() === $idApi){
+                    /* Dès que l'on trouve une correspondance, cela veut dire que l'animé est bien dans les animés favoris de l'utilisateur et on stop la boucle dès que cela arrive */
+                    $animeIsInFavorites = true;
+                    break;
+                }
+            }
+            /* Si l'animé est déjà dans les favoris de l'utilisateur */
+            if($animeIsInFavorites){
+                /* On lui indique */
+                $this->addFlash(
+                    'error',
+                    'You cannot add an anime to your favorites if it already is'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
+
+        /* On ajoute l'animé à la collection d'animé d'un utilisateur (et donc à ses favoris) */
+        $user->addAnime($animeInDatabase);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
 
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
