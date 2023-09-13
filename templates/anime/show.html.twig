@@ -16,7 +16,9 @@
                     {% if app.user and not animeIsInList %}
                         <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list">Add to your list</a>
                     {% endif %}
-                    <button class="animeButtonAddTo favorites">Add to your favorites</button>
+                    {% if app.user and not animeIsInFavorites %}
+                        <button class="animeButtonAddTo favorites">Add to your favorites</button>
+                    {% endif %}
                 </div>
                 <div class="animeTopRightContent">
                     <h1 class="animeTitle">{{ dataThisAnime.title.romaji ? dataThisAnime.title.romaji : "?" }}</h1>

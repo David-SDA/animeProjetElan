@@ -23,7 +23,6 @@
 .animeTopLeftContent{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin-right: 1.5em;
 }
 
