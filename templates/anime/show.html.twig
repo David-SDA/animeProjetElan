@@ -18,6 +18,8 @@
                     {% endif %}
                     {% if app.user and not animeIsInFavorites %}
                         <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
+                    {% elseif app.user and animeIsInFavorites and animeInDatabase %}
+                        <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites">Remove from favorites</a>
                     {% endif %}
                 </div>
                 <div class="animeTopRightContent">

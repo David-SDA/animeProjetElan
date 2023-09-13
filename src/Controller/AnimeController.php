@@ -66,10 +66,13 @@ class AnimeController extends AbstractController
             }
         }
 
+        $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
+        
         return $this->render('anime/show.html.twig', [
             'dataOneAnime' => $animeCallApiService->getAnimeDetails($id),
             'animeIsInList' => $animeIsInList,
             'animeIsInFavorites' => $animeIsInFavorites,
+            'animeInDatabase' => $animeInDatabase,
         ]);
     }
 

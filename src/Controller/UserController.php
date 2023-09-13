@@ -470,7 +470,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
-    public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService){
+    public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -525,6 +525,38 @@ class UserController extends AbstractController
 
         /* On ajoute l'animé à la collection d'animé d'un utilisateur (et donc à ses favoris) */
         $user->addAnime($animeInDatabase);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
+    }
+
+    #[Route('user/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
+    public function removeAnimeFromFavorites(Anime $anime, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On cherche si l'anime est déjà dans la base de données */
+        $animeInDatabase = $animeRepository->find($anime);
+        /* Si l'animé n'existe pas */
+        if(!$animeInDatabase){
+            /* Il ne peut pas être dans les favoris d'un utilisateur, alors on l'indique */
+            $this->addFlash(
+                'error',
+                'This anime does not exist'
+            );
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On enlève l'animé à la collection d'animé d'un utilisateur (et donc à ses favoris) */
+        $user->removeAnime($animeInDatabase);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($user);
