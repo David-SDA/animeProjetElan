@@ -154,6 +154,7 @@ class UserAnimeListController extends AbstractController
         return $this->render('user_anime_list/modifyAnimeList.html.twig', [
             'form' => $form->createView(),
             'animeData' => $animeData,
+            'userRegarderAnime' => $userRegarderAnime,
         ]);
     }
 
@@ -210,6 +211,28 @@ class UserAnimeListController extends AbstractController
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($animeInList);
         $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+    }
+
+    #[Route('user/animeList/removeAnime/{id}', name: 'remove_anime_from_list_user')]
+    public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface){
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur actuel n'est pas celui à qui appartient l'instance de la liste, il n'a pas accès à la suppression de celui-ci */
+        if($userRegarderAnime->getUser() !== $user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On supprime l'instance de la liste et on sauvegarde ce changement dans la base de données */
+        $entityManagerInterface->remove($userRegarderAnime);
+        $entityManagerInterface->flush();
+
+        /* On indique que la suppression a été effectuer */
+        $this->addFlash(
+            'success',
+            'This anime has been removed successfully'
+        );
 
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }

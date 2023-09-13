@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="animeListModifyFormLine">
-                <button class="animeButtonAddTo favorites">Delete</button>
+                <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo favorites">Delete</a>
                 <button type="submit" class="securityFormSubmitButton">Save</button>
             </div>
         {{ form_end(form) }}
