@@ -70,4 +70,41 @@ class CharacterCallApiService{
 
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
+
+    /**
+     * Fonction qui permet d'obtenir les informations nécessaire de plusieurs personnage (pour l'affichage des personnages favoris)
+     */
+    public function getMultipleCharactersDetails(array $characterIds){
+        // Définition de la query
+        $query = '
+            query($characterIds: [Int]){
+                Page(page: 1, perPage: 50){
+                    characters(id_in: $characterIds){
+                        id
+                        name{
+                            full
+                        }
+                        image{
+                            large
+                        }
+                    }
+                }
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'characterIds' => $characterIds,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
 }

@@ -8,6 +8,7 @@ use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
 use App\Repository\AnimeRepository;
+use App\Service\CharacterCallApiService;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use App\Form\ChangeUsernameFormType;
@@ -447,25 +448,35 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, AnimeCallApiService $animeCallApiService): Response{
+    public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService): Response{
         /* On récupère la collection d'animés d'un utilisateur (qui représente les animés favoris d'un utilisateur) */
-        $favoriteAnimes =  $user->getAnimes();
-
-        /* On crée un tableau pour stocker les id de l'API des animés favoris */
+        $favoriteAnimes = $user->getAnimes();
+        /* On crée un tableau pour stocker les ids de l'API des animés favoris */
         $favoriteAnimesApiIds = [];
-
         /* Pour chaque animés dans la collection (pour chaque animés favoris) */
         foreach($favoriteAnimes as $anime){
             /* On insère l'id de l'API dans le tableau créé */
             $favoriteAnimesApiIds[] = $anime->getIdApi();
         }
-        
         /* On appelle l'API pour obtenir les données des animés favoris */
-        $favoritesAnimesData = $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
+        $favoriteAnimesData = $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
 
-        return $this->render('user/show.html.twig',  [
+        /* On récupère la collection de personnages d'un utilisateur (qui représente les personnages favoris d'un utilisateurs) */
+        $favoriteCharacters = $user->getPersonnages();
+        /* On crée un tableau pour stocker les ids de l'API des personnages favoris */
+        $favoriteCharactersApiIds = [];
+        /* Pour chaque personnages dans la collection (pour chaque personnages favoris) */
+        foreach($favoriteCharacters as $character){
+            /* On insère l'id de l'API dans le tableau crée */
+            $favoriteCharactersApiIds[] = $character->getIdApi();
+        }
+        /* On appelle l'API pour obtenir les données des personnages favoris */
+        $favoriteCharactersData = $characterCallApiService->getMultipleCharactersDetails($favoriteCharactersApiIds);
+
+        return $this->render('user/show.html.twig', [
             'user' => $user,
-            'favoritesAnimesData' => $favoritesAnimesData['data']['Page']['media'],
+            'favoriteAnimesData' => $favoriteAnimesData['data']['Page']['media'],
+            'favoriteCharactersData' => $favoriteCharactersData['data']['Page']['characters'],
         ]);
     }
 
@@ -564,4 +575,7 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
+
+    // #[Route('user/addCharacterToFavorites/{idApi}', name: 'remove_anime_from_favorites_user')]
+    // public function addCharacterToFavorites(int $idApi){}
 }

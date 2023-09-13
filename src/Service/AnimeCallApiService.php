@@ -471,7 +471,7 @@ class AnimeCallApiService{
     }
 
     /**
-     * Fonction qui permet d'obtenir les infos nécessaires de plusieurs animé (pour l'affichage des animé favoris)
+     * Fonction qui permet d'obtenir les infos nécessaires de plusieurs animés (pour l'affichage des animés favoris)
      */
     public function getMultipleAnimeDetails(array $animeIds){
         // Définition de la query

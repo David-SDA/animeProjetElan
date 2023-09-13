@@ -42,7 +42,6 @@ security:
         - { path: ^/changePassword, roles: ROLE_USER }
         - { path: ^/user/\d+/settings, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:
