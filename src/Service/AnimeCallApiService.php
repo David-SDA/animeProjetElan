@@ -408,7 +408,7 @@ class AnimeCallApiService{
     /**
      * Fonction qui permet de récupérer les quelques détails d'un animé pour la liste
      */
-    public function getAnimeDetailsForList($animeId){
+    public function getAnimeDetailsForList(int $animeId){
         // Définition de la query
         $query = '
             query($animeId: Int){
@@ -444,7 +444,7 @@ class AnimeCallApiService{
     /**
      * Fonction qui permet de récupérer la réponse donnée par l'API pour savoir si l'anime existe
      */
-    public function getApiResponse($animeId){
+    public function getApiResponse(int $animeId){
         // Définition de la query
         $query = '
             query($animeId: Int){
@@ -468,5 +468,54 @@ class AnimeCallApiService{
         ]);
 
         return $response->getStatusCode();
+    }
+
+    /**
+     * Fonction qui permet d'obtenir les infos nécessaires de plusieurs animé (pour l'affichage des animé favoris)
+     */
+    public function getMultipleAnimeDetails(array $animeIds){
+        // Définition de la query
+        $query = '
+            query($animeIds: [Int]){
+                Page(page: 1, perPage: 50){
+                    media(id_in: $animeIds, type: ANIME, sort: TITLE_ROMAJI, isAdult: false){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                            color
+                        }
+                        genres
+                        episodes
+                        format
+                        studios{
+                            edges{
+                                isMain
+                                node{
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+        
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'animeIds' => $animeIds,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
     }
 }

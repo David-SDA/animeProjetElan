@@ -216,7 +216,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('user/animeList/removeAnime/{id}', name: 'remove_anime_from_list_user')]
-    public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface){
+    public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur actuel n'est pas celui à qui appartient l'instance de la liste, il n'a pas accès à la suppression de celui-ci */

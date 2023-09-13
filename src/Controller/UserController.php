@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
+use App\Service\AnimeCallApiService;
 use App\Service\HomeCallApiService;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
@@ -371,7 +372,7 @@ class UserController extends AbstractController
         ]);
     }
 
-/* Changement des infos de l'utilisateur connecté */
+    /* Changement des infos de l'utilisateur connecté */
     #[Route(path: 'user/settings/changeInfos', name: 'change_infos_user')]
     public function changeInfos(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
@@ -445,10 +446,25 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{id}', name: 'show_user')]
-    public function show(User $user, HomeCallApiService $homeCallApiService): Response{
+    public function show(User $user, AnimeCallApiService $animeCallApiService): Response{
+        /* On récupère la collection d'animés d'un utilisateur (qui représente les animés favoris d'un utilisateur) */
+        $favoriteAnimes =  $user->getAnimes();
+
+        /* On crée un tableau pour stocker les id de l'API des animés favoris */
+        $favoriteAnimesApiIds = [];
+
+        /* Pour chaque animés dans la collection (pour chaque animés favoris) */
+        foreach($favoriteAnimes as $anime){
+            /* On insère l'id de l'API dans le tableau créé */
+            $favoriteAnimesApiIds[] = $anime->getIdApi();
+        }
+        
+        /* On appelle l'API pour obtenir les données des animés favoris */
+        $favoritesAnimesData = $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
+
         return $this->render('user/show.html.twig',  [
             'user' => $user,
-            'dataTopTenAnime' => $homeCallApiService->getTopTenAnime(), // Test visuel uniquement, à retirer
+            'favoritesAnimesData' => $favoritesAnimesData['data']['Page']['media'],
         ]);
     }
 }
