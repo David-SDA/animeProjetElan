@@ -107,4 +107,33 @@ class CharacterCallApiService{
 
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
+
+    /**
+     * Fonction qui permet de récupérer la réponse données par l'API pour savoir si le personnage existe
+     */
+    public function getApiResponse(int $characterId){
+        // Définition de la query
+        $query = '
+            query($characterId: Int){
+                Character(id: $animeId){
+                    id
+                } 
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'characterId' => $characterId,
+        ];
+
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->getStatusCode();
+    }
 }

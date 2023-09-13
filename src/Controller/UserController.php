@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Personnage;
 use App\Entity\User;
 use App\Entity\Anime;
+use App\Repository\PersonnageRepository;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
@@ -544,6 +546,70 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
 
+    #[Route('user/addCharacterToFavorites/{idApi}', name: 'remove_anime_from_favorites_user')]
+    public function addCharacterToFavorites(int $idApi, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CharacterCallApiService $characterCallApiService){
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On cherche si le personnage est déjà dans la base de données */
+        $characterInDatabase = $personnageRepository->findOneBy(['idApi' => $idApi]);
+        /* Si le personnage n'est pas dans la base de données */
+        if(!$characterInDatabase){
+            /* Et si le personnage existe dans l'API */
+            if($characterCallApiService->getApiResponse($idApi) === Response::HTTP_OK){
+                /* On crée une instance de personnage dans lequel on y définit l'id de l'API */
+                $characterInDatabase = new Personnage();
+                $characterInDatabase->setIdApi($idApi);
+                $entityManagerInterface->persist($characterInDatabase);
+            }
+            else{
+                /* Sinon on indique que le personnage n'existe pas (dans l'API) */
+                $this->addFlash(
+                    'error',
+                    'This character does not exist'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
+        else{
+            /* On crée une variable pour déterminer si le personnage est dans les personnages favoris de l'utilisateur, on définit que de base, il n'y est pas */
+            $characterIsInFavorites = false;
+            /* Pour chaque personnage dans la collection de personnages de l'utilisateur (qui représente les personnages favoris de l'utilisateur) */
+            foreach($user->getPersonnages() as $character){
+                /* On vérifie si l'id de l'API correspond à l'id du personnage de la page actuelle */
+                if($character->getIdApi() === $idApi){
+                    /* Dès que l'on trouve une correspondance, cela veut dire que le personnage est bien dans les personnages favoris de l'utilisateur et on stop la boucle dès que cela arrive */
+                    $characterIsInFavorites = true;
+                    break;
+                }
+            }
+            /* Si le personnage est déjà dans les favoris de l'utilisateur */
+            if($characterIsInFavorites){
+                /* On lui indique */
+                $this->addFlash(
+                    'error',
+                    'You cannot add a character to your favorites if it already is'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+            }
+        }
+
+        /* On ajoute le personnage à la collection de personnage d'un utilisateur (et donc à ses favoris) */
+        $user->addPersonnage($characterInDatabase);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
+    }
+
     #[Route('user/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
     public function removeAnimeFromFavorites(Anime $anime, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
@@ -576,6 +642,4 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
 
-    // #[Route('user/addCharacterToFavorites/{idApi}', name: 'remove_anime_from_favorites_user')]
-    // public function addCharacterToFavorites(int $idApi){}
 }

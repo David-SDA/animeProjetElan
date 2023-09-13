@@ -13,7 +13,11 @@
                     <figure>
                         <img src="{{ dataThisCharacter.image.large }}" alt="{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "Unknown" }}" class="characterTopContentImage">
                     </figure>
-                    <button class="animeButtonAddTo favorites">Add to your favorites</button>
+                    {% if app.user and not characterIsInFavorites %}
+                        <a href="{{ path('remove_anime_from_favorites_user', { idApi : dataThisCharacter.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
+                    {% elseif app.user and characterIsInFavorites and characterInDatabase %}
+                        <a href="#" class="animeButtonAddTo favorites">Remove from favorites</a>
+                    {% endif %}
                 </div>
                 <div class="characterTopContentCenterContainer">
                     <h1 class="characterPartTitle">{{ dataThisCharacter.name.full ? dataThisCharacter.name.full : "?" }}</h1>
