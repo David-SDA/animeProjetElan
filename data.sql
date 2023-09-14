@@ -123,12 +123,14 @@ CREATE TABLE IF NOT EXISTS `personnage` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_api` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.personnage : ~2 rows (environ)
+-- Listage des données de la table animeprojetelan.personnage : ~4 rows (environ)
 INSERT INTO `personnage` (`id`, `id_api`) VALUES
 	(1, 90169),
-	(2, 124790);
+	(2, 124790),
+	(3, 66173),
+	(4, 66171);
 
 -- Listage de la structure de table animeprojetelan. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -181,7 +183,7 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`,
 	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 0),
 	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 0),
 	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, NULL, NULL, NULL, 1, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 0),
-	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-65015d0343c29.jpg', '2023-09-05', 'France', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$oU2K0lXIlVcWHjcAz/NW.ei/YMp6NaU/GF03d6b6xFSQO2TnM2e8O', 1, 0),
+	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-6502fdd6e8db1.jpg', '2023-09-05', 'France', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$oU2K0lXIlVcWHjcAz/NW.ei/YMp6NaU/GF03d6b6xFSQO2TnM2e8O', 1, 0),
 	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 'France', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0),
 	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 0);
 
@@ -199,7 +201,6 @@ CREATE TABLE IF NOT EXISTS `user_anime` (
 -- Listage des données de la table animeprojetelan.user_anime : ~3 rows (environ)
 INSERT INTO `user_anime` (`user_id`, `anime_id`) VALUES
 	(13, 1),
-	(13, 2),
 	(13, 10);
 
 -- Listage de la structure de table animeprojetelan. user_personnage

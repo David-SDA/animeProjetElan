@@ -543,7 +543,7 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
+        return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 
     #[Route('user/addCharacterToFavorites/{idApi}', name: 'add_character_to_favorites_user')]
@@ -639,7 +639,7 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
+        return $this->redirectToRoute('show_anime', ['id' => $animeInDatabase->getIdApi()]);
     }
 
     #[Route('user/removeCharacterFromFavorites/{id}', name: 'remove_character_from_favorites_user')]
