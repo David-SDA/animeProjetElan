@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         {% block stylesheets %}
@@ -47,9 +46,6 @@
                 </div>
                 <div class="navBarProfile">
                     {% if app.user %}
-                        {# <div class="navBarButtons">
-                            <a href="{{ path('app_logout') }}" class="navBarButton">LOGOUT</a>
-                        </div> #}
                         <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
                             <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
                             <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">

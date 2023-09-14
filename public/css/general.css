@@ -133,13 +133,29 @@ a{
 
 /* Les boutons de connexion/inscription */
 .navBarButtons{
-    
+    display: flex;
 }
 
 /* Un bouton de connexion/inscription */
 .navBarButton{
-
+    display: grid;
+    place-items: center;
+    height: 43px;
+    width: 131px;
+    background-color: #00BFFF;
+    font-weight: 600;
+    font-size: 1.25em;
+    color: #fff;
+    margin: 0 0.5em;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
+.navBarButton:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
 
 /* La partie de profile (partie droite de la barre de navigation) */
 .navBarProfile{

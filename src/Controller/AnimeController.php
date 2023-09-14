@@ -56,13 +56,16 @@ class AnimeController extends AbstractController
         /* On crée une variable pour déterminer si l'animé est dans les animés favoris de l'utilisateur, on définit que de base, il n'y est pas */
         $animeIsInFavorites = false;
 
-        /* Pour chaque animés dans la collection d'animés de l'utilisateur (qui représente les animés favoris de l'utilisateur) */
-        foreach($currentUser->getAnimes() as $anime){
-            /* On vérifie si l'id de l'API correspond à l'id de l'animé de la page actuelle */
-            if($anime->getIdApi() === $id){
-                /* Dès que l'on trouve une correspondance, cela veut dire que l'animé est bien dans les animés favoris de l'utilisateur et on stop la boucle dès que cela arrive */
-                $animeIsInFavorites = true;
-                break;
+        /* Si l'utilisateur est connecté */
+        if($currentUser){
+            /* Pour chaque animés dans la collection d'animés de l'utilisateur (qui représente les animés favoris de l'utilisateur) */
+            foreach($currentUser->getAnimes() as $anime){
+                /* On vérifie si l'id de l'API correspond à l'id de l'animé de la page actuelle */
+                if($anime->getIdApi() === $id){
+                    /* Dès que l'on trouve une correspondance, cela veut dire que l'animé est bien dans les animés favoris de l'utilisateur et on stop la boucle dès que cela arrive */
+                    $animeIsInFavorites = true;
+                    break;
+                }
             }
         }
 
