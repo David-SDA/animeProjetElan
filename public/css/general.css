@@ -10,20 +10,24 @@ body{
 a{
     text-decoration: none;
 }
+ul{
+    list-style-type: none;
+}
 
 /* Le contenu complet de la barre de navigation */
 .navBarContainer{
+    position: relative;
     height: 4em;
     background-color: #48466D;
     color: #fff;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 /* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
 .navBarAdmin{
+    position: absolute;
     width: 200px;
     background-color: #D32F2F;
     padding: 0.5em 1em;
@@ -33,12 +37,20 @@ a{
     margin-left: 1em;
     text-align: center;
     color: #fff;
+    z-index: 1;
     transition: all 0.25s ease;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 .navBarAdmin:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
+}
+
+.navBarContent{
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navBarNoAdmin{
@@ -48,12 +60,9 @@ a{
 
 /* Barre de navigation */
 .navBar{
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
 /* Un élément de la liste de la barre de navigation */
@@ -159,6 +168,8 @@ a{
 
 /* La partie de profile (partie droite de la barre de navigation) */
 .navBarProfile{
+    position: absolute;
+    right: 0;
     width: 200px;
     display: flex;
     flex-direction: row;

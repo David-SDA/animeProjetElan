@@ -23,14 +23,12 @@
         {% endblock %}
     </head>
     <body>
-        <nav>
-            <ul class="navBarContainer">
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="#" class="navBarAdmin">ADMIN SPACE</a>
-                {% else %}
-                    <div class="navBarNoAdmin"></div>
-                {% endif %}
-                <div class="navBar">
+        <div class="navBarContainer">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="#" class="navBarAdmin">ADMIN SPACE</a>
+            {% endif %}
+            <nav class="navBar">
+                <ul class="navBarContent">
                     <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
                     <li class="navBarElementDropdown">
                         <button class="navBarElementDropdownButton">ANIME</button>
@@ -42,23 +40,23 @@
                     </li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>
-                    <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li>
-                </div>
-                <div class="navBarProfile">
-                    {% if app.user %}
-                        <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
-                            <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
-                            <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
-                        </a>
-                    {% else %}
-                        <div class="navBarButtons">
-                            <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
-                            <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
-                        </div>
-                    {% endif %}
-                </div>
-            </ul>
-        </nav>
+                    {# <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li> #} 
+                </ul>
+            </nav>
+            <div class="navBarProfile">
+                {% if app.user %}
+                    <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
+                        <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
+                        <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                    </a>
+                {% else %}
+                    <div class="navBarButtons">
+                        <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
+                        <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
         {% block body %}
         {% endblock %}
     </body>
