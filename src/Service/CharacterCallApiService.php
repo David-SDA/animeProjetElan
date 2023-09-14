@@ -115,7 +115,7 @@ class CharacterCallApiService{
         // Définition de la query
         $query = '
             query($characterId: Int){
-                Character(id: $animeId){
+                Character(id: $characterId){
                     id
                 } 
             }

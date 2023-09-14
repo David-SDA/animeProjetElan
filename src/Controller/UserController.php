@@ -546,7 +546,7 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
 
-    #[Route('user/addCharacterToFavorites/{idApi}', name: 'remove_anime_from_favorites_user')]
+    #[Route('user/addCharacterToFavorites/{idApi}', name: 'add_character_to_favorites_user')]
     public function addCharacterToFavorites(int $idApi, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CharacterCallApiService $characterCallApiService){
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
@@ -573,7 +573,7 @@ class UserController extends AbstractController
                     'This character does not exist'
                 );
 
-                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+                return $this->redirectToRoute('show_character', ['id' => $idApi]);
             }
         }
         else{
@@ -596,7 +596,7 @@ class UserController extends AbstractController
                     'You cannot add a character to your favorites if it already is'
                 );
 
-                return $this->redirectToRoute('show_anime', ['id' => $idApi]);
+                return $this->redirectToRoute('show_character', ['id' => $idApi]);
             }
         }
 
@@ -607,7 +607,7 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
+        return $this->redirectToRoute('show_character', ['id' => $idApi]);
     }
 
     #[Route('user/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
