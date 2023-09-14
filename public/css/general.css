@@ -17,7 +17,7 @@ ul{
 /* Le contenu complet de la barre de navigation */
 .navBarContainer{
     position: relative;
-    height: 4em;
+    height: 6vh;
     background-color: #48466D;
     color: #fff;
     display: flex;
@@ -28,13 +28,13 @@ ul{
 /* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
 .navBarAdmin{
     position: absolute;
-    width: 200px;
+    width: 150px;
     background-color: #D32F2F;
     padding: 0.5em 1em;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 1.25em;
-    margin-left: 1em;
+    font-size: 1em;
+    margin-left: 0.5em;
     text-align: center;
     color: #fff;
     z-index: 1;
@@ -46,16 +46,12 @@ ul{
     filter: saturate(150%);
 }
 
+/* Le contenu de la barre de navigation */
 .navBarContent{
-    height: 4em;
+    height: 6vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.navBarNoAdmin{
-    width: 200px;
-    margin-left: 1em;
 }
 
 /* Barre de navigation */
@@ -68,7 +64,7 @@ ul{
 /* Un élément de la liste de la barre de navigation */
 .navBarElement{
     height: 100%;
-    width: 10em;
+    width: 8em;
 }
 .navBarElement:hover{
     background-color: #4169E1;
@@ -80,7 +76,7 @@ ul{
     height: 100%;
     text-decoration: none;
     color: #fff;
-    font-size: 1.25em;
+    font-size: 1em;
     font-weight: 600;
     display: flex;
     justify-content: center;
@@ -90,7 +86,7 @@ ul{
 /* Un élément de la liste de la barre de navigation qui est un menu déroulant */
 .navBarElementDropdown{
     height: 100%;
-    width: 10em;
+    width: 8em;
     position: relative;
 }
 .navBarElementDropdown:hover{
@@ -107,7 +103,7 @@ ul{
     background-color: transparent;
     border: none;
     color: #fff;
-    font-size: 1.25em;
+    font-size: 1em;
     font-weight: 600;
     cursor: pointer;
 }
@@ -139,48 +135,20 @@ ul{
     border-bottom-right-radius: 10px;
 }
 
-
-/* Les boutons de connexion/inscription */
-.navBarButtons{
-    display: flex;
-}
-
-/* Un bouton de connexion/inscription */
-.navBarButton{
-    display: grid;
-    place-items: center;
-    height: 43px;
-    width: 131px;
-    background-color: #00BFFF;
-    font-weight: 600;
-    font-size: 1.25em;
-    color: #fff;
-    margin: 0 0.5em;
-    border-radius: 10px;
-    transition: all 0.25s ease;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-.navBarButton:hover{
-    transform: translateY(-2px);
-    filter: saturate(150%);
-}
-
-
-/* La partie de profile (partie droite de la barre de navigation) */
+/* La partie de profil (partie droite de la barre de navigation) */
 .navBarProfile{
     position: absolute;
     right: 0;
-    width: 200px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 1em;
 }
 
 /* Le contenu de la partie en haut à droite de la page pour accéder au profil */
 .navBarProfileContainer{
     display: flex;
+    width: 200px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -203,7 +171,29 @@ ul{
 
 /* L'image de profil de l'utilisateur connecté */
 .navBarProfilePicture{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 5px;
+}
+
+/* Un bouton de connexion/inscription */
+.navBarButton{
+    display: grid;
+    place-items: center;
+    height: 40px;
+    width: 100px;
+    background-color: #00BFFF;
+    font-weight: 600;
+    font-size: 1em;
+    color: #fff;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.navBarButton:last-child{
+    margin: 0 0.5em;
+}
+.navBarButton:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
 }
