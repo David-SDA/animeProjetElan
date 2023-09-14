@@ -642,4 +642,35 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
     }
 
+    #[Route('user/removeCharacterFromFavorites/{id}', name: 'remove_character_from_favorites_user')]
+    public function removeCharacterFromFavorites(Personnage $personnage, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On cherche si le personnage est déjà dans la base de données */
+        $characterInDatabase = $personnageRepository->find($personnage);
+        /* Si le personnage n'existe pas */
+        if(!$characterInDatabase){
+            /* Il ne peut pas être dans les favoris d'un utilisateur, alors on l'indique */
+            $this->addFlash(
+                'error',
+                'This character does not exist'
+            );
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On enlève le personnage à la collection de personnage d'un utilisateur (et donc à ses favoris) */
+        $user->removePersonnage($characterInDatabase);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('show_character', ['id' => $characterInDatabase->getIdApi()]);
+    }
 }
