@@ -17,7 +17,7 @@ ul{
 /* Le contenu complet de la barre de navigation */
 .navBarContainer{
     position: relative;
-    height: 6vh;
+    height: 50px;
     background-color: #48466D;
     color: #fff;
     display: flex;
@@ -48,7 +48,7 @@ ul{
 
 /* Le contenu de la barre de navigation */
 .navBarContent{
-    height: 6vh;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,11 +148,11 @@ ul{
 /* Le contenu de la partie en haut à droite de la page pour accéder au profil */
 .navBarProfileContainer{
     display: flex;
-    width: 200px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 0.3em;
+    margin-right: 0.5em;
     border-radius: 5px;
     transition: all 0.25s ease;
 }
@@ -180,8 +180,8 @@ ul{
 .navBarButton{
     display: grid;
     place-items: center;
-    height: 40px;
-    width: 100px;
+    padding: 0.5em 0;
+    width: 110px;
     background-color: #00BFFF;
     font-weight: 600;
     font-size: 1em;

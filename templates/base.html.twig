@@ -24,9 +24,9 @@
     </head>
     <body>
         <div class="navBarContainer">
-            {# {% if is_granted('ROLE_ADMIN') %} #}
+            {% if is_granted('ROLE_ADMIN') %}
                 <a href="#" class="navBarAdmin">ADMIN SPACE</a>
-            {# {% endif %} #}
+            {% endif %}
             <nav class="navBar">
                 <ul class="navBarContent">
                     <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
