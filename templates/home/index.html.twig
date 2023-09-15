@@ -11,13 +11,13 @@
     <main class="homeContainer">
         <section>
             <h2 class="homeSecondaryTitle">BEST THIS SEASON</h2>
-            <section class="homeMultipleAnimes">
+            <div class="homeMultipleAnimes">
                 {% for media in dataBestAnimeThisSeason.data.Page.media %}
                     <figure class="homeOneAnime">
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                                <section class="homeHoverContent">
+                                <div class="homeHoverContent">
                                     <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
                                     <p class="homeOneAnimeInfoSmallerInfos">
                                         {% if media.episodes %}
@@ -50,23 +50,23 @@
                                             <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
                                         {% endfor %}
                                     </div>
-                                </section>
+                                </div>
                             </div>
-                            <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
                         </a>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji }}</a></figcaption>
                     </figure>
                 {% endfor %}
-            </section>
+            </div>
         </section>
         <section>
             <h2 class="homeSecondaryTitle">NEXT SEASON</h2>
-            <section class="homeMultipleAnimes">
+            <div class="homeMultipleAnimes">
                 {% for media in dataNextSeasonAnime.data.Page.media %}
                     <figure class="homeOneAnime">
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                                <section class="homeHoverContent">
+                                <div class="homeHoverContent">
                                     <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
                                     <p class="homeOneAnimeInfoSmallerInfos">
                                         {% if media.episodes %}
@@ -99,23 +99,23 @@
                                             <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
                                         {% endfor %}
                                     </div>
-                                </section>
+                                </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji }}</a></figcaption>
                     </figure>
                 {% endfor %}
-            </section>
+            </div>
         </section>
         <section>
             <h2 class="homeSecondaryTitle">POPULAR</h2>
-            <section class="homeMultipleAnimes">
+            <div class="homeMultipleAnimes">
                 {% for media in dataPopularAnime.data.Page.media %}
                     <figure class="homeOneAnime">
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                                <section class="homeHoverContent">
+                                <div class="homeHoverContent">
                                     <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
                                     <p class="homeOneAnimeInfoSmallerInfos">
                                         {% if media.episodes %}
@@ -148,27 +148,27 @@
                                             <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
                                         {% endfor %}
                                     </div>
-                                </section>
+                                </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji }}</a></figcaption>
                     </figure>
                 {% endfor %}
-            </section>
+            </div>
         </section>
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">TOP 10</h2>
                 <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore">View more</a>
             </div>
-            <section class="homeMultipleAnimes">
+            <div class="homeMultipleAnimes">
                 {% for media in dataTopTenAnime.data.Page.media %}
                     <figure class="homeOneAnime topTen">
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                             <div class="homeOneAnimeImageInfo">
                                 <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                                 <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
-                                <section class="homeHoverContent">
+                                <div class="homeHoverContent">
                                     <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
                                     <p class="homeOneAnimeInfoSmallerInfos">
                                         {% if media.episodes %}
@@ -201,13 +201,13 @@
                                             <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
                                         {% endfor %}
                                     </div>
-                                </section>
+                                </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji }}</a></figcaption>
                     </figure>
                 {% endfor %}
-            </section>
+            </div>
         </section>
     </main>
 {% endblock %}

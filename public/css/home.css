@@ -121,7 +121,7 @@
 .homeOneAnimeTitle{
     max-width: 230px;
     text-align: center;
-    margin-top: 5px;
+    padding-top: 5px;
     color: #333;
     font-weight: 600;
 }
@@ -140,4 +140,14 @@
     font-weight: 600;
     color: #fff;
     transform: translate(5px, 5px);
+}
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+
 }
