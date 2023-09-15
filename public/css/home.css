@@ -20,9 +20,10 @@
 
 /* Liste des animé d'une section */
 .homeMultipleAnimes{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(215px, 1fr));
+    grid-gap: 0 5px;
+    overflow: scroll;
 }
 
 /* Partie qui représente un animé */
@@ -144,10 +145,24 @@
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
-    
+    .homeMultipleAnimes{
+        grid-template-columns: repeat(6, minmax(140px, 1fr));
+    }
+
+    .homeOneAnimeImage{
+        width: 140px;
+        height: 195px;
+    }
 }
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
+    .homeMultipleAnimes{
+        grid-template-columns: repeat(6, minmax(175px, 1fr));
+    }
 
+    .homeOneAnimeImage{
+        width: 175px;
+        height: 245px;
+    }
 }
