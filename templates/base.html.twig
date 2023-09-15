@@ -63,10 +63,12 @@
                 const responsiveNavBarOpen = document.querySelector(".responsiveNavBarOpen");
                 const navBar = document.querySelector(".navBar");
                 const navBarContent = document.querySelector(".navBarContent");
+                const navBarAdmin = document.querySelector(".navBarAdmin");
 
                 responsiveNavBarOpen.addEventListener("click", () => {
                     navBar.classList.toggle("navBarOpen");
                     navBarContent.classList.toggle("navBarOpen");
+                    navBarAdmin.classList.toggle("navBarOpen");
                 });
             </script>
         {% endblock %}

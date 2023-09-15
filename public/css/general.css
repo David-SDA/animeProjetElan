@@ -219,7 +219,10 @@ ul{
     }
 
     .navBarAdmin{
-        display: none;
+        display: block;
+        z-index: 2;
+        bottom: -90vh;
+        margin-left: -100vw;
     }
     
     .navBar{
@@ -227,7 +230,7 @@ ul{
         transition: all 0.5s ease;
     }
 
-    .navBar.navBarOpen, .navBarContent.navBarOpen{
+    .navBar.navBarOpen, .navBarContent.navBarOpen, .navBarAdmin.navBarOpen{
         margin-left: 0;
     }
 
@@ -237,9 +240,20 @@ ul{
         position: absolute;
         top: 0;
         flex-direction: column;
+        justify-content: flex-start;
         width: 100%;
         height: 100vh;
         margin-left: -100%;
+        padding-top: 50px;
         transition: all 0.5s ease;
+    }
+    
+    .navBarElement, .navBarElementDropdown{
+        height: 10vh;
+        width: 100vw;
+    }
+
+    .navBarElementDropdownContent li, .navBarElementDropdown a{
+        height: 10vh;
     }
 }
