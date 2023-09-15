@@ -25,6 +25,19 @@ ul{
     align-items: center;
 }
 
+.responsiveNavBarOpen{
+    z-index: 2;
+    display: none;
+    background-color: #4169E1;
+    margin-left: 0.25em;
+    width: 40px;
+    height: 40px;
+    font-size: 2em;
+    border-radius: 10px;
+    place-items: center;
+    cursor: pointer;
+}
+
 /* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
 .navBarAdmin{
     position: absolute;
@@ -59,6 +72,7 @@ ul{
     position: absolute;
     left: 0;
     right: 0;
+    top: 0;
 }
 
 /* Un élément de la liste de la barre de navigation */
@@ -196,4 +210,36 @@ ul{
 .navBarButton:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
+}
+
+/* Pour tablette et mobile */
+@media screen and (max-width: 1024px){
+    .responsiveNavBarOpen{
+        display: grid;
+    }
+
+    .navBarAdmin{
+        display: none;
+    }
+    
+    .navBar{
+        margin-left: -110%;
+        transition: all 0.5s ease;
+    }
+
+    .navBar.navBarOpen, .navBarContent.navBarOpen{
+        margin-left: 0;
+    }
+
+    .navBarContent{
+        z-index: 1;
+        background-color: #48466D;
+        position: absolute;
+        top: 0;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+        margin-left: -100%;
+        transition: all 0.5s ease;
+    }
 }

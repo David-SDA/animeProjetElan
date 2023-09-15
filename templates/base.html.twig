@@ -24,9 +24,10 @@
     </head>
     <body>
         <div class="navBarContainer">
-            {% if is_granted('ROLE_ADMIN') %}
+            <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
+            {# {% if is_granted('ROLE_ADMIN') %} #}
                 <a href="#" class="navBarAdmin">ADMIN SPACE</a>
-            {% endif %}
+            {# {% endif %} #}
             <nav class="navBar">
                 <ul class="navBarContent">
                     <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
@@ -41,7 +42,7 @@
                     <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>
                     {# <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li> #} 
-                </ul>
+                </ul>    
             </nav>
             <div class="navBarProfile">
                 {% if app.user %}
@@ -56,6 +57,18 @@
             </div>
         </div>
         {% block body %}
+        {% endblock %}
+        {% block javascript %}
+            <script>
+                const responsiveNavBarOpen = document.querySelector(".responsiveNavBarOpen");
+                const navBar = document.querySelector(".navBar");
+                const navBarContent = document.querySelector(".navBarContent");
+
+                responsiveNavBarOpen.addEventListener("click", () => {
+                    navBar.classList.toggle("navBarOpen");
+                    navBarContent.classList.toggle("navBarOpen");
+                });
+            </script>
         {% endblock %}
     </body>
 </html>
