@@ -25,9 +25,9 @@
     <body>
         <div class="navBarContainer">
             <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
-            {# {% if is_granted('ROLE_ADMIN') %} #}
+            {% if is_granted('ROLE_ADMIN') %}
                 <a href="#" class="navBarAdmin">ADMIN SPACE</a>
-            {# {% endif %} #}
+            {% endif %}
             <nav class="navBar">
                 <ul class="navBarContent">
                     <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
@@ -41,7 +41,7 @@
                     </li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>
-                    {# <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li> #} 
+                    {# <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li>  #}
                 </ul>    
             </nav>
             <div class="navBarProfile">
@@ -60,15 +60,17 @@
         {% endblock %}
         {% block javascript %}
             <script>
+                /* On récupère l'élement qui ouvre la barre de navigation et la barre de navigation */
                 const responsiveNavBarOpen = document.querySelector(".responsiveNavBarOpen");
                 const navBar = document.querySelector(".navBar");
                 const navBarContent = document.querySelector(".navBarContent");
-                const navBarAdmin = document.querySelector(".navBarAdmin");
 
+                /* On ajoute un écouter du click sur l'élement qui ouvre la barre de navigation */
                 responsiveNavBarOpen.addEventListener("click", () => {
+                    /* Si on clique sur la barre de navigation, on ajoute différentes classes */
                     navBar.classList.toggle("navBarOpen");
                     navBarContent.classList.toggle("navBarOpen");
-                    navBarAdmin.classList.toggle("navBarOpen");
+                    document.body.classList.toggle("navBarNotScroll");
                 });
             </script>
         {% endblock %}
