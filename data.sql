@@ -250,12 +250,12 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
 
 -- Listage des données de la table animeprojetelan.user_regarder_anime : ~9 rows (environ)
 INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
-	(1, 13, 1, 'Watching', 5, '2023-09-07', '2023-09-11'),
+	(1, 13, 1, 'Watching', 2, '2023-09-07', '2023-09-11'),
 	(2, 13, 2, 'Watching', 9, NULL, NULL),
 	(4, 13, 4, 'Completed', 24, NULL, NULL),
 	(5, 1, 1, 'Completed', 25, NULL, NULL),
-	(6, 13, 5, 'Watching', 8, NULL, NULL),
-	(8, 13, 8, 'Watching', 0, NULL, NULL),
+	(6, 13, 5, 'Watching', 12, NULL, NULL),
+	(8, 13, 8, 'Watching', 1, NULL, NULL),
 	(10, 13, 9, 'Completed', 13, NULL, NULL),
 	(11, 13, 6, 'Plan to watch', 0, NULL, NULL),
 	(12, 13, 3, 'Plan to watch', 0, NULL, NULL);
