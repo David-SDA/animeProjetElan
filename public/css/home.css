@@ -25,9 +25,21 @@
     grid-gap: 0 5px;
     overflow: scroll;
 }
+.homeMultipleAnimes.topTen{
+    grid-template-columns: repeat(5, minmax(215px, 1fr));
+}
+.homeMultipleAnimes::-webkit-scrollbar{
+    height: 7px;
+}
+.homeMultipleAnimes::-webkit-scrollbar-track{
+    display: none;
+}
+.homeMultipleAnimes::-webkit-scrollbar-thumb{
+    background-color: #bbb;
+    border-radius: 10px;
+}
 
 /* Partie qui représente un animé */
-/* (Utilisé dans la page de description d'un personnage) */
 .homeOneAnime{
     display: flex;
     flex-direction: column;
@@ -35,15 +47,11 @@
     width: min-content;
     margin: 1em 0;
 }
-.homeOneAnime.topTen{
-    flex-basis: 20%;
-}
 .homeOneAnime.top{
     margin: 1em;
 }
 .homeOneAnime:hover .homeHoverContent{
     opacity: 1;
-    top: 0;
 }
 
 /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
@@ -146,23 +154,37 @@
 /* Pour mobile */
 @media screen and (max-width: 767px){
     .homeMultipleAnimes{
-        grid-template-columns: repeat(6, minmax(140px, 1fr));
+        grid-template-columns: repeat(3, minmax(140px, 1fr));
+    }
+    .homeMultipleAnimes.topTen{
+        grid-template-columns: repeat(5, minmax(140px, 1fr));
     }
 
     .homeOneAnimeImage{
         width: 140px;
         height: 195px;
     }
+
+    .homeHoverContent{
+        display: none;
+    }
 }
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
     .homeMultipleAnimes{
-        grid-template-columns: repeat(6, minmax(175px, 1fr));
+        grid-template-columns: repeat(3, minmax(175px, 1fr));
+    }
+    .homeMultipleAnimes.topTen{
+        grid-template-columns: repeat(5, minmax(175px, 1fr));
     }
 
     .homeOneAnimeImage{
         width: 175px;
         height: 245px;
+    }
+
+    .homeHoverContent{
+        display: none;
     }
 }

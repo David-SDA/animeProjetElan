@@ -161,9 +161,9 @@
                 <h2 class="homeSecondaryTitle">TOP 10</h2>
                 <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore">View more</a>
             </div>
-            <div class="homeMultipleAnimes">
+            <div class="homeMultipleAnimes topTen">
                 {% for media in dataTopTenAnime.data.Page.media %}
-                    <figure class="homeOneAnime topTen">
+                    <figure class="homeOneAnime">
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}">
                             <div class="homeOneAnimeImageInfo">
                                 <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
