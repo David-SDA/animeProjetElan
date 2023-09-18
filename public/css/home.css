@@ -2,7 +2,8 @@
 .homeTitle{
     text-align: center;
     color: #333;
-    margin: 1em 0;
+    margin: 0.5em 0;
+    padding: 0.5em;
 }
 
 /* Contenu de toute la page */
@@ -22,17 +23,20 @@
 .homeMultipleAnimes{
     display: grid;
     grid-template-columns: repeat(6, minmax(215px, 1fr));
-    grid-gap: 0 5px;
-    overflow: scroll;
+    grid-gap: 0 25px;
+    justify-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 .homeMultipleAnimes.topTen{
-    grid-template-columns: repeat(5, minmax(215px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
 }
 .homeMultipleAnimes::-webkit-scrollbar{
     height: 7px;
 }
 .homeMultipleAnimes::-webkit-scrollbar-track{
-    display: none;
+    background-color: transparent;
+    border-radius: 10px;
 }
 .homeMultipleAnimes::-webkit-scrollbar-thumb{
     background-color: #bbb;
@@ -45,7 +49,7 @@
     flex-direction: column;
     align-items: center;
     width: min-content;
-    margin: 1em 0;
+    margin: 0.5em 0;
 }
 .homeOneAnime.top{
     margin: 1em;
@@ -70,10 +74,10 @@
     height: 300px;
     width: 215px;
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-/* (Utilisé dans la page de description d'un personnage) */
 .homeHoverContent{
     position: absolute;
     border-radius: 10px;
@@ -128,6 +132,10 @@
 /* Le titre de l'animé en dessous de l'image de l'animé */
 /* (Utilisé dans la page de description d'un personnage) */
 .homeOneAnimeTitle{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     max-width: 230px;
     text-align: center;
     padding-top: 5px;
@@ -153,11 +161,22 @@
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
+    .homeContainer{
+        width: 95%;
+    }
+
+    .homeSecondaryTitle{
+        font-size: 1.25em;
+    }
+
     .homeMultipleAnimes{
         grid-template-columns: repeat(3, minmax(140px, 1fr));
+        grid-gap: 0 15px;
     }
+
     .homeMultipleAnimes.topTen{
-        grid-template-columns: repeat(5, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-gap: 0 15px;
     }
 
     .homeOneAnimeImage{
@@ -172,11 +191,12 @@
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
-    .homeMultipleAnimes{
-        grid-template-columns: repeat(3, minmax(175px, 1fr));
+    .homeContainer{
+        width: 90%;
     }
-    .homeMultipleAnimes.topTen{
-        grid-template-columns: repeat(5, minmax(175px, 1fr));
+    
+    .homeMultipleAnimes, .homeMultipleAnimes.topTen{
+        grid-template-columns: repeat(3, minmax(175px, 1fr));
     }
 
     .homeOneAnimeImage{

@@ -173,7 +173,7 @@
 /* Le texte qui permet de voir plus (de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartMore{
     font-weight: 500;
-    font-size: 1.25em;
+    font-size: 1em;
     color: #333333;
     text-decoration: none;
     align-self: end;
