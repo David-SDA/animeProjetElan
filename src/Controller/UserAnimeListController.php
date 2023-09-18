@@ -162,7 +162,7 @@ class UserAnimeListController extends AbstractController
     public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
         }
@@ -219,7 +219,7 @@ class UserAnimeListController extends AbstractController
     public function addEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter un episode */
+        /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter un episode */
         if(!$user){
             return $this->redirectToRoute('app_home');
         }
@@ -260,6 +260,54 @@ class UserAnimeListController extends AbstractController
 
         /* On rajoute un épisode à l'animé */
         $userRegarderAnime->setNombreEpisodeVu($currentEpisodesWatched + 1);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($userRegarderAnime);
+        $entityManagerInterface->flush();
+
+        /* On revient sur la liste d'animé de l'utilisateur */
+        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+    }
+
+    #[Route('user/animeList/removeEpisode/{id}', name: 'remove_episode_anime_list_user')]
+    public function removeEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empêche de supprimer un episode */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur n'est pas celui à qui appartient l'instance de la liste, on l'empêche de supprimer un episode */
+        if($userRegarderAnime->getUser() != $user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'animé auquel on veut supprimer un épisode n'est pas un animé qui est en cours de visionnage */
+        if($userRegarderAnime->getEtat() !== 'Watching'){
+            /* On l'en empêche, on l'indique et on revient à la liste */
+            $this->addFlash(
+                'error',
+                'This is not currently watched'
+            );
+            return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        }
+
+        /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
+        $currentEpisodesWatched = $userRegarderAnime->getNombreEpisodeVu();
+
+        /* Si le nombre d'épisode vu est déjà de 0, on l'empêche de supprimer un épisode */
+        if($currentEpisodesWatched === 0){
+            /* On l'en empêche la suppression d'épisode, on l'indique et on revient à la liste */
+            $this->addFlash(
+                'error',
+                'You cannot go under 0 episodes'
+            );
+            return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        }
+
+        /* On enlève un épisode à l'animé */
+        $userRegarderAnime->setNombreEpisodeVu($currentEpisodesWatched - 1);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($userRegarderAnime);
