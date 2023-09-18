@@ -20,7 +20,7 @@ class UserAnimeListController extends AbstractController
     #[Route('user/{id}/animeList', name: 'anime_list_user')]
     public function animeList(User $user, AnimeCallApiService $animeCallApiService): Response{
         /* On crée un tableau avec les 3 états possible d'un animé dans une liste */
-        $animeByState = [
+        $animesByState = [
             'Watching' => [],
             'Completed' => [],
             'Plan to watch' => [],
@@ -29,14 +29,14 @@ class UserAnimeListController extends AbstractController
         /* Pour chaque instance dans la liste d'un utilisateur, on intégre au tableau l'anime de la base de données concerné en fonction de son état  */
         foreach($user->getUserRegarderAnimes() as $userAnime){
             $state = $userAnime->getEtat();
-            $animeByState[$state][] = $userAnime;
+            $animesByState[$state][] = $userAnime;
         }
         
         /* Création de la variable pour les données des animés */
-        $animeDataByState = [];
+        $animesDataByState = [];
         
         /* Pour chaque état dans le tableau ($state => $userAnimes : permet d'avoir accès aux clés, ici l'état) */
-        foreach($animeByState as $state => $userAnimes){
+        foreach($animesByState as $state => $userAnimes){
             /* On crée un tableau d'ids (ids pour l'API) */
             $animeIds = [];
             
@@ -50,7 +50,7 @@ class UserAnimeListController extends AbstractController
             $animeData = $animeCallApiService->getAnimesFromList($animeIds);
             
             /* On crée un tableau associatifs avec l'état et données de l'API */
-            $animeDataByState[$state] = [];
+            $animesDataByState[$state] = [];
     
             /* Pour chaque animé dans la liste d'un utilisateur */
             foreach($userAnimes as $userAnime){
@@ -59,7 +59,7 @@ class UserAnimeListController extends AbstractController
                     /* Si l'id de l'anime dans l'API est le même que l'idApi de l'animé dans l'instance de la liste, 
                        on intègre les données de cette animé dans le tableau associé (ajout du nombre d'episodes vu aussi) */
                     if($userAnime->getAnime()->getIdApi() === $anime['id']){
-                        $animeDataByState[$state][$userAnime->getId()] = [
+                        $animesDataByState[$state][$userAnime->getId()] = [
                             'id' => $anime['id'],
                             'title' => $anime['title'],
                             'coverImage' => $anime['coverImage'],
@@ -73,7 +73,7 @@ class UserAnimeListController extends AbstractController
         
         return $this->render('user_anime_list/animeList.html.twig', [
             'user' => $user,
-            'animesDataByState' => $animeDataByState,
+            'animesDataByState' => $animesDataByState,
         ]);
     }
 
@@ -212,6 +212,60 @@ class UserAnimeListController extends AbstractController
         $entityManagerInterface->persist($animeInList);
         $entityManagerInterface->flush();
 
+        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+    }
+
+    #[Route('user/animeList/addEpisode/{id}', name: 'add_episode_anime_list_user')]
+    public function addEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter un episode */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur n'est pas celui à qui appartient l'instance de la liste, on l'empêche d'ajouter un episode */
+        if($userRegarderAnime->getUser() != $user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'animé auquel on veut ajouter un épisode n'est pas un animé qui est en cours de visionnage */
+        if($userRegarderAnime->getEtat() !== 'Watching'){
+            /* On l'en empêche, on l'indique et on revient à la liste */
+            $this->addFlash(
+                'error',
+                'This is not currently watched'
+            );
+            return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        }
+
+        /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
+        $currentEpisodesWatched = $userRegarderAnime->getNombreEpisodeVu();
+
+        /* On récupère les données de l'API de l'animé en question */
+        $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+
+        /* On récupère le nombre d'épisodes max de l'animé si il existe */
+        $maxEpisodes = $animeData['data']['Media']['episodes'];
+
+        /* Si il y a un maximum d'épisodes et qu'on est déjà à ce maximum (ou dépassé dans un cas où un animé n'avait pas de max d'épisode) */
+        if($maxEpisodes && $currentEpisodesWatched >= $maxEpisodes){
+            /* On l'en empêche l'ajout d'épisode, on l'indique et on revient à la liste */
+            $this->addFlash(
+                'error',
+                'You cannot go over the maximum number of episodes'
+            );
+            return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        }
+
+        /* On rajoute un épisode à l'animé */
+        $userRegarderAnime->setNombreEpisodeVu($currentEpisodesWatched + 1);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($userRegarderAnime);
+        $entityManagerInterface->flush();
+
+        /* On revient sur la liste d'animé de l'utilisateur */
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }
 

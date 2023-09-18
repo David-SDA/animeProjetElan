@@ -16,9 +16,9 @@
                 <figure>
                     <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <div class="animeEpisodesWatchedContainer">
-                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                        <a href="#"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
                         <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
-                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
                     </div>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
@@ -44,9 +44,9 @@
                 <figure>
                     <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
                     <div class="animeEpisodesWatchedContainer">
-                        <i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i>
+                        <a href="#"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
                         <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
-                        <i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i>
+                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
                     </div>
                     <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
                     <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
