@@ -46,15 +46,31 @@
             </nav>
             <div class="navBarProfile">
                 {% if app.user %}
-                    <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
-                        <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
-                        <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
-                    </a>
+                <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
+                    <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
+                    <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                </a>
                 {% else %}
-                    <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
-                    <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
+                <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
+                <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
                 {% endif %}
             </div>
+            {% if app.user %}
+                <div class="navBarUserMenu">
+                    <div class="navBarUserMenuTop">
+                        <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                        <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
+                        <i class="fa-solid fa-xmark navBarUserMenuClose"></i>
+                    </div>
+                    <ul>
+                        <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}"><i class="fa-regular fa-user"></i>Profile</a></li>
+                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
+                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
+                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
+                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
         {% block body %}
         {% endblock %}
