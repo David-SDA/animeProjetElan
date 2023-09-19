@@ -40,27 +40,6 @@ ul{
     cursor: pointer;
 }
 
-/* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
-.navBarAdmin{
-    position: absolute;
-    width: 150px;
-    background-color: #D32F2F;
-    padding: 0.5em 1em;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 1em;
-    margin-left: 0.5em;
-    text-align: center;
-    color: #fff;
-    z-index: 1;
-    transition: all 0.25s ease;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-.navBarAdmin:hover{
-    transform: translateY(-2px);
-    filter: saturate(150%);
-}
-
 /* Le contenu de la barre de navigation */
 .navBarContent{
     height: 50px;
@@ -170,6 +149,7 @@ ul{
     padding: 0.3em;
     margin-right: 0.5em;
     border-radius: 5px;
+    cursor: pointer;
     transition: all 0.25s ease;
 }
 .navBarProfileContainer:hover{
@@ -219,16 +199,20 @@ ul{
 
 /* Le menu pour un utilisateur connecté */
 .navBarUserMenu{
-    position: absolute;
+    z-index: 999;
+    position: fixed;
     top: 0;
-    right: 0;
+    right: -300px;
     width: 300px;
     height: 100vh;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     padding: 1em;
     background-color: #48466D;
-    border: 1px solid red;
+    transition: all 0.5s ease;
+}
+.navBarUserMenu.visible{
+    right: 0;
 }
 
 /* Le haut du menu pour un utilisateur connecté */
@@ -273,18 +257,53 @@ ul{
     margin-right: 0.5em;
 }
 
+/* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
+.navBarAdmin{
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+    right: 0;
+    background-color: #D32F2F;
+    margin: 0 1em;
+    padding: 0.5em 0;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1em;
+    text-align: center;
+    color: #fff;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.navBarAdmin:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
+/* Le background quand le menu de l'utilisateur est ouvert */
+.navBarUserMenuOverlay{
+    z-index: 998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+.navBarUserMenuOverlay.visible{
+    display: block;
+}
+
+/* Quand la barre de navigation est ouverte, on empèche de scroll */
+.navBarNotScroll{
+    overflow: hidden;
+}
+
 /* Pour tablette et mobile */
 @media screen and (max-width: 1024px){
     /* L'élement qui ouvre la barre de navigation */
     .responsiveNavBarOpen{
         display: grid;
-    }
-
-    /* Le bouton vers le panel d'admin (partie gauche de la barre de navigation) */
-    .navBarAdmin{
-        margin: auto;
-        left: 0;
-        right: 0;
     }
     
     /* La barre de navigation */
@@ -320,10 +339,5 @@ ul{
     /* Les éléments du menu dropdown */
     .navBarElementDropdownContent li, .navBarElementDropdown a{
         height: 10vh;
-    }
-
-    /* Quand la barre de navigation est ouverte, on empèche de scroll */
-    .navBarNotScroll{
-        overflow: hidden;
     }
 }

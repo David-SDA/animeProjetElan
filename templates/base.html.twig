@@ -25,9 +25,6 @@
     <body>
         <div class="navBarContainer">
             <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="#" class="navBarAdmin">ADMIN SPACE</a>
-            {% endif %}
             <nav class="navBar">
                 <ul class="navBarContent">
                     <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
@@ -46,10 +43,10 @@
             </nav>
             <div class="navBarProfile">
                 {% if app.user %}
-                <a href="{{ path('show_user', { id: app.user.id }) }}" class="navBarProfileContainer">
+                <div class="navBarProfileContainer">
                     <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
                     <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
-                </a>
+                </div>
                 {% else %}
                 <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
                 <a href="{{ path('app_register') }}" class="navBarButton">REGISTER</a>
@@ -64,29 +61,55 @@
                     </div>
                     <ul>
                         <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}"><i class="fa-regular fa-user"></i>Profile</a></li>
-                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('anime_list_user', { id: app.user.id }) }}"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
                         <li class="navBarUserMenuLink"><a href="#"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
-                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
-                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('settings_user') }}"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="#" class="navBarAdmin">ADMIN SPACE</a>
+                    {% endif %}
                 </div>
+                <div class="navBarUserMenuOverlay"></div>
             {% endif %}
         </div>
         {% block body %}
         {% endblock %}
         {% block javascript %}
             <script>
-                /* On récupère l'élement qui ouvre la barre de navigation et la barre de navigation */
+                /* On récupère l'élement qui ouvre la barre de navigation et le conteneur et le contenu de la barre de navigation */
                 const responsiveNavBarOpen = document.querySelector(".responsiveNavBarOpen");
                 const navBar = document.querySelector(".navBar");
                 const navBarContent = document.querySelector(".navBarContent");
+            
+                /* On récupère le conteneur du profil, le menu d'un utilisateur, la partie pour fermer le menu et l'overlay lorsque le menu est actif */
+                const navBarProfileContainer = document.querySelector(".navBarProfileContainer");
+                const navBarUserMenu = document.querySelector(".navBarUserMenu");
+                const navBarUserMenuClose = document.querySelector(".navBarUserMenuClose");
+                const navBarUserMenuOverlay = document.querySelector(".navBarUserMenuOverlay");
 
                 /* On ajoute un écouter du click sur l'élement qui ouvre la barre de navigation */
                 responsiveNavBarOpen.addEventListener("click", () => {
-                    /* Si on clique sur la barre de navigation, on ajoute différentes classes */
+                    /* Si on clique sur la barre de navigation, on ajoute/supprime différentes classes */
                     navBar.classList.toggle("navBarOpen");
                     navBarContent.classList.toggle("navBarOpen");
                     document.body.classList.toggle("navBarNotScroll");
+                });
+
+                /* On ajoute un écouteur du click sur l'élement qui sert à ouvrir le menu d'un utilisateur */
+                navBarProfileContainer.addEventListener("click", () => {
+                    /* Si on clique dessus, on ajoute différentes classes */
+                    document.body.classList.add("navBarNotScroll");
+                    navBarUserMenu.classList.add("visible");
+                    navBarUserMenuOverlay.classList.add("visible");
+                });
+
+                /* On ajoute un écouteur du click sur l'élement qui sert à fermer le menu d'un utilisateur */
+                navBarUserMenuClose.addEventListener("click", () => {
+                    /* Si on clique dessus, on ajoute différentes classes */
+                    document.body.classList.remove("navBarNotScroll");
+                    navBarUserMenu.classList.remove("visible");
+                    navBarUserMenuOverlay.classList.remove("visible");
                 });
             </script>
         {% endblock %}
