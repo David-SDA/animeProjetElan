@@ -1,7 +1,7 @@
 /* L'image de profil de l'utilisateur */
 .profileImage{
-    width: 200px;
-    height: 200px;
+    width: 175px;
+    height: 175px;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     border-radius: 5px;
 }
@@ -9,15 +9,15 @@
 /* Le pseudo de l'utilisateur */
 .profilePseudo{
     font-weight: 600;
-    font-size: 2em;
+    font-size: 1.75em;
     color: #333333;
-    margin-bottom: 0.25em;
+    margin-bottom: 0.2em;
 }
 
 /* La description de l'utilisateur */
 .profileDescription{
     font-weight: 400;
-    font-size: 1.25em;
+    font-size: 1em;
     color: #333333;
 }
 
@@ -42,7 +42,6 @@
     height: fit-content;
     background-color: #fff;
     border-radius: 10px;
-    margin-bottom: 1em;
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
 }
@@ -203,4 +202,32 @@
 /* Un text semi bold dans les paramètres */
 .settingsSemiBoldText{
     font-weight: 600;
+}
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    /* L'image de profil de l'utilisateur */
+    .profileImage{
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Le pseudo de l'utilisateur */
+    .profilePseudo{
+        font-size: 1.5em;
+    }
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* L'image de profil de l'utilisateur */
+    .profileImage{
+        width: 137.5px;
+        height: 137.5px;
+    }
+
+    /* Le pseudo de l'utilisateur */
+    .profilePseudo{
+        font-size: 1.625em;
+    }
 }

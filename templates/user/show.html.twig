@@ -4,130 +4,123 @@
 
 {% block body %}
     <main class="animeContainer">
-        <section class="animeTopContainer">
-            <div class="animeTopContent">
-                <div class="animeTopLeftContent">
-                    <figure>
-                        <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
-                    </figure>
-                </div>
-                <div class="animeTopRightContent">
-                    <h1 class="profilePseudo">{{ user.pseudo }}</h1>
-                    <p class="profileDescription">{{ user.description ? user.description : "<i>No description yet ...</i>" }}</p>
-                </div>
+        <div class="animeTopContainer">            
+            <figure>
+                <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+            </figure>
+            <div class="animeTopRightContent">
+                <h1 class="profilePseudo">{{ user.pseudo }}</h1>
+                <p class="profileDescription">{{ user.description ? user.description : '<i>No description yet ...</i>' }}</p>
             </div>
-        </section>
+        </div>
         <div class="animeRemainingContainer">
-            <div class="profileRemainingContent">
-                <div class="profileInfosLine">
-                    <div class="profileInfos">
-                        <h2 class="profileInfosTitle">Details</h2>
-                        <p class="profileInfo"><span class="profileInfoTitle">Joined : </span>{{ user.dateInscription|date("m/d/Y H:i:s") }} <i>(UTC)</i></p>
-                        <p class="profileInfo"><span class="profileInfoTitle">Date of birth : </span>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : "<i>Not specified</i>" }}</p>
-                        {% if user.pays and user.ville %}
-                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays }}, {{ user.ville }}</p>
-                        {% elseif user.pays and not user.ville or not user.pays and user.ville %}
-                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays ? user.pays : user.ville }}</p>
-                        {% else %}
-                            <p class="profileInfo"><span class="profileInfoTitle">Location : </span><i>Not specified</i></p>
-                        {% endif %}
-                    </div>
-                    <div class="profileInfos">
-                        <p><i>A venir...</i></p>
-                    </div>
-                    <div class="profileInfos">
-                        <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
-                        {% if app.user == user %}
-                            <a href="#" class="profileInfosButton">CALENDAR</a>
-                        {% endif %}
+            <div class="profileInfosLine">
+                <section class="profileInfos">
+                    <h2 class="profileInfosTitle">Details</h2>
+                    <p class="profileInfo"><span class="profileInfoTitle">Joined : </span>{{ user.dateInscription|date("m/d/Y H:i:s") }} <i>(UTC)</i></p>
+                    <p class="profileInfo"><span class="profileInfoTitle">Date of birth : </span>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : '<i>Not specified</i>' }}</p>
+                    {% if user.pays and user.ville %}
+                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays }}, {{ user.ville }}</p>
+                    {% elseif user.pays or user.ville %}
+                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays ? user.pays : user.ville }}</p>
+                    {% else %}
+                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span><i>Not specified</i></p>
+                    {% endif %}
+                </section>
+                <div class="profileInfos">
+                    <p><i>A venir...</i></p>
+                </div>
+                <div class="profileInfos">
+                    <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
+                    {% if app.user == user %}
+                        <a href="#" class="profileInfosButton">CALENDAR</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% if user.animes is not empty %}
+                <div class="profileInfos">
+                    <h2 class="profileInfosTitle">Favorites Animes</h2>
+                    <div class="profileInfosFavoritesAnimes">
+                        {% for anime in favoriteAnimesData %}
+                            <figure class="homeOneAnime topTen">
+                                <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
+                                    <div class="homeOneAnimeImageInfo">
+                                        <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="homeOneAnimeImage">
+                                        <section class="homeHoverContent">
+                                            <p class="homeOneAnimeInfoTitle">{{ anime.title.romaji }}</p>
+                                            <p class="homeOneAnimeInfoSmallerInfos">
+                                                {% if anime.episodes %}
+                                                    {% if anime.episodes < 2 %}
+                                                        {{ anime.episodes }} episode
+                                                    {% else %}
+                                                        {{ anime.episodes }} episodes
+                                                    {% endif %}
+                                                {% else %}    
+                                                    ? episodes
+                                                {% endif %}
+                                                - 
+                                                {% if anime.format %}
+                                                    {{ anime.format }}
+                                                {% else %}
+                                                    ?
+                                                {% endif %}
+                                            </p>
+                                            <p class="homeOneAnimeInfoSmallerInfos">
+                                                {% set mainStudios = [] %}
+                                                {% for studio in anime.studios.edges %}
+                                                    {% if studio.isMain %}
+                                                        {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {{ mainStudios|join(' - ') }}
+                                            </p>
+                                            <div class="homeOneAnimeInfoGenres">
+                                                {% for genre in anime.genres %}
+                                                    <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ anime.coverImage.color }};">{{ genre }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        </section>
+                                    </div>
+                                </a>
+                                <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                            </figure>
+                        {% endfor %}
                     </div>
                 </div>
-                {% if user.animes is not empty %}
-                {# Visuel/responsive à refaire, noms à modifier #}
-                    <div class="profileInfos">
-                        <h2 class="profileInfosTitle">Favorites Animes</h2>
-                        <div class="profileInfosFavoritesAnimes">
-                            {% for anime in favoriteAnimesData %}
-                                <figure class="homeOneAnime topTen">
-                                    <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
-                                        <div class="homeOneAnimeImageInfo">
-                                            <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="homeOneAnimeImage">
-                                            <section class="homeHoverContent">
-                                                <p class="homeOneAnimeInfoTitle">{{ anime.title.romaji }}</p>
-                                                <p class="homeOneAnimeInfoSmallerInfos">
-                                                    {% if anime.episodes %}
-                                                        {% if anime.episodes < 2 %}
-                                                            {{ anime.episodes }} episode
-                                                        {% else %}
-                                                            {{ anime.episodes }} episodes
-                                                        {% endif %}
-                                                    {% else %}    
-                                                        ? episodes
-                                                    {% endif %}
-                                                    - 
-                                                    {% if anime.format %}
-                                                        {{ anime.format }}
-                                                    {% else %}
-                                                        ?
-                                                    {% endif %}
-                                                </p>
-                                                <p class="homeOneAnimeInfoSmallerInfos">
-                                                    {% set mainStudios = [] %}
-                                                    {% for studio in anime.studios.edges %}
-                                                        {% if studio.isMain %}
-                                                            {% set mainStudios = mainStudios|merge([studio.node.name]) %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    {{ mainStudios|join(' - ') }}
-                                                </p>
-                                                <div class="homeOneAnimeInfoGenres">
-                                                    {% for genre in anime.genres %}
-                                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ anime.coverImage.color }};">{{ genre }}</p>
-                                                    {% endfor %}
-                                                </div>
-                                            </section>
-                                        </div>
-                                    </a>
-                                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+            {% endif %}
+            {% if user.personnages is not empty %}
+                <div class="profileInfos">
+                    <h2 class="profileInfosTitle">Favorites Characters</h2>
+                    <div class="profileInfosFavoritesCharacters">
+                        {% for character in favoriteCharactersData %}
+                            <a href="{{ path('show_character', { id: character.id }) }}">
+                                <figure class="favoriteCharacter">
+                                    <img src="{{ character.image.large }}" alt="Image of {{ character.name.full }}" class="favoriteCharacterImage">
+                                    <figcaption class="homeOneAnimeTitle">{{ character.name.full }}</figcaption>
                                 </figure>
-                            {% endfor %}
-                        </div>
+                            </a>
+                        {% endfor %}
                     </div>
-                {% endif %}
-                {% if user.personnages is not empty %}
-                    <div class="profileInfos">
-                        <h2 class="profileInfosTitle">Favorites Characters</h2>
-                        <div class="profileInfosFavoritesCharacters">
-                            {% for character in favoriteCharactersData %}
-                                <a href="{{ path('show_character', { id: character.id }) }}">
-                                    <figure class="favoriteCharacter">
-                                        <img src="{{ character.image.large }}" alt="Image of {{ character.name.full }}" class="favoriteCharacterImage">
-                                        <figcaption class="homeOneAnimeTitle">{{ character.name.full }}</figcaption>
-                                    </figure>
-                                </a>
-                            {% endfor %}
-                        </div>
+                </div>
+            {% endif %}
+            {% if user.discussions is empty %}
+                <div class="profileInfos">
+                    <h2 class="profileInfosTitle">Talks participated</h2>
+                    <div class="profileInfosTalks">
+                        {% for i in range(1, 7) %}
+                            <section class="animeRemainingRightContentPartCardsContent talk">
+                                <div class="animeRemainingRightContentPartCardsTextContainer">
+                                    <h2 class="animeRemainingRightContentPartCardsTop">(Spoiler Alert !) Episode 5 Talk</h2>
+                                    <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
+                                </div>
+                                <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
+                                </div>
+                            </section>
+                        {% endfor %}
                     </div>
-                {% endif %}
-                {% if user.discussions is empty %}
-                    <div class="profileInfos">
-                        <h2 class="profileInfosTitle">Talks participated</h2>
-                        <div class="profileInfosTalks">
-                            {% for i in range(1, 7) %}
-                                <section class="animeRemainingRightContentPartCardsContent talk">
-                                    <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">(Spoiler Alert !) Episode 5 Talk</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
-                                    </div>
-                                    <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                        <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
-                                    </div>
-                                </section>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
     </main>
 {% endblock %}

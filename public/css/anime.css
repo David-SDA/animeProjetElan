@@ -7,7 +7,8 @@
 /* Partie du haut (de la page d'un animé) */
 .animeTopContainer{
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 10px -20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1.5em 10%;
     display: flex;
     justify-content: center;
 }
@@ -57,7 +58,6 @@
 }
 
 /* Le bouton pour ajouter l'animé à ses favoris (de la partie gauche du contenu du haut de la page d'un animé) */
-/* (Utilisé dans la page description d'un personnage) */
 .animeButtonAddTo.favorites{
     margin-top: 0.5em;
     background-color: #FF4136;
@@ -93,9 +93,8 @@
 
 /* Partie restante (de la page d'un animé) */
 .animeRemainingContainer{
-    display: flex;
-    justify-content: center;
-    margin-top: 2em;
+    margin: 1em auto;
+    width: 80%;
 }
 
 /* Contenu de la partie restante (de la page d'un animé) */
@@ -393,10 +392,6 @@
     color: #ff0000;
 }
 
-
-/******************************************************
-    PARTIE DÉDIÉ À LA PAGE DES PERSONNAGES D'UN ANIMÉ
-******************************************************/
 /* Contenu de toute la page des personnages d'un animé */
 .animeCharactersContainer{
     width: 80%;
@@ -411,3 +406,41 @@
     text-align: center;
     margin: 0.5em 0;
 }
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    /* Partie du haut (de la page d'un animé) */
+    .animeTopContainer{
+        padding: 1.5em 2.5%;
+    }
+
+    /* La partie droite du contenu du haut (de la page d'un animé) */
+    .animeTopRightContent{
+        margin-left: 1em;
+    }
+
+    /* Partie restante (de la page d'un animé) */
+    .animeRemainingContainer{
+        width: 95%;
+    }
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Partie du haut (de la page d'un animé) */
+    .animeTopContainer{
+        padding: 1.5em 5%;
+    }
+
+    /* La partie droite du contenu du haut (de la page d'un animé) */
+    .animeTopRightContent{
+        margin-left: 1.25em;
+    }
+
+    /* Partie restante (de la page d'un animé) */
+    .animeRemainingContainer{
+        width: 90%;
+    }
+}
+
+
