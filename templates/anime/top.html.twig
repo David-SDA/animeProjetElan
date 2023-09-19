@@ -4,8 +4,8 @@
 
 {% block body %}
     <main class="homeContainer">
-        <h1 class="homeTitle">TOP ANIME</h1>
-        <section class="homeMultipleAnimes">
+        <h1 class="title">TOP ANIME</h1>
+        <div class="homeMultipleAnimes autoFill">
             {% for media in dataTopAnimes.data.Page.media %}
                 <figure class="homeOneAnime top">
                     <a href="{{ path('show_anime', { 'id' : media.id }) }}">
@@ -13,7 +13,7 @@
                             <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
-                                <p class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</p>
+                                <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji }}</h2>
                                 <p class="homeOneAnimeInfoSmallerInfos">
                                     {% if media.episodes %}
                                         {% if media.episodes < 2 %}
@@ -42,15 +42,15 @@
                                 </p>
                                 <div class="homeOneAnimeInfoGenres">
                                     {% for genre in media.genres %}
-                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color }};">{{ genre }}</p>
+                                        <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color ? media.coverImage.color : '#4169e1' }};">{{ genre }}</p>
                                     {% endfor %}
                                 </div>
                             </section>
                         </div>
                     </a>
-                    <figcaption class="homeOneAnimeTitle">{{ media.title.romaji }}</figcaption>
+                    <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji }}</a></figcaption>
                 </figure>
             {% endfor %}
-        </section>
+        </div>
     </main>
 {% endblock %}

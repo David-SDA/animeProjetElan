@@ -16,7 +16,7 @@
         {% else %}
             {% set currentSeason = "FALL" %}
         {% endif %}
-        <h1 class="homeTitle">{{ currentSeason }} {{ currentYear }}</h1>
+        <h1 class="title">{{ currentSeason }} {{ currentYear }}</h1>
         <section class="homeMultipleAnimes">
             {% for media in dataSeasonalAnimes.data.Page.media %}
                 <figure class="homeOneAnime top">
