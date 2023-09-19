@@ -1,250 +1,249 @@
 /* Titre de la page d'accueil */
-.title {
-  text-align: center;
-  color: #333;
-  margin: 0.5em 0;
-  padding: 0.5em;
+.title{
+    text-align: center;
+    color: #333;
+    margin: 0.5em 0;
+    padding: 0.5em;
 }
 
 /* Contenu de toute la page */
-.homeContainer {
-  width: 80%;
-  margin: auto;
+.homeContainer{
+    width: 80%;
+    margin: auto;
 }
 
 /* Les titres secondaires */
-.homeSecondaryTitle {
-  margin-top: 1em;
-  font-weight: 600;
-  color: #333;
+.homeSecondaryTitle{
+    margin-top: 1em;
+    font-weight: 600;
+    color: #333;
 }
 
 /* Liste des animé d'une section */
-.homeMultipleAnimes {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(215px, 1fr));
-  grid-gap: 0 25px;
-  justify-items: center;
-  overflow-x: auto;
-  overflow-y: hidden;
+.homeMultipleAnimes{
+    display: grid;
+    grid-template-columns: repeat(6, minmax(215px, 1fr));
+    grid-gap: 0 25px;
+    justify-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
-.homeMultipleAnimes.autoFill {
-  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+.homeMultipleAnimes.autoFill{
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
 }
-.homeMultipleAnimes::-webkit-scrollbar {
-  height: 7px;
+.homeMultipleAnimes::-webkit-scrollbar{
+    height: 7px;
 }
-.homeMultipleAnimes::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 10px;
+.homeMultipleAnimes::-webkit-scrollbar-track{
+    background-color: transparent;
+    border-radius: 10px;
 }
-.homeMultipleAnimes::-webkit-scrollbar-thumb {
-  background-color: #bbb;
-  border-radius: 10px;
+.homeMultipleAnimes::-webkit-scrollbar-thumb{
+    background-color: #bbb;
+    border-radius: 10px;
 }
 
 /* Partie qui représente un animé */
-.homeOneAnime {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min-content;
-  margin: 0.5em 0;
+.homeOneAnime{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min-content;
+    margin: 0.5em 0;
 }
-.homeOneAnime.autoFill {
-  margin: 1em;
+.homeOneAnime.autoFill{
+    margin: 1em;
 }
-.homeOneAnime:hover .homeHoverContent {
-  opacity: 1;
+.homeOneAnime:hover .homeHoverContent{
+    opacity: 1;
 }
 
 /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
-.homeOneAnimeImageInfo {
-  position: relative;
-  border-radius: 10px;
-  width: max-content;
+.homeOneAnimeImageInfo{
+    position: relative;
+    border-radius: 10px;
+    width: max-content;
 }
 
 /* Une image d'un animé */
-.homeOneAnimeImage {
-  border-radius: 10px;
-  display: block;
-  height: 300px;
-  width: 215px;
-  object-fit: cover;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+.homeOneAnimeImage{
+    border-radius: 10px;
+    display: block;
+    height: 300px;
+    width: 215px;
+    object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-.homeHoverContent {
-  position: absolute;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  top: 0;
-  width: 100%;
-  height: 100%;
-  padding: 0.75em;
-  color: #fff;
-  opacity: 0;
-  transition: all 0.5s ease;
+.homeHoverContent{
+    position: absolute;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0.75em;
+    color: #fff;
+    opacity: 0;
+    transition: all 0.5s ease;
 }
 
 /* Titre de l'animé dans la partie des informations supplémentaires */
-.homeOneAnimeInfoTitle {
-  font-size: 1.25em;
-  font-weight: 600;
-  text-align: center;
+.homeOneAnimeInfoTitle{
+    font-size: 1.25em;
+    font-weight: 600;
+    text-align: center;
 }
 
 /* Informations de plus petite taille de l'animé dans la partie des informations supplémentaires */
-.homeOneAnimeInfoSmallerInfos {
-  font-size: 0.875em;
-  font-weight: 500;
-  text-align: center;
-  font-style: italic;
+.homeOneAnimeInfoSmallerInfos{
+    font-size: 0.875em;
+    font-weight: 500;
+    text-align: center;
+    font-style: italic;
 }
 
 /* Partie qui contient les genres de l'animé dans la partie des informations supplémentaires */
-.homeOneAnimeInfoGenres {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin-bottom: 0.5em;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+.homeOneAnimeInfoGenres{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 0.5em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 /* Un genre de l'animé dans la partie des informations supplémentaires */
-.homeOneAnimeInfoOneGenre {
-  background-color: var(--media-color);
-  width: fit-content;
-  border-radius: 10px;
-  padding: 0.4em;
-  margin: 0.25em 0.2em;
-  font-size: 0.875em;
-  font-weight: 500;
+.homeOneAnimeInfoOneGenre{
+    background-color: var(--media-color);
+    width: fit-content;
+    border-radius: 10px;
+    padding: 0.4em;
+    margin: 0.25em 0.2em;
+    font-size: 0.875em;
+    font-weight: 500;
 }
 
 /* Le titre de l'animé en dessous de l'image de l'animé */
-/* (Utilisé dans la page de description d'un personnage) */
-.homeOneAnimeTitle {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  max-width: 230px;
-  text-align: center;
-  padding-top: 5px;
-  color: #333;
-  font-weight: 600;
+.homeOneAnimeTitle{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 230px;
+    text-align: center;
+    padding-top: 5px;
+    color: #333;
+    font-weight: 600;
 }
 
 /* La partie du classement des meilleurs animé */
-.homeOneAnimeTopRanking {
-  width: 2em;
-  height: 2em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #4169e1;
-  border-radius: 100%;
-  position: absolute;
-  font-size: 1.25em;
-  font-weight: 600;
-  color: #fff;
-  transform: translate(5px, 5px);
+.homeOneAnimeTopRanking{
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4169e1;
+    border-radius: 100%;
+    position: absolute;
+    font-size: 1.25em;
+    font-weight: 600;
+    color: #fff;
+    transform: translate(5px, 5px);
 }
 
 /* Pour mobile */
-@media screen and (max-width: 767px) {
-  /* Titre de la page d'accueil */
-  .title {
-    font-size: 1.75em;
-  }
+@media screen and (max-width: 767px){
+    /* Titre de la page d'accueil */
+    .title{
+        font-size: 1.75em;
+    }
 
-  /* Contenu de toute la page */
-  .homeContainer {
-    width: 95%;
-  }
+    /* Contenu de toute la page */
+    .homeContainer {
+        width: 95%;
+    }
 
-  /* Les titres secondaires */
-  .homeSecondaryTitle {
-    font-size: 1.25em;
-  }
+    /* Les titres secondaires */
+    .homeSecondaryTitle {
+        font-size: 1.25em;
+    }
 
-  /* Liste des animé d'une section */
-  .homeMultipleAnimes {
-    grid-template-columns: repeat(3, minmax(140px, 1fr));
-    grid-gap: 0 15px;
-  }
-  /* Et ceux qui ont un remplissage automatique */
-  .homeMultipleAnimes.autoFill {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    grid-gap: 0 15px;
-  }
+    /* Liste des animé d'une section */
+    .homeMultipleAnimes {
+        grid-template-columns: repeat(3, minmax(140px, 1fr));
+        grid-gap: 0 15px;
+    }
+    /* Et ceux qui ont un remplissage automatique */
+    .homeMultipleAnimes.autoFill {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-gap: 0 15px;
+    }
 
-  /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
-  .homeOneAnimeImage {
-    width: 140px;
-    height: 195px;
-  }
+    /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
+    .homeOneAnimeImage {
+        width: 140px;
+        height: 195px;
+    }
 
-  /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-  .homeHoverContent {
-    display: none;
-  }
+    /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
+    .homeHoverContent {
+        display: none;
+    }
 
-  /* La partie du classement des meilleurs animé */
-  .homeOneAnimeTopRanking {
-    width: 1.75em;
-    height: 1.75em;
-    font-size: 1em;
-  }
+    /* La partie du classement des meilleurs animé */
+    .homeOneAnimeTopRanking {
+        width: 1.75em;
+        height: 1.75em;
+        font-size: 1em;
+    }
 }
 
 /* Pour tablette */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  /* Titre de la page d'accueil */
-  .title {
-    font-size: 1.875em;
-  }
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Titre de la page d'accueil */
+    .title {
+        font-size: 1.875em;
+    }
 
-  /* Contenu de toute la page */
-  .homeContainer {
-    width: 90%;
-  }
+    /* Contenu de toute la page */
+    .homeContainer {
+        width: 90%;
+    }
 
-  /* Les titres secondaires */
-  .homeSecondaryTitle {
-    font-size: 1.375em;
-  }
+    /* Les titres secondaires */
+    .homeSecondaryTitle {
+        font-size: 1.375em;
+    }
 
-  /* Liste des animé d'une section */
-  .homeMultipleAnimes {
-    grid-template-columns: repeat(3, minmax(175px, 1fr));
-  }
-  /* Et ceux qui ont un remplissage automatique */
-  .homeMultipleAnimes.autoFill {
-    grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-  }
+    /* Liste des animé d'une section */
+    .homeMultipleAnimes {
+        grid-template-columns: repeat(3, minmax(175px, 1fr));
+    }
+    /* Et ceux qui ont un remplissage automatique */
+    .homeMultipleAnimes.autoFill {
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    }
 
-  /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
-  .homeOneAnimeImage {
-    width: 175px;
-    height: 245px;
-  }
+    /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
+    .homeOneAnimeImage {
+        width: 175px;
+        height: 245px;
+    }
+    
+    /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
+    .homeHoverContent {
+        display: none;
+    }
 
-  /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-  .homeHoverContent {
-    display: none;
-  }
-
-  /* La partie du classement des meilleurs animé */
-  .homeOneAnimeTopRanking {
-    width: 1.875em;
-    height: 1.875em;
-    font-size: 1.125em;
-  }
+    /* La partie du classement des meilleurs animé */
+    .homeOneAnimeTopRanking {
+        width: 1.875em;
+        height: 1.875em;
+        font-size: 1.125em;
+    }
 }
