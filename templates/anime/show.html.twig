@@ -7,141 +7,131 @@
 
 {% block body %}
     <main class="animeContainer">
-        <section class="animeTopContainer">
-            <div class="animeTopContent">
-                <div class="animeTopLeftContent">
-                    <figure>
-                        <img src="{{ dataThisAnime.coverImage.large }}" alt="Cover Image of {{ dataThisAnime.title.romaji ? dataThisAnime.title.romaji : "?" }}" class="animeImage">
-                    </figure>
-                    {% if app.user and not animeIsInList %}
-                        <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list">Add to your list</a>
-                    {% endif %}
-                    {% if app.user and not animeIsInFavorites %}
-                        <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
-                    {% elseif app.user and animeIsInFavorites and animeInDatabase %}
-                        <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites">Remove from favorites</a>
-                    {% endif %}
-                </div>
-                <div class="animeTopRightContent">
-                    <h1 class="animeTitle">{{ dataThisAnime.title.romaji ? dataThisAnime.title.romaji : "?" }}</h1>
-                    <h3 class="animeSynopsisTitle"><i>Synopsis</i></h3>
-                    <p class="animeSynopsisContent">{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : "No synopsis yet" }}</p>
-                </div>
+        <div class="animeTopContainer">
+            <div class="animeTopLeftContent">
+                <figure>
+                    <img src="{{ dataThisAnime.coverImage.large }}" alt="Cover Image of {{ dataThisAnime.title.romaji|default('Unknown') }}" class="animeImage">
+                </figure>
+                {% if app.user and not animeIsInList %}
+                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list">Add to your list</a>
+                {% endif %}
+                {% if app.user and not animeIsInFavorites %}
+                    <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
+                {% elseif app.user and animeIsInFavorites and animeInDatabase %}
+                    <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites">Remove from favorites</a>
+                {% endif %}
             </div>
-        </section>
+            <div class="animeTopRightContent">
+                <h1 class="animeTitle">{{ dataThisAnime.title.romaji|default('Unknown') }}</h1>
+                <h2 class="animeSynopsisTitle"><i>Synopsis</i></h2>
+                <p class="animeSynopsisContent">{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : '<i>No synopsis yet</i>' }}</p>
+            </div>
+        </div>
         <div class="animeRemainingContainer">
             <div class="animeRemainingContent">
                 <div class="animeRemainingLeftContent">
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : "<i>TBA</i>" }}</p>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h3>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h3>
                         <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.status ? dataThisAnime.status|title|replace({'_' : ' '}) }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Airing Dates</i></h2>
-                        {# Différentes vérification par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage #}
-                        {# Si on n'a pas de date de début et de fin, on affiche TBA #}
+                        <h3 class="animeRemainingLeftContentInfoTitle">{{ dataThisAnime.startDate == dataThisAnime.endDate ? '<i>Airing Date</i>' : '<i>Airing Dates</i>' }}</h3>
+                        {# Différentes vérifications par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage #}
+                        {# Cas pas de date de début et de fin #}
                         {% if dataThisAnime.startDate.year == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null and dataThisAnime.endDate.year == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
                             <p class="animeRemainingLeftContentInfoContent">TBA</p>
+                        {# Cas date de début = date de fin (pour les films par exemple) #}
                         {% elseif dataThisAnime.startDate.year == dataThisAnime.endDate.year and dataThisAnime.startDate.month == dataThisAnime.endDate.month and dataThisAnime.startDate.day == dataThisAnime.endDate.day %}
                             <p class="animeRemainingLeftContentInfoContent">
-                                {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month ~ "/" : "" }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? "0" : "") ~ dataThisAnime.startDate.day ~ "/" : "" }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : "" }}
+                                {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? '0' : '' ) ~ dataThisAnime.startDate.month ~ '/' : '' }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? '0' : '') ~ dataThisAnime.startDate.day ~ '/' : '' }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : '' }}
                             </p>
                         {% else %}
-                            {% if dataThisAnime.startDate.year and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.startDate.year }}</p>
-                            {% elseif dataThisAnime.startDate.year and dataThisAnime.startDate.month and dataThisAnime.startDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month }}/{{ dataThisAnime.startDate.year }}</p>
-                            {% elseif dataThisAnime.startDate.year and dataThisAnime.startDate.month and dataThisAnime.startDate.day %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.startDate.month < 10 ? "0" : "" ) ~ dataThisAnime.startDate.month }}/{{ (dataThisAnime.startDate.day < 10 ? "0" : "") ~ dataThisAnime.startDate.day }}/{{ dataThisAnime.startDate.year }}</p>
-                            {% else %}
+                        {# Sinon, il y a au moins une date donc on affiche la date de début et de fin #}
+                            {# Cas où il n'y a pas de date de début #}
+                            {% if dataThisAnime.startDate.day == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.year == null %}
                                 <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                            {# Cas où il y a une date de début #}
+                            {% else %}
+                                <p class="animeRemainingLeftContentInfoContent">
+                                    {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? '0' : '') ~ dataThisAnime.startDate.month ~ '/' : '' }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? '0' : '') ~ dataThisAnime.startDate.day ~ '/' : '' }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : '' }}
+                                </p>
                             {% endif %}
+                            {# Séparation des dates de début et de fin #}
                             <p class="animeRemainingLeftContentInfoContent">to</p>
-                            {% if dataThisAnime.endDate.year and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.endDate.year }}</p>
-                            {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day == null %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.endDate.month < 10 ? "0" : "" ) ~ dataThisAnime.endDate.month }}/{{ dataThisAnime.endDate.year }}</p>
-                            {% elseif dataThisAnime.endDate.year and dataThisAnime.endDate.month and dataThisAnime.endDate.day %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ (dataThisAnime.endDate.month < 10 ? "0" : "" ) ~ dataThisAnime.endDate.month }}/{{ (dataThisAnime.endDate.day < 10 ? "0" : "") ~ dataThisAnime.endDate.day }}/{{ dataThisAnime.endDate.year }}</p>
-                            {% else %}
+                            {# Cas où il n'y a pas de date de fin #}
+                            {% if dataThisAnime.endDate.day == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.year == null %}
                                 <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                            {# Cas où il y a une date de fin #}
+                            {% else %}
+                                <p class="animeRemainingLeftContentInfoContent">
+                                    {{ dataThisAnime.endDate.month ? (dataThisAnime.endDate.month < 10 ? '0' : '') ~ dataThisAnime.endDate.month ~ '/' : '' }}{{ dataThisAnime.endDate.day ? (dataThisAnime.endDate.day < 10 ? '0' : '') ~ dataThisAnime.endDate.day ~ '/' : '' }}{{ dataThisAnime.endDate.year ? dataThisAnime.endDate.year : '' }}
+                                </p>
                             {% endif %}
                         {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
-                        {# Si jamais il n'y a pas de seasonYear, il n'y a pas de season. On adapte l'affichage en fonction de cela #}
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h3>
                         {% if dataThisAnime.season and dataThisAnime.seasonYear %}
                             <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.season|title }} {{ dataThisAnime.seasonYear }}</p>
-                        {% elseif dataThisAnime.seasonYear %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.seasonYear }}</p>
                         {% else %}
                             <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                         {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h2>
-                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.episodes ? dataThisAnime.episodes : "<i>TBA</i>" }}</p>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h3>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.episodes|default('<i>TBA</i>') }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h2>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h3>
                         {# On effectue la conversion de minutes en heures si nécessaires et adaptations de l'affichage en fonction de cela #}
                         {% if dataThisAnime.duration %}
                             {% set duration = dataThisAnime.duration %}
                             {% if duration >= 60 %}
                                 {% set hours = duration // 60 %}
                                 {% set minutes = duration % 60 %}
-                                {% if hours > 1 %}
-                                    {% set hoursText = "hours" %}
-                                {% else %}
-                                    {% set hoursText = "hour" %}
-                                {% endif %}
-                                {% if minutes > 1 %}
-                                    {% set minText = "mins" %}
-                                {% else %}
-                                    {% set minText = "min" %}
-                                {% endif %}
+                                {% set hoursText = hours > 1 ? 'hours' : 'hour' %}
+                                {% set minText = minutes > 1 ? 'mins' : 'min' %}
                                 <p class="animeRemainingLeftContentInfoContent">{{ hours }} {{ hoursText }} {{ minutes }} {{ minText }}</p>
                             {% else %}
-                                {% if duration > 1 %}
-                                    <p class="animeRemainingLeftContentInfoContent">{{ duration }} mins</p>
-                                {% else %}
-                                    <p class="animeRemainingLeftContentInfoContent">{{ duration }} min</p>
-                                {% endif %}
+                                <p class="animeRemainingLeftContentInfoContent">{{ duration > 1 ? duration ~ ' mins' : duration ~ ' min' }}</p>
                             {% endif %}
                         {% else %}
                             <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                         {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h2>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h3>
                         {# Si il y a une source, on affiche de telle manière à ce que les underscores soient replacés par un espace et que chaque mot ait une majuscule au début ce celui-ci #}
-                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.source ? dataThisAnime.source|title|replace({'_' : ' '}) : "<i>TBA</i>" }}</p>
+                        <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.source ? dataThisAnime.source|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h2>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h3>
                         {% if dataThisAnime.genres %}
                             {% for genre in dataThisAnime.genres %}
                                 <p class="animeRemainingLeftContentInfoContent">&bull; {{ genre }}</p>
                             {% endfor %}
                         {% else %}
-                        <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        <p class="animeRemainingLeftContentInfoContent"><i>None</i></p>
                         {% endif %}
                     </section>
                     <section class="animeRemainingLeftContentInfo">
-                        <h2 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h2>
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h3>
                         {# Un animé a souvent 1 seul studio d'animation, mais il peut en avoir plusieurs, donc on prends cela en compte pour les mettre dans un tableau #}
                         {% if dataThisAnime.studios %}
+                            {# On crée un tableau pour stocker les studios principaux #}
                             {% set mainStudios = [] %}
                             {% for studio in dataThisAnime.studios.edges %}
+                                {# Si le studio est principal #}
                                 {% if studio.isMain %}
+                                    {# On le fusionne avec le tableau #}
                                     {% set mainStudios = mainStudios|merge([studio.node.name]) %}
                                 {% endif %}
                             {% endfor %}
+                            {# On affiche les studios principaux #}
                             {% for mainStudio in mainStudios %}
                                 <p class="animeRemainingLeftContentInfoContent">&bull; {{ mainStudio }}</p>
                             {% endfor %}
@@ -149,147 +139,135 @@
                             <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                         {% endif %}
                     </section>
-                    {# Si un animé n'as pas de "producers", alors on n'affichera pas la section dédié à cela, sinon on le fera #}
-                    {% if dataThisAnime.studios %}
-                        {% set producers = [] %}
-                        {% for studio in dataThisAnime.studios.edges %}
-                            {% if studio.isMain == false %}
-                                {% set producers = producers|merge([studio.node.name]) %}
-                            {% endif %}
-                        {% endfor %}
-                        {% if producers|length > 0 %}
-                            <section class="animeRemainingLeftContentInfo">
-                                <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
-                                {% for producer in producers %}
-                                    <p class="animeRemainingLeftContentInfoContent">&bull; {{ producer }}</p>
-                                {% endfor %}
-                            </section>
+                    <section class="animeRemainingLeftContentInfo">
+                        <h3 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h3>
+                        {# Les studios qui ne sont pas principaux sont des producteurs #}
+                        {% if dataThisAnime.studios %}
+                            {# On crée un tableau pour stocker les studios producteurs #}
+                            {% set producers = [] %}
+                            {% for studio in dataThisAnime.studios.edges %}
+                                {# Si le studio n'est pas principal #}
+                                {% if studio.isMain == false %}
+                                    {# On le fusionne avec le tableau #}
+                                    {% set producers = producers|merge([studio.node.name]) %}
+                                {% endif %}
+                            {% endfor %}
+                            {% for producer in producers %}
+                                <p class="animeRemainingLeftContentInfoContent">&bull; {{ producer }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
                         {% endif %}
-                    {% endif %}
+                    </section>
                 </div>
                 <div class="animeRemainingRightContent">
-                    {# Si il y a un prochain episode prévu, on affiche le temps qu'il manque avant celui-ci #}
-                    {% if dataThisAnime.nextAiringEpisode %}
-                        {% set episodeNumber = dataThisAnime.nextAiringEpisode.episode %}
-                        {% set airingAt = dataThisAnime.nextAiringEpisode.airingAt %}
-                        {% set totalSeconds = dataThisAnime.nextAiringEpisode.timeUntilAiring %}
+                {# Si il y a un prochain episode prévu, on affiche le temps qu'il manque avant celui-ci #}
+                {% if dataThisAnime.nextAiringEpisode %}
+                    {% set episodeNumber = dataThisAnime.nextAiringEpisode.episode %}
+                    {% set airingAt = dataThisAnime.nextAiringEpisode.airingAt %}
+                    {% set totalSeconds = dataThisAnime.nextAiringEpisode.timeUntilAiring %}
 
-                        {# Calcul des jours, heures et minutes avant le prochain épisode #}
-                        {% set days = totalSeconds // 86400 %}
-                        {% set hours = (totalSeconds % 86400) // 3600 %}
-                        {% set minutes = ((totalSeconds % 86400) % 3600) // 60 %}
+                    {# Calcul des jours, heures et minutes avant le prochain épisode #}
+                    {% set days = totalSeconds // 86400 %}
+                    {% set hours = (totalSeconds % 86400) // 3600 %}
+                    {% set minutes = ((totalSeconds % 86400) % 3600) // 60 %}
 
-                        {# Adapation de l'affichage de chaque données en fonction de celles-ci #}
-                        {# Pour le numéro du prochain épsiode #}
-                        {% if episodeNumber %}
-                            {% set episodeText = " (episode #{episodeNumber}) " %}
-                        {% else %}
-                            {% set episodeText = " " %}
-                        {% endif %}
+                    {# Adapation de l'affichage de chaque données en fonction de celles-ci #}
+                    {# Pour le numéro du prochain épsiode #}
+                    {% set episodeText = episodeNumber ? ' (episode ' ~ episodeNumber ~ ') ' : ' ' %}
 
-                        {# Pour les jours manquant #}
-                        {% if days > 1 %}
-                            {% set daysText = "days, " %}
-                        {% else %}
-                            {% set daysText = "day, " %}
-                        {% endif %}
+                    {# Pour les jours manquant #}
+                    {% set daysText = days > 1 ? days ~ ' days ' : days ~ ' day ' %}
 
-                        {# Pour les heures manquantes #}
-                        {% if hours > 1 %}
-                            {% set hoursText = "hours, " %}
-                        {% else %}
-                            {% set hoursText = "hour, " %}
-                        {% endif %}
+                    {# Pour les heures manquantes #}
+                    {% set hoursText = hours > 1 ? hours ~ ' hours ' : hours ~ ' hour ' %}
 
-                        {# Pour les minutes manquantes #}
-                        {% if minutes > 1 %}
-                            {% set minText = "mins" %}
-                        {% else %}
-                            {% set minText = "min" %}
-                        {% endif %}
+                    {# Pour les minutes manquantes #}
+                    {% set minText = minutes > 1 ? minutes ~ ' mins' : minutes ~ ' min' %}
 
-
-                        {% set GMTDate = airingAt|date("D, d M Y,  H:i", "GMT") %}
-                        <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ airingAt ? "#{GMTDate} (GMT)" : "Airing at" }}">
-                            <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? days ~ " " ~ daysText : "" }}{{ hours >= 1 ? hours ~ " " ~ hoursText : "" }}{{ minutes >= 1 ? minutes ~ " " ~ minText : "" }}</i>
-                        </h2>
-                    {% endif %}
-                    {% if dataThisAnime.characters.edges %}
-                        <div class="animeRemainingRightContentPartTitleContainer">
-                            <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                            <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
-                        </div>
-                        <div class="animeRemainingRightContentPartCardsContainer">
-                            {% for character in dataThisAnime.characters.edges|slice(0, 6) %}
-                                <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
-                                    <figure>
-                                        <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full ? character.node.name.full : "Image of the character" }}" class="animeRemainingRightContentPartCardsImage">
-                                    </figure>
-                                    <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full ? character.node.name.full : "Unknown" }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : "Unknown" }}</i></p>
-                                    </div>                                
-                                </a>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    {% if dataThisAnime.staff.edges %}
-                        <div class="animeRemainingRightContentPartTitleContainer">
-                            <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
-                            <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
-                        </div>
-                        <div class="animeRemainingRightContentPartCardsContainer">
-                            {% for staff in dataThisAnime.staff.edges|slice(0, 6) %}
-                                <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
-                                    <figure>
-                                        <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full ? staff.node.name.full : "Image of the staff member" }}" class="animeRemainingRightContentPartCardsImage">
-                                    </figure>
-                                    <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full ? staff.node.name.full : "Unknown" }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role ? staff.role : "Unknown" }}</i></p>
-                                    </div>
-                                </a>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    {# On récupère la date et l'heure de sortie de l'épisode #}
+                    {% set GMTDate = airingAt|date('D, d M Y,  H:i', 'GMT') %}
+                    <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ GMTDate ~ ' (GMT)' }}">
+                        <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? daysText : '' }}{{ hours >= 1 ? hoursText : "" }}{{ minutes >= 1 ? minText : "" }}</i>
+                    </h2>
+                {% endif %}
+                {% if dataThisAnime.characters.edges %}
+                    <div class="animeRemainingRightContentPartTitleContainer">
+                        <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
+                        <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                    </div>
+                    <div class="animeRemainingRightContentPartCardsContainer">
+                    {% for character in dataThisAnime.characters.edges|slice(0, 6) %}
+                        <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+                            <figure>
+                                <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full|default('Image of the character') }}" class="animeRemainingRightContentPartCardsImage">
+                            </figure>
+                            <div class="animeRemainingRightContentPartCardsTextContainer">
+                                <h3 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full|default('Unknown') }}</h3>
+                                <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {% if dataThisAnime.staff.edges %}
+                    <div class="animeRemainingRightContentPartTitleContainer">
+                        <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
+                        <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                    </div>
+                    <div class="animeRemainingRightContentPartCardsContainer">
+                    {% for staff in dataThisAnime.staff.edges|slice(0, 6) %}
+                        <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+                            <figure>
+                                <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full|default('Image of the staff member') }}" class="animeRemainingRightContentPartCardsImage">
+                            </figure>
+                            <div class="animeRemainingRightContentPartCardsTextContainer">
+                                <h3 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full|default('Unknown') }}</h3>
+                                <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role|default('Unknown') }}</i></p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {# Rajouter une condition quand les talks seront fait #}
                     <div class="animeRemainingRightContentPartTitleContainer">
                         <h2 class="animeRemainingRightContentPartTitle">Talks</h2>
                         <a href="#" class="animeRemainingRightContentPartMore">View more</a>
                     </div>
                     <div class="animeRemainingRightContentPartCardsContainer">
-                        {% for i in range(1, 4) %}
-                            <section class="animeRemainingRightContentPartCardsContent talk">
-                                <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop">(Spoiler Alert !) Episode 5 Talk</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
-                                </div>
-                                <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
-                                </div>
-                            </section>
-                        {% endfor %}
+                    {% for i in range(1, 5) %}
+                        <section class="animeRemainingRightContentPartCardsContent talk">
+                            <div class="animeRemainingRightContentPartCardsTextContainer">
+                                <h3 class="animeRemainingRightContentPartCardsTop">(Spoiler Alert !) Episode 5 Talk</h3>
+                                <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
+                            </div>
+                            <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
+                            </div>
+                        </section>
+                    {% endfor %}
                     </div>
                     <h2 class="animeRemainingRightContentPartTitle">Give your opinion about this anime !</h2>
                     <div class="animeRemainingRightContentPartYourOpinionContainer">
-                        <textarea type="text" name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
+                        <textarea name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
                         <input type="submit" value="Publish your opinion" class="animeRemainingRightContentPartYourOpinionSubmit">
                     </div>
                     <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it !</h2>
                     <p class="animeRemainingRightContentPartOpinionsFilter">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
                     <div class="animeRemainingRightContentPartOpinionsContainer">
-                        {% for i in range(1, 5) %}
-                            <div class="animeRemainingRightContentPartOpinionsContent">
-                                <div class="animeRemainingRightContentPartOpinionsTopContent">
-                                    <img src="https://s4.anilist.co/file/anilistcdn/staff/medium/default.jpg" alt="User 'user' profile picture" class="animeRemainingRightContentPartOpinionsProfilePicture">
-                                    <h2 class="animeRemainingRightContentPartOpinionsPseudo">Pseudo</h2>
-                                    <p class="animeRemainingRightContentPartOpinionsPublicationTime">5 days ago</p>
-                                </div>
-                                <p class="animeRemainingRightContentPartOpinionsMidContent">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor. Ut vel diam lobortis, eleifend erat eu, tristique justo. Suspendisse rhoncus ante at nibh sodales, condimentum varius felis rhoncus. Morbi viverra aliquam lectus, sollicitudin tincidunt nisl commodo ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor.
-                                </p>
-                                <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-regular fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
+                    {% for i in range(1, 5) %}
+                        <div class="animeRemainingRightContentPartOpinionsContent">
+                            <div class="animeRemainingRightContentPartOpinionsTopContent">
+                                <img src="https://s4.anilist.co/file/anilistcdn/staff/medium/default.jpg" alt="User 'user' profile picture" class="animeRemainingRightContentPartOpinionsProfilePicture">
+                                <h2 class="animeRemainingRightContentPartOpinionsPseudo">Pseudo</h2>
+                                <p class="animeRemainingRightContentPartOpinionsPublicationTime">5 days ago</p>
                             </div>
-                        {% endfor %}
+                            <p class="animeRemainingRightContentPartOpinionsMidContent">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor. Ut vel diam lobortis, eleifend erat eu, tristique justo. Suspendisse rhoncus ante at nibh sodales, condimentum varius felis rhoncus. Morbi viverra aliquam lectus, sollicitudin tincidunt nisl commodo ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor.
+                            </p>
+                            <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-regular fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
+                        </div>
+                    {% endfor %}
                     </div>
                 </div>
             </div>

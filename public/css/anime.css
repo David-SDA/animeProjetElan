@@ -101,7 +101,6 @@
 
 /* Contenu de la partie restante (de la page d'un animé) */
 .animeRemainingContent{
-    width: 80%;
     display: flex;
 }
 
