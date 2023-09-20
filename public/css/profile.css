@@ -48,7 +48,6 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
 }
 .profileInfos.settings{
-    width: 60%;
     padding: 0 1.5em;
 }
 
@@ -78,11 +77,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: center;
     width: 150px;
-    height: 40px;
     font-weight: 700;
     margin: 0.3em 0;
+    padding: 0.5em 0;
     color: #fff;
     background-color: #00BFFF;
     border-radius: 10px;
@@ -98,12 +96,20 @@
 .profileInfosButton.settings{
     font-weight: 600;
     margin-bottom: 0;
+    text-align: center;
 }
 .profileInfosButton.settings.large{
-    width: 250px;
+    width: 200px;
 }
 .profileInfosButton.settings.medium{
-    width: 200px;
+    width: 175px;
+}
+.profileInfosButton.settings.full{
+    width: 100%;
+}
+.profileInfosButton.settings.fit{
+    width: fit-content;
+    padding: 0.5em 1em;
 }
 
 /* La partie des animes favoris d'un utilisateur */
@@ -224,6 +230,19 @@
     .profileInfosFavoritesCharacters{
         grid-gap: 5px 10px;
     }
+
+    /* Un bouton de la page des paramètres de la page de profil */
+    .profileInfosButton.settings.large{
+        width: 188px;
+    }
+    .profileInfosButton.settings.medium{
+        width: 100px;
+    }
+
+    /* La partie des infos de l'utilisateur */
+    .profileInfos.settings{
+        padding: 0 1em;
+    }
 }
 
 /* Pour tablette */
@@ -242,6 +261,16 @@
     /* La partie des personnages favoris d'un utilisateur */
     .profileInfosFavoritesCharacters{
         grid-gap: 5px 15px;
+    }
+
+    /* Un bouton de la page des paramètres de la page de profil */
+    .profileInfosButton.settings.medium{
+        width: 137.5px;
+    }
+
+    /* La partie des infos de l'utilisateur */
+    .profileInfos.settings{
+        padding: 0 1.25em;
     }
 }
 

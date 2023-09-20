@@ -24,7 +24,9 @@
 .animeTopLeftContent{
     display: flex;
     flex-direction: column;
-    margin-right: 1.5em;
+}
+.animeTopLeftContent.settings{
+    align-items: center;
 }
 
 /* L'image de l'animé (dans la partie gauche du contenu du haut de la page d'un animé) */
