@@ -28,8 +28,14 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+/* Et ceux qui ont un remplissage automatique */
 .homeMultipleAnimes.autoFill{
     grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+}
+/* Et ceux de la page de profil */
+.homeMultipleAnimes.autoFill.profile{
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    grid-gap: 0 20px;
 }
 .homeMultipleAnimes::-webkit-scrollbar{
     height: 7px;
@@ -74,6 +80,11 @@
     object-fit: cover;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+/* Une image d'un animé dans la page de profil */
+.homeOneAnimeImage.profile{
+    width: 190px;
+    height: 266px;
+}
 
 /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
 .homeHoverContent{
@@ -94,6 +105,9 @@
     font-size: 1.25em;
     font-weight: 600;
     text-align: center;
+}
+.homeOneAnimeInfoTitle.profile{
+    font-size: 1em;
 }
 
 /* Informations de plus petite taille de l'animé dans la partie des informations supplémentaires */
@@ -125,6 +139,9 @@
     margin: 0.25em 0.2em;
     font-size: 0.875em;
     font-weight: 500;
+}
+.homeOneAnimeInfoOneGenre.profile{
+    font-size: 0.75em;
 }
 
 /* Le titre de l'animé en dessous de l'image de l'animé */
@@ -164,42 +181,57 @@
     }
 
     /* Contenu de toute la page */
-    .homeContainer {
+    .homeContainer{
         width: 95%;
     }
 
     /* Les titres secondaires */
-    .homeSecondaryTitle {
+    .homeSecondaryTitle{
         font-size: 1.25em;
     }
 
     /* Liste des animé d'une section */
-    .homeMultipleAnimes {
+    .homeMultipleAnimes{
         grid-template-columns: repeat(3, minmax(140px, 1fr));
         grid-gap: 0 15px;
     }
     /* Et ceux qui ont un remplissage automatique */
-    .homeMultipleAnimes.autoFill {
+    .homeMultipleAnimes.autoFill{
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         grid-gap: 0 15px;
     }
+    /* Et ceux de la page de profil */
+    .homeMultipleAnimes.autoFill.profile{
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        grid-gap: 0 10px;
+    }
 
-    /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
-    .homeOneAnimeImage {
+    /* Une image d'un animé */
+    .homeOneAnimeImage{
         width: 140px;
         height: 195px;
     }
+    /* Une image d'un animé dans la page de profil */
+    .homeOneAnimeImage.profile{
+        width: 100px;
+        height: 139px;
+    }
 
     /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-    .homeHoverContent {
+    .homeHoverContent{
         display: none;
     }
 
     /* La partie du classement des meilleurs animé */
-    .homeOneAnimeTopRanking {
+    .homeOneAnimeTopRanking{
         width: 1.75em;
         height: 1.75em;
         font-size: 1em;
+    }
+
+    /* Le titre de l'animé en dessous de l'image de l'animé */
+    .homeOneAnimeTitle.profile{
+        font-size: 0.75em;
     }
 }
 
@@ -211,39 +243,54 @@
     }
 
     /* Contenu de toute la page */
-    .homeContainer {
+    .homeContainer{
         width: 90%;
     }
 
     /* Les titres secondaires */
-    .homeSecondaryTitle {
+    .homeSecondaryTitle{
         font-size: 1.375em;
     }
 
     /* Liste des animé d'une section */
-    .homeMultipleAnimes {
+    .homeMultipleAnimes{
         grid-template-columns: repeat(3, minmax(175px, 1fr));
     }
     /* Et ceux qui ont un remplissage automatique */
-    .homeMultipleAnimes.autoFill {
+    .homeMultipleAnimes.autoFill{
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
     }
+    /* Et ceux de la page de profil */
+    .homeMultipleAnimes.autoFill.profile{
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-gap: 0 15px;
+    }
 
-    /* Partie qui contient les images et les informations supplémentaires lorsqu'on hover l'image */
-    .homeOneAnimeImage {
+    /* Une image d'un animé */
+    .homeOneAnimeImage{
         width: 175px;
         height: 245px;
     }
+    /* Une image d'un animé dans la page de profil */
+    .homeOneAnimeImage.profile{
+        width: 150px;
+        height: 210px;
+    }
     
     /* Partie qui contient des informations supplémentaires d'un animé lorsqu'on hover l'image */
-    .homeHoverContent {
+    .homeHoverContent{
         display: none;
     }
 
     /* La partie du classement des meilleurs animé */
-    .homeOneAnimeTopRanking {
+    .homeOneAnimeTopRanking{
         width: 1.875em;
         height: 1.875em;
         font-size: 1.125em;
+    }
+
+    /* Le titre de l'animé en dessous de l'image de l'animé */
+    .homeOneAnimeTitle.profile{
+        font-size: 0.875em;
     }
 }
