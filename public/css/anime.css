@@ -208,8 +208,9 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all 0.25s ease;
 }
-.animeRemainingRightContentPartCardsContent.talk{
-    flex-basis: 48%;
+.animeRemainingRightContentPartCardsContent.profile{
+    height: 120px;
+    width: 380px;
     display: flex;
     justify-content: space-between;
 }
@@ -235,14 +236,19 @@
 /* Nom complet d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartCardsTop{
     font-weight: 500;
-    font-size: 1.5em;
+    font-size: 1.25em;
     color: #636363;
+}
+.animeRemainingRightContentPartCardsTop.profile{
+    max-width: 270px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Rôle d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartCardsBottom{
     font-weight: 400;
-    font-size: 1.5em;
     color: #636363;
 }
 
@@ -259,7 +265,7 @@
 
 /* Icône du nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
 .animeRemainingRightContentPartCardsCommentTextIcon{
-    font-size: 1.5em;
+    font-size: 1.25em;
 }
 
 /* Nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
@@ -423,6 +429,21 @@
     .animeRemainingContainer{
         width: 95%;
     }
+
+    .animeRemainingRightContentPartCardsTop.profile{
+        max-width: 200px;
+        font-size: 1em;
+    }
+    
+    /* Partie du bas d'une carte */
+    .animeRemainingRightContentPartCardsBottom{
+        font-size: 0.75em;
+    }
+
+    /* Texte du nombre de commentaires d'une discussion d'une carte */
+    .animeRemainingRightContentPartCardsCommentText{
+        font-size: 0.875em;
+    }
 }
 
 /* Pour tablette */
@@ -441,6 +462,15 @@
     .animeRemainingContainer{
         width: 90%;
     }
+
+    .animeRemainingRightContentPartCardsTop.profile{
+        max-width: 550px;
+    }
 }
 
-
+/* Pour tablette et mobile */
+@media screen and (max-width: 1024px){
+    .animeRemainingRightContentPartCardsContent.profile{
+        width: 100%;
+    }
+}

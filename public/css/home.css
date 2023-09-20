@@ -156,6 +156,9 @@
     color: #333;
     font-weight: 600;
 }
+.homeOneAnimeTitle.favorites{
+    padding-top: 0;
+}
 
 /* La partie du classement des meilleurs animé */
 .homeOneAnimeTopRanking{
@@ -230,7 +233,7 @@
     }
 
     /* Le titre de l'animé en dessous de l'image de l'animé */
-    .homeOneAnimeTitle.profile{
+    .homeOneAnimeTitle.profile, .homeOneAnimeTitle.favorites{
         font-size: 0.75em;
     }
 }
@@ -290,7 +293,7 @@
     }
 
     /* Le titre de l'animé en dessous de l'image de l'animé */
-    .homeOneAnimeTitle.profile{
+    .homeOneAnimeTitle.profile, .homeOneAnimeTitle.favorites{
         font-size: 0.875em;
     }
 }

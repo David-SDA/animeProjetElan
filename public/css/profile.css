@@ -117,8 +117,8 @@
 /* La partie des personnages favoris d'un utilisateur */
 .profileInfosFavoritesCharacters{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
-    grid-gap: 15px 20px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 5px 20px;
     justify-items: center;
 }
 
@@ -127,19 +127,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: min-content;
 }
 
 /* L'image d'un personnage favori */
 .favoriteCharacterImage{
     width: 100px;
+    height: 150px;
+    object-fit: cover;
     border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 /* La partie des discussions auquel un utilisateur a participé */
 .profileInfosTalks{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     justify-items: center;
 }
 
@@ -216,6 +219,11 @@
     .profilePseudo{
         font-size: 1.5em;
     }
+
+    /* La partie des personnages favoris d'un utilisateur */
+    .profileInfosFavoritesCharacters{
+        grid-gap: 5px 10px;
+    }
 }
 
 /* Pour tablette */
@@ -229,6 +237,11 @@
     /* Le pseudo de l'utilisateur */
     .profilePseudo{
         font-size: 1.625em;
+    }
+
+    /* La partie des personnages favoris d'un utilisateur */
+    .profileInfosFavoritesCharacters{
+        grid-gap: 5px 15px;
     }
 }
 
@@ -244,5 +257,11 @@
     .profileInfos.buttons{
         flex-direction: row;
         justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    /* La partie des discussions auquel un utilisateur a participé */
+    .profileInfosTalks{
+        grid-template-columns: none;
     }
 }
