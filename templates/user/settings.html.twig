@@ -17,45 +17,43 @@
                 <a href="{{ path('change_description_user') }}" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
             </div>
         </div>
-        <div class="animeRemainingContainer">
-            <div class="profileInfos settings">
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Theme</h2>
-                    <div class="settingsThemes">
-                        <a href="#" class="settingsTheme light">A</a>
-                        <a href="#" class="settingsTheme dark">A</a>
-                    </div>
+        <div class="animeRemainingContainer profileInfos settings">
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Theme</h2>
+                <div class="settingsThemes">
+                    <a href="#" class="settingsTheme light">A</a>
+                    <a href="#" class="settingsTheme dark">A</a>
                 </div>
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Email</h2>
-                    <div>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Email : </span><i>{{ app.user.email }}</i></p>
-                        <a href="{{ path('change_email_user') }}" class="profileInfosButton settings fit">CHANGE EMAIL</a>
-                    </div>
+            </div>
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Email</h2>
+                <div>
+                    <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Email : </span><i>{{ app.user.email }}</i></p>
+                    <a href="{{ path('change_email_user') }}" class="profileInfosButton settings fit">CHANGE EMAIL</a>
                 </div>
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Password</h2>
-                    <div>
-                        <a href="{{ path('change_password_user') }}" class="profileInfosButton settings fit">CHANGE PASSWORD</a>
-                    </div>
+            </div>
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Password</h2>
+                <div>
+                    <a href="{{ path('change_password_user') }}" class="profileInfosButton settings fit">CHANGE PASSWORD</a>
                 </div>
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Infos</h2>
-                    <div>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ app.user.dateNaissance ? app.user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ app.user.pays ? app.user.pays : "Not specified" }}</i></p>
-                        <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ app.user.ville ? app.user.ville : "Not specified" }}</i></p>
-                        <a href="{{ path('change_infos_user') }}" class="profileInfosButton settings fit">CHANGE INFOS</a>
-                    </div>
+            </div>
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Infos</h2>
+                <div>
+                    <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Date of birth : </span><i>{{ app.user.dateNaissance ? app.user.dateNaissance|date("m/d/Y") : "Not specified" }}</i></p>
+                    <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Country : </span><i>{{ app.user.pays ? app.user.pays : "Not specified" }}</i></p>
+                    <p class="settingsNormalText"><span class="settingsSemiBoldText">Your City : </span><i>{{ app.user.ville ? app.user.ville : "Not specified" }}</i></p>
+                    <a href="{{ path('change_infos_user') }}" class="profileInfosButton settings fit">CHANGE INFOS</a>
                 </div>
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Account visibility</h2>
-                    <p><i>A venir ...</i></p>
-                </div>
-                <div class="settingsOne">
-                    <h2 class="settingsTitle">Calendar notifications</h2>
-                    <p><i>A venir ...</i></p>
-                </div>
+            </div>
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Account visibility</h2>
+                <p><i>A venir ...</i></p>
+            </div>
+            <div class="settingsOne">
+                <h2 class="settingsTitle">Calendar notifications</h2>
+                <p><i>A venir ...</i></p>
             </div>
         </div>
     </main>

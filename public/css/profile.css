@@ -146,10 +146,11 @@
 }
 
 /* La partie des discussions auquel un utilisateur a participé */
-.profileInfosTalks{
+.profileInfosTalks, .animeRemainingRightContentPartCardsContainer.talk{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     justify-items: center;
+    grid-gap: 0 10px;
 }
 
 /* Le lien qui sert à changer de pseudo */
@@ -290,7 +291,7 @@
     }
 
     /* La partie des discussions auquel un utilisateur a participé */
-    .profileInfosTalks{
+    .profileInfosTalks, .animeRemainingRightContentPartCardsContainer.talk{
         grid-template-columns: none;
     }
 }
