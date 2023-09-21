@@ -18,7 +18,6 @@
             <link rel="stylesheet" href="{{ asset("css/animeList.css") }}">
             <link rel="stylesheet" href="{{ asset("css/responsive.css") }}">
         {% endblock %}
-        
         {% block javascripts %}
         {% endblock %}
     </head>
@@ -33,12 +32,10 @@
                         <ul class="navBarElementDropdownContent">
                             <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink">TOP</a></li>
                             <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink">SEASONIAL</a></li>
-                            <li><a href="{{ path('all_anime') }}" class="navBarElementLink navBarElementDropdownLink last">ALL</a></li>
                         </ul>
                     </li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
-                    <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>
-                    {# <li class="navBarElement"><a href="#" class="navBarElementLink">MARKET</a></li>  #}
+                    <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>                    
                 </ul>    
             </nav>
             <div class="navBarProfile">

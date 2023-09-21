@@ -319,55 +319,6 @@ class AnimeCallApiService{
     }
 
     /**
-     * Fonction qui permet de récupérer tout les animés en fonction de critères
-     */
-    public function getAllAnimes(int $pageNumber){
-        // Définition de la query
-        $query = '
-            query($pageNumber: Int){
-                Page(page: $pageNumber, perPage: 50){
-                    media(type: ANIME, sort: TITLE_ROMAJI, isAdult: false){
-                        id
-                        title{
-                            romaji
-                        }
-                        coverImage{
-                            large
-                            color
-                        }
-                        genres
-                        episodes
-                        format
-                        studios{
-                            edges{
-                                isMain
-                                node{
-                                    name
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        ';
-
-        // Définition des variables utilisées dans la query
-        $variables = [
-            'pageNumber' => $pageNumber,
-        ];
-
-        // Appel à l'API
-        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
-            'json' => [
-                'query' => $query,
-                'variables' => $variables,
-            ]
-        ]);
-
-        return $response->toArray(); // On retourne les données sous forme de tableau
-    }
-
-    /**
      * Fonction qui permet de récupérer tout les animés pour une liste donnée
      */
     public function getAnimesFromList(array $animeIds){
