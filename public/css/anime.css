@@ -28,7 +28,7 @@
     align-items: center;
 }
 
-/* L'image de l'animé (dans la partie gauche du contenu du haut de la page d'un animé) */
+/* L'image de l'animé */
 .animeImage{
     display: block;
     width: 200px;
@@ -36,7 +36,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* Les boutons (de la partie gauche du contenu du haut de la page d'un animé) */
+/* Les boutons d'ajout */
 .animeButtonAddTo{
     padding: 10px;
     border: none;
@@ -51,25 +51,23 @@
     transform: translateY(-2px);
     filter: saturate(150%);
 }
-
-/* Le bouton pour ajouter l'animé à sa liste (de la partie gauche du contenu du haut de la page d'un animé) */
+/* Le bouton pour ajouter l'animé à sa liste */
 .animeButtonAddTo.list{
     margin: 1em 0 0.5em 0;
     background-color: #00BFFF;
 }
-
-/* Le bouton pour ajouter l'animé à ses favoris (de la partie gauche du contenu du haut de la page d'un animé) */
+/* Le bouton pour ajouter l'animé à ses favoris */
 .animeButtonAddTo.favorites{
     margin-top: 0.5em;
     background-color: #FF4136;
 }
 
-/* La partie droite du contenu du haut (de la page d'un animé) */
+/* La partie droite du contenu du haut de la page d'un animé */
 .animeTopRightContent{
     margin-left: 1.5em;
 }
 
-/* Le titre de l'animé (de la partie droite du contenu du haut de la page d'un animé) */
+/* Le titre de l'animé */
 .animeTitle{
     font-size: 1.75em;
     font-weight: 600;
@@ -77,7 +75,7 @@
     margin-bottom: 0.5em;
 }
 
-/* Le titre de la description de l'animé (de la partie droite du contenu du haut de la page d'un animé) */
+/* Le titre de la description de l'animé */
 .animeSynopsisTitle{
     font-size: 1.25em;
     font-weight: 600;
@@ -85,13 +83,13 @@
     margin-bottom: 0.25em;
 }
 
-/* Le contenu de la description de l'animé (de la partie droite du contenu du haut de la page d'un animé) */
+/* Le contenu de la description de l'animé */
 .animeSynopsisContent{
     font-weight: 500;
     color: #636363;
 }
 
-/* Contenu de la partie restante (de la page d'un animé) */
+/* Contenu de la partie restante de la page d'un animé */
 .animeRemainingContainer{
     width: 80%;
     margin: 1.5em auto;
@@ -101,7 +99,7 @@
     display: block;
 }
 
-/* Contenu à gauche (de la partie restante de la page d'un animé) */
+/* Contenu à gauche de la partie restante */
 .animeRemainingLeftContent{
     min-width: 200px;
     height: fit-content;
@@ -112,14 +110,14 @@
     margin-right: 1.5em;
 }
 
-/* Une information sur l'animé (dans la partie gauche de la partie restante de la page d'un animé) */
+/* Une information sur l'animé */
 .animeRemainingLeftContentInfo{
     display: flex;
     flex-direction: column;
     margin-top: 1em;
 }
 
-/* Le titre de l'information sur l'animé (dans la partie gauche de la partie restante de la page d'un animé) */
+/* Le titre de l'information sur l'animé */
 .animeRemainingLeftContentInfoTitle{
     font-weight: 700;
     font-size: 1.25em;
@@ -127,23 +125,23 @@
     margin-bottom: 0.25em;
 }
 
-/* Le contenu de l'information sur l'animé (dans la partie gauche de la partie restante de la page d'un animé) */
+/* Le contenu de l'information sur l'animé */
 .animeRemainingLeftContentInfoContent{
     font-weight: 400;
     color: #636363;
 }
 
-/* Contenu à droite (de la partie restante de la page d'un animé) */
+/* Contenu à droite de la partie restante */
 .animeRemainingRightContent{
     margin-left: 1.5em;
 }
 
-/* Temps avant le prochain épisode (de la partie droite de la partie restante de la page d'un animé) */
+/* Temps avant le prochain épisode */
 .animeRemainingRightContentTimeBeforeEpisode{
     font-weight: 600;
     font-size: 1.25em;
     color: #333333;
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
 }
 
 /* La partie qui contient le titre d'une partie */
@@ -152,19 +150,20 @@
     justify-content: space-between;
     margin-bottom: 0.5em;
 }
-.animeRemainingRightContentPartTitleContainer:not(:first-child){
-    margin-top: 1em;
-}
 
-/* Titre d'une partie (de la partie droite de la partie restante de la page d'un animé) */
+/* Titre d'une partie */
 .animeRemainingRightContentPartTitle{
     font-weight: 600;
     font-size: 1.5em;
     color: #333333;
     margin-bottom: 0.5em;
 }
+/* Pour la partie des commentaires sur l'animé */
+.animeRemainingRightContentPartTitle:last-of-type{
+    margin-bottom: 0;
+}
 
-/* Le texte qui permet de voir plus (de la partie droite de la partie restante de la page d'un animé) */
+/* Le texte qui permet de voir plus (pour les personnages et staff) */
 .animeRemainingRightContentPartMore{
     font-weight: 500;
     font-size: 1em;
@@ -176,22 +175,14 @@
     color: #00BFFF;
 }
 
-/* Le titre de la partie (de la partie droite de la partie restante de la page d'un animé) */
-.animeRemainingRightContentPartTitle:not(:first-child){
-    margin-top: 1em;
-}
-.animeRemainingRightContentPartTitle:last-of-type{
-    margin-bottom: 0;
-}
-
-/* Partie qui contient des cartes (de la partie droite de la partie restante de la page d'un animé) */
+/* Partie qui contient des cartes */
 .animeRemainingRightContentPartCardsContainer{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 0 20px;
 }
 
-/* Contenu de la partie qui contient des cartes (de la partie droite de la partie restante de la page d'un animé) */
+/* Contenu de la partie qui contient des cartes */
 .animeRemainingRightContentPartCardsContent{
     height: 150px;
     margin-bottom: 1.5em;
@@ -211,7 +202,7 @@
     transform: translateY(-2px);
 }
 
-/* Image d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Image d'une carte */
 .animeRemainingRightContentPartCardsImage{
     border-radius: 10px;
     width: 100px;
@@ -219,15 +210,15 @@
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-/* Partie du texte d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Partie du texte d'une carte */
 .animeRemainingRightContentPartCardsTextContainer{
-    margin: 0 1em;
+    margin: 1em;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-/* Nom complet d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Nom complet d'une carte */
 .animeRemainingRightContentPartCardsTop{
     font-weight: 500;
     font-size: 1.25em;
@@ -240,42 +231,42 @@
     text-overflow: ellipsis;
 }
 
-/* Rôle d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Rôle d'une carte */
 .animeRemainingRightContentPartCardsBottom{
     font-weight: 400;
     color: #636363;
 }
 
-/* Partie qui contient le nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Partie qui contient le nombre de commentaires d'une discussion */
 .animeRemainingRightContentPartCardsCommentContainer{
     margin-top: 1em;
     margin-right: 1em;
 }
 
-/* Texte du nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Texte du nombre de commentaires et icône d'une discussion */
 .animeRemainingRightContentPartCardsCommentText{
     color: #636363;
 }
 
-/* Icône du nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Icône du nombre de commentaires d'une discussion */
 .animeRemainingRightContentPartCardsCommentTextIcon{
     font-size: 1.25em;
 }
 
-/* Nombre de commentaires d'une discussion d'une carte (de la partie qui contient des cartes de la partie droite de la partie restante de la page d'un animé) */
+/* Nombre de commentaires d'une discussion */
 .animeRemainingRightContentPartCardsCommentTextNumber{
     font-weight: 400;
     font-size: 0.875em;
     vertical-align: text-top;
 }
 
-/* Partie qui permet de donner son opinion sur un animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Partie qui permet de donner son opinion sur un animé */
 .animeRemainingRightContentPartYourOpinionContainer{
     display: flex;
     flex-direction: column;
 }
 
-/* L'input pour donner son opinion sur un animé (de la partie droite de la partie restante de la page d'un animé) */
+/* L'input pour donner son opinion sur un animé */
 .animeRemainingRightContentPartYourOpinionInput{
     width: 100%;
     min-height: 10em;
@@ -289,7 +280,7 @@
     font-style: italic;
 }
 
-/* L'input pour publier son opinion sur un animé (de la partie droite de la partie restante de la page d'un animé) */
+/* L'input (ici comme un bouton) pour publier son opinion sur un animé */
 .animeRemainingRightContentPartYourOpinionSubmit{
     align-self: end;
     margin-top: 1em;
@@ -308,7 +299,7 @@
     filter: saturate(150%);
 }
 
-/* Texte qui contient les filtres dans la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Texte qui contient les filtres dans la partie qui contient les opinions sur l'animé */
 .animeRemainingRightContentPartOpinionsFilter{
     width: fit-content;
     margin-left: auto;
@@ -318,18 +309,18 @@
     color: #333333;
 }
 
-/* Un choix de filtre dans la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Un choix de filtre dans la partie qui contient les opinions sur l'animé */
 .animeRemainingRightContentPartOpinionsFilterOption{
     cursor: pointer;
 }
 
-/* Partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Partie qui contient les opinions sur l'animé */
 .animeRemainingRightContentPartOpinionsContainer{
     display: flex;
     flex-direction: column;
 }
 
-/* Contenu de la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Contenu de la partie qui contient les opinions sur l'animé */
 .animeRemainingRightContentPartOpinionsContent{
     flex-basis: 100%;
     display: flex;
@@ -341,21 +332,21 @@
     border-radius: 10px;
 }
 
-/* Partie du haut de la partie qui contient les opinions sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Partie du haut de la partie qui contient une opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsTopContent{
     display: flex;
     align-items: center;
     margin-bottom: 1em;
 }
 
-/* Image de profil de l'utilisateur qui a donné son opinion sur l'animé (dans la partie du haut de la partie qui contient les commentaires sur l'animé de la partie droite de la partie restante de la page d'un animé) */
+/* Image de profil de l'utilisateur qui a donné son opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsProfilePicture{
     width: 40px;
     height: 40px;
     border-radius: 5px;
 }
 
-/* Pseudo de l'utilisateur qui a donné son opinion sur l'animé (dans la partie du haut de la partie qui contient les commentaires sur l'animé de la partie droite de la partie restante de la page d'un animé) */
+/* Pseudo de l'utilisateur qui a donné son opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsPseudo{
     margin-left: 0.5em;
     font-weight: 500;
@@ -367,13 +358,13 @@
     text-overflow: ellipsis;
 }
 
-/* Temps de la publication de l'opinion sur l'animé (dans la partie du haut de la partie qui contient les commentaires sur l'animé de la partie droite de la partie restante de la page d'un animé) */
+/* Temps de la publication de l'opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsPublicationTime{
     margin-left: auto;
     align-self: flex-start;
 }
 
-/* Partie du milieu de la partie qui contient une opinion sur l'animé (l'opinion) (de la partie droite de la partie restante de la page d'un animé) */
+/* L'opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsMidContent{
     background-color: #F5F5F5;
     border-radius: 10px;
@@ -381,7 +372,7 @@
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-/* Partie du bas de la partie qui contient une opinion sur l'animé (icône) (de la partie droite de la partie restante de la page d'un animé) */
+/* Partie des likes d'une opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsBottomContent{
     margin-top: 1em;
     align-self: end;
@@ -390,7 +381,7 @@
     cursor: pointer;
 }
 
-/* Le nombre de likes de la partie du bas de la partie qui contient une opinion sur l'animé (de la partie droite de la partie restante de la page d'un animé) */
+/* Le nombre de likes d'une opinion */
 .animeRemainingRightContentPartOpinionsLikesNumber{
     font-weight: 500;
     font-size: 1em;
@@ -405,8 +396,6 @@
 
 /* Titre de la page des personnages d'un animé */
 .animeCharactersTitle{
-    font-weight: 600;
-    font-size: 2em;
     color: #636363;
     text-align: center;
     margin: 0.5em 0;
@@ -414,7 +403,7 @@
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
-    /* Partie du haut */
+    /* Partie du haut de la page d'un animé */
     .animeTopContainer{
         padding: 1.5em 2.5%;
     }
@@ -424,7 +413,7 @@
         width: 125px;
     }
 
-    /* La partie droite du contenu du haut */
+    /* La partie droite du contenu du haut de la page d'un animé */
     .animeTopRightContent{
         margin-left: 1em;
     }
@@ -434,26 +423,28 @@
         font-size: 1.5em;
     }
 
-    /* Partie restante */
+    /* Contenu de la partie restante de la page d'un animé */
     .animeRemainingContainer{
         width: 95%;
     }
 
+    /* Partie qui contient des cartes */
+    .animeRemainingRightContentPartCardsContainer.talk.anime{
+        grid-template-columns: none;
+    }
+    
+    /* Contenu de la partie qui contient des cartes */
+    .animeRemainingRightContentPartCardsContent{
+        height: 120px;
+    }
+    
     /* Image d'une carte */
     .animeRemainingRightContentPartCardsImage{
         width: 80px;
         height: 120px;
     }
-    /* Partie qui contient des cartes */
-    .animeRemainingRightContentPartCardsContainer.talk.anime{
-        grid-template-columns: none;
-    }
 
-    /* Contenu de la partie qui contient des cartes */
-    .animeRemainingRightContentPartCardsContent{
-        height: 120px;
-    }
-
+    /* Nom complet d'une carte */
     .animeRemainingRightContentPartCardsTop.anime{
         max-width: 210px;
         font-size: 1em;
@@ -463,7 +454,7 @@
         font-size: 1em;
     }
     
-    /* Partie du bas d'une carte */
+    /* Rôle d'une carte */
     .animeRemainingRightContentPartCardsBottom{
         font-size: 0.8em;
     }
@@ -474,16 +465,25 @@
         font-size: 1em
     }
 
-    /* Texte du nombre de commentaires d'une discussion d'une carte */
+    /* Texte du nombre de commentaires d'une discussion */
     .animeRemainingRightContentPartCardsCommentText{
         font-size: 0.875em;
     }
 
-    /* Partie du bas de la partie qui contient une opinion sur l'animé */
+    /* Partie des likes d'une opinion sur l'animé */
     .animeRemainingRightContentPartOpinionsBottomContent{
         font-size: 1.25em;
     }
 
+    /* Contenu de toute la page des personnages d'un animé */
+    .animeCharactersContainer{
+        width: 95%;
+    }
+
+    /* Titre de la page des personnages d'un animé */
+    .animeCharactersTitle{
+        font-size: 1.75em;
+    }
 }
 
 /* Pour tablette */
@@ -498,7 +498,7 @@
         width: 175px;
     }
 
-    /* La partie droite du contenu du haut */
+    /* La partie droite du contenu du haut de la page d'un animé */
     .animeTopRightContent{
         margin-left: 1.25em;
     }
@@ -508,9 +508,14 @@
         font-size: 1.625em;
     }
 
-    /* Partie restante */
+    /* Contenu de la partie restante de la page d'un animé */
     .animeRemainingContainer{
         width: 90%;
+    }
+
+    /* Contenu de la partie qui contient des cartes */
+    .animeRemainingRightContentPartCardsContent{
+        height: 135px;
     }
 
     /* Image d'une carte */
@@ -519,10 +524,7 @@
         height: 135px;
     }
 
-    /* Contenu de la partie qui contient des cartes */
-    .animeRemainingRightContentPartCardsContent{
-        height: 135px;
-    }
+    /* Nom complet d'une carte */
     .animeRemainingRightContentPartCardsTop.profile, .animeRemainingRightContentPartCardsTop.anime{
         max-width: 550px;
     }
@@ -533,20 +535,30 @@
         font-size: 1.25em
     }
 
-    /* Partie du bas de la partie qui contient une opinion sur l'animé */
+    /* Partie des likes d'une opinion sur l'animé */
     .animeRemainingRightContentPartOpinionsBottomContent{
         font-size: 1.375em;
+    }
+
+    /* Contenu de toute la page des personnages d'un animé */
+    .animeCharactersContainer{
+        width: 90%;
+    }
+
+    /* Titre de la page des personnages d'un animé */
+    .animeCharactersTitle{
+        font-size: 1.875em;
     }
 }
 
 /* Pour tablette et mobile */
 @media screen and (max-width: 1024px){
-    /* Partie restante de la page */
+    /* Contenu de la partie restante de la page d'un animé */
     .animeRemainingContainer{
         flex-direction: column;
     }
 
-    /* Contenu à gauche */
+    /* Contenu à gauche de la partie restante */
     .animeRemainingLeftContent{
         width: auto;
         height: fit-content;
@@ -556,24 +568,24 @@
         padding: 1em 0;
     }
 
-    /* Le titre de l'information sur l'animé */
-    .animeRemainingLeftContentInfoTitle{
-        width: max-content;
-    }
-
     /* Une information sur l'animé */
     .animeRemainingLeftContentInfo{
         margin: 0 1em;
     }
 
-    /* Le texte d'une information sur l'animé */
-    .animeRemainingLeftContentInfoContentContainer{
-        display: flex;
+    /* Le titre de l'information sur l'animé */
+    .animeRemainingLeftContentInfoTitle{
+        width: max-content;
     }
 
     /* Le contenu de l'information sur l'animé */
     .animeRemainingLeftContentInfoContent{
         width: max-content;
+    }
+
+    /* Le texte d'une information sur l'animé */
+    .animeRemainingLeftContentInfoContentContainer{
+        display: flex;
     }
 
     /* Contenu à droite de la partie restante */

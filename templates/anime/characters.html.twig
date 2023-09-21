@@ -3,23 +3,23 @@
 {# Permet de rendre la récuperation des données plus pratique #}
 {% set dataAllCharactersThisAnime = dataAllCharactersOneAnime.data.Media %}
 
-{% block title %}Characters of {{ dataAllCharactersThisAnime.title.romaji ? dataAllCharactersThisAnime.title.romaji : "?" }}{% endblock %}
+{% block title %}Characters of {{ dataAllCharactersThisAnime.title.romaji|default('?') }}{% endblock %}
 
 {% block body %}
     <main class="animeCharactersContainer">
-        <h1 class="animeCharactersTitle">Characters of {{ dataAllCharactersThisAnime.title.romaji ? dataAllCharactersThisAnime.title.romaji : "?" }}</h1>
+        <h1 class="animeCharactersTitle">Characters of {{ dataAllCharactersThisAnime.title.romaji|default('?') }}</h1>
         <div class="animeRemainingRightContentPartCardsContainer">
-            {% for character in dataAllCharactersThisAnime.characters.edges %}
-                <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
-                    <figure>
-                        <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full ? character.node.name.full : "Unknown" }}" class="animeRemainingRightContentPartCardsImage">
-                    </figure>
-                    <div class="animeRemainingRightContentPartCardsTextContainer">
-                        <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full ? character.node.name.full : "Unknown" }}</h2>
-                        <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : "Unknown" }}</i></p>
-                    </div>
-                </a>
-            {% endfor %}
+        {% for character in dataAllCharactersThisAnime.characters.edges %}
+            <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+                <figure>
+                    <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full|default('Unknown') }}" class="animeRemainingRightContentPartCardsImage">
+                </figure>
+                <div class="animeRemainingRightContentPartCardsTextContainer">
+                    <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full|default('Unknown') }}</h2>
+                    <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
+                </div>
+            </a>
+        {% endfor %}
         </div>
     </main>
 {% endblock %}
