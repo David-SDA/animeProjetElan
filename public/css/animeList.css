@@ -113,51 +113,50 @@
 
 /* Le conteneur de la page de modification d'un élement de la liste d'animé d'un utilisateur */
 .animeListModifyContainer{
-    width: 60%;
+    background-color: #fff;
+    width: 80%;
     display: flex;
-    justify-content: space-evenly;
     margin: 1em auto;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .animeListModifyContainer figure{
-    width: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: min-content;
 }
 .animeListModifyContainer button{
-    font-size: 0.875em;
+    width: 100%;
 }
 
 /* Le formulaire de la page de modification d'un élement de la liste d'animé d'un utilisateur */
 .animeListModifyForm{
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    margin-left: 1em;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 10px 10px;
 }
 
-/* Une colonne dans le formulaire de la page de modification de la liste d'animé d'un utilisateur */
-.animeListModifyFormLine{
+.securityFormRow.animeList input[type="date"], .securityFormRow.animeList select, .securityFormRow.animeList input[type="number"]{
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.animeListModifyFormLine input[type="date"], .animeListModifyFormLine select, .animeListModifyFormLine input[type="number"]{
-    width: 322px;
     height: 44px;
-    
 }
-.animeListModifyFormLine select, .animeListModifyFormLine input[type="number"]{
+.securityFormRow.animeList select, .securityFormRow.animeList input[type="number"]{
     border-radius: 10px;
     border: 1px solid #B4B4B4;
     padding: 0 10px;
 }
-.animeListModifyFormLine button{
-    width: 100px;
+.securityFormRow.animeList button{
     height: 50px;
     margin: 0;
     box-shadow: none;
+}
+
+.animeButtonAddTo.delete{
+    margin-top: 1.5em;
+    background-color: #FF4136;
+    height: 44px;
+    align-self: center;
 }
 
 /* Pour mobile */
@@ -174,6 +173,19 @@
         width: 95%;
         grid-gap: 10px 5px;
     }
+
+    /* Le conteneur de la page de modification d'un élement de la liste d'animé d'un utilisateur */
+    .animeListModifyContainer{
+        width: 95%;
+        padding: 0.5em;
+    }
+
+    /* Le formulaire de la page de modification d'un élement de la liste d'animé d'un utilisateur */
+    .animeListModifyForm{
+        margin-left: 0.5em;
+        grid-template-columns: repeat(1, minmax(150px, 1fr));
+        grid-gap: 0 5px;
+    }
 }
 
 /* Pour tablette */
@@ -189,6 +201,18 @@
     .animeListContainer{
         width: 90%;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    /* Le conteneur de la page de modification d'un élement de la liste d'animé d'un utilisateur */
+    .animeListModifyContainer{
+        width: 90%;
+        padding: 0.75em;
+    }
+
+    /* Le formulaire de la page de modification d'un élement de la liste d'animé d'un utilisateur */
+    .animeListModifyForm{
+        margin-left: 0.75em;
+        grid-template-columns: repeat(2, minmax(230px, 1fr));
     }
 }
 

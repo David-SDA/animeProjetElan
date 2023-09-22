@@ -5,38 +5,35 @@
 
 {% block body %}
     <main class="animeListModifyContainer">
-        <figure>
-            <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-            <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+        <div>
+            <figure>
+                <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="animeImage">
+                <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+            </figure>
             <button class="animeButtonAddTo favorites">Add to your favorites</button>
-        </figure>
+        </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
-            <div class="animeListModifyFormLine">
-                <div class="securityFormRow">
-                    {{ form_label(form.dateDebutVisionnage, 'Started Watching') }}
-                    {{ form_widget(form.dateDebutVisionnage) }}
-                </div>
-                <div class="securityFormRow">
-                    {{ form_label(form.dateFinVisionnage, 'Finished Watching') }}
-                    {{ form_widget(form.dateFinVisionnage) }}
-                </div>
+            <div class="securityFormRow animeList">
+                {{ form_label(form.dateDebutVisionnage, 'Started Watching') }}
+                {{ form_widget(form.dateDebutVisionnage) }}
             </div>
-            <div class="animeListModifyFormLine">
-                <div class="securityFormRow">
-                    {{ form_label(form.etat, 'Status') }}
-                    {{ form_widget(form.etat) }}
-                </div>
-                <div class="securityFormRow">
-                    {{ form_label(form.nombreEpisodeVu, 'Episodes Watched') }}
-                    {{ form_widget(form.nombreEpisodeVu) }}
-                </div>
+            <div class="securityFormRow animeList">
+                {{ form_label(form.dateFinVisionnage, 'Finished Watching') }}
+                {{ form_widget(form.dateFinVisionnage) }}
             </div>
-            <div class="animeListModifyFormLine">
-                <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo favorites">Delete</a>
-                <button type="submit" class="securityFormSubmitButton">Save</button>
+            <div class="securityFormRow animeList">
+                {{ form_label(form.etat, 'Status') }}
+                {{ form_widget(form.etat) }}
             </div>
+            <div class="securityFormRow animeList">
+                {{ form_label(form.nombreEpisodeVu, 'Episodes Watched') }}
+                {{ form_widget(form.nombreEpisodeVu) }}
+            </div>
+            <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete">Delete</a>
+            <button type="submit" class="securityFormSubmitButton">Save</button>
         {{ form_end(form) }}
     </main>
+
     {% block script %}
         <script>
             // On crée un écouteur quand la page est bien chargé
