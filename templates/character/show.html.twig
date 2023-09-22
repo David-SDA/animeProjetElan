@@ -33,7 +33,9 @@
             <div class="homeMultipleAnimes autoFill">
             {% for anime in dataThisCharacter.media.edges %}
                 <figure class="homeOneAnime">
-                    <a href="{{ path('show_staff', { 'id' :  anime.voiceActors[0].id}) }}"><img src="{{ anime.voiceActors[0].image.medium }}" alt="{{ anime.voiceActors[0].name.full }}" class="characterRemainingVoiceActorImage"></a>
+                {% if anime.voiceActors %}
+                    <a href="{{ path('show_staff', { 'id' :  anime.voiceActors[0].id }) }}"><img src="{{ anime.voiceActors[0].image.medium }}" alt="{{ anime.voiceActors[0].name.full }}" class="characterRemainingVoiceActorImage"></a>
+                {% endif %}
                     <a href="{{ path('show_anime', { 'id' : anime.node.id }) }}">
                         <div class="homeOneAnimeImageInfo">
                             <img src="{{ anime.node.coverImage.large }}" alt="Cover Image of {{ anime.node.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
