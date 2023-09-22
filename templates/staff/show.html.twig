@@ -3,62 +3,55 @@
 {# Permet de rendre la récuperation des données plus pratique #}
 {% set dataThisStaff = dataOneStaff.data.Staff %}
 
-{% block title %}{{ dataThisStaff.name.full ? dataThisStaff.name.full : "?" }}{% endblock %}
+{% block title %}{{ dataThisStaff.name.full|default('Unknown') }}{% endblock %}
 
 {% block body %}
-    <main class="characterContainer">
-        <div class="characterTopContainer">
-            <div class="characterTopContent">
-                <div class="characterTopLeftContainer">
-                    <figure>
-                        <img src="{{ dataThisStaff.image.large ? dataThisStaff.image.large : dataThisStaff.image.medium }}" alt="{{ dataThisStaff.name.full ? dataThisStaff.name.full : "Unknown" }}" class="characterTopContentImage">
-                    </figure>
-                </div>
-                <div class="characterTopContentCenterContainer">
-                    <h1 class="characterPartTitle">{{ dataThisStaff.name.full ? dataThisStaff.name.full : "?" }}</h1>
-                    <p class="characterTopContentTraitText">Age : <span class="characterTopContentTraitApi">{{ dataThisStaff.age ? dataThisStaff.age : "?" }}</span></p>
-                    <p class="characterTopContentTraitText">Gender : <span class="characterTopContentTraitApi">{{ dataThisStaff.gender ? dataThisStaff.gender : "?" }}</span></p>
-                    {# Voir les différents contenu des description pour adapter l'affichage #}
-                    <p class="characterTopContentRegularText">
-                        {{ dataThisStaff.description ? dataThisStaff.description|raw|nl2br : "No description yet" }}
-                    </p>
-                </div>
+    <main class="animeContainer">
+        <div class="animeTopContainer">
+            <div class="animeTopLeftContent">
+                <figure>
+                    <img src="{{ dataThisStaff.image.large }}" alt="{{ dataThisStaff.name.full|default('Unknown') }}" class="animeImage">
+                </figure>
+            </div>
+            <div class="animeTopRightContent">
+                <h1 class="animeTitle">{{ dataThisStaff.name.full|default('Unknown') }}</h1>
+                <p class="animeSynopsisContent"><b>Age :</b> {{ dataThisStaff.age|default('Unknown') }}</p>
+                <p class="animeSynopsisContent"><b>Gender :</b> {{ dataThisStaff.gender|default('Unknown') }}</p>
+                {# Voir les différents contenu des description pour adapter l'affichage #}
+                <p class="animeSynopsisContent">
+                    {{ dataThisStaff.description ? dataThisStaff.description|raw|nl2br : "No description yet" }}
+                </p>
             </div>
         </div>
         <div class="characterRemainingContainer">
             {# Si ce membre de staff a doublé des personnages, alors on l'affiche #}
             {% if dataThisStaff.characters.edges %}
                 <h2 class="characterPartTitle">APPEARANCES</h2>
-                <div class="characterMultipleAnimes">
-                    {# Pour chaque personnage incarné par le doubleur #}
-                    {% for character in dataThisStaff.characters.edges %}
+                <div class="homeMultipleAnimes autoFill">
+                {# Pour chaque personnage incarné par le doubleur #}
+                {% for character in dataThisStaff.characters.edges %}
+                    {# On définit des variables pour manipuler les données de l'API plus facilement #}
+                    {% set characterId = character.node.id %}
+                    {% set characterName = character.node.name.full|default('Unknown') %}
+                    {% set characterImage = character.node.image.medium %}
+                    
+                    {# Pour chaque anime dans lequel le personnage apparaît, on affiche cette animé #}
+                    {% for anime in character.node.media.nodes %}
                         {# On définit des variables pour manipuler les données de l'API plus facilement #}
-                        {% set characterId = character.node.id %}
-                        {% set characterName = character.node.name.full %}
-                        {% set characterImage = character.node.image.medium %}
-                        
-                        {# Pour chaque anime dans lequel le personnage apparaît, on affiche cette animé #}
-                        {% for anime in character.node.media.nodes %}
-                            {# On définit des variables pour manipuler les données de l'API plus facilement #}
-                            {% set animeId = anime.id %}
-                            {% set animeTitle = anime.title.romaji %}
-                            {% set animeCoverImage = anime.coverImage.large %}
-                            <figure class="homeOneAnime top">
-                                <a href="{{ path('show_anime', { 'id' : animeId }) }}">
-                                    <div class="homeOneAnimeImageInfo">
-                                        <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
-                                        <section class="homeHoverContent">
-                                            <div class="characterRemainingVoiceActorContainer">
-                                                <img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage">
-                                                <p class="characterRemainingVoiceActorName">{{ characterName }}</p>
-                                            </div>
-                                        </section>
-                                    </div>
-                                    <figcaption class="homeOneAnimeTitle">{{ animeTitle }}</figcaption>
-                                </a>
-                            </figure>
-                        {% endfor %}
+                        {% set animeId = anime.id %}
+                        {% set animeTitle = anime.title.romaji|default('Unknown') %}
+                        {% set animeCoverImage = anime.coverImage.large %}
+                        <figure class="homeOneAnime">
+                            <a href="{{ path('show_character', { 'id' : characterId }) }}"><img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage"></a>
+                            <a href="{{ path('show_anime', { 'id' : animeId }) }}">
+                                <div class="homeOneAnimeImageInfo">
+                                    <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
+                                </div>
+                            </a>
+                            <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : animeId }) }}">{{ animeTitle }}</a></figcaption>
+                        </figure>
                     {% endfor %}
+                {% endfor %}
                 </div>
             {% endif %}
 
@@ -67,15 +60,15 @@
             {% for media in dataThisStaff.staffMedia.edges %}
                 {# On récupère les données que l'ont veut (id, title, coverImage et staffRole) #}
                 {% set id = media.node.id %}
-                {% set title = media.node.title.romaji %}
+                {% set title = media.node.title.romaji|default('Unknown') %}
                 {% set coverImage = media.node.coverImage.large %}
                 {% set role = media.staffRole %}
                 {# On vérifie si l'anime est défini dans animeRoles #}
                 {% if animeRoles[title] is not defined %}
-                    {# Si l'animé n'est pas définie, on la crée #}
+                    {# Si l'animé n'est pas définie, on le crée #}
                     {% set animeRoles = animeRoles|merge({(title): {'id': id, 'title': title, 'coverImage': coverImage, 'roles': [role]}}) %}
                 {% else %}
-                    {# Sinon on le crée #}
+                    {# Sinon on ajoute le rôle à l'animé existant #}
                     {% set animeRoles = animeRoles|merge({(title): animeRoles[title]|merge({'roles': animeRoles[title].roles|merge([role])})}) %}
                 {% endif %}
             {% endfor %}
@@ -83,25 +76,23 @@
             {# Si ce membre de staff est dans des staffs d'animés, alors on l'affiche #}
             {% if animeRoles|length > 0 %}
                 <h2 class="characterPartTitle">ROLES IN ANIME STAFFS</h2>
-                <div class="characterMultipleAnimes">
-                    {# On fait l'affichage grâce a animeRoles #}
-                    {% for anime in animeRoles %}
-                        <figure class="homeOneAnime top">
-                            <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
-                                <div class="homeOneAnimeImageInfo">
-                                    <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title ? anime.title : "Unknown" }}" class="homeOneAnimeImage">
-                                    <section class="homeHoverContent">
-                                        <div class="characterRemainingVoiceActorContainer roles">
-                                            {% for role in anime.roles %}
-                                                <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
-                                            {% endfor %}
-                                        </div>
-                                    </section>
+                <div class="homeMultipleAnimes autoFill">
+                {# On fait l'affichage grâce a animeRoles #}
+                {% for anime in animeRoles %}
+                    <figure class="homeOneAnime">
+                        <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
+                            <div class="homeOneAnimeImageInfo">
+                                <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title|default('Unknown') }}" class="homeOneAnimeImage">
+                                <div class="homeHoverContent">
+                                {% for role in anime.roles %}
+                                    <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
+                                {% endfor %}
                                 </div>
-                                <figcaption class="homeOneAnimeTitle">{{ anime.title ? anime.title : "Unknown" }}</figcaption>
-                            </a>
-                        </figure>
-                    {% endfor %}
+                            </div>
+                        </a>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.id }) }}">{{ anime.title|default('Unknown') }}</a></figcaption>
+                    </figure>
+                {% endfor %}
                 </div>
             {% endif %}
         </div>
