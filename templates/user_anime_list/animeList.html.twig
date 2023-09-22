@@ -5,92 +5,46 @@
 {% block body %}
     <main>
         <h1 class="title">{{ user.pseudo }}'s Anime List</h1>
-        <section class="animeListButtonsContainer">
+        <div class="animeListButtonsContainer">
             <button class="animeListButton active" id="animeListButtonAll">ALL</button>
             <button class="animeListButton" id="animeListButtonWatching">WATCHING</button>
             <button class="animeListButton" id="animeListButtonCompleted">COMPLETED</button>
             <button class="animeListButton" id="animeListButtonPlanned">PLANNED TO WATCH</button>
-        </section>
-        <section class="animeListContainer" id="animeListAll">
+        </div>
+        <div class="animeListContainer">
             {% for key, anime in animesDataByState["Watching"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <div class="animeEpisodesWatchedContainer">
-                        <a href="{{ path('remove_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
-                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
-                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
-                    </div>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            <figure class="animeListWatching">
+                <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                <div class="animeEpisodesWatchedContainer">
+                    <a href="{{ path('remove_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
+                    <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes|default('?') }}</p>
+                    <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
+                </div>
+                <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+            </figure>
             {% endfor %}
             {% for key, anime in animesDataByState["Completed"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            <figure class="animeListCompleted">
+                <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+            </figure>
             {% endfor %}
             {% for key, anime in animesDataByState["Plan to watch"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
+            <figure class="animeListPlanned">
+                <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+            </figure>
             {% endfor %}
-        </section>
-        <section class="animeListContainer" id="animeListWatching">
-            {% for key, anime in animesDataByState["Watching"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <div class="animeEpisodesWatchedContainer">
-                        <a href="{{ path('remove_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
-                        <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes ? anime.episodes : "?" }}</p>
-                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
-                    </div>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
-            {% endfor %}
-        </section>
-        <section class="animeListContainer" id="animeListCompleted">
-            {% for key, anime in animesDataByState["Completed"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
-            {% endfor %}
-        </section>
-        <section class="animeListContainer" id="animeListPlanned">
-            {% for key, anime in animesDataByState["Plan to watch"] %}
-                <figure>
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
-                    <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji }}" class="animeListAnimeImage">
-                    <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
-                </figure>
-            {% endfor %}
-        </section>
+        </div>
     </main>
 
     {% block script %}
         <script>
-            // Récupération des boutons de la page de la liste d'anime
+            // Récupération des boutons de la page de la liste d'animé
             const buttons = document.querySelectorAll(".animeListButton");
-
-            // On rajoute une écoute du click
-            buttons.forEach((button) => {
-                // Quand un des boutons est cliqué
-                button.addEventListener("click", () => {
-                    // On enlève la classe active à tout les boutons
-                    buttons.forEach((btn) => {
-                        btn.classList.remove("active");
-                    });
-
-                    // On ajoute la classe active au bouton cliqué
-                    button.classList.add("active");
-                });
-            });
 
             // Récupération des boutons de manière distinctives
             const animeListButtonAll = document.getElementById("animeListButtonAll");
@@ -98,31 +52,62 @@
             const animeListButtonCompleted = document.getElementById("animeListButtonCompleted");
             const animeListButtonPlanned = document.getElementById("animeListButtonPlanned");
 
-            // Récupération des sections de manières distinctives
-            const animeListSectionAll = document.getElementById("animeListAll");
-            const animeListSectionWatching = document.getElementById("animeListWatching");
-            const animeListSectionCompleted = document.getElementById("animeListCompleted");
-            const animeListSectionPlanned = document.getElementById("animeListPlanned");
+            // Récupération des animés de manières distinctives
+            const animesWatching = document.querySelectorAll(".animeListWatching");
+            const animesCompleted = document.querySelectorAll(".animeListCompleted");
+            const animesPlanned = document.querySelectorAll(".animeListPlanned");
 
-            // Ajout d'écouteur d'evenement
-            animeListButtonAll.addEventListener("click", () => showSection(animeListSectionAll));
-            animeListButtonWatching.addEventListener("click", () => showSection(animeListSectionWatching));
-            animeListButtonCompleted.addEventListener("click", () => showSection(animeListSectionCompleted));
-            animeListButtonPlanned.addEventListener("click", () => showSection(animeListSectionPlanned));
 
-            // Fonction qui gère le click d'un bouton pour faire afficher une section
-            function showSection(selectedSection){
-                const sections = [animeListSectionAll, animeListSectionWatching, animeListSectionCompleted, animeListSectionPlanned];
+            // Fonction qui gère les animés à afficher
+            function showAnimes(selectedStatus){
+                // On récupère les animés avec différents status
+                const allAnimes = [animesWatching, animesCompleted, animesPlanned];
 
-                sections.forEach(section => {
-                    section.style.display = "none";
+                // On n'affiche plus d'animé
+                allAnimes.forEach(status => {
+                    status.forEach(anime => {
+                        anime.style.display = "none";
+                    });
                 });
-
-                selectedSection.style.display = "grid";
+                // Pour pouvoir afficher ceux demandées
+                selectedStatus.forEach(anime => {
+                    anime.style.display = "block";
+                })
             }
 
-            // On affiche de base la section all
-            showSection(animeListSectionAll);
+            // Pour chaque bouton
+            buttons.forEach((button) => {
+                // Quand un des boutons est cliqué
+                button.addEventListener("click", () => {
+                    // On enlève la classe active à tout les boutons
+                    buttons.forEach((btn) => {
+                        btn.classList.remove("active");
+                    });
+                    // Pour ajouter la classe active au bouton cliqué
+                    button.classList.add("active");
+
+                    // On affiche les animés demandées
+                    if(button === animeListButtonAll){
+                        // Affichage de tout les animés
+                        showAnimes([...animesWatching, ...animesCompleted, ...animesPlanned]);
+                    }
+                    else if(button === animeListButtonWatching){
+                        // Affichage des animés en cours de visionnage
+                        showAnimes(animesWatching);
+                    }
+                    else if(button === animeListButtonCompleted){
+                        // Affichage des animés compléter
+                        showAnimes(animesCompleted);
+                    }
+                    else if (button === animeListButtonPlanned){
+                        // Affichage des animé qui sont prévus d'être visionner
+                        showAnimes(animesPlanned);
+                    }
+                });
+            });
+
+            // On affiche de base tout les animés
+            showAnimes([...animesWatching, ...animesCompleted, ...animesPlanned]);
         </script>
     {% endblock %}
 {% endblock %}
