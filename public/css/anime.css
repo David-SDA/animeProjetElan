@@ -85,8 +85,8 @@
 
 /* Le contenu de la description de l'animé */
 .animeSynopsisContent{
-    font-weight: 500;
     color: #636363;
+    overflow-wrap: anywhere;
 }
 
 /* Contenu de la partie restante de la page d'un animé */

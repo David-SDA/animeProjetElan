@@ -30,15 +30,15 @@
         <div class="animeRemainingContainer">
             <div class="animeRemainingLeftContent">
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
                     <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
                     <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.status ? dataThisAnime.status|title|replace({'_' : ' '}) }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle">{{ dataThisAnime.startDate == dataThisAnime.endDate ? '<i>Airing Date</i>' : '<i>Airing Dates</i>' }}</h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle">{{ dataThisAnime.startDate == dataThisAnime.endDate ? '<i>Airing Date</i>' : '<i>Airing Dates</i>' }}</h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                     {# Différentes vérifications par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage #}
                     {# Cas pas de date de début et de fin #}
@@ -75,7 +75,7 @@
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
                     {% if dataThisAnime.season and dataThisAnime.seasonYear %}
                         <p class="animeRemainingLeftContentInfoContent season">{{ dataThisAnime.season|title }} {{ dataThisAnime.seasonYear }}</p>
                     {% else %}
@@ -83,11 +83,11 @@
                     {% endif %}
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h2>
                     <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.episodes ? dataThisAnime.episodes : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h2>
                     {# On effectue la conversion de minutes en heures si nécessaires et adaptations de l'affichage en fonction de cela #}
                     {% if dataThisAnime.duration %}
                         {% set duration = dataThisAnime.duration %}
@@ -105,12 +105,12 @@
                     {% endif %}
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h2>
                     {# Si il y a une source, on affiche de telle manière à ce que les underscores soient replacés par un espace et que chaque mot ait une majuscule au début ce celui-ci #}
                     <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.source ? dataThisAnime.source|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                     {% if dataThisAnime.genres %}
                         {% for genre in dataThisAnime.genres %}
@@ -122,7 +122,7 @@
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                         {# Un animé a souvent 1 seul studio d'animation, mais il peut en avoir plusieurs, donc on prends cela en compte pour les mettre dans un tableau #}
                         {% if dataThisAnime.studios %}
@@ -145,7 +145,7 @@
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h3 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h3>
+                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                         {# Les studios qui ne sont pas principaux sont des producteurs #}
                         {% if dataThisAnime.studios %}

@@ -23,7 +23,7 @@
 .homeMultipleAnimes{
     display: grid;
     grid-template-columns: repeat(6, minmax(215px, 1fr));
-    grid-gap: 0 25px;
+    grid-gap: 0 20px;
     justify-items: center;
     overflow-x: auto;
     overflow-y: hidden;
@@ -35,7 +35,6 @@
 /* Et ceux de la page de profil */
 .homeMultipleAnimes.autoFill.profile{
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    grid-gap: 0 20px;
 }
 .homeMultipleAnimes::-webkit-scrollbar{
     height: 7px;
@@ -51,6 +50,7 @@
 
 /* Partie qui représente un animé */
 .homeOneAnime{
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -196,12 +196,12 @@
     /* Liste des animé d'une section */
     .homeMultipleAnimes{
         grid-template-columns: repeat(3, minmax(140px, 1fr));
-        grid-gap: 0 15px;
+        grid-gap: 0 10px;
     }
     /* Et ceux qui ont un remplissage automatique */
     .homeMultipleAnimes.autoFill{
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        grid-gap: 0 15px;
+        grid-gap: 0 10px;
     }
     /* Et ceux de la page de profil */
     .homeMultipleAnimes.autoFill.profile{
@@ -258,10 +258,12 @@
     /* Liste des animé d'une section */
     .homeMultipleAnimes{
         grid-template-columns: repeat(3, minmax(175px, 1fr));
+        grid-gap: 0 15px;
     }
     /* Et ceux qui ont un remplissage automatique */
     .homeMultipleAnimes.autoFill{
         grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+        grid-gap: 0 15px;
     }
     /* Et ceux de la page de profil */
     .homeMultipleAnimes.autoFill.profile{

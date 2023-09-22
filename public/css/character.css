@@ -1,64 +1,8 @@
-/* Partie qui contient toute la page d'un personnage */
-.characterContainer{
-    display: flex;
-    flex-direction: column;
-}
-
-/* Partie qui contient le haut de la page d'un personnage */
-.characterTopContainer{
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.45) 0px 20px 10px -20px;
-}
-
-/* Contenu du haut de la page d'un personnage */
-.characterTopContent{
-    margin: 1em auto;
-    display: flex;
-    align-items: flex-start;
-    width: 80%;
-}
-
-.characterTopLeftContainer{
-    display: flex;
-    flex-direction: column;
-}
-
-/* Image du personnage (du haut de la page d'un personnage) */
-.characterTopContentImage{
-    display: block;
-    width: 200px;
-    border-radius: 10px;
-}
-
-/* Partie du centre (du haut de la page d'un personnage) */
-.characterTopContentCenterContainer{
-    margin-left: 3em;
-}
-
-/* Titre d'un partie */
-.characterPartTitle{
-    font-weight: 600;
-    font-size: 2em;
-    color: #636363;
-    margin-bottom: 0.5em;
-}
-
 /* Caractéristiques du personnage (centre du haut de la page d'un personnage) */
 .characterTopContentTraitText{
     font-weight: 600;
     color: #333333;
     margin-bottom: 0.25em;
-}
-
-/* Caractéristiques du personnage venant de l'API (centre du haut de la page d'un personnage) */
-.characterTopContentTraitApi{
-    font-weight: normal;
-}
-
-/* Description du personnage (centre du haut de la page d'un personnage) */
-.characterTopContentRegularText{
-    font-weight: 400;
-    color: #333333;
 }
 
 /* Partie qui contient le reste de la page */
@@ -69,37 +13,34 @@
     flex-direction: column;
 }
 
-/* Partie qui contient les animés dans lequel le personnage apparaît */
-.characterMultipleAnimes{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-/* Partie qui contient un doubleur (japonais) du personnage dans un animé */
-.characterRemainingVoiceActorContainer{
-    display: flex;
-    align-items: center;
-}
-.characterRemainingVoiceActorContainer.roles{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+/* Le titre d'une partie restante de la page */
+.characterPartTitle{
+    color: #333333;
 }
 
 /* Image du doubleur (japonais) du personnage dans un animé */
 .characterRemainingVoiceActorImage{
-    width: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 70px;
     border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-/* Nom du doubleur (japonais) du personnage dans un animé */
-.characterRemainingVoiceActorName{
-    font-weight: 600;
-    font-size: 1.25em;
-    margin-left: 0.25em;
-    color: #fff;
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    /* Image du doubleur (japonais) du personnage dans un animé */
+    .characterRemainingVoiceActorImage{
+        width: 50px;   
+    }
 }
-.characterRemainingVoiceActorName.link:hover{
-    color: #00BFFF;
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Image du doubleur (japonais) du personnage dans un animé */
+    .characterRemainingVoiceActorImage{
+        width: 60px;   
+    }
 }
