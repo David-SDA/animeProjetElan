@@ -5,5 +5,27 @@
 {% block body %}
     <main>
         <h1 class="title talks">All Talks</h1>
+        {% for i in range(1, 8) %}
+            <a href="#">
+                <section class="oneTalkContainer">
+                    <div class="oneTalkPartContainer">
+                        <h2 class="oneTalkTitle">(Spoiler Alert !) Episode 7 Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk </h2>
+                        <figure class="oneTalkUserContainer">
+                            <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage">
+                            <figcaption class="oneTalkUsername">User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1</figcaption>
+                        </figure>
+                        <p class="oneTalkUserTime"><i>Created 12 days ago</i></p>
+                    </div>
+                    <div class="oneTalkPartContainer">
+                        <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> 42</p>
+                        <figure class="oneTalkUserContainer right">
+                            <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage small">
+                            <figcaption class="oneTalkUsername small">User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2</figcaption>
+                        </figure>
+                        <p class="oneTalkUserTime small"><i>Posted 1 days ago</i></p>
+                    </div>
+                </section>
+            </a>
+        {% endfor %}
     </main>
 {% endblock %}

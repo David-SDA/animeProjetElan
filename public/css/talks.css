@@ -2,3 +2,99 @@
 .title.talks{
     margin: 0;
 }
+
+/* Le conteneur d'une discussion */
+.oneTalkContainer{
+    width: 80%;
+    height: 150px;
+    margin: 1em auto;
+    background-color: #fff;
+    color: #333;
+    padding: 1em;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: all 0.25s ease;
+}
+.oneTalkContainer:hover{
+    transform: translateY(-2px);
+}
+
+/* La partie d'un côté d'une discussion */
+.oneTalkPartContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Le titre de la discussion */
+.oneTalkTitle{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 600px;
+    font-weight: 600;
+}
+
+/* Le conteneur d'un utilisateur */
+.oneTalkUserContainer{
+    display: flex;
+    align-items: center;
+}
+.oneTalkUserContainer.right{
+    margin-top: auto;
+}
+
+/* L'image d'un utilisateur */
+.oneTalkUserImage{
+    width: 40px;
+    height: 40px;
+    margin-right: 0.25em;
+}
+.oneTalkUserImage.small{
+    width: 30px;
+    height: 30px;
+}
+
+/* Le pseudo de l'utilisateur */
+.oneTalkUsername{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    max-width: 500px;
+}
+.oneTalkUsername.small{
+    font-size: 0.875em;
+    max-width: 70px;
+}
+
+/* Le temps de la publication */
+.oneTalkUserTime{
+    font-size: 0.875em;
+}
+.oneTalkUserTime.small{
+    font-size: 0.75em;
+    align-self: flex-end;
+}
+
+/* La partie du nombre de post d'une discussion */
+.oneTalkComments{
+    align-self: flex-end;
+}
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+
+}
+
+/* Pour mobile et tablette */
+@media screen and (max-width: 1024px){
+
+}
