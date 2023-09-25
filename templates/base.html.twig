@@ -17,6 +17,7 @@
             <link rel="stylesheet" href="{{ asset("css/security.css") }}">
             <link rel="stylesheet" href="{{ asset("css/profile.css") }}">
             <link rel="stylesheet" href="{{ asset("css/animeList.css") }}">
+            <link rel="stylesheet" href="{{ asset("css/talks.css") }}">
             <link rel="stylesheet" href="{{ asset("css/responsive.css") }}">
         {% endblock %}
         {% block javascripts %}
@@ -43,7 +44,7 @@
                         </ul>
                     </li>
                     <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
-                    <li class="navBarElement"><a href="#" class="navBarElementLink">TALKS</a></li>                    
+                    <li class="navBarElement"><a href="{{ path('app_discussion') }}" class="navBarElementLink">TALKS</a></li>                    
                 </ul>    
             </nav>
             <div class="navBarProfile">

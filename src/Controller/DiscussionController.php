@@ -11,8 +11,6 @@ class DiscussionController extends AbstractController
     #[Route('/discussion', name: 'app_discussion')]
     public function index(): Response
     {
-        return $this->render('discussion/index.html.twig', [
-            'controller_name' => 'DiscussionController',
-        ]);
+        return $this->render('discussion/index.html.twig');
     }
 }
