@@ -5,19 +5,41 @@
 {% block body %}
     <main>
         <h1 class="title talks">All Talks</h1>
-        {% for i in range(1, 8) %}
+        {% for talk in talks %}
         <section>
             <a href="#" class="oneTalkContainer">
                 <div class="oneTalkPartContainer">
-                    <h2 class="oneTalkTitle">(Spoiler Alert !) Episode 7 Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk Talk </h2>
+                    <h2 class="oneTalkTitle">{{ talk.titre }}</h2>
                     <figure class="oneTalkUserContainer">
-                        <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage">
-                        <figcaption class="oneTalkUsername">User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1 User 1</figcaption>
+                        <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage">
+                        <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
                     </figure>
-                    <p class="oneTalkUserTime"><i>Created 12 days ago</i></p>
+                    {% set now = 'now'|date("U") %}
+                    {% set creationDate = talk.dateCreation|date("U") %}
+                    {% set timeDifference = now - creationDate %}
+                    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+                    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+                    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+                    
+                    {% if years > 0 %}
+                        {% set textCreation = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif months > 0 %}
+                        {% set textCreation = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif days > 0 %}
+                        {% set textCreation = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif hours > 0 %}
+                        {% set textCreation = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif minutes > 0 %}
+                        {% set textCreation = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
+                    {% else %}
+                        {% set textCreation = 'just now' %}
+                    {% endif %}
+                    <p class="oneTalkUserTime"><i>Created {{ textCreation }}</i></p>
                 </div>
                 <div class="oneTalkPartContainer">
-                    <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> 42</p>
+                    <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
                     <figure class="oneTalkUserContainer right">
                         <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage small">
                         <figcaption class="oneTalkUsername small">User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2</figcaption>

@@ -19,7 +19,7 @@ class Discussion
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\Column]

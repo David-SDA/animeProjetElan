@@ -16,10 +16,10 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateDerniereModification = null;
 
     #[ORM\Column(type: Types::TEXT)]
