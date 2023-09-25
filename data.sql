@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `anime` (
   UNIQUE KEY `UNIQ_1304594233A13055` (`id_api`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.anime : ~10 rows (environ)
+-- Listage des données de la table animeprojetelan.anime : ~9 rows (environ)
 INSERT INTO `anime` (`id`, `id_api`) VALUES
 	(10, 103047),
 	(4, 113415),
@@ -57,15 +57,17 @@ CREATE TABLE IF NOT EXISTS `anime_discussion` (
 CREATE TABLE IF NOT EXISTS `discussion` (
   `id` int NOT NULL AUTO_INCREMENT,
   `titre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_creation` datetime NOT NULL,
+  `date_creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `est_verrouiller` tinyint(1) NOT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~0 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~1 rows (environ)
+INSERT INTO `discussion` (`id`, `titre`, `date_creation`, `est_verrouiller`, `user_id`) VALUES
+	(1, 'Talk 1', '2023-09-25 15:38:58', 0, 1);
 
 -- Listage de la structure de table animeprojetelan. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -138,8 +140,8 @@ INSERT INTO `personnage` (`id`, `id_api`) VALUES
 -- Listage de la structure de table animeprojetelan. post
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `date_creation` datetime NOT NULL,
-  `date_derniere_modification` datetime NOT NULL,
+  `date_creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_derniere_modification` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `contenu` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int DEFAULT NULL,
   `discussion_id` int NOT NULL,
@@ -148,9 +150,15 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.post : ~0 rows (environ)
+-- Listage des données de la table animeprojetelan.post : ~5 rows (environ)
+INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
+	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', 1, 1),
+	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
+	(3, '2023-09-25 15:50:00', '2023-09-25 15:50:00', 'Post 3', 1, 1),
+	(4, '2023-09-25 15:50:25', '2023-09-25 15:50:25', 'Post 4', 4, 1),
+	(5, '2023-09-25 15:50:43', '2023-09-25 15:50:43', 'Post 5', 5, 1);
 
 -- Listage de la structure de table animeprojetelan. user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -186,7 +194,7 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`,
 	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 0),
 	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 0),
 	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, NULL, NULL, NULL, 1, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 0),
-	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-6502fdd6e8db1.jpg', '2023-09-05', 'France', '', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$oU2K0lXIlVcWHjcAz/NW.ei/YMp6NaU/GF03d6b6xFSQO2TnM2e8O', 1, 0),
+	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-6511399dacfbf.jpg', '2023-09-05', 'France', NULL, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$cqDHHEr0h5AoMj8jhp1LpO5q1WA31k.yHTeDXUYBmi0C/VaR.QGOO', 1, 0),
 	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 'France', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0),
 	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 0);
 
@@ -221,11 +229,12 @@ CREATE TABLE IF NOT EXISTS `user_personnage` (
   CONSTRAINT `FK_CD8D8E81A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_personnage : ~5 rows (environ)
+-- Listage des données de la table animeprojetelan.user_personnage : ~4 rows (environ)
 INSERT INTO `user_personnage` (`user_id`, `personnage_id`) VALUES
 	(13, 1),
 	(13, 2),
 	(13, 3),
+	(13, 4),
 	(13, 5),
 	(13, 6);
 
@@ -256,18 +265,17 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
   KEY `IDX_57428AE9794BBE89` (`anime_id`),
   CONSTRAINT `FK_57428AE9794BBE89` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`),
   CONSTRAINT `FK_57428AE9A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.user_regarder_anime : ~9 rows (environ)
 INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
-	(1, 13, 1, 'Watching', 2, '2023-09-07', '2023-09-11'),
-	(2, 13, 2, 'Watching', 9, NULL, NULL),
+	(1, 13, 1, 'Completed', 13, '2023-09-07', '2023-09-20'),
+	(2, 13, 2, 'Watching', 11, NULL, NULL),
 	(4, 13, 4, 'Completed', 24, NULL, NULL),
 	(5, 1, 1, 'Completed', 25, NULL, NULL),
 	(6, 13, 5, 'Watching', 12, NULL, NULL),
 	(8, 13, 8, 'Watching', 1, NULL, NULL),
 	(10, 13, 9, 'Completed', 13, NULL, NULL),
-	(11, 13, 6, 'Plan to watch', 0, NULL, NULL),
 	(12, 13, 3, 'Plan to watch', 0, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
