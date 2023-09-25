@@ -23,6 +23,13 @@
         {% endblock %}
     </head>
     <body>
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flashMessage flashMessage-{{ type }}">
+                    <b>{{ message }}</b>
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="navBarContainer">
             <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
             <nav class="navBar">
