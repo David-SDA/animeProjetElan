@@ -152,11 +152,16 @@
     box-shadow: none;
 }
 
+/* Le bouton de suppression d'un animé de sa liste */
 .animeButtonAddTo.delete{
     margin-top: 1.5em;
     background-color: #FF4136;
     height: 44px;
     align-self: center;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 /* Pour mobile */

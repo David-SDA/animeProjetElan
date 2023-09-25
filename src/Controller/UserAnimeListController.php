@@ -107,7 +107,7 @@ class UserAnimeListController extends AbstractController
             $newEpisodesWatched = intval($form->get('nombreEpisodeVu')->getData());
 
             /* Si toute les données sont le même qu'en base de données, alors on ne soumet pas le formulaire */
-            if($newStartDate === $userRegarderAnime->getDateDebutVisionnage() && $newEndDate === $userRegarderAnime->getDateFinVisionnage() && $newStatus === $userRegarderAnime->getEtat() && $newEpisodesWatched === $userRegarderAnime->getNombreEpisodeVu()){
+            if($newStartDate == $userRegarderAnime->getDateDebutVisionnage() && $newEndDate == $userRegarderAnime->getDateFinVisionnage() && $newStatus === $userRegarderAnime->getEtat() && $newEpisodesWatched === $userRegarderAnime->getNombreEpisodeVu()){
                 $this->addFlash(
                     'error',
                     'The infos cannot be the same as the current ones'
@@ -212,7 +212,13 @@ class UserAnimeListController extends AbstractController
         $entityManagerInterface->persist($animeInList);
         $entityManagerInterface->flush();
 
-        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        /* On indique la réussite de l'ajout à la liste */
+        $this->addFlash(
+            'success',
+            'This anime has been added to your list'
+        );
+
+        return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 
     #[Route('user/animeList/addEpisode/{id}', name: 'add_episode_anime_list_user')]
@@ -234,7 +240,7 @@ class UserAnimeListController extends AbstractController
             /* On l'en empêche, on l'indique et on revient à la liste */
             $this->addFlash(
                 'error',
-                'This is not currently watched'
+                'This anime is not currently watched'
             );
             return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
         }
@@ -244,16 +250,17 @@ class UserAnimeListController extends AbstractController
 
         /* On récupère les données de l'API de l'animé en question */
         $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
-
-        /* On récupère le nombre d'épisodes max de l'animé si il existe */
+        
+        /* On récupère le nombre d'épisodes max et le titre de l'animé */
         $maxEpisodes = $animeData['data']['Media']['episodes'];
+        $title = $animeData['data']['Media']['title']['romaji'];
 
         /* Si il y a un maximum d'épisodes et qu'on est déjà à ce maximum (ou dépassé dans un cas où un animé n'avait pas de max d'épisode) */
         if($maxEpisodes && $currentEpisodesWatched >= $maxEpisodes){
             /* On l'en empêche l'ajout d'épisode, on l'indique et on revient à la liste */
             $this->addFlash(
                 'error',
-                'You cannot go over the maximum number of episodes'
+                'You cannot go over the maximum number of episode of "' . $title . '"'
             );
             return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
         }
@@ -264,6 +271,12 @@ class UserAnimeListController extends AbstractController
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($userRegarderAnime);
         $entityManagerInterface->flush();
+
+        /* On indique la réussite de l'ajout d'épisode */
+        $this->addFlash(
+            'success',
+            'An episode of "' . $title . '" has been added'
+        );
 
         /* On revient sur la liste d'animé de l'utilisateur */
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
@@ -288,13 +301,17 @@ class UserAnimeListController extends AbstractController
             /* On l'en empêche, on l'indique et on revient à la liste */
             $this->addFlash(
                 'error',
-                'This is not currently watched'
+                'This anime is not currently watched'
             );
             return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
         }
 
         /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
         $currentEpisodesWatched = $userRegarderAnime->getNombreEpisodeVu();
+
+        /* On récupère les données de l'API de l'animé en question */
+        $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+        $title = $animeData['data']['Media']['title']['romaji'];
 
         /* Si le nombre d'épisode vu est déjà de 0, on l'empêche de supprimer un épisode */
         if($currentEpisodesWatched === 0){
@@ -313,6 +330,12 @@ class UserAnimeListController extends AbstractController
         $entityManagerInterface->persist($userRegarderAnime);
         $entityManagerInterface->flush();
 
+        /* On indique la réussite de la suppression d'un épisode */
+        $this->addFlash(
+            'success',
+            'An episode of "' . $title . '" has been removed'
+        );
+
         /* On revient sur la liste d'animé de l'utilisateur */
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }
@@ -326,6 +349,8 @@ class UserAnimeListController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        $idApi = $userRegarderAnime->getAnime()->getIdApi();
+
         /* On supprime l'instance de la liste et on sauvegarde ce changement dans la base de données */
         $entityManagerInterface->remove($userRegarderAnime);
         $entityManagerInterface->flush();
@@ -333,9 +358,9 @@ class UserAnimeListController extends AbstractController
         /* On indique que la suppression a été effectuer */
         $this->addFlash(
             'success',
-            'This anime has been removed successfully'
+            'This anime has been removed from your list'
         );
 
-        return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
+        return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 }

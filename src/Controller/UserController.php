@@ -297,12 +297,6 @@ class UserController extends AbstractController
                     $entityManagerInterface->persist($currentUser);
                     $entityManagerInterface->flush();
         
-                    /* On crée un message de succès */
-                    $this->addFlash(
-                        'success',
-                        'Email has been modified successfully, please confirm that email'
-                    );
-
                     $this->emailVerifier->sendEmailConfirmation('app_verify_email', $currentUser,
                         (new TemplatedEmail())
                             ->from(new Address('admin@AnimeProjetElan.com', 'Admin Anime Projet Elan'))
@@ -355,17 +349,12 @@ class UserController extends AbstractController
                 $entityManagerInterface->persist($currentUser);
                 $entityManagerInterface->flush();
 
-                /* On crée un message de succès */
-                $this->addFlash(
-                    'success',
-                    'Password has been modified successfully'
-                );
                 return $this->redirectToRoute('app_logout');
             }
             else{
                 /* On crée un message d'echec */
                 $this->addFlash(
-                    'warning',
+                    'error',
                     'Wrong password'
                 );
             }
@@ -404,7 +393,7 @@ class UserController extends AbstractController
             $newCity = $form->get('ville')->getData();
 
             /* On vérifie si les infos indiquées sont tous les même ou pas que ceux actuelles */
-            if($newDateOfBirth === $currentUser->getDateNaissance() && $newCountry === $currentUser->getPays() && $newCity === $currentUser->getVille()){
+            if($newDateOfBirth == $currentUser->getDateNaissance() && $newCountry === $currentUser->getPays() && $newCity === $currentUser->getVille()){
                 $this->addFlash(
                     'error',
                     'All infos cannot be the same as the current ones'
@@ -543,6 +532,12 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        /* On indique la réussite du changement */
+        $this->addFlash(
+            'success',
+            'This anime has been added to your favorites'
+        );
+
         return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 
@@ -607,6 +602,12 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        /* On indique la réussite du changement */
+        $this->addFlash(
+            'success',
+            'This character has been added to your favorites'
+        );
+
         return $this->redirectToRoute('show_character', ['id' => $idApi]);
     }
 
@@ -639,6 +640,12 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        /* On indique la réussite du changement */
+        $this->addFlash(
+            'success',
+            'This anime has been removed from your favorites'
+        );
+
         return $this->redirectToRoute('show_anime', ['id' => $animeInDatabase->getIdApi()]);
     }
 
@@ -670,6 +677,12 @@ class UserController extends AbstractController
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
+
+        /* On indique la réussite du changement */
+        $this->addFlash(
+            'success',
+            'This character has been removed from your favorites'
+        );
 
         return $this->redirectToRoute('show_character', ['id' => $characterInDatabase->getIdApi()]);
     }

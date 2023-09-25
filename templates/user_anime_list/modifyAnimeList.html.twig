@@ -2,15 +2,17 @@
 
 {% block title %}Modify your list{% endblock %}
 {% set anime = animeData.data.Media %}
+{% set idApi = userRegarderAnime.anime.idApi %}
 
 {% block body %}
     <main class="animeListModifyContainer">
         <div>
             <figure>
-                <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="animeImage">
-                <figcaption class="homeOneAnimeTitle">{{ anime.title.romaji }}</figcaption>
+                <a href="{{ path('show_anime', { 'id' : idApi }) }}">
+                    <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji }}" class="animeImage">
+                </a>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : idApi }) }}">{{ anime.title.romaji }}</a></figcaption>
             </figure>
-            <button class="animeButtonAddTo favorites">Add to your favorites</button>
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
             <div class="securityFormRow animeList">

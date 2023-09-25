@@ -18,7 +18,7 @@ ul{
 /* Les messages flashs */
 .flashMessage{
     color: #fff;
-    width: 200px;
+    width: 300px;
     position: fixed;
     z-index: 999;
     top: 70px;
