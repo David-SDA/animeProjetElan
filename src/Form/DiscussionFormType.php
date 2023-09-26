@@ -15,15 +15,20 @@ class DiscussionFormType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'required' => true,
+                'data' => $options['title'],
             ])
             ->add('firstPost', TextareaType::class, [
                 'required' => true,
+                'data' => $options['firstPostContent'],
             ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'title' => null,
+            'firstPostContent' => null,
+        ]);
     }
 }
