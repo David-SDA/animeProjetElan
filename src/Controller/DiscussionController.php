@@ -14,7 +14,7 @@ class DiscussionController extends AbstractController
     {
         /* On cherche toutes les discussions */
         $talks = $discussionRepository->findBy([], ["dateCreation" => "ASC"]);
-        //dd($talks);
+        
         return $this->render('discussion/index.html.twig', [
             'talks' => $talks,
         ]);

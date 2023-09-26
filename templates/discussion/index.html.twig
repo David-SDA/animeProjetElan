@@ -11,22 +11,26 @@
                 <div class="oneTalkPartContainer">
                     <h2 class="oneTalkTitle">{{ talk.titre }}</h2>
                     <figure class="oneTalkUserContainer">
-                        <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage">
+                        <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
                         <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
                     </figure>
+                    {# Calcul de l'écart entre la création de la discussion et maintenant (grâce au temps unix) #}
                     {% set now = 'now'|date("U") %}
                     {% set creationDate = talk.dateCreation|date("U") %}
                     {% set timeDifference = now - creationDate %}
                     {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
                     {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
                     {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
                     {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
                     {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
-                    
+                    {# On crée un texte en fonction du temps manquant #}
                     {% if years > 0 %}
                         {% set textCreation = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
                     {% elseif months > 0 %}
                         {% set textCreation = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif weeks > 0 %}
+                        {% set textCreation = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
                     {% elseif days > 0 %}
                         {% set textCreation = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
                     {% elseif hours > 0 %}
@@ -40,11 +44,38 @@
                 </div>
                 <div class="oneTalkPartContainer">
                     <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
+                    {% set lastPost = talk.posts|last %}
                     <figure class="oneTalkUserContainer right">
-                        <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="oneTalkUserImage small">
-                        <figcaption class="oneTalkUsername small">User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2 User 2</figcaption>
+                        <img src="{{ lastPost.user.imageProfil ? asset('uploads/' ~ lastPost.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.pseudo }} profile picture" class="oneTalkUserImage small">
+                        <figcaption class="oneTalkUsername small">{{ lastPost.user.pseudo }}</figcaption>
                     </figure>
-                    <p class="oneTalkUserTime small"><i>Posted 1 days ago</i></p>
+                    {# Calcul de l'écart entre la publication du dernier post et maintenant (grâce au temps unix) #}
+                    {% set now = 'now'|date("U") %}
+                    {% set publicationDate = lastPost.dateCreation|date("U") %}
+                    {% set timeDifference = now - publicationDate %}
+                    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+                    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+                    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+                    {# On crée un texte en fonction du temps manquant #}
+                    {% if years > 0 %}
+                        {% set textPublication = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif months > 0 %}
+                        {% set textPublication = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif weeks > 0 %}
+                        {% set textPublication = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif days > 0 %}
+                        {% set textPublication = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif hours > 0 %}
+                        {% set textPublication = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif minutes > 0 %}
+                        {% set textPublication = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
+                    {% else %}
+                        {% set textPublication = 'just now' %}
+                    {% endif %}
+                    <p class="oneTalkUserTime small"><i>Posted {{ textPublication }}</i></p>
                 </div>
             </a>
         </section>
