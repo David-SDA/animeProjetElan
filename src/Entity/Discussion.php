@@ -22,7 +22,7 @@ class Discussion
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options:["default" => "false"])]
     private ?bool $estVerrouiller = null;
 
     #[ORM\ManyToOne(inversedBy: 'discussions')]

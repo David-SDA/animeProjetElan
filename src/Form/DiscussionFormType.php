@@ -13,7 +13,7 @@ class DiscussionFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre', TextType::class, [
+            ->add('title', TextType::class, [
                 'required' => true,
             ])
             ->add('firstPost', TextareaType::class, [
