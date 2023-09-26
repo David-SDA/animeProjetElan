@@ -120,7 +120,6 @@
     font-size: 0.875em;
     color: #636363;
     margin-top: 1em;
-    align-self: flex-end;
 }
 .securityFormLinkEnd a:hover{
     text-decoration: underline;

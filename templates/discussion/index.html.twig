@@ -5,6 +5,9 @@
 {% block body %}
     <main>
         <h1 class="title talks">All Talks</h1>
+        {% if app.user %}
+            <a href="{{ path('add_discussion') }}" class="profileInfosButton talks">Create Talk</a>
+        {% endif %}
         {% for talk in talks %}
         <section>
             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer">

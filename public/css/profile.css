@@ -111,6 +111,12 @@
     width: fit-content;
     padding: 0.5em 1em;
 }
+.profileInfosButton.talks{
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    width: 100px;
+}
 
 /* La partie des animes favoris d'un utilisateur */
 .profileInfosFavoritesAnimes{
@@ -238,6 +244,10 @@
     }
     .profileInfosButton.settings.medium{
         width: 100px;
+    }
+    .profileInfosButton.talks{
+        top: auto;
+        bottom: 40px;
     }
 
     /* La partie des infos de l'utilisateur */

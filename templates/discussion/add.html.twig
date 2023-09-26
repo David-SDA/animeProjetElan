@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {# On change le titre de la page en fonction de l'existence de la discussion #}
+    {% if discussion %}
+        Edit talk
+    {% else %}
+        Create a new talk
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="securityFormContainer">
+            {{ form_start(form) }}
+            {# On change le titre de la page en fonction de l'existence de la discussion #}
+            {% if discussion %}
+                <h1 class="securityFormTitle">Edit talk</h1>
+            {% else %}
+                <h1 class="securityFormTitle">Create a new talk</h1>
+            {% endif %}
+                <div class="securityFormRow">
+                    {{ form_label(form.titre, 'Title*') }}
+                    {{ form_widget(form.titre) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.firstPost, 'Content*') }}
+                    {{ form_widget(form.firstPost) }}
+                </div>
+                <button type="submit" class="securityFormSubmitButton large">Create talk</button>
+                <p class="securityFormLinkEnd"><i>
+                    If you want to create a new talk about an anime, go to that anime page and create a new talk.
+                </i></p>
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
