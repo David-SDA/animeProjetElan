@@ -3,13 +3,13 @@
 {% block title %}{{ talk.titre }}{% endblock %}
 
 {% block body %}
-    <main>
+    <main class="talkContainer">
         <h1 class="title talks">{{ talk.titre }}</h1>
         <div class="onePostContainer">
             <div class="onePostTopContainer">
                 <figure class="oneTalkUserContainer">
                     <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
-                    <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
+                    <figcaption class="oneTalkUsername post">{{ talk.user.pseudo }}</figcaption>
                 </figure>
                 {# Calcul de l'écart entre la création de la discussion et maintenant (grâce au temps unix) #}
                 {% set now = 'now'|date("U") %}
@@ -37,9 +37,55 @@
                 {% else %}
                     {% set textPublication = 'just now' %}
                 {% endif %}
-                <p class="oneTalkUserTime post"><i>Created {{ textPublication }}</i></p>
+                <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
             </div>
             <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.contenu }}</p>
         </div>
+        <div class="oneTalkRepliesTopContainer">
+            {% set responseNumber = talk.posts|length - 1 %}
+            <p class="oneTalkRepliesNumber">{{ responseNumber }} {{ responseNumber > 1 ? 'Replies' : 'Reply' }}</p>
+            <p class="oneTalkFilterText"><span class="oneTalkFilterTextBefore">Filter by :</span> Date - Likes</p>
+        </div>
+        {% if talk.posts|length > 1 %}
+            {% for post in talk.posts|slice(1) %}
+            <div class="onePostContainer">
+                <div class="onePostTopContainer">
+                    <figure class="oneTalkUserContainer">
+                        <img src="{{ post.user.imageProfil ? asset('uploads/' ~ post.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.pseudo }} profile picture" class="oneTalkUserImage">
+                        <figcaption class="oneTalkUsername post">{{ post.user.pseudo }}</figcaption>
+                    </figure>
+                    {# Calcul de l'écart entre la création de la discussion et maintenant (grâce au temps unix) #}
+                    {% set now = 'now'|date("U") %}
+                    {% set publicationDate = post.dateCreation|date("U") %}
+                    {% set timeDifference = now - publicationDate %}
+                    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+                    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+                    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+                    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+                    {# On crée un texte en fonction du temps manquant #}
+                    {% if years > 0 %}
+                        {% set textPublication = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif months > 0 %}
+                        {% set textPublication = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif weeks > 0 %}
+                        {% set textPublication = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif days > 0 %}
+                        {% set textPublication = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif hours > 0 %}
+                        {% set textPublication = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
+                    {% elseif minutes > 0 %}
+                        {% set textPublication = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
+                    {% else %}
+                        {% set textPublication = 'just now' %}
+                    {% endif %}
+                    <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                </div>
+                <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.contenu }}</p>
+                <p class="onePostLikes"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">42</span></p>
+            </div>
+            {% endfor %}
+        {% endif %}
     </main>
 {% endblock %}

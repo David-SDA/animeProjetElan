@@ -71,6 +71,9 @@
     font-size: 0.875em;
     max-width: 70px;
 }
+.oneTalkUsername.post{
+    max-width: 580px;
+}
 
 /* Le temps de la publication */
 .oneTalkUserTime{
@@ -80,7 +83,7 @@
     font-size: 0.75em;
     align-self: flex-end;
 }
-.onTalkUserTime.post{
+.oneTalkUserTime.post{
     text-align: end;
 }
 
@@ -89,9 +92,14 @@
     align-self: flex-end;
 }
 
+/* Conteneur de la page d'une discussion */
+.talkContainer{
+    width: 80%;
+    margin: auto;
+}
+
 /* Le conteneur d'un post */
 .onePostContainer{
-    width: 80%;
     margin: 0 auto 1em auto;
     background-color: #fff;
     color: #333;
@@ -107,10 +115,44 @@
     margin-bottom: 1em;
 }
 
+/* La partie avant les post de la discussion */
+.oneTalkRepliesTopContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em 0 1em 0;
+}
+
+/* Le texte du nombre de réponses */
+.oneTalkRepliesNumber{
+    font-weight: 600;
+    font-size: 1.25em;
+}
+
+/* Le texte avant les filtres */
+.oneTalkFilterTextBefore{
+    font-weight: 500;
+}
+
+/* Le texte des likes d'un post */
+.onePostLikes{
+    margin: 0.5em 0.5em 0 auto;
+    color: #ff0000;
+    font-size: 1.25em;
+    width: fit-content;
+    cursor: pointer;
+}
+
+/* Le texte du nombre de likes d'un post */
+.onePostLikesNumber{
+    font-size: 0.8em;
+    vertical-align: inherit;
+}
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
-    /* Le conteneur d'une discussion et le conteneur d'un post */
-    .oneTalkContainer, .onePostContainer{
+    /* Le conteneur d'une discussion */
+    .oneTalkContainer{
         width: 95%;
         padding: 0.75em;
     }
@@ -122,18 +164,33 @@
     }
 
     /* Le pseudo de l'utilisateur */
-    .oneTalkUsername{
+    .oneTalkUsername, .oneTalkUsername.post{
         max-width: 120px;
     }
     .oneTalkUsername.small{
         max-width: 75px;
     }
+    
+    /* Conteneur de la page d'une discussion */
+    .talkContainer{
+        width: 95%;
+    }
+
+    /* Le conteneur d'un post */
+    .onePostContainer{
+        padding: 0.5em;
+    }
+
+    /* Le texte pour les filtres */
+    .oneTalkFilterText{
+        font-size: 0.8em;
+    }
 }
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
-    /* Le conteneur d'une discussion et le conteneur d'un post */
-    .oneTalkContainer, .onePostContainer{
+    /* Le conteneur d'une discussion */
+    .oneTalkContainer{
         width: 90%;
     }
 
@@ -143,11 +200,26 @@
     }
 
     /* Le pseudo de l'utilisateur */
-    .oneTalkUsername{
+    .oneTalkUsername, .oneTalkUsername.post{
         max-width: 450px;
     }
     .oneTalkUsername.small{
         max-width: 75px;
+    }
+    
+    /* Conteneur de la page d'une discussion */
+    .talkContainer{
+        width: 90%;
+    }
+
+    /* Le conteneur d'un post */
+    .onePostContainer{
+        padding: 0.75em;
+    }
+
+    /* Le texte pour les filtres */
+    .oneTalkFilterText{
+        font-size: 0.9em;
     }
 }
 

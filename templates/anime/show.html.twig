@@ -193,8 +193,8 @@
                 {% set minText = minutes > 1 ? minutes ~ ' mins' : minutes ~ ' min' %}
 
                 {# On récupère la date et l'heure de sortie de l'épisode #}
-                {% set GMTDate = airingAt|date('D, d M Y,  H:i', 'GMT') %}
-                <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ GMTDate ~ ' (GMT)' }}">
+                {% set UTCDate = airingAt|date('D, d M Y,  H:i', 'UTC') %}
+                <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ UTCDate ~ ' (UTC)' }}">
                     <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? daysText : '' }}{{ hours >= 1 ? hoursText : "" }}{{ minutes >= 1 ? minText : "" }}</i>
                 </h2>
             {% endif %}
@@ -272,7 +272,7 @@
                         <p class="animeRemainingRightContentPartOpinionsMidContent">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor. Ut vel diam lobortis, eleifend erat eu, tristique justo. Suspendisse rhoncus ante at nibh sodales, condimentum varius felis rhoncus. Morbi viverra aliquam lectus, sollicitudin tincidunt nisl commodo ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor.
                         </p>
-                        <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-regular fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
+                        <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-solid fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
                     </div>
                 {% endfor %}
                 </div>

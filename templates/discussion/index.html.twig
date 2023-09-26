@@ -40,7 +40,7 @@
                     {% else %}
                         {% set textCreation = 'just now' %}
                     {% endif %}
-                    <p class="oneTalkUserTime"><i>Created {{ textCreation }}</i></p>
+                    <p class="oneTalkUserTime" title="{{ talk.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
                 </div>
                 <div class="oneTalkPartContainer">
                     <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
@@ -75,7 +75,7 @@
                     {% else %}
                         {% set textPublication = 'just now' %}
                     {% endif %}
-                    <p class="oneTalkUserTime small"><i>Posted {{ textPublication }}</i></p>
+                    <p class="oneTalkUserTime small" title="{{ lastPost.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
                 </div>
             </a>
         </section>
