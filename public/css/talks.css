@@ -80,16 +80,37 @@
     font-size: 0.75em;
     align-self: flex-end;
 }
+.onTalkUserTime.post{
+    text-align: end;
+}
 
 /* La partie du nombre de post d'une discussion */
 .oneTalkComments{
     align-self: flex-end;
 }
 
+/* Le conteneur d'un post */
+.onePostContainer{
+    width: 80%;
+    margin: 0 auto 1em auto;
+    background-color: #fff;
+    color: #333;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+/* La partie du haut du conteneur */
+.onePostTopContainer{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
-    /* Le conteneur d'une discussion */
-    .oneTalkContainer{
+    /* Le conteneur d'une discussion et le conteneur d'un post */
+    .oneTalkContainer, .onePostContainer{
         width: 95%;
         padding: 0.75em;
     }
@@ -111,8 +132,8 @@
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
-    /* Le conteneur d'une discussion */
-    .oneTalkContainer{
+    /* Le conteneur d'une discussion et le conteneur d'un post */
+    .oneTalkContainer, .onePostContainer{
         width: 90%;
     }
 

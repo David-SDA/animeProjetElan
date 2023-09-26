@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Discussion;
 use App\Repository\DiscussionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +15,16 @@ class DiscussionController extends AbstractController
     {
         /* On cherche toutes les discussions */
         $talks = $discussionRepository->findBy([], ["dateCreation" => "ASC"]);
-        
+
         return $this->render('discussion/index.html.twig', [
             'talks' => $talks,
+        ]);
+    }
+
+    #[Route('/discussion/{id}', name: 'show_discussion')]
+    public function show(Discussion $discussion){
+        return $this->render('discussion/show.html.twig', [
+            'talk' => $discussion,
         ]);
     }
 }

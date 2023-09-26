@@ -7,7 +7,7 @@
         <h1 class="title talks">All Talks</h1>
         {% for talk in talks %}
         <section>
-            <a href="#" class="oneTalkContainer">
+            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer">
                 <div class="oneTalkPartContainer">
                     <h2 class="oneTalkTitle">{{ talk.titre }}</h2>
                     <figure class="oneTalkUserContainer">
