@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {# On change le titre de la page en fonction de l'existence du post #}
+    {% if postExist %}
+        Edit post
+    {% else %}
+        Create a new post
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="securityFormContainer">
+            {{ form_start(form) }}
+            {# On change le titre de la page en fonction de l'existence du post #}
+            {% if postExist %}
+                <h1 class="securityFormTitle">Edit post</h1>
+            {% else %}
+                <h1 class="securityFormTitle">Create a new post</h1>
+            {% endif %}
+                <div class="securityFormRow">
+                    {{ form_label(form.content, 'Content*') }}
+                    {{ form_widget(form.content) }}
+                </div>
+            {% if postExist %}
+                <button type="submit" class="securityFormSubmitButton large">Edit post</button>
+            {% else %}
+                <button type="submit" class="securityFormSubmitButton large">Create post</button>
+            {% endif %}
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}

@@ -117,6 +117,13 @@
     right: 10px;
     width: 100px;
 }
+.profileInfosButton.addPost{
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.5em 0.7em;
+    margin: 0;
+    font-size: 0.8em;
+}
 
 /* La partie des animes favoris d'un utilisateur */
 .profileInfosFavoritesAnimes{
@@ -248,6 +255,10 @@
     .profileInfosButton.talks{
         top: auto;
         bottom: 40px;
+    }
+    .profileInfosButton.addPost{
+        display: flex;
+        margin-top: 3px;
     }
 
     /* La partie des infos de l'utilisateur */
