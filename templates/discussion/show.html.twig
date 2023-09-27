@@ -6,9 +6,14 @@
     <main class="talkContainer">
         <h1 class="title talks">
             {{ talk.titre }}
-            {% if talk.user == app.user %}
+
+            {# Si la discussion appartient à l'utilisateur et n'est pas verrouillé, il pourra la modifier #}
+            {% if talk.user == app.user and not talk.estVerrouiller %}
                 <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
             {% endif %}
+
+            {# Si l'utilisateur est un admin et la discussion est verrouillé, il pourra déverrouiller celle-ci #}
+            {# Si l'utilisateur est un admin et la discussion n'est pas verrouillé, il pourra verrouiller celle-ci #}
             {% if is_granted('ROLE_ADMIN') and talk.estVerrouiller %}
                 <a href="{{ path('unlock_discussion', { id: talk.id }) }}" title="Unlock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock"></i></a>
             {% elseif is_granted('ROLE_ADMIN') and not talk.estVerrouiller %}
@@ -49,7 +54,8 @@
                 {% endif %}
                 <div class="oneTalkTopRightContainer">
                     <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
-                    {% if talk.user == app.user or is_granted('ROLE_ADMIN') %}
+                    {# Si la discussion appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, la discussion peut être supprimer #}
+                    {% if (talk.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
                     {% endif %}
                 </div>
