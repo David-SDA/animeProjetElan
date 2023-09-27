@@ -29,6 +29,7 @@ ul{
     text-align: center;
     animation: fadeIn 5s;
     opacity: 0;
+    pointer-events: none;
 }
 
 /* Les messages de succès */

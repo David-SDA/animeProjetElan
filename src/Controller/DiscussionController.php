@@ -97,24 +97,37 @@ class DiscussionController extends AbstractController
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
-            /* On modifie le titre de la discussion */
-            $discussion->setTitre($form->get('title')->getData());
+            /* On récupère les différentes données du formulaire */
+            $talkTitle = $form->get('title')->getData();
+            $talkFirstPost = $form->get('firstPost')->getData();
 
-            /* On modifie le contenu et la date de dernière modification de du premier post de la discussion */
-            $discussion->getPosts()->first()->setContenu($form->get('firstPost')->getData());
-            $discussion->getPosts()->first()->setDateDerniereModification(new \DateTime());
-
-            /* On sauvegarde ces changements dans la base de données */
-            $entityManagerInterface->persist($discussion);
-            $entityManagerInterface->flush();
-
-            /* On indique le succès de la création */
-            $this->addFlash(
-                'success',
-                'This talk has been edited successfully'
-            );
-
-            return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+            /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
+            if($talkTitle === $discussion->getTitre() && $talkFirstPost === $discussion->getPosts()->first()->getContenu()){
+                $this->addFlash(
+                    'error',
+                    'You need to change something to edit the talk'
+                );
+            }
+            else{
+                /* On modifie le titre de la discussion */
+                $discussion->setTitre($talkTitle);
+    
+                /* On modifie le contenu et la date de dernière modification du premier post de la discussion */
+                $discussion->getPosts()->first()->setContenu($talkFirstPost);
+                $discussion->getPosts()->first()->setDateDerniereModification(new \DateTime());
+    
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($discussion);
+                $entityManagerInterface->flush();
+    
+                /* On indique le succès de la création */
+                $this->addFlash(
+                    'success',
+                    'This talk has been edited successfully'
+                );
+    
+                return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+            }
         }
 
         return $this->render('discussion/add.html.twig', [

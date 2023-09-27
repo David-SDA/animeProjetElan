@@ -4,7 +4,12 @@
 
 {% block body %}
     <main class="talkContainer">
-        <h1 class="title talks">{{ talk.titre }}</h1>
+        <h1 class="title talks">
+            {{ talk.titre }}
+            {% if talk.user == app.user %}
+                <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a>            
+            {% endif %}
+        </h1>
         <div class="onePostContainer">
             <div class="onePostTopContainer">
                 <figure class="oneTalkUserContainer">
