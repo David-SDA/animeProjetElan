@@ -42,7 +42,12 @@
                 {% else %}
                     {% set textPublication = 'just now' %}
                 {% endif %}
-                <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                <div class="oneTalkTopRightContainer">
+                    <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                    {% if talk.user == app.user or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
+                    {% endif %}
+                </div>
             </div>
             <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.contenu }}</p>
         </div>

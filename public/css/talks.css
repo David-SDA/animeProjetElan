@@ -75,6 +75,14 @@
     max-width: 580px;
 }
 
+/* La partie en haut à droite d'un post */
+.oneTalkTopRightContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
+
 /* Le temps de la publication */
 .oneTalkUserTime{
     font-size: 0.875em;
@@ -85,6 +93,11 @@
 }
 .oneTalkUserTime.post{
     text-align: end;
+}
+
+/* Le lien pour supprimer une discussion */
+.talkDeleteLink{
+    color: #ff0000;
 }
 
 /* La partie du nombre de post d'une discussion */

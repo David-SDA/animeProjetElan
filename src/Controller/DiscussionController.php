@@ -136,6 +136,31 @@ class DiscussionController extends AbstractController
         ]);
     }
 
+    #[Route('/discussion/{id}/delete', name: 'delete_discussion')]
+    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui et que ce n'est pas un admin, on l'empeche de supprimer la discussion */
+        if(!$user || $user !== $discussion->getUser() && $this->isGranted('ROLE_ADMIN') === false){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On récupère le titre de la discussion qui va être supprimer */
+        $talkTitle = $discussion->getTitre();
+
+        /* On supprime la discussion et on sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->remove($discussion);
+        $entityManagerInterface->flush();
+
+        /* On indique la réussite de la suppression */
+        $this->addFlash(
+            'success',
+            'The talk "' . $talkTitle . '" has been deleted'
+        );
+
+        return $this->redirectToRoute('app_discussion');
+    }
+
     #[Route('/discussion/{id}', name: 'show_discussion')]
     public function show(Discussion $discussion){
         return $this->render('discussion/show.html.twig', [
