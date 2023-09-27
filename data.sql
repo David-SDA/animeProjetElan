@@ -64,13 +64,14 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~3 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~4 rows (environ)
 INSERT INTO `discussion` (`id`, `titre`, `date_creation`, `est_verrouiller`, `user_id`) VALUES
 	(1, 'Talk 1', '2023-09-25 15:38:58', 0, 1),
 	(2, 'Talk 2', '2023-09-26 16:15:11', 0, 13),
-	(3, 'Talk 3', '2023-09-26 16:19:09', 0, 13);
+	(3, 'Talk 3', '2023-09-26 16:19:09', 1, 13),
+	(9, 'test', '2023-09-27 11:59:37', 0, 13);
 
 -- Listage de la structure de table animeprojetelan. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -153,17 +154,23 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.post : ~7 rows (environ)
+-- Listage des données de la table animeprojetelan.post : ~13 rows (environ)
 INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
 	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', 1, 1),
 	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
 	(3, '2023-09-25 15:50:00', '2023-09-25 15:50:00', 'Post 3', 1, 1),
 	(4, '2023-09-25 15:50:25', '2023-09-25 15:50:25', 'Post 4', 4, 1),
 	(5, '2023-09-25 15:50:43', '2023-09-25 15:50:43', 'Post 5', 5, 1),
-	(6, '2023-09-26 16:15:11', '2023-09-26 17:30:16', 'Talk 2 post 1', 13, 2),
-	(7, '2023-09-26 16:19:09', '2023-09-26 16:19:09', 'Talk 3 post 1', 13, 3);
+	(6, '2023-09-26 16:15:11', '2023-09-27 09:17:42', 'Talk 2 post 1', 13, 2),
+	(7, '2023-09-26 16:19:09', '2023-09-26 16:19:09', 'Talk 3 post 1', 13, 3),
+	(13, '2023-09-27 11:59:37', '2023-09-27 16:34:25', 'test premier post', 13, 9),
+	(14, '2023-09-27 14:24:42', '2023-09-27 14:24:42', 'test post1', 13, 9),
+	(15, '2023-09-27 14:27:57', '2023-09-27 14:27:57', 'Test post 2', 13, 9),
+	(16, '2023-09-27 15:07:32', '2023-09-27 16:20:43', 'test post to edit', 13, 9),
+	(17, '2023-09-27 16:26:24', '2023-09-27 16:29:41', 'test to edit.', 13, 1),
+	(18, '2023-09-27 16:48:16', '2023-09-27 16:48:16', 'test', 13, 2);
 
 -- Listage de la structure de table animeprojetelan. user
 CREATE TABLE IF NOT EXISTS `user` (
