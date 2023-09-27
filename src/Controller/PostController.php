@@ -127,4 +127,47 @@ class PostController extends AbstractController
             'postExist' => true,
         ]);
     }
+
+    #[Route('/discussion/{discussion_id}/post/{id}/delete', name: 'delete_post')]
+    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté ou que le post n'a pas été crée par lui et que ce n'est pas un admin, on l'empeche de supprimer le post */
+        if(!$user || $user !== $post->getUser() && $this->isGranted('ROLE_ADMIN') === false){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si on veut supprimer le premier post de la discussion */
+        if($post === $discussion_id->getPosts()->first()){
+            /* On indique qu'il faut supprimer la discussion */
+            $this->addFlash(
+                'error',
+                'The first post of this talk can be deleted only if you delete this talk'
+            );
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
+
+        /* Si la discussion est verrouillé et que l'utilisateur n'est pas un admin, on empêche la suppression du post */
+        if($discussion_id->isEstVerrouiller() && $this->isGranted('ROLE_ADMIN') === false){
+            /* On l'indique */
+            $this->addFlash(
+                'error',
+                'This talk is locked, only admins can delete it'
+            );
+
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
+
+        /* On supprime le post et on sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->remove($post);
+        $entityManagerInterface->flush();
+
+        /* On indique la réussite de la suppression */
+        $this->addFlash(
+            'success',
+            'The post has been deleted'
+        );
+
+        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+    }
 }

@@ -116,7 +116,7 @@
                             {% endif %}
                             {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
                             {% if (post.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
-                                <a href="#" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
                             {% endif %}
                         </div>
                     </div>
