@@ -7,7 +7,12 @@
         <h1 class="title talks">
             {{ talk.titre }}
             {% if talk.user == app.user %}
-                <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a>            
+                <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') and talk.estVerrouiller %}
+                <a href="{{ path('unlock_discussion', { id: talk.id }) }}" title="Unlock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock"></i></a>
+            {% elseif is_granted('ROLE_ADMIN') and not talk.estVerrouiller %}
+                <a href="{{ path('lock_discussion', { id: talk.id }) }}" title="Lock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock-open"></i></a>
             {% endif %}
         </h1>
         <div class="onePostContainer">

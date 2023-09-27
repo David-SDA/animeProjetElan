@@ -161,6 +161,74 @@ class DiscussionController extends AbstractController
         return $this->redirectToRoute('app_discussion');
     }
 
+    #[Route('/discussion/{id}/lock', name: 'lock_discussion')]
+    public function lock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+        /* Si l'utilisateur n'est pas un admin, il n'est pas autorisé à vérrouiller la discussion */
+        if($this->isGranted('ROLE_ADMIN') === false){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si la discussion est déjà vérrouillé */
+        if($discussion->isEstVerrouiller()){
+            /* On indique qu'il ne peut pas vérrouiller la discussion */
+            $this->addFlash(
+                'error',
+                'This talk is already locked'
+            );
+
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+        }
+
+        /* On vérrouille la discussion */
+        $discussion->setEstVerrouiller(true);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($discussion);
+        $entityManagerInterface->flush();
+
+        /* On indique la réussite du vérrouillage */
+        $this->addFlash(
+            'success',
+            'The talk has been locked'
+        );
+
+        return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+    }
+
+    #[Route('/discussion/{id}/unlock', name: 'unlock_discussion')]
+    public function unlock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+        /* Si l'utilisateur n'est pas un admin, il n'est pas autorisé à devérrouiller la discussion */
+        if($this->isGranted('ROLE_ADMIN') === false){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si la discussion n'est pas vérrouillé */
+        if(!$discussion->isEstVerrouiller()){
+            /* On indique qu'il ne peut pas devérrouiller la discussion */
+            $this->addFlash(
+                'error',
+                'This talk is already unlocked'
+            );
+
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+        }
+
+        /* On devérrouille la discussion */
+        $discussion->setEstVerrouiller(false);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($discussion);
+        $entityManagerInterface->flush();
+
+        /* On indique la réussite du devérrouillage */
+        $this->addFlash(
+            'success',
+            'The talk has been unlocked'
+        );
+
+        return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+    }    
+
     #[Route('/discussion/{id}', name: 'show_discussion')]
     public function show(Discussion $discussion){
         return $this->render('discussion/show.html.twig', [
