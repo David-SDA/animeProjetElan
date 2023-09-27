@@ -14,12 +14,15 @@ class PostFormType extends AbstractType
         $builder
         ->add('content', TextareaType::class, [
             'required' => true,
+            'data' => $options['content'],
         ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'content' => null,
+        ]);
     }
 }

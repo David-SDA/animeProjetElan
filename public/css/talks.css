@@ -83,6 +83,11 @@
     align-items: end;
 }
 
+/* La ligne qui contient les boutons de suppression et d'édition du post */
+.oneTalkTopRightBottomLine{
+    display: inline;
+}
+
 /* Le temps de la publication */
 .oneTalkUserTime{
     font-size: 0.875em;
@@ -98,6 +103,10 @@
 /* Le lien pour supprimer une discussion */
 .talkDeleteLink{
     color: #ff0000;
+    margin-left: 3em;
+}
+.talkDeleteLink:hover{
+    filter: saturate(70%);
 }
 
 /* La partie du nombre de post d'une discussion */

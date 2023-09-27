@@ -64,4 +64,67 @@ class PostController extends AbstractController
             'postExist' => false
         ]);
     }
+
+    #[Route('/discussion/{discussion_id}/post/{id}/edit', name: 'edit_post')]
+    public function edit(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, Request $request): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté ou que le post n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier le post */
+        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller()){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si on veut modifier le premier post de la discussion */
+        if($post === $discussion_id->getPosts()->first()){
+            /* On indique qu'il faut passer par la modification de la discussion */
+            $this->addFlash(
+                'error',
+                'The first post of this talk can be edited only through the edition of this talk'
+            );
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(PostFormType::class, null, [
+            'content' => $post->getContenu(),
+        ]);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère les différentes données du formulaire */
+            $postContent = $form->get('content')->getData();
+
+            /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
+            if($postContent === $post->getContenu()){
+                $this->addFlash(
+                    'error',
+                    'You need to change the content of the post'
+                );
+            }
+            else{
+                /* On modifie le contenu du post et sa date de dernière modification */
+                $post->setContenu($postContent);
+                $post->setDateDerniereModification(new \DateTime());
+    
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($post);
+                $entityManagerInterface->flush();
+    
+                /* On indique le succès de l'édition */
+                $this->addFlash(
+                    'success',
+                    'The post has been edited successfully'
+                );
+    
+                return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+            }
+        }
+
+        return $this->render('post/add.html.twig', [
+            'form' => $form->createView(),
+            'postExist' => true,
+        ]);
+    }
 }

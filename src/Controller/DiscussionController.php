@@ -131,7 +131,7 @@ class DiscussionController extends AbstractController
                 $entityManagerInterface->persist($discussion);
                 $entityManagerInterface->flush();
     
-                /* On indique le succès de la création */
+                /* On indique le succès de l'édition */
                 $this->addFlash(
                     'success',
                     'This talk has been edited successfully'

@@ -68,7 +68,7 @@
                 {{ responseNumber }} {{ responseNumber > 1 ? 'Replies' : 'Reply' }}
                 {# Si l'utilisateur est connecté et la discussion n'est pas verrouiller, l'utilisateur peut créer une discussion #}
                 {% if app.user and not talk.estVerrouiller %}
-                    <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost">Reply</a>
+                    <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost" title="Reply to this discussion">Reply</a>
                 {% endif %}
             </p>
             <p class="oneTalkFilterText"><span class="oneTalkFilterTextBefore">Filter by :</span> Date - Likes</p>
@@ -107,7 +107,19 @@
                     {% else %}
                         {% set textPublication = 'just now' %}
                     {% endif %}
-                    <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                    <div class="oneTalkTopRightContainer">
+                        <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                        <div class="oneTalkTopRightBottomLine">
+                            {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
+                            {% if post.user == app.user and not talk.estVerrouiller %}
+                                <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
+                            {% endif %}
+                            {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
+                            {% if (post.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
+                                <a href="#" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
                 <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.contenu }}</p>
                 <p class="onePostLikes"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">42</span></p>
