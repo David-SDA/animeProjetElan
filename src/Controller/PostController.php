@@ -143,7 +143,7 @@ class PostController extends AbstractController
            ou que le post est le premier de la discussion
            ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
            on l'empeche de supprimer le post */
-        if(!$user || $user !== $post->getUser() && $this->isGranted('ROLE_ADMIN') === false || $post === $discussion_id->getPosts()->first() || $discussion_id->isEstVerrouiller() && $this->isGranted('ROLE_ADMIN') === false){
+        if(!$user || $user !== $post->getUser() && !$this->isGranted('ROLE_ADMIN') || $post === $discussion_id->getPosts()->first() || $discussion_id->isEstVerrouiller() && !$this->isGranted('ROLE_ADMIN')){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',

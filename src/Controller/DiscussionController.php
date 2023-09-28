@@ -31,7 +31,13 @@ class DiscussionController extends AbstractController
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
         if(!$user){
-            return $this->redirectToRoute('app_home');
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are allowed to create a new talk'
+            );
+
+            return $this->redirectToRoute('app_discussion');
         }
 
         /* On crée une discussion et un premier post */
@@ -66,7 +72,7 @@ class DiscussionController extends AbstractController
             /* On indique le succès de la création */
             $this->addFlash(
                 'success',
-                'Talk has been created successfully'
+                'A new talk has been created successfully'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -82,17 +88,12 @@ class DiscussionController extends AbstractController
     public function edit(EntityManagerInterface $entityManagerInterface, Discussion $discussion, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui, on l'empeche de modifier la discussion */
-        if(!$user || $user !== $discussion->getUser()){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si la discussion est verrouillé, l'auteur de celui-ci ne peut pas le modifier */
-        if($discussion->isEstVerrouiller()){
-            /* On l'indique */
+        /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier la discussion */
+        if(!$user || $user !== $discussion->getUser() || $discussion->isEstVerrouiller()){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This talk is locked therefore it cannot be edited'
+                'You are not allowed to edit this talk'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -151,17 +152,17 @@ class DiscussionController extends AbstractController
     public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui et que ce n'est pas un admin, on l'empeche de supprimer la discussion */
-        if(!$user || $user !== $discussion->getUser() && $this->isGranted('ROLE_ADMIN') === false){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si la discussion est verrouillé et que l'utilisateur n'est pas un admin, on empêche la suppression de celle-ci */
-        if($discussion->isEstVerrouiller() && $this->isGranted('ROLE_ADMIN') === false){
-            /* On l'indique */
+        /* Si l'utilisateur n'est pas connecté
+           ou que la discussion n'a pas été crée par lui et que ce n'est pas un admin
+           ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
+           on l'empeche de supprimer la discussion */
+        if(!$user
+            || $user !== $discussion->getUser() && !$this->isGranted('ROLE_ADMIN')
+            || $discussion->isEstVerrouiller() && !$this->isGranted('ROLE_ADMIN')){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This talk is locked, only admins can delete it'
+                'You are not allowed to delete this talk'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -177,7 +178,7 @@ class DiscussionController extends AbstractController
         /* On indique la réussite de la suppression */
         $this->addFlash(
             'success',
-            'The talk "' . $talkTitle . '" has been deleted'
+            'The talk "' . $talkTitle . '" has been deleted successfully'
         );
 
         return $this->redirectToRoute('app_discussion');
@@ -185,17 +186,12 @@ class DiscussionController extends AbstractController
 
     #[Route('/discussion/{id}/lock', name: 'lock_discussion')]
     public function lock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
-        /* Si l'utilisateur n'est pas un admin, il n'est pas autorisé à verrouiller la discussion */
-        if($this->isGranted('ROLE_ADMIN') === false){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si la discussion est déjà verrouillé */
-        if($discussion->isEstVerrouiller()){
-            /* On indique qu'il ne peut pas verrouiller la discussion */
+        /* Si l'utilisateur n'est pas un admin et que la discussion est déjà verrouillé, il n'est pas autorisé à verrouiller la discussion */
+        if(!$this->isGranted('ROLE_ADMIN') && $discussion->isEstVerrouiller()){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This talk is already locked'
+                'You are not allowed to lock this talk'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -211,7 +207,7 @@ class DiscussionController extends AbstractController
         /* On indique la réussite du verrouillage */
         $this->addFlash(
             'success',
-            'The talk has been locked'
+            'The talk has been locked successfully'
         );
 
         return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -219,17 +215,12 @@ class DiscussionController extends AbstractController
 
     #[Route('/discussion/{id}/unlock', name: 'unlock_discussion')]
     public function unlock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
-        /* Si l'utilisateur n'est pas un admin, il n'est pas autorisé à déverrouiller la discussion */
-        if($this->isGranted('ROLE_ADMIN') === false){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si la discussion n'est pas verrouillé */
-        if(!$discussion->isEstVerrouiller()){
-            /* On indique qu'il ne peut pas déverrouiller la discussion */
+        /* Si l'utilisateur n'est pas un admin et que la discussion n'est déjà pas verrouiller , il n'est pas autorisé à déverrouiller la discussion */
+        if(!$this->isGranted('ROLE_ADMIN') && !$discussion->isEstVerrouiller()){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This talk is already unlocked'
+                'You are not allowed to unlock this talk'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -245,7 +236,7 @@ class DiscussionController extends AbstractController
         /* On indique la réussite du déverrouillage */
         $this->addFlash(
             'success',
-            'The talk has been unlocked'
+            'The talk has been unlocked successfully'
         );
 
         return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
