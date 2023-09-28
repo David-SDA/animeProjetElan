@@ -27,7 +27,13 @@ class PostController extends AbstractController
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
         if(!$user || $discussion->isEstVerrouiller()){
-            return $this->redirectToRoute('app_home');
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'Your are not allowed to add a post to this talk'
+            );
+
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
         }
 
         /* On crée un nouveau post */
@@ -53,7 +59,7 @@ class PostController extends AbstractController
             /* On indique le succès de la création */
             $this->addFlash(
                 'success',
-                'Post has been created successfully'
+                'Your post has been added to the talk successfully'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
@@ -69,18 +75,18 @@ class PostController extends AbstractController
     public function edit(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté ou que le post n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier le post */
-        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller()){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si on veut modifier le premier post de la discussion */
-        if($post === $discussion_id->getPosts()->first()){
-            /* On indique qu'il faut passer par la modification de la discussion */
+        /* Si l'utilisateur n'est pas connecté
+           ou que le post n'a pas été crée par lui
+           ou que la discussion est verrouiller
+           ou que le post est le premier de la discussion,
+           on l'empeche de modifier le post */
+        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller() || $post === $discussion_id->getPosts()->first()){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'The first post of this talk can be edited only through the edition of this talk'
+                'You are not allowed to edit this post'
             );
+
             return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
         }
 
@@ -132,27 +138,16 @@ class PostController extends AbstractController
     public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté ou que le post n'a pas été crée par lui et que ce n'est pas un admin, on l'empeche de supprimer le post */
-        if(!$user || $user !== $post->getUser() && $this->isGranted('ROLE_ADMIN') === false){
-            return $this->redirectToRoute('app_home');
-        }
-
-        /* Si on veut supprimer le premier post de la discussion */
-        if($post === $discussion_id->getPosts()->first()){
-            /* On indique qu'il faut supprimer la discussion */
+        /* Si l'utilisateur n'est pas connecté
+           ou que le post n'a pas été crée par lui et que ce n'est pas un admin
+           ou que le post est le premier de la discussion
+           ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
+           on l'empeche de supprimer le post */
+        if(!$user || $user !== $post->getUser() && $this->isGranted('ROLE_ADMIN') === false || $post === $discussion_id->getPosts()->first() || $discussion_id->isEstVerrouiller() && $this->isGranted('ROLE_ADMIN') === false){
+            /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'The first post of this talk can be deleted only if you delete this talk'
-            );
-            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
-        }
-
-        /* Si la discussion est verrouillé et que l'utilisateur n'est pas un admin, on empêche la suppression du post */
-        if($discussion_id->isEstVerrouiller() && $this->isGranted('ROLE_ADMIN') === false){
-            /* On l'indique */
-            $this->addFlash(
-                'error',
-                'This talk is locked, only admins can delete it'
+                'You are not allowed to delete this post'
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
@@ -165,7 +160,7 @@ class PostController extends AbstractController
         /* On indique la réussite de la suppression */
         $this->addFlash(
             'success',
-            'The post has been deleted'
+            'The post has been deleted successfully'
         );
 
         return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
