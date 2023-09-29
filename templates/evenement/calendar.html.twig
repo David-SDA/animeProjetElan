@@ -6,5 +6,52 @@
     <main>
         <h1 class="title">Your Calendar</h1>
         <div id="calendar"></div>
+        <section>
+            <h2>Manage your calendar</h2>
+            <a href="">Add a new event</a>
+        </section>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+     {# Ajout de Full Calendar #}
+     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js" integrity="sha256-alsi6DkexWIdeVDEct5s7cnqsWgOqsh2ihuIZbU6H3I=" crossorigin="anonymous"></script>
+
+     {# Affichage d'un calendrier #}
+    <script>
+        window.onload = () => {
+            let calendarElt = document.querySelector("#calendar");
+
+            let calendar = new FullCalendar.Calendar(calendarElt, {
+                initialView: 'timeGridWeek',
+                allDaySlot: false,
+                locale: 'locale',
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                },
+                firstDay: 1,
+                buttonText: {
+                    month: 'Month',
+                    week: 'Week',
+                    day: 'Day',
+                    list: 'List',
+                    today: 'Today',
+                },
+                views: {
+                    dayGrid: {
+                        dayMaxEvents: 3,
+                    },
+                    timeGrid: {
+                        eventMaxStack: 2
+                    },
+                },
+            })
+            
+            calendar.render();
+        };
+    </script>
 {% endblock %}
