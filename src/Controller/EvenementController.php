@@ -21,8 +21,7 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/evenement/add', name: 'add_evenement')]
-    public function add(EntityManagerInterface $entityManagerInterface, Request $request): Response
-    {
+    public function add(EntityManagerInterface $entityManagerInterface, Request $request): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès à son calendrier */
@@ -65,6 +64,61 @@ class EvenementController extends AbstractController
         return $this->render('evenement/add.html.twig', [
             'form' => $form,
             'eventExist' => false,
+        ]);
+    }
+
+    #[Route('/evenement/{id}/edit', name: 'edit_evenement')]
+    public function edit(EntityManagerInterface $entityManagerInterface, Evenement $evenement, Request $request): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté ou si ce n'est pas son évènement, on l'empeche de modifier celui-ci */
+        if(!$user || $user !== $evenement->getUser()){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are not allowed to edit this event'
+            );
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Création du formulaire */
+        $form = $this->createForm(EvenementFormType::class, $evenement);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On récupère les différentes données du formulaire */
+            $title = $form->get('nomEvenement')->getData();
+            $startDate = $form->get('dateDebut')->getData();
+            $endDate = $form->get('dateFin')->getData();
+
+            /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
+            if($title === $evenement->getNomEvenement() && $startDate == $evenement->getDateDebut() && $endDate == $evenement->getDateFin()){
+                $this->addFlash(
+                    'error',
+                    'You need to change the content of the event'
+                );
+            }
+            else{
+                /* On sauvegarde ces changements dans la base de données */
+                $entityManagerInterface->persist($evenement);
+                $entityManagerInterface->flush();
+    
+                /* On indique le succès de la modification */
+                $this->addFlash(
+                    'success',
+                    'Your event has been edited successfully'
+                );
+    
+                return $this->redirectToRoute('calendar_user');
+            }
+        }
+
+        return $this->render('evenement/add.html.twig', [
+            'form' => $form,
+            'eventExist' => true,
         ]);
     }
 }
