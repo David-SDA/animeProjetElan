@@ -81,7 +81,7 @@ class EvenementController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
-
+        
         /* Création du formulaire */
         $form = $this->createForm(EvenementFormType::class, $evenement);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
@@ -106,5 +106,36 @@ class EvenementController extends AbstractController
             'form' => $form,
             'eventExist' => true,
         ]);
+    }
+
+    #[Route('/evenement/{id}/delete', name: 'delete_evenement')]
+    public function delete(EntityManagerInterface $entityManagerInterface, Evenement $evenement, Request $request): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté ou si l'évènement ne lui appartient pas, on l'empeche de supprimer l'évènement */
+        if(!$user || $user !== $evenement->getUser()){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are not allowed to delete this event'
+            );
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* On récupère le nom de l'évènement */
+        $eventTitle = $evenement->getNomEvenement();
+
+        /* On supprime l'évènement et on sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->remove($evenement);
+        $entityManagerInterface->flush();
+
+        /* On indique la réussite de la suppression */
+        $this->addFlash(
+            'success',
+            'The event "' . $eventTitle . '" has been deleted successfully'
+        );
+        
+        return $this->redirectToRoute('calendar_user');
     }
 }
