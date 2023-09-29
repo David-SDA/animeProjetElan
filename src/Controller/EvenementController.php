@@ -89,31 +89,17 @@ class EvenementController extends AbstractController
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
-            /* On récupère les différentes données du formulaire */
-            $title = $form->get('nomEvenement')->getData();
-            $startDate = $form->get('dateDebut')->getData();
-            $endDate = $form->get('dateFin')->getData();
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($evenement);
+            $entityManagerInterface->flush();
 
-            /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
-            if($title === $evenement->getNomEvenement() && $startDate == $evenement->getDateDebut() && $endDate == $evenement->getDateFin()){
-                $this->addFlash(
-                    'error',
-                    'You need to change the content of the event'
-                );
-            }
-            else{
-                /* On sauvegarde ces changements dans la base de données */
-                $entityManagerInterface->persist($evenement);
-                $entityManagerInterface->flush();
-    
-                /* On indique le succès de la modification */
-                $this->addFlash(
-                    'success',
-                    'Your event has been edited successfully'
-                );
-    
-                return $this->redirectToRoute('calendar_user');
-            }
+            /* On indique le succès de la modification */
+            $this->addFlash(
+                'success',
+                'Your event has been edited successfully'
+            );
+
+            return $this->redirectToRoute('calendar_user');
         }
 
         return $this->render('evenement/add.html.twig', [
