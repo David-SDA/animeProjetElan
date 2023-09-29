@@ -64,14 +64,16 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~4 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~6 rows (environ)
 INSERT INTO `discussion` (`id`, `titre`, `date_creation`, `est_verrouiller`, `user_id`) VALUES
 	(1, 'Talk 1', '2023-09-25 15:38:58', 0, 1),
 	(2, 'Talk 2', '2023-09-26 16:15:11', 0, 13),
 	(3, 'Talk 3', '2023-09-26 16:19:09', 1, 13),
-	(9, 'test', '2023-09-27 11:59:37', 0, 13);
+	(9, 'test', '2023-09-27 11:59:37', 0, 13),
+	(10, 'eeeee', '2023-09-28 08:49:33', 0, 13),
+	(11, 'aaa', '2023-09-28 10:38:35', 0, 13);
 
 -- Listage de la structure de table animeprojetelan. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -95,9 +97,13 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   PRIMARY KEY (`id`),
   KEY `IDX_B26681EA76ED395` (`user_id`),
   CONSTRAINT `FK_B26681EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.evenement : ~0 rows (environ)
+-- Listage des données de la table animeprojetelan.evenement : ~3 rows (environ)
+INSERT INTO `evenement` (`id`, `nom_evenement`, `date_debut`, `date_fin`, `user_id`) VALUES
+	(1, 'Event test 1', '2023-09-29 13:20:00', '2023-09-29 17:00:00', 13),
+	(3, 'Event test 2', '2023-09-29 17:00:00', '2023-09-29 19:00:00', 13),
+	(4, 'Event test 3', '2023-09-29 20:30:00', '2023-09-30 01:00:00', 13);
 
 -- Listage de la structure de table animeprojetelan. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
@@ -154,9 +160,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.post : ~13 rows (environ)
+-- Listage des données de la table animeprojetelan.post : ~17 rows (environ)
 INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
 	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', 1, 1),
 	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
@@ -170,7 +176,11 @@ INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `conten
 	(15, '2023-09-27 14:27:57', '2023-09-27 14:27:57', 'Test post 2', 13, 9),
 	(16, '2023-09-27 15:07:32', '2023-09-27 16:20:43', 'test post to edit', 13, 9),
 	(17, '2023-09-27 16:26:24', '2023-09-27 16:29:41', 'test to edit.', 13, 1),
-	(18, '2023-09-27 16:48:16', '2023-09-27 16:48:16', 'test', 13, 2);
+	(18, '2023-09-27 16:48:16', '2023-09-27 16:48:16', 'test', 13, 2),
+	(20, '2023-09-28 08:49:33', '2023-09-28 08:49:33', 'eeeeeee', 13, 10),
+	(21, '2023-09-28 08:49:48', '2023-09-28 08:49:48', 'zzz', 13, 10),
+	(22, '2023-09-28 08:49:57', '2023-09-28 09:19:18', 'dzdzzzzzzz', 13, 10),
+	(24, '2023-09-28 10:38:35', '2023-09-28 10:38:35', 'aaa', 13, 11);
 
 -- Listage de la structure de table animeprojetelan. user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -279,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
   CONSTRAINT `FK_57428AE9A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_regarder_anime : ~9 rows (environ)
+-- Listage des données de la table animeprojetelan.user_regarder_anime : ~8 rows (environ)
 INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
 	(1, 13, 1, 'Completed', 13, '2023-09-07', '2023-09-20'),
 	(2, 13, 2, 'Watching', 11, NULL, NULL),
