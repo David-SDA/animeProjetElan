@@ -53,6 +53,24 @@ class UserController extends AbstractController
         return $this->render('user/settings.html.twig');
     }
 
+    #[Route('user/calendar', name: 'calendar_user')]
+    public function calendar(): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès à son calendrier */
+        if(!$currentUser){
+            /* On l'indique */
+            $this->addFlash(
+                'error',
+                'Access denied'
+            );
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('evenement/calendar.html.twig');
+    }
+
     /* Changement du pseudo de l'utilisateur connecté */
     #[Route(path: 'user/settings/changeUsername', name: 'change_username_user')]
     public function changeUsername(Request $request, EntityManagerInterface $entityManagerInterface): Response{

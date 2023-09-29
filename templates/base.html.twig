@@ -20,8 +20,6 @@
             <link rel="stylesheet" href="{{ asset("css/talks.css") }}">
             <link rel="stylesheet" href="{{ asset("css/responsive.css") }}">
         {% endblock %}
-        {% block javascripts %}
-        {% endblock %}
     </head>
     <body>
         {% for type, messages in app.flashes %}
@@ -68,7 +66,7 @@
                     <ul>
                         <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}"><i class="fa-regular fa-user"></i>Profile</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('anime_list_user', { id: app.user.id }) }}"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
-                        <li class="navBarUserMenuLink"><a href="#"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('calendar_user') }}"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('settings_user') }}"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
@@ -81,7 +79,7 @@
         </div>
         {% block body %}
         {% endblock %}
-        {% block javascript %}
+        {% block javascripts %}
             <script>
                 /* On récupère l'élement qui ouvre la barre de navigation et le conteneur et le contenu de la barre de navigation */
                 const responsiveNavBarOpen = document.querySelector(".responsiveNavBarOpen");

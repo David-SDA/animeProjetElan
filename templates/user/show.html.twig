@@ -33,7 +33,7 @@
                 <div class="profileInfos buttons">
                     <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
                     {% if app.user == user %}
-                        <a href="#" class="profileInfosButton">CALENDAR</a>
+                        <a href="{{ path('calendar_user') }}" class="profileInfosButton">CALENDAR</a>
                     {% endif %}
                 </div>
             </div>
