@@ -68,7 +68,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('evenement/calendar.html.twig');
+        return $this->render('user/calendar.html.twig');
     }
 
     /* Changement du pseudo de l'utilisateur connecté */

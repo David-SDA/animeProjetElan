@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {# On change le titre de la page en fonction de l'existence de l'évènement#}
+    {% if eventExist %}
+        Edit event
+    {% else %}
+        Create a new event
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="securityFormContainer">
+            {{ form_start(form) }}
+            {# On change le titre de la page en fonction de l'existence de l'évènement #}
+            {% if eventExist %}
+                <h1 class="securityFormTitle">Edit event</h1>
+            {% else %}
+                <h1 class="securityFormTitle">Create a new event</h1>
+            {% endif %}
+                <div class="securityFormRow">
+                    {{ form_label(form.nomEvenement, 'Event Name*') }}
+                    {{ form_widget(form.nomEvenement) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.dateDebut, 'Start Date*') }}
+                    {{ form_widget(form.dateDebut) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.dateFin, 'End Date*') }}
+                    {{ form_widget(form.dateFin) }}
+                </div>
+            {% if eventExist %}
+                <button type="submit" class="securityFormSubmitButton large">Edit event</button>
+            {% else %}
+                <button type="submit" class="securityFormSubmitButton large">Create event</button>
+            {% endif %}
+            {{ form_end(form) }}
+        </div>
+    </main>
+{% endblock %}
