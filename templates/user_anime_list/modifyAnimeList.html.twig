@@ -36,7 +36,9 @@
         {{ form_end(form) }}
     </main>
 
-    {% block script %}
+    {% block javascripts %}
+        {{ parent() }}
+
         <script>
             // On crée un écouteur quand la page est bien chargé
             document.addEventListener("DOMContentLoaded", function (){

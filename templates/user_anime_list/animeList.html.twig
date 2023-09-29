@@ -44,7 +44,9 @@
         </div>
     </main>
 
-    {% block script %}
+    {% block javascripts %}
+        {{ parent() }}
+
         <script>
             // Récupération des boutons de la page de la liste d'animé
             const buttons = document.querySelectorAll(".animeListButton");
