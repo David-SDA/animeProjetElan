@@ -1,3 +1,15 @@
+/* La partie qui contient le titre et les liens d'un évènement */
+.eventContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* La partie qui contient le titre de l'évènement */
+.eventTitleContainer{
+    flex: 1;
+}
+
 #calendar{
     width: 90%;
     height: 80vh;

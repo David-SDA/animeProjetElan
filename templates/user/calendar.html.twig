@@ -23,21 +23,21 @@
             let calendarElt = document.querySelector("#calendar");
 
             let calendar = new FullCalendar.Calendar(calendarElt, {
-                initialView: 'timeGridWeek',
+                initialView: "timeGridWeek",
                 allDaySlot: false,
-                locale: 'locale',
+                locale: "locale",
                 headerToolbar: {
-                    start: 'prev,next today',
-                    center: 'title',
-                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+                    start: "prev,next today",
+                    center: "title",
+                    end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
                 },
                 firstDay: 1,
                 buttonText: {
-                    month: 'Month',
-                    week: 'Week',
-                    day: 'Day',
-                    list: 'List',
-                    today: 'Today',
+                    month: "Month",
+                    week: "Week",
+                    day: "Day",
+                    list: "List",
+                    today: "Today",
                 },
                 views: {
                     dayGrid: {
@@ -49,31 +49,45 @@
                     listWeek: {
                         // Dans la vue de la liste des évènement de la semaine, on va personaliser l'affichage de l'évènement
                         eventContent: function(args) {
-                            // Création d'une div pour contenir l'évènement
-                            let eventElement = document.createElement('div');
+                            // Création d'un conteneur pour la partie de titre et liens de l'évènement
+                            let eventContainer = document.createElement("div");
+                            // Ajout d'une classe pour celui-ci
+                            eventContainer.classList.add("eventContainer");
         
+                            // Création d'un conteneur pour le titre
+                            let titleContainer = document.createElement('div');
+                            // Ajout d'une classe pour celui-ci
+                            titleContainer.classList.add("eventTitleContainer");
+                            // Ajout du nom de l'évènement
+                            titleContainer.textContent = args.event.title;
+
+                            // Création d'un conteneur pour les liens
+                            let linksContainer = document.createElement("div");
+
                             // Création d'un lien pour l'édition 
-                            let editLink = document.createElement('a');
+                            let editLink = document.createElement("a");
                             // Ajout du chemin du lien
-                            editLink.href = "{{ path('edit_evenement', { id: 'EVENT_ID' }) }}".replace('EVENT_ID', args.event.id);
+                            editLink.href = "{{ path('edit_evenement', { id: 'EVENT_ID' }) }}".replace("EVENT_ID", args.event.id);
                             // Ajout du texte du lien
-                            editLink.innerText = 'Edit';
+                            editLink.innerText = "Edit";
         
                             // Création d'un lien pour la suppression
-                            let deleteLink = document.createElement('a');
+                            let deleteLink = document.createElement("a");
                             // Ajout du chemin du lien
-                            deleteLink.href = "{{ path('delete_evenement', { id: 'EVENT_ID' }) }}".replace('EVENT_ID', args.event.id);
+                            deleteLink.href = "{{ path('delete_evenement', { id: 'EVENT_ID' }) }}".replace("EVENT_ID", args.event.id);
                             // Ajout du texte du lien
-                            deleteLink.innerText = 'Delete';
+                            deleteLink.innerText = "Delete";
         
-                            // On intègre dans le div créé les différents élements (titre et liens)
-                            eventElement.appendChild(document.createTextNode(args.event.title + ' '));
-                            eventElement.appendChild(editLink);
-                            eventElement.appendChild(document.createTextNode(' | '));
-                            eventElement.appendChild(deleteLink);
+                            // Ajout des liens dans leur conteneur
+                            linksContainer.appendChild(editLink);
+                            linksContainer.appendChild(deleteLink);
+
+                            // Ajout des 2 conteneur dans un conteneur parent
+                            eventContainer.appendChild(titleContainer);
+                            eventContainer.appendChild(linksContainer);
         
                             // On retourne l'élement crée pour chaque évènement qui représente notre manière d'afficher l'évènement
-                            return { domNodes: [eventElement] };
+                            return { domNodes: [eventContainer] };
                         }
                     }
                 },
