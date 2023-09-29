@@ -5,12 +5,9 @@
 {% block body %}
     <main>
         <h1 class="title">Your Calendar</h1>
-        <div id="calendar"></div>
-        <section>
-            <h2>Manage your calendar</h2>
-            <a href="{{ path('add_evenement') }}">Add a new event</a>
-            
-        </section>
+        <div id="calendar">
+            <a href="{{ path('add_evenement') }}" class="profileInfosButton">Add a new event</a>
+        </div>
     </main>
 {% endblock %}
 
@@ -49,6 +46,36 @@
                     timeGrid: {
                         eventMaxStack: 2
                     },
+                    listWeek: {
+                        // Dans la vue de la liste des évènement de la semaine, on va personaliser l'affichage de l'évènement
+                        eventContent: function(args) {
+                            // Création d'une div pour contenir l'évènement
+                            let eventElement = document.createElement('div');
+        
+                            // Création d'un lien pour l'édition 
+                            let editLink = document.createElement('a');
+                            // Ajout du chemin du lien
+                            editLink.href = "{{ path('edit_evenement', { id: 'EVENT_ID' }) }}".replace('EVENT_ID', args.event.id);
+                            // Ajout du texte du lien
+                            editLink.innerText = 'Edit';
+        
+                            // Création d'un lien pour la suppression
+                            let deleteLink = document.createElement('a');
+                            // Ajout du chemin du lien
+                            deleteLink.href = "{{ path('delete_evenement', { id: 'EVENT_ID' }) }}".replace('EVENT_ID', args.event.id);
+                            // Ajout du texte du lien
+                            deleteLink.innerText = 'Delete';
+        
+                            // On intègre dans le div créé les différents élements (titre et liens)
+                            eventElement.appendChild(document.createTextNode(args.event.title + ' '));
+                            eventElement.appendChild(editLink);
+                            eventElement.appendChild(document.createTextNode(' | '));
+                            eventElement.appendChild(deleteLink);
+        
+                            // On retourne l'élement crée pour chaque évènement qui représente notre manière d'afficher l'évènement
+                            return { domNodes: [eventElement] };
+                        }
+                    }
                 },
                 events: {{ dataEvents|raw }},
             });
