@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Personnage;
 use App\Entity\User;
 use App\Entity\Anime;
+use App\Repository\EvenementRepository;
 use App\Repository\PersonnageRepository;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
@@ -54,7 +55,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/calendar', name: 'calendar_user')]
-    public function calendar(): Response{
+    public function calendar(EvenementRepository $evenementRepository): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès à son calendrier */
@@ -68,7 +69,29 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('user/calendar.html.twig');
+        /* On récupère tout les évènements d'un utilisateur */
+        $events = $evenementRepository->findBy(['user' => $currentUser]);
+
+        /* On crée un tableau pour fournir au calendrier les évènement sous un format qu'il reconnaît */
+        $eventsData = [];
+
+        /* On boucle sur les évènements récuperer */
+        foreach($events as $event){
+            /* On ajoute au tabeau les informations nécessaires */
+            $eventsData[] = [
+                'id' => $event->getId(),
+                'start' => $event->getDateDebut()->format('Y-m-d H:i:s'),
+                'end' => $event->getDateFin()->format('Y-m-d H:i:s'),
+                'title' => $event->getNomEvenement(),
+            ];
+        }
+
+        /* Conversion en chaîne de caractère json */
+        $dataEvents = json_encode($eventsData);
+
+        return $this->render('user/calendar.html.twig', [
+            'dataEvents' => $dataEvents,
+        ]);
     }
 
     /* Changement du pseudo de l'utilisateur connecté */

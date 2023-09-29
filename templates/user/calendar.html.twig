@@ -9,6 +9,7 @@
         <section>
             <h2>Manage your calendar</h2>
             <a href="{{ path('add_evenement') }}">Add a new event</a>
+            
         </section>
     </main>
 {% endblock %}
@@ -49,7 +50,8 @@
                         eventMaxStack: 2
                     },
                 },
-            })
+                events: {{ dataEvents|raw }},
+            });
             
             calendar.render();
         };
