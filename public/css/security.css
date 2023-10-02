@@ -66,6 +66,9 @@
     border-radius: 20px;
     cursor: pointer;
 }
+.securityFormRow input[type="radio"]{
+    margin-left: 1em;
+}
 .securityFormRow textarea{
     resize: vertical;
     min-height: 100px;

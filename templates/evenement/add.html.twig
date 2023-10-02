@@ -24,11 +24,15 @@
                     {{ form_widget(form.nomEvenement) }}
                 </div>
                 <div class="securityFormRow">
-                    {{ form_label(form.dateDebut, 'Start Date*') }}
+                    {{ form_label(form.estRecurrent, 'Is it a weekly event ?*') }}
+                    {{ form_widget(form.estRecurrent) }}
+                </div>
+                <div class="securityFormRow">
+                    {{ form_label(form.dateDebut, 'Start Date* (if it is a weekly event, this date is the first occurence of it)') }}
                     {{ form_widget(form.dateDebut) }}
                 </div>
                 <div class="securityFormRow">
-                    {{ form_label(form.dateFin, 'End Date*') }}
+                    {{ form_label(form.dateFin, 'End Date* (if it is a weekly event, this date is the last occurence of it)') }}
                     {{ form_widget(form.dateFin) }}
                 </div>
             {% if eventExist %}
