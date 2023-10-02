@@ -27,6 +27,9 @@ class Evenement
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?bool $estRecurrent = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Evenement
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isEstRecurrent(): ?bool
+    {
+        return $this->estRecurrent;
+    }
+
+    public function setEstRecurrent(bool $estRecurrent): static
+    {
+        $this->estRecurrent = $estRecurrent;
 
         return $this;
     }
