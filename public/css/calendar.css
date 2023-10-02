@@ -8,6 +8,14 @@
 /* La partie qui contient le titre de l'évènement */
 .eventTitleContainer{
     flex: 1;
+    margin-right: 0.5em;
+}
+
+/* LES CLASSES DU CALENDRIER */
+
+/* Le titre du calendrier */
+.fc-toolbar-title{
+    text-align: center;
 }
 
 /* Tout les boutons du calendrier */
@@ -30,8 +38,15 @@
     border: none;
 }
 
+/* Les icones des boutons */
 .fc-icon{
     font-weight: 600;
+}
+
+/* Les header des colonnes */
+.fc .fc-col-header-cell-cushion{
+    font-weight: 600;
+    padding: 0.5em;
 }
 
 /* Le calendrier */
@@ -43,6 +58,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 1em 1em 0.5em 1em;
     border-radius: 10px;
+    color: #333;
 }
 
 /* Pour mobile */
@@ -59,10 +75,20 @@
         margin: 0.5em 0 0 0;
     }
 
-    /* Le calendrier */
-    #calendar{
-        width: 99%;
-        padding: 0.5em 0.25em;
+    /* LES CLASSES DU CALENDRIER */
+
+    /* Le titre du calendrier */
+    .fc-toolbar-title{
+        font-size: 1.25em !important;
+    }
+
+    .fc-today-button{
+        margin: 0.2em 0 0 0 !important;
+    }
+
+    /* Les boutons dans un groupe de bouton */
+    .fc-button-group button, .fc-today-button{
+        padding: 0.2em 0.4em !important;
     }
 
     /* La vue des mois */
@@ -70,15 +96,38 @@
         display: none;
     }
 
+    /* Les parties du header */
+    .fc-toolbar-chunk{
+        display: flex;
+        flex-direction: column;
+    }
+    
     /* Le bouton pour la vue des mois */
     .fc-dayGridMonth-button{
         display: none !important;
     }
-
     
+    /* Les boutons qui ne sont pas dernier */
     .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child){
         border-top-left-radius: 15px !important;
         border-bottom-left-radius: 15px !important;
+    }
+
+    /* Les header des colonnes */
+    .fc .fc-col-header-cell-cushion{
+        font-size: 0.75em;
+        padding: 2px;
+    }
+
+    /* Les heures */
+    .fc .fc-timegrid-slot-label-cushion{
+        font-size: 0.75em !important;
+    }
+
+    /* Le calendrier */
+    #calendar{
+        width: 99%;
+        padding: 0.5em 0.25em;
     }
 }
 
