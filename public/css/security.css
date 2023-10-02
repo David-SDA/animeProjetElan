@@ -36,7 +36,7 @@
     color: #333333;
     margin-bottom: 0.3em;
 }
-.securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"], .securityFormRow input[type="password"]{
+.securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"], .securityFormRow input[type="datetime-local"], .securityFormRow input[type="password"]{
     height: 44px;
     border-radius: 10px;
     border: 1px solid #B4B4B4;
@@ -44,6 +44,10 @@
 }
 .securityFormRow input[type="date"]{
     width: 150px;
+    text-align: center;
+}
+.securityFormRow input[type="datetime-local"]{
+    width: 170px;
     text-align: center;
 }
 .securityFormRow input[type="file"]{
