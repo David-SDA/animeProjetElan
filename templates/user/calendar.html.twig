@@ -29,13 +29,12 @@
                 headerToolbar: {
                     start: "prev,next today",
                     center: "title",
-                    end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+                    end: "dayGridMonth,timeGridWeek,listWeek",
                 },
                 firstDay: 1,
                 buttonText: {
                     month: "Month",
                     week: "Week",
-                    day: "Day",
                     list: "List",
                     today: "Today",
                 },
@@ -55,7 +54,7 @@
                             eventContainer.classList.add("eventContainer");
         
                             // Création d'un conteneur pour le titre
-                            let titleContainer = document.createElement('div');
+                            let titleContainer = document.createElement("div");
                             // Ajout d'une classe pour celui-ci
                             titleContainer.classList.add("eventTitleContainer");
                             // Ajout du nom de l'évènement
@@ -63,20 +62,26 @@
 
                             // Création d'un conteneur pour les liens
                             let linksContainer = document.createElement("div");
+                            // Ajout d'une classe
+                            linksContainer.classList.add("eventLinksContainer");
 
                             // Création d'un lien pour l'édition 
                             let editLink = document.createElement("a");
+                            // Ajout d'une classe
+                            editLink.classList.add("settingsChangePseudo");
                             // Ajout du chemin du lien
                             editLink.href = "{{ path('edit_evenement', { id: 'EVENT_ID' }) }}".replace("EVENT_ID", args.event.id);
                             // Ajout du texte du lien
-                            editLink.innerText = "Edit";
+                            editLink.innerHTML = "<i class='fa-solid fa-pen-to-square'></i>";
         
                             // Création d'un lien pour la suppression
                             let deleteLink = document.createElement("a");
+                            // Ajout d'une classe
+                            deleteLink.classList.add("talkDeleteLink");
                             // Ajout du chemin du lien
                             deleteLink.href = "{{ path('delete_evenement', { id: 'EVENT_ID' }) }}".replace("EVENT_ID", args.event.id);
                             // Ajout du texte du lien
-                            deleteLink.innerText = "Delete";
+                            deleteLink.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
         
                             // Ajout des liens dans leur conteneur
                             linksContainer.appendChild(editLink);

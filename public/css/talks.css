@@ -102,7 +102,7 @@
 
 /* Le lien pour supprimer une discussion */
 .talkDeleteLink{
-    color: #ff0000;
+    color: #ff0000 !important;
     margin-left: 3em;
 }
 .talkDeleteLink:hover{

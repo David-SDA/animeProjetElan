@@ -10,12 +10,82 @@
     flex: 1;
 }
 
+/* Tout les boutons du calendrier */
+.fc .fc-button{
+    border-radius: 15px;
+}
+
+/* Les boutons primaires du calendrier */
+.fc .fc-button-primary{
+    background-color: #f5f5f5;
+    color: #333;
+    border-color: #dddddd;
+    font-weight: 600;
+}
+
+/* Les boutons primaires du calendrier lorsqu'ils sont activés */
+.fc .fc-button-primary:not(:disabled).fc-button-active{
+    background-color: #ddd;
+    color: #333;
+    border: none;
+}
+
+.fc-icon{
+    font-weight: 600;
+}
+
+/* Le calendrier */
 #calendar{
     width: 90%;
     height: 80vh;
-    margin: auto;
+    margin: auto auto 1em auto;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 1em;
+    padding: 1em 1em 0.5em 1em;
     border-radius: 10px;
+}
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    /* La partie qui contientles liens d'un évènement */
+    .eventLinksContainer{
+        display: flex;
+        flex-direction: column;
+    }
+    .eventLinksContainer .settingsChangePseudo{
+        margin: 0 0 0.5em 0;
+    }
+    .eventLinksContainer .talkDeleteLink{
+        margin: 0.5em 0 0 0;
+    }
+
+    /* Le calendrier */
+    #calendar{
+        width: 99%;
+        padding: 0.5em 0.25em;
+    }
+
+    /* La vue des mois */
+    .fc-dayGridMonth-view{
+        display: none;
+    }
+
+    /* Le bouton pour la vue des mois */
+    .fc-dayGridMonth-button{
+        display: none !important;
+    }
+
+    
+    .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child){
+        border-top-left-radius: 15px !important;
+        border-bottom-left-radius: 15px !important;
+    }
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Le calendrier */
+    #calendar{
+        width: 95%;
+    }
 }

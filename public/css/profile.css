@@ -168,7 +168,7 @@
 
 /* Le lien qui sert à changer de pseudo */
 .settingsChangePseudo{
-    color: #00BFFF;
+    color: #00BFFF !important;
 }
 .settingsChangePseudo:hover{
     filter: saturate(150%);
