@@ -72,7 +72,7 @@
                         <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a href="#" class="navBarAdmin">ADMIN SPACE</a>
+                        <a href="{{ path('app_admin') }}" class="navBarAdmin">ADMIN SPACE</a>
                     {% endif %}
                 </div>
                 <div class="navBarUserMenuOverlay"></div>
