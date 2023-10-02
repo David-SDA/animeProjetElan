@@ -94,16 +94,19 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   `date_debut` datetime NOT NULL,
   `date_fin` datetime NOT NULL,
   `user_id` int NOT NULL,
+  `est_recurrent` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_B26681EA76ED395` (`user_id`),
   CONSTRAINT `FK_B26681EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.evenement : ~3 rows (environ)
-INSERT INTO `evenement` (`id`, `nom_evenement`, `date_debut`, `date_fin`, `user_id`) VALUES
-	(1, 'Event test 1', '2023-09-29 13:20:00', '2023-09-29 17:00:00', 13),
-	(3, 'Event test 2', '2023-09-29 17:00:00', '2023-09-29 19:00:00', 13),
-	(4, 'Event test 3', '2023-09-29 20:30:00', '2023-09-30 01:00:00', 13);
+-- Listage des données de la table animeprojetelan.evenement : ~5 rows (environ)
+INSERT INTO `evenement` (`id`, `nom_evenement`, `date_debut`, `date_fin`, `user_id`, `est_recurrent`) VALUES
+	(1, 'Event test 1', '2023-09-29 13:20:00', '2023-09-29 17:00:00', 13, 0),
+	(3, 'Event test 2', '2023-09-29 17:00:00', '2023-09-29 19:00:00', 13, 0),
+	(4, 'Event test 3', '2023-09-29 20:30:00', '2023-09-30 01:00:00', 13, 0),
+	(8, 'Event', '2023-10-02 08:20:00', '2023-10-02 17:00:00', 13, 0),
+	(10, 'Weekly event', '2023-10-03 12:00:00', '2023-12-19 13:20:00', 13, 1);
 
 -- Listage de la structure de table animeprojetelan. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
