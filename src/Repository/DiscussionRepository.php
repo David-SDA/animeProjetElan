@@ -21,6 +21,19 @@ class DiscussionRepository extends ServiceEntityRepository
         parent::__construct($registry, Discussion::class);
     }
 
+    /**
+     * Permet d'obtenir le nombre de discussions
+     */
+    public function countDiscussions(): int{
+        /* Query qui permet d'obtenir le nombre de discussion total */
+        $totalTalks = $this->createQueryBuilder('d') // Création d'un query builder avec un alias pour identifier l'entité actuel
+                    ->select('COUNT(d.id)') // Sélection du nombre d'id des discussions
+                    ->getQuery() // Obtention de la query construite
+                    ->getSingleScalarResult(); // Execution de la query et obtention des résultat sous forme d'un nombre
+        
+        return $totalTalks;
+    }
+
 //    /**
 //     * @return Discussion[] Returns an array of Discussion objects
 //     */
