@@ -55,15 +55,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Permet d'obtenir les utilisateurs non bannis
      */
-    public function getNonBannedUsers(){
+    public function getUsersByStatus(bool $isBanned){
         /* Query qui permet d'obtenir les utilisateurs non bannis */
-        $nonBannedUsers = $this->createQueryBuilder('u')
-                        ->select('u.id, u.email, u.pseudo, u.dateInscription')
-                        ->andWhere('u.estBanni = false')
-                        ->getQuery()
-                        ->getResult();
+        $usersByStatus = $this->createQueryBuilder('u')
+                        ->select('u.id, u.email, u.pseudo, u.dateInscription');
+        
+        if($isBanned){
+            $usersByStatus->andWhere('u.estBanni = true');
+        }
+        else{
+            $usersByStatus->andWhere('u.estBanni = false');
+        }
 
-        return $nonBannedUsers;
+        return $usersByStatus->getQuery()->getResult();
     }
 
 //    /**
