@@ -53,21 +53,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * Permet d'obtenir les utilisateurs non bannis
+     * Permet d'obtenir les utilisateurs bannis ou non bannis
      */
     public function getUsersByStatus(bool $isBanned){
         /* Query qui permet d'obtenir les utilisateurs non bannis */
-        $usersByStatus = $this->createQueryBuilder('u')
-                        ->select('u.id, u.email, u.pseudo, u.dateInscription');
+        $usersByStatus = $this->createQueryBuilder('u') // Création d'un query builder avec un alias pour l'entité actuel
+                        ->select('u.id, u.email, u.pseudo, u.dateInscription'); // Sélection de l'id, email, pseudo et date d'inscription des utilisateurs
         
+        /* Si on veut les utilisateurs bannis */                        
         if($isBanned){
-            $usersByStatus->andWhere('u.estBanni = true');
+            $usersByStatus->andWhere('u.estBanni = true'); // On restreint la query aux utilisateurs bannis
         }
         else{
-            $usersByStatus->andWhere('u.estBanni = false');
+            $usersByStatus->andWhere('u.estBanni = false'); // On restreint la query aux utilisateurs non bannis
         }
 
-        return $usersByStatus->getQuery()->getResult();
+        return $usersByStatus->getQuery()->getResult(); // Obtention de la query construite, execution de la query et obtention du résultat
+    }
+
+    /**
+     * Permet d'obtenir les utilisateurs non vérifiés
+     */
+    public function getUnverifiedUsers(){
+        /* Query qui permet d'obtenir les utilisateurs non vérifiés */
+        $unverifiedUsers = $this->createQueryBuilder('u') // Création d'un query builder avec un alias pour l'entité actuel
+                            ->select('u.id, u.email, u.pseudo, u.dateInscription') // Sélection de l'id, email, pseudo et date d'inscription des utilisateurs
+                            ->andWhere('u.isVerified = false') // On restreint la query aux utilisateurs non vérifié
+                            ->getQuery() // Obtention de la query construite
+                            ->getResult(); // Execution de la query et obtention du résultat
+
+        return $unverifiedUsers;
     }
 
 //    /**

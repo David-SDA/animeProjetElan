@@ -28,7 +28,8 @@ class AdminController extends AbstractController
     public function users(UserRepository $userRepository): Response{
         return $this->render('admin/users.html.twig', [
             'nonBannedUsers' => $userRepository->getUsersByStatus(false),
-            'bannedUsers' => $userRepository->getUsersByStatus(true)
+            'bannedUsers' => $userRepository->getUsersByStatus(true),
+            'unverifiedUsers' => $userRepository->getUnverifiedUsers(),
         ]);
     }
 }

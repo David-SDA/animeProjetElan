@@ -62,11 +62,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% for unverifiedUser in unverifiedUsers %}
                     <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
+                        <td>{{ unverifiedUser.pseudo }}</td>
+                        <td>{{ unverifiedUser.email }}</td>
+                        <td>{{ unverifiedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                        <td><a href="#" title="Send a email confirmation"><i class="fa-solid fa-envelope"></i></a></td>
+                    </tr>        
+                {% endfor %}
                 </tbody>
             </table>
         </section>
