@@ -21,6 +21,19 @@ class AnimeRepository extends ServiceEntityRepository
         parent::__construct($registry, Anime::class);
     }
 
+    /**
+     * Permet d'obtenir le nombre d'animé (dans la base de données)
+     */
+    public function countAnimes(): int{
+        /* Query qui permet d'obtenir le nombre d'animé total dans la base de données */
+        $totalAnimes = $this->createQueryBuilder('a') // Création d'un query builder avec un alias pour identifier l'entité actuel
+                    ->select('COUNT(a.id)') // Sélection du nombre d'id des animées
+                    ->getQuery() // Obtention de la query construite
+                    ->getSingleScalarResult(); // Execution de la query et obtention des résultat sous forme d'un nombre
+        
+        return $totalAnimes;
+    }
+
 //    /**
 //     * @return Anime[] Returns an array of Anime objects
 //     */
