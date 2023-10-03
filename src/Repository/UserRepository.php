@@ -47,7 +47,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $totalUsers = $this->createQueryBuilder('u') // Création d'un query builder avec un alias pour l'entité actuel
                     ->select('COUNT(u.id)') // Sélection du nombre d'id des utilisateurs
                     ->getQuery() // Obtention de la query construite
-                    ->getSingleScalarResult(); // Execution de la query et obtention des résultat sous forme d'un nombre
+                    ->getSingleScalarResult(); // Execution de la query et obtention du résultat sous forme d'un nombre
         
         return $totalUsers;
     }

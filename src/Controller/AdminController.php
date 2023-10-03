@@ -18,6 +18,7 @@ class AdminController extends AbstractController
             'totalUsers' => $userRepository->countUsers(),
             'totalTalks' => $discussionRepository->countDiscussions(),
             'totalAnimes' => $animeRepository->countAnimes(),
+            'usersMostTalksCreated' => $discussionRepository->usersMostTalksCreated(),
         ]);
     }
 }

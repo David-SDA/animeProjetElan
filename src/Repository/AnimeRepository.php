@@ -29,7 +29,7 @@ class AnimeRepository extends ServiceEntityRepository
         $totalAnimes = $this->createQueryBuilder('a') // Création d'un query builder avec un alias pour identifier l'entité actuel
                     ->select('COUNT(a.id)') // Sélection du nombre d'id des animées
                     ->getQuery() // Obtention de la query construite
-                    ->getSingleScalarResult(); // Execution de la query et obtention des résultat sous forme d'un nombre
+                    ->getSingleScalarResult(); // Execution de la query et obtention du résultat sous forme d'un nombre
         
         return $totalAnimes;
     }

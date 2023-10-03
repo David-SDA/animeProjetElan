@@ -10,7 +10,45 @@
         <p>Number of animes in our database : {{ totalAnimes }} <a href="#">See all animes</a></p>
     </div>
     <section>
-        <h2>Most active users (talks and posts)</h2>
+        <h2>Most active users</h2>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Talks</th>
+                    </tr>
+                    <tr>
+                        <th>User</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for userMostTalksCreated in usersMostTalksCreated %}
+                            <tr>
+                                <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}">{{ userMostTalksCreated.pseudo }}</a></td>
+                                <td>{{ userMostTalksCreated.talksCount }}</td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Posts</th>
+                    </tr>
+                    <tr>
+                        <th>User</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
     <section>
         <h2>Most active talks</h2>
