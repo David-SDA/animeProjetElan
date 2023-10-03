@@ -23,4 +23,11 @@ class AdminController extends AbstractController
             'usersMostPostsCreated' => $postRepository->usersMostPostsCreated(),
         ]);
     }
+
+    #[Route('/admin/users', name: 'users_admin')]
+    public function users(): Response{
+        return $this->render('admin/users.html.twig', [
+
+        ]);
+    }
 }
