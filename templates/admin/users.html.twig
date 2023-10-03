@@ -22,7 +22,11 @@
                         <td>{{ nonBannedUser.pseudo }}</td>
                         <td>{{ nonBannedUser.email }}</td>
                         <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
-                        <td><a href="#" title="Ban this user"><i class="fa-solid fa-user-xmark"></i></td>
+                        <td>
+                            {% if 'ROLE_ADMIN' not in nonBannedUser.roles %}
+                                <a href="#" title="Ban this user"><i class="fa-solid fa-user-xmark"></i>
+                            {% endif %}
+                        </td>
                     </tr>        
                 {% endfor %}
                 </tbody>
@@ -84,11 +88,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                    </tr>
+                {% for nonBannedUser in nonBannedUsers %}
+                    {% if 'ROLE_ADMIN' in nonBannedUser.roles %}
+                        <tr>
+                            <td>{{ nonBannedUser.pseudo }}</td>
+                            <td>{{ nonBannedUser.email }}</td>
+                            <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                        </tr>       
+                    {% endif %}
+                {% endfor %}
                 </tbody>
             </table>
         </section>
