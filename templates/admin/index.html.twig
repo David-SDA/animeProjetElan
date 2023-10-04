@@ -9,6 +9,7 @@
         <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" class="adminLink">See all users</a></p>
         <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
         <p class="adminStatsOneLine"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b> <a href="#" class="adminLink">See all animes</a></p>
+        <p class="adminStatsOneLine"><i>Number of characters in our database:</i> <b>{{ totalCharacters }}</b> <a href="#" class="adminLink">See all characters</a></p>
     </div>
     <section class="adminSection">
         <h2>Most active users</h2>
@@ -53,7 +54,7 @@
             </table>
         </div>
     </section>
-    <section>
+    <section class="adminSection">
         <h2>Users and number of animes in there anime list</h2>
     </section>
 </main>

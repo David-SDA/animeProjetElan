@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\PersonnageRepository;
 use App\Security\EmailVerifier;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -24,12 +25,13 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository): Response
+    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository): Response
     {        
         return $this->render('admin/index.html.twig', [
             'totalUsers' => $userRepository->countUsers(),
             'totalTalks' => $discussionRepository->countDiscussions(),
             'totalAnimes' => $animeRepository->countAnimes(),
+            'totalCharacters' => $personnageRepository->countCharacters(),
             'usersMostTalksCreated' => $discussionRepository->usersMostTalksCreated(),
             'usersMostPostsCreated' => $postRepository->usersMostPostsCreated(),
         ]);

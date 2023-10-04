@@ -21,6 +21,19 @@ class PersonnageRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnage::class);
     }
 
+    /**
+     * Permet d'obtenir le nombre de personnages (dans la base de données)
+     */
+    public function countCharacters(): int{
+        /* Query qui permet d'obtenir le nombre de personnages total dans la base de données */
+        $totalCharacters = $this->createQueryBuilder('p') // Création d'un query builder avec un alias pour identifier l'entité actuel
+                    ->select('COUNT(p.id)') // Sélection du nombre d'id des personnages
+                    ->getQuery() // Obtention de la query construite
+                    ->getSingleScalarResult(); // Execution de la query et obtention du résultat sous forme d'un nombre
+        
+        return $totalCharacters;
+    }
+
 //    /**
 //     * @return Personnage[] Returns an array of Personnage objects
 //     */
