@@ -3,17 +3,26 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\AnimeRepository;
-use App\Repository\DiscussionRepository;
+use App\Security\EmailVerifier;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Repository\AnimeRepository;
+use Symfony\Component\Mime\Address;
+use App\Repository\DiscussionRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier){
+        $this->emailVerifier = $emailVerifier;
+    }
+
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository): Response
     {        
@@ -35,8 +44,8 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/user/{id}/ban', name:'ban_user_admin')]
-    public function ban(EntityManagerInterface $entityManagerInterface, User $user){
+    #[Route('/admin/user/{id}/ban', name: 'ban_user_admin')]
+    public function ban(EntityManagerInterface $entityManagerInterface, User $user): Response{
         /* Si l'utilisateur n'est pas banni */
         if(!$user->isEstBanni()){
             /* On le banni */
@@ -63,8 +72,8 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('users_admin');
     }
 
-    #[Route('/admin/user/{id}/unban', name:'unban_user_admin')]
-    public function unban(EntityManagerInterface $entityManagerInterface, User $user){
+    #[Route('/admin/user/{id}/unban', name: 'unban_user_admin')]
+    public function unban(EntityManagerInterface $entityManagerInterface, User $user): Response{
         /* Si l'utilisateur est banni */
         if($user->isEstBanni()){
             /* On le débanni */
@@ -85,6 +94,36 @@ class AdminController extends AbstractController
             $this->addFlash(
                 'error',
                 'The user "' . $user->getPseudo() . '" is already unbanned'
+            );
+        }
+
+        return $this->redirectToRoute('users_admin');
+    }
+
+    #[Route('/admin/user/{id}/resendConfirmation', name: 'resend_confirmation_user_admin')]
+    public function resendConfirmation(User $user): Response{
+        /* Si l'utilisateur n'a pas vérifier son email */
+        if(!$user->isVerified()){
+            /* On lui renvoie un email de confirmation */
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('admin@AnimeProjetElan.com', 'Admin Anime Projet Elan'))
+                        ->to($user->getEmail())
+                        ->subject('Please Confirm your Email')
+                        ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+
+            /* On indique le succès de l'envoie d'email */
+            $this->addFlash(
+                'success',
+                'The confirmation of the email of the user "' . $user->getPseudo() . '" has been sended successfully'
+            );
+        }
+        else{
+            /* On indique l'échec de l'envoie d'email */
+            $this->addFlash(
+                'error',
+                'The user "' . $user->getPseudo() . '" is already verified'
             );
         }
 

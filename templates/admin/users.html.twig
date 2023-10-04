@@ -19,7 +19,7 @@
                 <tbody>
                 {% for nonBannedUser in nonBannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: nonBannedUser.id }) }}" class="adminLinkText">{{ nonBannedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: nonBannedUser.id }) }}" class="adminLinkText">{{ nonBannedUser.pseudo }}</a></td>
                         <td>{{ nonBannedUser.email }}</td>
                         <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
                         <td>
@@ -46,7 +46,7 @@
                 <tbody>
                 {% for bannedUser in bannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: bannedUser.id }) }}" class="adminLinkText">{{ bannedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: bannedUser.id }) }}" class="adminLinkText">{{ bannedUser.pseudo }}</a></td>
                         <td>{{ bannedUser.email }}</td>
                         <td>{{ bannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
                         <td><a href="{{ path('unban_user_admin', { id:bannedUser.id }) }}" title="Unban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-plus"></i></a></td>
@@ -63,15 +63,16 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Register date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for unverifiedUser in unverifiedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: unverifiedUser.id }) }}" class="adminLinkText">{{ unverifiedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: unverifiedUser.id }) }}" class="adminLinkText">{{ unverifiedUser.pseudo }}</a></td>
                         <td>{{ unverifiedUser.email }}</td>
                         <td>{{ unverifiedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
-                        <td><a href="#" title="Send a email confirmation"><i class="fa-solid fa-envelope"></i></a></td>
+                        <td><a href="{{ path('resend_confirmation_user_admin', { id: unverifiedUser.id }) }}" title="Resend an email confirmation" class="settingsChangePseudo"><i class="fa-solid fa-envelope"></i></a></td>
                     </tr>        
                 {% endfor %}
                 </tbody>
@@ -91,7 +92,7 @@
                 {% for user in nonBannedUsers %}
                     {% if 'ROLE_ADMIN' in user.roles %}
                         <tr>
-                            <td><a href="{{ path('show_user' , { id: user.id }) }}" class="adminLinkText">{{ user.pseudo }}</a></td>
+                            <td><a href="{{ path('show_user', { id: user.id }) }}" class="adminLinkText">{{ user.pseudo }}</a></td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.dateInscription|date('m/d/Y H:i:s') }}</td>
                         </tr>       
