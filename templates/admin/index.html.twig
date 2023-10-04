@@ -5,10 +5,10 @@
 {% block body %}
 <main>
     <h1 class="title">Admin Space : {{ app.user.pseudo }}</h1>
-    <div>
-        <p>Number of users: {{ totalUsers }} <a href="{{ path('users_admin') }}">See all users</a></p>
-        <p>Number of talks: {{ totalTalks }} </p>
-        <p>Number of animes in our database : {{ totalAnimes }} <a href="#">See all animes</a></p>
+    <div class="adminStats">
+        <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" class="adminLink">See all users</a></p>
+        <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
+        <p class="adminStatsOneLine"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b> <a href="#" class="adminLink">See all animes</a></p>
     </div>
     <section>
         <h2>Most active users</h2>

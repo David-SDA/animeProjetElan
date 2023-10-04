@@ -1,0 +1,48 @@
+/* Les statistiques de la page admin */
+.adminStats{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Les lignes de stats qui ne sont pas le premier ni le dernier */
+.adminStatsOneLine:not(:first-child), .adminStatsOneLine:not(:last-child){
+    margin: 0 10px;
+}
+
+/* Les liens de la page admin */
+.adminLink{
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+    background-color: #4169E1;
+    color: #fff;
+    border-radius: 10px;
+    padding: 3px;
+    transition: all 0.25s ease;
+}
+.adminLink:hover{
+    filter: saturate(200%);
+}
+
+/* Pour mobile */
+@media screen and (max-width: 767px){
+    /* Les statistiques de la page admin */
+    .adminStats{
+        width: 98%;
+    }
+}
+
+/* Pour tablette */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Les statistiques de la page admin */
+    .adminStats{
+        width: 94%;
+    }
+}
+
+/* Pour tablette et mobile */
+@media screen and (max-width: 1024px){}
