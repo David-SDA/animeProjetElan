@@ -28,11 +28,65 @@
     filter: saturate(200%);
 }
 
+/* Une section de la page d'un admin */
+.adminSection{
+    width: 90%;
+    margin: 1em auto;
+}
+
+/* Les conteneur de la page d'un admin */
+.adminTableContainer{
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+/* Les tableau de la partie admin */
+.adminTable{
+    width: 48%;
+}
+.adminTable.full{
+    width: 100%;
+}
+.adminTable, .adminTable th, .adminTable td{
+    border: 1px solid;
+    border-collapse: collapse;
+    text-align: center;
+}
+.adminTable td{
+    padding: 5px 10px;
+}
+
+/* Les liens de la page admin pour du simple texte */
+.adminLinkText{
+    color: blue;
+    text-decoration: underline;
+}
+
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
     /* Les statistiques de la page admin */
     .adminStats{
         width: 98%;
+    }
+
+    /* Une section de la page d'un admin */
+    .adminSection{
+        width: 98%;
+    }
+
+    /* Les conteneur de la page d'un admin */
+    .adminTableContainer{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    /* Les tableau de la partie admin */
+    .adminTable{
+        width: 100%;
+        margin: 1em 0;
     }
 }
 
@@ -40,6 +94,11 @@
 @media screen and (min-width: 768px) and (max-width: 1024px){
     /* Les statistiques de la page admin */
     .adminStats{
+        width: 94%;
+    }
+
+    /* Une section de la page d'un admin */
+    .adminSection{
         width: 94%;
     }
 }

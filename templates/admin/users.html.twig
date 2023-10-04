@@ -5,9 +5,9 @@
 {% block body %}
     <main>
         <h1 class="title">Admin Space : Users</h1>
-        <section>
+        <section class="adminSection">
             <h2>Non banned Users</h2>
-            <table>
+            <table class="adminTable full">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -19,12 +19,12 @@
                 <tbody>
                 {% for nonBannedUser in nonBannedUsers %}
                     <tr>
-                        <td>{{ nonBannedUser.pseudo }}</td>
+                        <td><a href="{{ path('show_user' , { id: nonBannedUser.id }) }}" class="adminLinkText">{{ nonBannedUser.pseudo }}</a></td>
                         <td>{{ nonBannedUser.email }}</td>
                         <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
                         <td>
                             {% if 'ROLE_ADMIN' not in nonBannedUser.roles %}
-                                <a href="#" title="Ban this user"><i class="fa-solid fa-user-xmark"></i>
+                                <a href="#" title="Ban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-xmark"></i>
                             {% endif %}
                         </td>
                     </tr>        
@@ -32,9 +32,9 @@
                 </tbody>
             </table>
         </section>
-        <section>
+        <section class="adminSection">
             <h2>Banned Users</h2>
-            <table>
+            <table class="adminTable full">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -46,18 +46,18 @@
                 <tbody>
                 {% for bannedUser in bannedUsers %}
                     <tr>
-                        <td>{{ bannedUser.pseudo }}</td>
+                        <td><a href="{{ path('show_user' , { id: bannedUser.id }) }}" class="adminLinkText">{{ bannedUser.pseudo }}</a></td>
                         <td>{{ bannedUser.email }}</td>
                         <td>{{ bannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
-                        <td><a href="#" title="Unban this user"><i class="fa-solid fa-user-plus"></i></a></td>
+                        <td><a href="#" title="Unban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-plus"></i></a></td>
                     </tr>        
                 {% endfor %}
                 </tbody>
             </table>
         </section>
-        <section>
+        <section class="adminSection">
             <h2>Unverified Users</h2>
-            <table>
+            <table class="adminTable full">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -68,7 +68,7 @@
                 <tbody>
                 {% for unverifiedUser in unverifiedUsers %}
                     <tr>
-                        <td>{{ unverifiedUser.pseudo }}</td>
+                        <td><a href="{{ path('show_user' , { id: unverifiedUser.id }) }}" class="adminLinkText">{{ unverifiedUser.pseudo }}</a></td>
                         <td>{{ unverifiedUser.email }}</td>
                         <td>{{ unverifiedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
                         <td><a href="#" title="Send a email confirmation"><i class="fa-solid fa-envelope"></i></a></td>
@@ -77,9 +77,9 @@
                 </tbody>
             </table>
         </section>
-        <section>
+        <section class="adminSection">
             <h2>Admins</h2>
-            <table>
+            <table class="adminTable full">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -88,12 +88,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for nonBannedUser in nonBannedUsers %}
-                    {% if 'ROLE_ADMIN' in nonBannedUser.roles %}
+                {% for user in nonBannedUsers %}
+                    {% if 'ROLE_ADMIN' in user.roles %}
                         <tr>
-                            <td>{{ nonBannedUser.pseudo }}</td>
-                            <td>{{ nonBannedUser.email }}</td>
-                            <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                            <td><a href="{{ path('show_user' , { id: user.id }) }}" class="adminLinkText">{{ user.pseudo }}</a></td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.dateInscription|date('m/d/Y H:i:s') }}</td>
                         </tr>       
                     {% endif %}
                 {% endfor %}

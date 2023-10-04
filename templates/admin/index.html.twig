@@ -10,10 +10,10 @@
         <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
         <p class="adminStatsOneLine"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b> <a href="#" class="adminLink">See all animes</a></p>
     </div>
-    <section>
+    <section class="adminSection">
         <h2>Most active users</h2>
-        <div>
-            <table>
+        <div class="adminTableContainer">
+            <table class="adminTable">
                 <thead>
                     <tr>
                         <th colspan="2">Talks</th>
@@ -26,13 +26,13 @@
                 <tbody>
                 {% for userMostTalksCreated in usersMostTalksCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}">{{ userMostTalksCreated.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}" class="adminLinkText">{{ userMostTalksCreated.pseudo }}</a></td>
                         <td>{{ userMostTalksCreated.talksCount }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <table>
+            <table class="adminTable">
                 <thead>
                     <tr>
                         <th colspan="2">Posts</th>
@@ -45,7 +45,7 @@
                 <tbody>
                 {% for userMostPostsCreated in usersMostPostsCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}">{{ userMostPostsCreated.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}" class="adminLinkText">{{ userMostPostsCreated.pseudo }}</a></td>
                         <td>{{ userMostPostsCreated.postsCount }}</td>
                     </tr>
                 {% endfor %}
