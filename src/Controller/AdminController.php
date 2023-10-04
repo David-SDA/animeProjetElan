@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\AnimeRepository;
 use App\Repository\DiscussionRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,5 +33,33 @@ class AdminController extends AbstractController
             'bannedUsers' => $userRepository->getUsersByStatus(true),
             'unverifiedUsers' => $userRepository->getUnverifiedUsers(),
         ]);
+    }
+
+    #[Route('/admin/user/{id}/ban', name:'ban_user_admin')]
+    public function ban(EntityManagerInterface $entityManagerInterface, User $user){
+        /* Si l'utilisateur n'est pas banni */
+        if(!$user->isEstBanni()){
+            /* On le banni */
+            $user->setEstBanni(true);
+
+            /* On sauvegarde les changements en base de données */
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+
+            /* On indique la réussite du bannissement */
+            $this->addFlash(
+                'success',
+                'The user ' . $user->getPseudo() . ' has been banned successfully'
+            );
+        }
+        else{
+            /* On indique l'échec du bannissement */
+            $this->addFlash(
+                'error',
+                'The user ' . $user->getPseudo() . ' is already banned'
+            );
+        }
+
+        return $this->redirectToRoute('users_admin');
     }
 }

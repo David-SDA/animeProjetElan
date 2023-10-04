@@ -24,7 +24,7 @@
                         <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
                         <td>
                             {% if 'ROLE_ADMIN' not in nonBannedUser.roles %}
-                                <a href="#" title="Ban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-xmark"></i>
+                                <a href="{{ path('ban_user_admin', { id: nonBannedUser.id }) }}" title="Ban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-xmark"></i>
                             {% endif %}
                         </td>
                     </tr>        
