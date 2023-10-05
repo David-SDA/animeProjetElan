@@ -18,7 +18,7 @@ class DiscussionController extends AbstractController
     public function index(DiscussionRepository $discussionRepository): Response
     {
         /* On cherche toutes les discussions */
-        $talks = $discussionRepository->findBy([], ["dateCreation" => "ASC"]);
+        $talks = $discussionRepository->findBy([], ["dateCreation" => "DESC"]);
 
         return $this->render('discussion/index.html.twig', [
             'talks' => $talks,
