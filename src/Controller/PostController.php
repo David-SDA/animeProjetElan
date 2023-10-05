@@ -165,4 +165,80 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
     }
+
+    #[Route('/discussion/{discussion_id}/post/{id}/like', name: 'like_post')]
+    public function like(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+
+        /* Si l'utilisateur n'est pas connecté */
+        if(!$user){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are not allowed to like'
+            );
+        }
+        /* Si le post est déjà liké par l'utilisateur */
+        elseif($post->getUsers()->contains($user)){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'This post from "' . $post->getUser()->getPseudo() . '" is already liked'
+            );
+        }
+        else{
+            /* On ajoute l'utilisateur à la collection d'utilisateur du post (qui représente les utilisateur qui ont liké le post) */
+            $post->addUser($user);
+    
+            /* On sauvegarde ces changements en base de données */
+            $entityManagerInterface->flush();
+    
+            /* On indique le succès du like d'un post */
+            $this->addFlash(
+                'success',
+                'This post from "' . $post->getUser()->getPseudo() . '" has been liked successfully'
+            );
+        }
+
+        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+    }
+
+    #[Route('/discussion/{discussion_id}/post/{id}/unlike', name: 'unlike_post')]
+    public function unlike(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+
+        /* Si l'utilisateur n'est pas connecté */
+        if(!$user){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are not allowed to unlike'
+            );
+        }
+        /* Si le post est déjà non liké par l'utilisateur */
+        elseif(!$post->getUsers()->contains($user)){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'This post from "' . $post->getUser()->getPseudo() . '" is already not liked'
+            );
+        }
+        else{
+            /* On supprime l'utilisateur de la collection d'utilisateur du post (qui représente les utilisateur qui ont liké le post) */
+            $post->removeUser($user);
+    
+            /* On sauvegarde ces changements en base de données */
+            $entityManagerInterface->flush();
+    
+            /* On indique le succès du unlike d'un post */
+            $this->addFlash(
+                'success',
+                'This post from "' . $post->getUser()->getPseudo() . '" has been unliked successfully'
+            );
+        }
+
+        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+    }
 }
