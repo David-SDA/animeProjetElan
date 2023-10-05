@@ -66,6 +66,7 @@
                     {% endif %}
                 </div>
             </div>
+            {# Si l'utilisateur a des animés favoris #}
             {% if user.animes is not empty %}
                 <section class="profileInfos">
                     <h2 class="profileInfosTitle">Favorites Animes</h2>
@@ -104,6 +105,7 @@
                     </div>
                 </section>
             {% endif %}
+            {# Si l'utilisateur a des personnages favoris #}
             {% if user.personnages is not empty %}
                 <section class="profileInfos">
                     <h2 class="profileInfosTitle">Favorites Characters</h2>
@@ -119,10 +121,12 @@
                     </div>
                 </section>
             {% endif %}
+            {# Si l'utilisateur à publié de discussions #}
             {% if user.discussions is not empty %}
                 <div class="profileInfos">
                     <h2 class="profileInfosTitle">Talks recently created</h2>
                     <div class="profileInfosTalks">
+                    {# Boucle sur les 6 dernières discussions créées #}
                     {% for talk in user.discussions|reverse|slice(0, 6) %}
                         <section style="width: 100%;">
                             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
@@ -139,22 +143,30 @@
                     </div>
                 </div>
             {% endif %}
+            {# Si l'utilisateur a publié des posts #}
             {% if user.posts is not empty %}
                 <div class="profileInfos">
                     <h2 class="profileInfosTitle">Talks recently participated</h2>
                     <div class="profileInfosTalks">
-                    {% for post in user.posts|reverse|slice(0, 6) %}
-                        <section style="width: 100%;">
-                            <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
-                                <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.titre }}</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.dateCreation) }}</i></p>
-                                </div>
-                                <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
-                                </div>
-                            </a>
-                        </section>
+                    {# On définit un tableau pour définir les discussions uniques #}
+                    {% set uniqueTalks = [] %}
+                    {# Boucle sur les posts allant du plus récent au plus ancien #}
+                    {% for post in user.posts|reverse %}
+                        {# On affiche les 6 dernières discussion auquels l'utilisateur à participer #}
+                        {% if post.discussion not in uniqueTalks and uniqueTalks|length < 6 %}
+                            {% set uniqueTalks = uniqueTalks|merge([post.discussion]) %}
+                            <section style="width: 100%;">
+                                <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
+                                    <div class="animeRemainingRightContentPartCardsTextContainer">
+                                        <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.titre }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.dateCreation) }}</i></p>
+                                    </div>
+                                    <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                        <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
+                                    </div>
+                                </a>
+                            </section>
+                        {% endif %}
                     {% endfor %}
                     </div>
                 </div>
