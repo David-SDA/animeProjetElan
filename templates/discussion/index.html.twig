@@ -29,10 +29,27 @@
     {% endif %}
 {% endmacro %}
 
+{% set jsonTalks = [] %}
+{% for talk in talks %}
+    {% set jsonTalk = {
+        'id': talk.id,
+        'title': talk.titre,
+        'creationDate': talk.dateCreation|date('Y-m-d H:i:s'),
+        'isLocked': talk.estVerrouiller,
+        'userId': talk.user.id,
+        'userName': talk.user.pseudo,
+        'animeCount': talk.animes|length,
+        'postCount': talk.posts|length
+    } %}
+
+    {% set jsonTalks = jsonTalks|merge([jsonTalk]) %}
+{% endfor %}
+
 {% block title %}Talks{% endblock %}
 
 {% block body %}
     <main>
+        {{ dump(jsonTalks|json_encode()) }}       
         <h1 class="title talks">All Talks</h1>
         {% if app.user %}
             <a href="{{ path('add_discussion') }}" class="profileInfosButton talks">Create Talk</a>
@@ -65,4 +82,10 @@
         </section>
         {% endfor %}
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
 {% endblock %}
