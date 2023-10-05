@@ -99,6 +99,10 @@
 .oneTalkUserTime.post{
     text-align: end;
 }
+.oneTalkUserTime.post.bottom{
+    text-align: start;
+    align-self: flex-end;
+}
 
 /* Le lien pour supprimer une discussion */
 .talkDeleteLink{
@@ -156,13 +160,18 @@
     font-weight: 500;
 }
 
+/* La partie du bas du conteneur */
+.onePostBottomContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Le texte des likes d'un post */
 .onePostLikes{
     margin: 0.5em 0.5em 0 auto;
     color: #ff0000;
     font-size: 1.25em;
     width: fit-content;
-    cursor: pointer;
 }
 
 /* Le texte du nombre de likes d'un post */

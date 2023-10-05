@@ -122,7 +122,38 @@
                     </div>
                 </div>
                 <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.contenu }}</p>
-                <p class="onePostLikes"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">42</span></p>
+                <div class="onePostBottomContainer">
+                    {% if post.dateCreation != post.dateDerniereModification %}
+                        {# Calcul de l'écart entre la création de la discussion et la date de dernnière modification du post (grâce au temps unix) #}
+                        {% set now = 'now'|date("U") %}
+                        {% set lastModifiedDate = post.dateDerniereModification|date("U") %}
+                        {% set timeDifference = now - lastModifiedDate %}
+                        {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+                        {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+                        {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+                        {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+                        {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+                        {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+                        {# On crée un texte en fonction du temps manquant #}
+                        {% if years > 0 %}
+                            {% set textModified = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
+                        {% elseif months > 0 %}
+                            {% set textModified = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
+                        {% elseif weeks > 0 %}
+                            {% set textModified = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
+                        {% elseif days > 0 %}
+                            {% set textModified = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
+                        {% elseif hours > 0 %}
+                            {% set textModified = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
+                        {% elseif minutes > 0 %}
+                            {% set textModified = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
+                        {% else %}
+                            {% set textModified = 'just now' %}
+                        {% endif %}
+                        <p class="oneTalkUserTime post bottom" title="{{ post.dateDerniereModification|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
+                    {% endif %}
+                    <a href="" class="onePostLikes"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                </div>
             </div>
             {% endfor %}
         {% endif %}
