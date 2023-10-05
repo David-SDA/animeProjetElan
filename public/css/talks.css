@@ -102,6 +102,7 @@
 .oneTalkUserTime.post.bottom{
     text-align: start;
     align-self: flex-end;
+    margin-top: 0.5em;
 }
 
 /* Le lien pour supprimer une discussion */

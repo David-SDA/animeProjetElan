@@ -1,17 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% macro textTimeAgo(date) %}
+    {# Calcul de l'écart entre la date et maintenant (grâce au temps unix) #}
+    {% set now = 'now'|date("U") %}
+    {% set dateTime = date|date("U") %}
+    {% set timeDifference = now - dateTime %}
+    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+    {# On crée un texte en fonction du temps manquant #}
+    {% if years > 0 %}
+        {{ years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif months > 0 %}
+        {{ months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif weeks > 0 %}
+        {{ weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif days > 0 %}
+        {{ days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif hours > 0 %}
+        {{ hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif minutes > 0 %}
+        {{ minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' }}
+    {% else %}
+        {{ 'just now' }}
+    {% endif %}
+{% endmacro %}
+
 {% block title %}{{ talk.titre }}{% endblock %}
 
 {% block body %}
     <main class="talkContainer">
         <h1 class="title talks">
             {{ talk.titre }}
-
             {# Si la discussion appartient à l'utilisateur et n'est pas verrouillé, il pourra la modifier #}
             {% if talk.user == app.user and not talk.estVerrouiller %}
                 <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
             {% endif %}
-
             {# Si l'utilisateur est un admin et la discussion est verrouillé, il pourra déverrouiller celle-ci #}
             {# Si l'utilisateur est un admin et la discussion n'est pas verrouillé, il pourra verrouiller celle-ci #}
             {% if is_granted('ROLE_ADMIN') and talk.estVerrouiller %}
@@ -26,34 +53,10 @@
                     <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
                     <figcaption class="oneTalkUsername post">{{ talk.user.pseudo }}</figcaption>
                 </figure>
-                {# Calcul de l'écart entre la création de la discussion et maintenant (grâce au temps unix) #}
-                {% set now = 'now'|date("U") %}
-                {% set publicationDate = talk.posts|first.dateCreation|date("U") %}
-                {% set timeDifference = now - publicationDate %}
-                {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
-                {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
-                {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
-                {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
-                {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
-                {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
-                {# On crée un texte en fonction du temps manquant #}
-                {% if years > 0 %}
-                    {% set textPublication = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
-                {% elseif months > 0 %}
-                    {% set textPublication = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
-                {% elseif weeks > 0 %}
-                    {% set textPublication = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
-                {% elseif days > 0 %}
-                    {% set textPublication = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
-                {% elseif hours > 0 %}
-                    {% set textPublication = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
-                {% elseif minutes > 0 %}
-                    {% set textPublication = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
-                {% else %}
-                    {% set textPublication = 'just now' %}
-                {% endif %}
+                {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
+                {% set textCreation = _self.textTimeAgo(talk.posts|first.dateCreation) %}
                 <div class="oneTalkTopRightContainer">
-                    <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                    <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
                     {# Si la discussion appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, la discussion peut être supprimer #}
                     {% if (talk.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
@@ -61,6 +64,11 @@
                 </div>
             </div>
             <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.contenu }}</p>
+            {% if talk.posts|first.dateCreation != talk.posts|first.dateDerniereModification %}
+                {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification de la discussion et maintenant #}
+                {% set textFirstModified = _self.textTimeAgo(talk.posts|first.dateDerniereModification) %}
+                <p class="oneTalkUserTime post bottom" title="{{ talk.posts|first.dateDerniereModification|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textFirstModified }}</i></p>
+            {% endif %}
         </div>
         <div class="oneTalkRepliesTopContainer">
             {% set responseNumber = talk.posts|length - 1 %}
@@ -81,32 +89,8 @@
                         <img src="{{ post.user.imageProfil ? asset('uploads/' ~ post.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.pseudo }} profile picture" class="oneTalkUserImage">
                         <figcaption class="oneTalkUsername post">{{ post.user.pseudo }}</figcaption>
                     </figure>
-                    {# Calcul de l'écart entre la création de la discussion et maintenant (grâce au temps unix) #}
-                    {% set now = 'now'|date("U") %}
-                    {% set publicationDate = post.dateCreation|date("U") %}
-                    {% set timeDifference = now - publicationDate %}
-                    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
-                    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
-                    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
-                    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
-                    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
-                    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
-                    {# On crée un texte en fonction du temps manquant #}
-                    {% if years > 0 %}
-                        {% set textPublication = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
-                    {% elseif months > 0 %}
-                        {% set textPublication = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
-                    {% elseif weeks > 0 %}
-                        {% set textPublication = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
-                    {% elseif days > 0 %}
-                        {% set textPublication = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
-                    {% elseif hours > 0 %}
-                        {% set textPublication = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
-                    {% elseif minutes > 0 %}
-                        {% set textPublication = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
-                    {% else %}
-                        {% set textPublication = 'just now' %}
-                    {% endif %}
+                    {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
+                    {% set textPublication = _self.textTimeAgo(post.dateCreation) %}
                     <div class="oneTalkTopRightContainer">
                         <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
                         <div class="oneTalkTopRightBottomLine">
@@ -124,32 +108,8 @@
                 <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.contenu }}</p>
                 <div class="onePostBottomContainer">
                     {% if post.dateCreation != post.dateDerniereModification %}
-                        {# Calcul de l'écart entre la création de la discussion et la date de dernnière modification du post (grâce au temps unix) #}
-                        {% set now = 'now'|date("U") %}
-                        {% set lastModifiedDate = post.dateDerniereModification|date("U") %}
-                        {% set timeDifference = now - lastModifiedDate %}
-                        {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
-                        {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
-                        {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
-                        {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
-                        {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
-                        {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
-                        {# On crée un texte en fonction du temps manquant #}
-                        {% if years > 0 %}
-                            {% set textModified = years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' %}
-                        {% elseif months > 0 %}
-                            {% set textModified = months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' %}
-                        {% elseif weeks > 0 %}
-                            {% set textModified = weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' %}
-                        {% elseif days > 0 %}
-                            {% set textModified = days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' %}
-                        {% elseif hours > 0 %}
-                            {% set textModified = hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' %}
-                        {% elseif minutes > 0 %}
-                            {% set textModified = minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' %}
-                        {% else %}
-                            {% set textModified = 'just now' %}
-                        {% endif %}
+                        {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
+                        {% set textModified = _self.textTimeAgo(post.dateDerniereModification) %}
                         <p class="oneTalkUserTime post bottom" title="{{ post.dateDerniereModification|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
                     {% endif %}
                     <a href="" class="onePostLikes"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
