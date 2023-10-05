@@ -1,5 +1,34 @@
 {% extends 'base.html.twig' %}
 
+{% macro textTimeAgo(date) %}
+    {# Calcul de l'écart entre la date et maintenant (grâce au temps unix) #}
+    {% set now = 'now'|date("U") %}
+    {% set dateTime = date|date("U") %}
+    {% set timeDifference = now - dateTime %}
+    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+    {# On crée un texte en fonction du temps manquant #}
+    {% if years > 0 %}
+        {{ years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif months > 0 %}
+        {{ months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif weeks > 0 %}
+        {{ weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif days > 0 %}
+        {{ days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif hours > 0 %}
+        {{ hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif minutes > 0 %}
+        {{ minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' }}
+    {% else %}
+        {{ 'just now' }}
+    {% endif %}
+{% endmacro %}
+
 {% block title %}{{ user.pseudo }}{% endblock %}
 
 {% block body %}
@@ -90,19 +119,41 @@
                     </div>
                 </section>
             {% endif %}
-            {% if user.discussions is empty %}
+            {% if user.discussions is not empty %}
                 <div class="profileInfos">
-                    <h2 class="profileInfosTitle">Talks participated</h2>
+                    <h2 class="profileInfosTitle">Talks recently created</h2>
                     <div class="profileInfosTalks">
-                    {% for i in range(1, 6) %}
-                        <section class="animeRemainingRightContentPartCardsContent profile">
-                            <div class="animeRemainingRightContentPartCardsTextContainer">
-                                <h2 class="animeRemainingRightContentPartCardsTop profile">(Spoiler Alert !) Episode 5 Talk</h2>
-                                <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
-                            </div>
-                            <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
-                            </div>
+                    {% for talk in user.discussions|reverse|slice(0, 6) %}
+                        <section style="width: 100%;">
+                            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
+                                <div class="animeRemainingRightContentPartCardsTextContainer">
+                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ talk.titre }}</h2>
+                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.dateCreation) }}</i></p>
+                                </div>
+                                <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ talk.posts|length }}</span></p>
+                                </div>
+                            </a>
+                        </section>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if user.posts is not empty %}
+                <div class="profileInfos">
+                    <h2 class="profileInfosTitle">Talks recently participated</h2>
+                    <div class="profileInfosTalks">
+                    {% for post in user.posts|reverse|slice(0, 6) %}
+                        <section style="width: 100%;">
+                            <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
+                                <div class="animeRemainingRightContentPartCardsTextContainer">
+                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.titre }}</h2>
+                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.dateCreation) }}</i></p>
+                                </div>
+                                <div class="animeRemainingRightContentPartCardsCommentContainer">
+                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
+                                </div>
+                            </a>
                         </section>
                     {% endfor %}
                     </div>
