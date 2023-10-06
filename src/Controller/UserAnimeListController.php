@@ -15,10 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/user')]
 class UserAnimeListController extends AbstractController
 {
-    #[Route('user/{id}/animeList', name: 'anime_list_user')]
+    #[Route('/{id}/animeList', name: 'anime_list_user')]
     public function animeList(User $user, AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* On crée un tableau avec les 3 états possible d'un animé dans une liste */
         $animesByState = [
             'Watching' => [],
@@ -77,8 +83,13 @@ class UserAnimeListController extends AbstractController
         ]);
     }
 
-    #[Route('user/animeList/modify/{id}', name: 'change_anime_list_user')]
+    #[Route('/animeList/modify/{id}', name: 'change_anime_list_user')]
     public function modifyAnimeList(Request $request, UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur actuel n'est pas celui à qui appartient l'instance de la liste, il n'a pas accès au changement de celui-ci */
         if($userRegarderAnime->getUser() !== $this->getUser()){
             return $this->redirectToRoute('app_home');
@@ -158,10 +169,16 @@ class UserAnimeListController extends AbstractController
         ]);
     }
 
-    #[Route('user/animeList/addAnime/{idApi}', name: 'add_anime_to_list_user')]
+    #[Route('/animeList/addAnime/{idApi}', name: 'add_anime_to_list_user')]
     public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+        
         /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
@@ -221,10 +238,16 @@ class UserAnimeListController extends AbstractController
         return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 
-    #[Route('user/animeList/addEpisode/{id}', name: 'add_episode_anime_list_user')]
+    #[Route('/animeList/addEpisode/{id}', name: 'add_episode_anime_list_user')]
     public function addEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter un episode */
         if(!$user){
             return $this->redirectToRoute('app_home');
@@ -282,10 +305,16 @@ class UserAnimeListController extends AbstractController
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }
 
-    #[Route('user/animeList/removeEpisode/{id}', name: 'remove_episode_anime_list_user')]
+    #[Route('/animeList/removeEpisode/{id}', name: 'remove_episode_anime_list_user')]
     public function removeEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté, on l'empêche de supprimer un episode */
         if(!$user){
             return $this->redirectToRoute('app_home');
@@ -340,10 +369,16 @@ class UserAnimeListController extends AbstractController
         return $this->redirectToRoute('anime_list_user', ['id' => $user->getId()]);
     }
 
-    #[Route('user/animeList/removeAnime/{id}', name: 'remove_anime_from_list_user')]
+    #[Route('/animeList/removeAnime/{id}', name: 'remove_anime_from_list_user')]
     public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur actuel n'est pas celui à qui appartient l'instance de la liste, il n'a pas accès à la suppression de celui-ci */
         if($userRegarderAnime->getUser() !== $user){
             return $this->redirectToRoute('app_home');
