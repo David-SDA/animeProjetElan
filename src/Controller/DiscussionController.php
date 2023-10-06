@@ -13,11 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('/discussion')]
 class DiscussionController extends AbstractController
 {
-    #[Route('/discussion', name: 'app_discussion')]
-    public function index(DiscussionRepository $discussionRepository, Request $request): Response
-    {
+    #[Route('', name: 'app_discussion')]
+    public function index(DiscussionRepository $discussionRepository, Request $request): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Création du formulaire pour le filtre */
         $form = $this->createForm(DiscussionFilterFormType::class);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
@@ -73,10 +78,16 @@ class DiscussionController extends AbstractController
         ]);
     }
 
-    #[Route('/discussion/add', name: 'add_discussion')]
+    #[Route('/add', name: 'add_discussion')]
     public function add(EntityManagerInterface $entityManagerInterface, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
         if(!$user){
             /* On indique l'interdiction */
@@ -132,10 +143,16 @@ class DiscussionController extends AbstractController
         ]);
     }
 
-    #[Route('/discussion/{id}/edit', name: 'edit_discussion')]
+    #[Route('/{id}/edit', name: 'edit_discussion')]
     public function edit(EntityManagerInterface $entityManagerInterface, Discussion $discussion, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier la discussion */
         if(!$user || $user !== $discussion->getUser() || $discussion->isEstVerrouiller()){
             /* On indique l'interdiction */
@@ -196,10 +213,16 @@ class DiscussionController extends AbstractController
         ]);
     }
 
-    #[Route('/discussion/{id}/delete', name: 'delete_discussion')]
+    #[Route('/{id}/delete', name: 'delete_discussion')]
     public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté
            ou que la discussion n'a pas été crée par lui et que ce n'est pas un admin
            ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
@@ -232,8 +255,13 @@ class DiscussionController extends AbstractController
         return $this->redirectToRoute('app_discussion');
     }
 
-    #[Route('/discussion/{id}/lock', name: 'lock_discussion')]
+    #[Route('/{id}/lock', name: 'lock_discussion')]
     public function lock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas un admin et que la discussion est déjà verrouillé, il n'est pas autorisé à verrouiller la discussion */
         if(!$this->isGranted('ROLE_ADMIN') && $discussion->isEstVerrouiller()){
             /* On indique l'interdiction */
@@ -261,8 +289,13 @@ class DiscussionController extends AbstractController
         return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
     }
 
-    #[Route('/discussion/{id}/unlock', name: 'unlock_discussion')]
+    #[Route('/{id}/unlock', name: 'unlock_discussion')]
     public function unlock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas un admin et que la discussion n'est déjà pas verrouiller , il n'est pas autorisé à déverrouiller la discussion */
         if(!$this->isGranted('ROLE_ADMIN') && !$discussion->isEstVerrouiller()){
             /* On indique l'interdiction */
@@ -290,8 +323,13 @@ class DiscussionController extends AbstractController
         return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
     }    
 
-    #[Route('/discussion/{id}', name: 'show_discussion')]
+    #[Route('/{id}', name: 'show_discussion')]
     public function show(Discussion $discussion){
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+        
         return $this->render('discussion/show.html.twig', [
             'talk' => $discussion,
         ]);
