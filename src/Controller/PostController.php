@@ -11,20 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/discussion')]
 class PostController extends AbstractController
 {
-    #[Route('/post', name: 'app_post')]
-    public function index(): Response
-    {
-        return $this->render('post/index.html.twig', [
-            'controller_name' => 'PostController',
-        ]);
-    }
-
-    #[Route('/discussion/{id}/post/add', name: 'add_post')]
+    #[Route('/{id}/post/add', name: 'add_post')]
     public function add(EntityManagerInterface $entityManagerInterface, Discussion $discussion, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
         if(!$user || $discussion->isEstVerrouiller()){
             /* On indique l'interdiction */
@@ -71,10 +70,16 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/discussion/{discussion_id}/post/{id}/edit', name: 'edit_post')]
+    #[Route('/{discussion_id}/post/{id}/edit', name: 'edit_post')]
     public function edit(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté
            ou que le post n'a pas été crée par lui
            ou que la discussion est verrouiller
@@ -134,10 +139,16 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('/discussion/{discussion_id}/post/{id}/delete', name: 'delete_post')]
+    #[Route('/{discussion_id}/post/{id}/delete', name: 'delete_post')]
     public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté
            ou que le post n'a pas été crée par lui et que ce n'est pas un admin
            ou que le post est le premier de la discussion
@@ -166,10 +177,15 @@ class PostController extends AbstractController
         return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
     }
 
-    #[Route('/discussion/{discussion_id}/post/{id}/like', name: 'like_post')]
+    #[Route('/{discussion_id}/post/{id}/like', name: 'like_post')]
     public function like(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
 
         /* Si l'utilisateur n'est pas connecté */
         if(!$user){
@@ -204,10 +220,15 @@ class PostController extends AbstractController
         return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
     }
 
-    #[Route('/discussion/{discussion_id}/post/{id}/unlike', name: 'unlike_post')]
+    #[Route('/{discussion_id}/post/{id}/unlike', name: 'unlike_post')]
     public function unlike(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
 
         /* Si l'utilisateur n'est pas connecté */
         if(!$user){
