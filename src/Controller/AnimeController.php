@@ -18,6 +18,7 @@ class AnimeController extends AbstractController
         if($this->getUser() && $this->getUser()->isEstBanni()){
             return $this->redirectToRoute('app_banned');
         }
+        
         return $this->render('anime/top.html.twig', [
             'dataTopAnimes' => $animeCallApiService->getTopAnimes(),
         ]);

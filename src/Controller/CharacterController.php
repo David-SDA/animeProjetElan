@@ -8,20 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/character')]
 class CharacterController extends AbstractController
 {
-    #[Route('/character', name: 'app_character')]
-    public function index(): Response
-    {
-        return $this->render('character/index.html.twig', [
-            'controller_name' => 'CharacterController',
-        ]);
-    }
-
-    #[Route('/character/{id}', name:'show_character')]
+    #[Route('/{id}', name:'show_character')]
     public function show(int $id, CharacterCallApiService $characterCallApiService, PersonnageRepository $personnageRepository): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
 
         /* On crée une variable pour déterminer si le personnage est dans les personnages favoris de l'utilisateur, on définit que de base, il n'y est pas */
         $characterIsInFavorites = false;
