@@ -33,20 +33,22 @@
         {% endfor %}
         <div class="navBarContainer">
             <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
-            <nav class="navBar">
-                <ul class="navBarContent">
-                    <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
-                    <li class="navBarElementDropdown">
-                        <button class="navBarElementDropdownButton">ANIME</button>
-                        <ul class="navBarElementDropdownContent">
-                            <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink">TOP</a></li>
-                            <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last">SEASONIAL</a></li>
-                        </ul>
-                    </li>
-                    <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
-                    <li class="navBarElement"><a href="{{ path('app_discussion') }}" class="navBarElementLink">TALKS</a></li>                    
-                </ul>    
-            </nav>
+            {% if not app.user or not app.user.isEstBanni %}
+                <nav class="navBar">
+                    <ul class="navBarContent">
+                        <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
+                        <li class="navBarElementDropdown">
+                            <button class="navBarElementDropdownButton">ANIME</button>
+                            <ul class="navBarElementDropdownContent">
+                                <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink">TOP</a></li>
+                                <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last">SEASONIAL</a></li>
+                            </ul>
+                        </li>
+                        <li class="navBarElement"><a href="#" class="navBarElementLink">SEARCH</a></li>
+                        <li class="navBarElement"><a href="{{ path('app_discussion') }}" class="navBarElementLink">TALKS</a></li>                    
+                    </ul>   
+                </nav>
+            {% endif %}
             <div class="navBarProfile">
                 {% if app.user %}
                 <div class="navBarProfileContainer">
@@ -66,13 +68,15 @@
                         <i class="fa-solid fa-xmark navBarUserMenuClose"></i>
                     </div>
                     <ul>
+                    {% if not app.user.isEstBanni %}
                         <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}"><i class="fa-regular fa-user"></i>Profile</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('anime_list_user', { id: app.user.id }) }}"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('calendar_user') }}"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('settings_user') }}"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
+                    {% endif %}
                         <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN') and not app.user.isEstBanni %}
                         <a href="{{ path('app_admin') }}" class="navBarAdmin">ADMIN SPACE</a>
                     {% endif %}
                 </div>

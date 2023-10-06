@@ -25,8 +25,12 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository): Response
-    {        
+    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('admin/index.html.twig', [
             'totalUsers' => $userRepository->countUsers(),
             'totalTalks' => $discussionRepository->countDiscussions(),
@@ -39,6 +43,11 @@ class AdminController extends AbstractController
 
     #[Route('/admin/users', name: 'users_admin')]
     public function users(UserRepository $userRepository): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('admin/users.html.twig', [
             'nonBannedUsers' => $userRepository->getUsersByStatus(false),
             'bannedUsers' => $userRepository->getUsersByStatus(true),
@@ -48,6 +57,11 @@ class AdminController extends AbstractController
 
     #[Route('/admin/user/{id}/ban', name: 'ban_user_admin')]
     public function ban(EntityManagerInterface $entityManagerInterface, User $user): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas banni */
         if(!$user->isEstBanni()){
             /* On le banni */
@@ -76,6 +90,11 @@ class AdminController extends AbstractController
 
     #[Route('/admin/user/{id}/unban', name: 'unban_user_admin')]
     public function unban(EntityManagerInterface $entityManagerInterface, User $user): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur est banni */
         if($user->isEstBanni()){
             /* On le débanni */
@@ -104,6 +123,11 @@ class AdminController extends AbstractController
 
     #[Route('/admin/user/{id}/resendConfirmation', name: 'resend_confirmation_user_admin')]
     public function resendConfirmation(User $user): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'a pas vérifier son email */
         if(!$user->isVerified()){
             /* On lui renvoie un email de confirmation */
