@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~6 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
 INSERT INTO `discussion` (`id`, `titre`, `date_creation`, `est_verrouiller`, `user_id`) VALUES
 	(1, 'Talk 1', '2023-09-25 15:38:58', 0, 1),
 	(2, 'Talk 2', '2023-09-26 16:15:11', 0, 13),
@@ -165,9 +165,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.post : ~17 rows (environ)
+-- Listage des données de la table animeprojetelan.post : ~19 rows (environ)
 INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
 	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', 1, 1),
 	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
@@ -187,7 +187,8 @@ INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `conten
 	(22, '2023-09-28 08:49:57', '2023-09-28 09:19:18', 'dzdzzzzzzz', 13, 10),
 	(24, '2023-09-28 10:38:35', '2023-09-28 10:38:35', 'aaa', 13, 11),
 	(25, '2023-10-05 11:34:56', '2023-10-05 11:34:56', 'test', 13, 12),
-	(26, '2023-10-05 11:35:19', '2023-10-05 11:35:19', 'test', 13, 13);
+	(26, '2023-10-05 11:35:19', '2023-10-05 11:35:19', 'test', 13, 13),
+	(27, '2023-10-06 16:11:39', '2023-10-06 16:11:39', 'test', 13, 13);
 
 -- Listage de la structure de table animeprojetelan. user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -278,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `user_post` (
   CONSTRAINT `FK_200B2044A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_post : ~2 rows (environ)
+-- Listage des données de la table animeprojetelan.user_post : ~0 rows (environ)
 INSERT INTO `user_post` (`user_id`, `post_id`) VALUES
 	(13, 1),
 	(13, 17),
