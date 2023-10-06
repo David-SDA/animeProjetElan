@@ -10,20 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[Route('evenement')]
 class EvenementController extends AbstractController
 {
-    #[Route('/evenement', name: 'app_evenement')]
-    public function index(): Response
-    {
-        return $this->render('evenement/index.html.twig', [
-            'controller_name' => 'EvenementController',
-        ]);
-    }
-
-    #[Route('/evenement/add', name: 'add_evenement')]
+    #[Route('/add', name: 'add_evenement')]
     public function add(EntityManagerInterface $entityManagerInterface, Request $request): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès à son calendrier */
         if(!$currentUser){
             /* On l'indique */
@@ -67,10 +66,16 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/evenement/{id}/edit', name: 'edit_evenement')]
+    #[Route('/{id}/edit', name: 'edit_evenement')]
     public function edit(EntityManagerInterface $entityManagerInterface, Evenement $evenement, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté ou si ce n'est pas son évènement, on l'empeche de modifier celui-ci */
         if(!$user || $user !== $evenement->getUser()){
             /* On indique l'interdiction */
@@ -108,10 +113,16 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/evenement/{id}/delete', name: 'delete_evenement')]
+    #[Route('/{id}/delete', name: 'delete_evenement')]
     public function delete(EntityManagerInterface $entityManagerInterface, Evenement $evenement, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Si l'utilisateur n'est pas connecté ou si l'évènement ne lui appartient pas, on l'empeche de supprimer l'évènement */
         if(!$user || $user !== $evenement->getUser()){
             /* On indique l'interdiction */
