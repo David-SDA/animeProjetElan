@@ -9,34 +9,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/anime')]
 class AnimeController extends AbstractController
-{
-    #[Route('/anime', name: 'app_anime')]
-    public function index(): Response
-    {
-        return $this->render('anime/index.html.twig', [
-            'controller_name' => 'AnimeController',
-        ]);
-    }
-    
-    #[Route('/anime/top', name: 'top_anime')]
+{   
+    #[Route('/top', name: 'top_anime')]
     public function top(AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
         return $this->render('anime/top.html.twig', [
             'dataTopAnimes' => $animeCallApiService->getTopAnimes(),
         ]);
     }
 
-    #[Route('anime/seasonal', name: 'seasonal_anime')]
+    #[Route('/seasonal', name: 'seasonal_anime')]
     public function seasonal(AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('anime/seasonal.html.twig', [
             'dataSeasonalAnimes' => $animeCallApiService->getSeasonalAnimes(1),
         ]);
     }
 
-    #[Route('/anime/{id}', name: 'show_anime')]
+    #[Route('/{id}', name: 'show_anime')]
     public function show(int $id, AnimeCallApiService $animeCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeRepository $animeRepository): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
+        
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
         
         /* On crée une variable pour déterminer si l'animé est dans la liste de l'utilisateur, on définit que de base, il n'y est pas */
         $animeIsInList = false;
@@ -72,15 +79,25 @@ class AnimeController extends AbstractController
         ]);
     }
 
-    #[Route('/anime/{id}/characters', name: 'characters_anime')]
+    #[Route('/{id}/characters', name: 'characters_anime')]
     public function characters(int $id, AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('anime/characters.html.twig', [
             'dataAllCharactersOneAnime' => $animeCallApiService->getAllCharactersAnime($id),
         ]);
     }
 
-    #[Route('/anime/{id}/staff', name: 'staff_anime')]
+    #[Route('/{id}/staff', name: 'staff_anime')]
     public function staff(int $id, AnimeCallApiService $animeCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('anime/staff.html.twig', [
             'dataAllStaffOneAnime' => $animeCallApiService->getAllStaffAnime($id),
         ]);
