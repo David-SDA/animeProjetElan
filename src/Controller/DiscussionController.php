@@ -22,49 +22,50 @@ class DiscussionController extends AbstractController
         $form = $this->createForm(DiscussionFilterFormType::class);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
-
-        /* Création de filtre et ordre de base */
-        $orderBy = 'dateCreation';
-        $sort = 'DESC';
         
+        /* On cherche toutes les discussions en fonction */
+        $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
+
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On traite les différents choix */
             switch($form->get('filter')->getData()){
                 /* Cas des titres de A à Z */
                 case 'titreAsc':
-                    $orderBy = 'titre';
-                    $sort = 'ASC';
+                    $talks = $discussionRepository->findBy([], ['titre' => 'ASC']);
                     break;
                 
                 /* Cas des titres de Z à A */
                 case 'titreDesc':
-                    $orderBy = 'titre';
-                    $sort = 'DESC';
+                    $talks = $discussionRepository->findBy([], ['titre' => 'DESC']);
                     break;
 
                 /* Cas des date de creation des plus ancien aux plus récent */
                 case 'dateCreationAsc':
-                    $orderBy = 'dateCreation';
-                    $sort = 'ASC';
+                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'ASC']);
                     break;
 
                 /* Cas des date de creation des plus récent aux plus ancien */
                 case 'dateCreationDesc':
-                    $orderBy = 'dateCreation';
-                    $sort = 'DESC';
+                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
+                    break;
+
+                /* Cas du nombre de posts du plus petit au plus grand */
+                case 'postsAsc':
+                    $talks = $discussionRepository->talksByPostsNumber('ASC');
+                    break;
+                
+                /* Cas du nombre de posts du plus grand au plus petit */
+                case 'postsDesc':
+                    $talks = $discussionRepository->talksByPostsNumber('DESC');
                     break;
 
                 /* Cas par défaut : cas dateCreationDesc */
                 default:
-                    $orderBy = 'dateCreation';
-                    $sort = 'DESC';
+                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
                     break;
             }
         }
-
-        /* On cherche toutes les discussions en fonction */
-        $talks = $discussionRepository->findBy([], [$orderBy => $sort]);
 
         return $this->render('discussion/index.html.twig', [
             'form' => $form->createView(),

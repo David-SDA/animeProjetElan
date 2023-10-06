@@ -14,10 +14,12 @@ class DiscussionFilterFormType extends AbstractType
         $builder
             ->add('filter', ChoiceType::class, [
                 'choices' => [
-                    'Title ↑' => 'titreAsc',
-                    'Title ↓' => 'titreDesc',
                     'Date ↑' => 'dateCreationAsc',
                     'Date ↓' => 'dateCreationDesc',
+                    'Posts ↑' => 'postsAsc',
+                    'Posts ↓' => 'postsDesc',
+                    'Title ↑' => 'titreAsc',
+                    'Title ↓' => 'titreDesc',
                 ],
                 'data' => 'dateCreationDesc',
             ])

@@ -51,6 +51,21 @@ class DiscussionRepository extends ServiceEntityRepository
         return $usersMostTalksCreated;                                
     }
 
+    /**
+     * Permet d'obtenir toutes les discussions en fonction du nombre de post
+     */
+    public function talksByPostsNumber(string $sort){
+        /* Query qui permet d'obtenir les discussions dans l'ordre du nombre de posts dans ceux-ci */
+        $talks = $this->createQueryBuilder('d') // Création d'un query builder avec un alias pour identifier l'entité actuel
+                    ->leftJoin('d.posts', 'p') // Association avec les posts
+                    ->groupBy('d.id') // Grouper par les discussions
+                    ->orderBy('COUNT(p.id)', $sort) // Ordre sur le nombre de posts de chaque discussion
+                    ->getQuery() // Obtention de la query construite
+                    ->getResult(); // Execution de la query et obtention des résultats
+
+        return $talks;
+    }
+
 //    /**
 //     * @return Discussion[] Returns an array of Discussion objects
 //     */
