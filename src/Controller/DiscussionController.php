@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Discussion;
 use App\Entity\Post;
+use App\Form\DiscussionFilterFormType;
 use App\Form\DiscussionFormType;
 use App\Repository\DiscussionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,13 +16,59 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DiscussionController extends AbstractController
 {
     #[Route('/discussion', name: 'app_discussion')]
-    public function index(DiscussionRepository $discussionRepository): Response
+    public function index(DiscussionRepository $discussionRepository, Request $request): Response
     {
-        /* On cherche toutes les discussions */
-        $talks = $discussionRepository->findBy([], ["dateCreation" => "DESC"]);
+        /* Création du formulaire pour le filtre */
+        $form = $this->createForm(DiscussionFilterFormType::class);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Création de filtre et ordre de base */
+        $orderBy = 'dateCreation';
+        $sort = 'DESC';
+        
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* On traite les différents choix */
+            switch($form->get('filter')->getData()){
+                /* Cas des titres de A à Z */
+                case 'titreAsc':
+                    $orderBy = 'titre';
+                    $sort = 'ASC';
+                    break;
+                
+                /* Cas des titres de Z à A */
+                case 'titreDesc':
+                    $orderBy = 'titre';
+                    $sort = 'DESC';
+                    break;
+
+                /* Cas des date de creation des plus ancien aux plus récent */
+                case 'dateCreationAsc':
+                    $orderBy = 'dateCreation';
+                    $sort = 'ASC';
+                    break;
+
+                /* Cas des date de creation des plus récent aux plus ancien */
+                case 'dateCreationDesc':
+                    $orderBy = 'dateCreation';
+                    $sort = 'DESC';
+                    break;
+
+                /* Cas par défaut : cas dateCreationDesc */
+                default:
+                    $orderBy = 'dateCreation';
+                    $sort = 'DESC';
+                    break;
+            }
+        }
+
+        /* On cherche toutes les discussions en fonction */
+        $talks = $discussionRepository->findBy([], [$orderBy => $sort]);
 
         return $this->render('discussion/index.html.twig', [
-            'talks' => $talks,            
+            'form' => $form->createView(),
+            'talks' => $talks,
         ]);
     }
 

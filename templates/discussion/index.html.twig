@@ -48,12 +48,18 @@
 {% block title %}Talks{% endblock %}
 
 {% block body %}
-    <main>
-        {{ dump(jsonTalks|json_encode()) }}       
+    <main>     
         <h1 class="title talks">All Talks</h1>
         {% if app.user %}
             <a href="{{ path('add_discussion') }}" class="profileInfosButton talks">Create Talk</a>
         {% endif %}
+        {{ form_start(form, {'attr': {'class': 'filterForm'}}) }}
+            <div class="filterElementForm">
+                {{ form_label(form.filter, 'Filter by') }}
+                {{ form_widget(form.filter) }}
+            </div>
+            <button type="submit" class="filterSubmitButton">Apply Filter</button>
+        {{ form_end(form) }}
         {% for talk in talks %}
         <section>
             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer">

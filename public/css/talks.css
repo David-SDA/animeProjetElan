@@ -3,6 +3,43 @@
     margin: 0;
 }
 
+/* Le formulaire de filtre */
+.filterForm{
+    width: 80%;
+    margin: auto auto 1em auto;
+}
+
+/* Un élement de formulaire de filtre */
+.filterElementForm{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.filterElementForm select{
+    border-radius: 10px;
+    border: 1px solid #B4B4B4;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Le bouton pour soumettre les filtres */
+.filterSubmitButton{
+    border: none;
+    margin: 0.3em 0;
+    padding: 0.5em 0.75em;
+    font-weight: 700;
+    color: #fff;
+    background-color: #00BFFF;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.filterSubmitButton:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+
 /* Le conteneur d'une discussion */
 .oneTalkContainer{
     width: 80%;
@@ -183,6 +220,10 @@
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
+    /* Le formulaire de filtre */
+    .filterForm{
+        width: 95%;
+    }
     /* Le conteneur d'une discussion */
     .oneTalkContainer{
         width: 95%;
@@ -221,6 +262,11 @@
 
 /* Pour tablette */
 @media screen and (min-width: 768px) and (max-width: 1024px){
+    /* Le formulaire de filtre */
+    .filterForm{
+        width: 90%;
+    }
+
     /* Le conteneur d'une discussion */
     .oneTalkContainer{
         width: 90%;
