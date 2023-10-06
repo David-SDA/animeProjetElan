@@ -28,6 +28,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[Route('/user')]
 class UserController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -36,28 +37,26 @@ class UserController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
-
-    #[Route('user/settings', name: 'settings_user')]
+    #[Route('/settings', name: 'settings_user')]
     public function settings(): Response{
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres */
         if(!$this->getUser()){
             return $this->redirectToRoute('app_home');
         }
 
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         return $this->render('user/settings.html.twig');
     }
 
-    #[Route('user/calendar', name: 'calendar_user')]
+    #[Route('/calendar', name: 'calendar_user')]
     public function calendar(EvenementRepository $evenementRepository): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
+        
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès à son calendrier */
         if(!$currentUser){
             /* On l'indique */
@@ -67,6 +66,11 @@ class UserController extends AbstractController
             );
 
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On récupère tout les évènements d'un utilisateur */
@@ -108,7 +112,7 @@ class UserController extends AbstractController
     }
 
     /* Changement du pseudo de l'utilisateur connecté */
-    #[Route(path: 'user/settings/changeUsername', name: 'change_username_user')]
+    #[Route('/settings/changeUsername', name: 'change_username_user')]
     public function changeUsername(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
@@ -116,6 +120,11 @@ class UserController extends AbstractController
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement de pseudo */
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
+        }
+        
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
@@ -174,7 +183,7 @@ class UserController extends AbstractController
     }
 
     /* Changement de la description de l'utilisateur connecté */
-    #[Route(path: 'user/settings/changeDescription', name: 'change_description_user')]
+    #[Route('/settings/changeDescription', name: 'change_description_user')]
     public function changeDescription(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
@@ -182,6 +191,11 @@ class UserController extends AbstractController
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement de description */
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
@@ -229,7 +243,7 @@ class UserController extends AbstractController
     }
 
     /* Changement de l'image de profil de l'utilisateur connecté */
-    #[Route(path: 'user/settings/changeProfilePicture', name: 'change_profile_picture_user')]
+    #[Route('/settings/changeProfilePicture', name: 'change_profile_picture_user')]
     public function changeProfilePicture(Request $request, EntityManagerInterface $entityManagerInterface, SluggerInterface $slugger): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
@@ -238,6 +252,12 @@ class UserController extends AbstractController
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
         }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
         /* Création du formulaire */
         $form = $this->createForm(ChangeProfilePictureFormType::class);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
@@ -302,14 +322,20 @@ class UserController extends AbstractController
     }
 
     /* Changement de l'email de l'utilisateur connecté */
-    #[Route(path: 'user/settings/changeEmail', name: 'change_email_user')]
+    #[Route('/settings/changeEmail', name: 'change_email_user')]
     public function changeEmail(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
 
+        
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement d'email */
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
@@ -370,7 +396,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route(path: 'user/settings/changePassword', name: 'change_password_user')]
+    #[Route('/settings/changePassword', name: 'change_password_user')]
     public function changePassword(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
@@ -378,6 +404,11 @@ class UserController extends AbstractController
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement de mot de passe */
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
+        }
+        
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
@@ -420,7 +451,7 @@ class UserController extends AbstractController
     }
 
     /* Changement des infos de l'utilisateur connecté */
-    #[Route(path: 'user/settings/changeInfos', name: 'change_infos_user')]
+    #[Route('/settings/changeInfos', name: 'change_infos_user')]
     public function changeInfos(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
@@ -428,6 +459,11 @@ class UserController extends AbstractController
         /* Si l'utilisateur n'est pas connecté, il n'a pas accès aux paramètres de changement des infos */
         if(!$currentUser){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
@@ -492,8 +528,13 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'show_user')]
+    #[Route('/{id}', name: 'show_user')]
     public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+        
         /* On récupère la collection d'animés d'un utilisateur (qui représente les animés favoris d'un utilisateur) */
         $favoriteAnimes = $user->getAnimes();
         /* On crée un tableau pour stocker les ids de l'API des animés favoris */
@@ -525,13 +566,18 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
+    #[Route('/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
     public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On cherche si l'anime est déjà dans la base de données */
@@ -595,13 +641,18 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_anime', ['id' => $idApi]);
     }
 
-    #[Route('user/addCharacterToFavorites/{idApi}', name: 'add_character_to_favorites_user')]
+    #[Route('/addCharacterToFavorites/{idApi}', name: 'add_character_to_favorites_user')]
     public function addCharacterToFavorites(int $idApi, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CharacterCallApiService $characterCallApiService){
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On cherche si le personnage est déjà dans la base de données */
@@ -665,13 +716,18 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_character', ['id' => $idApi]);
     }
 
-    #[Route('user/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
+    #[Route('/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
     public function removeAnimeFromFavorites(Anime $anime, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On cherche si l'anime est déjà dans la base de données */
@@ -703,13 +759,18 @@ class UserController extends AbstractController
         return $this->redirectToRoute('show_anime', ['id' => $animeInDatabase->getIdApi()]);
     }
 
-    #[Route('user/removeCharacterFromFavorites/{id}', name: 'remove_character_from_favorites_user')]
+    #[Route('/removeCharacterFromFavorites/{id}', name: 'remove_character_from_favorites_user')]
     public function removeCharacterFromFavorites(Personnage $personnage, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
         if(!$user){
             return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On cherche si le personnage est déjà dans la base de données */
