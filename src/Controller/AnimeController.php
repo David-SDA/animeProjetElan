@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\SearchFormType;
 use App\Repository\AnimeRepository;
 use App\Repository\UserRegarderAnimeRepository;
 use App\Service\AnimeCallApiService;
@@ -12,6 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/anime')]
 class AnimeController extends AbstractController
 {   
+    #[Route('/search', name: 'search_anime')]
+    public function search(): Response{
+        $form = $this->createForm(SearchFormType::class);
+
+        return $this->render('anime/search.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/top', name: 'top_anime')]
     public function top(AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */

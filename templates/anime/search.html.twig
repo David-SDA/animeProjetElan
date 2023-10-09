@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Anime{% endblock %}
+
+{% block body %}
+    <h1 class="title">Search</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.search) }}
+        {{ form_row(form.season) }}
+        {{ form_row(form.year) }}
+        {{ form_row(form.genre) }}
+        {{ form_row(form.format) }}
+        <button type="submit" class="filterSubmitButton">Apply Filters</button>
+    {{ form_end(form) }}
+{% endblock %}
