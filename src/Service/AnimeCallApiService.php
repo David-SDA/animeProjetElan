@@ -474,11 +474,32 @@ class AnimeCallApiService{
      * Fonction qui permet d'obtenir des animés selon des filtres ou recherche
      */
     public function getMultipleAnimesSearch(string $search = null, string $season = null, int $seasonYear = null, string $genre = null, string $format = null){
-        // Définition de la query
+        // Définition du début de la query
         $query = '
-            query($search: String, $season: MediaSeason, $seasonYear: Int, $genre: String, $format: MediaFormat){
+            query{
                 Page(page: 1, perPage: 50){
-                    media(type: ANIME, sort: START_DATE_DESC, isAdult: false, search: $search, season: $season, seasonYear: $seasonYear, genre: $genre, format: $format){
+                    media(type: ANIME, sort: POPULARITY_DESC, isAdult: false';
+
+        // Vérifications des paramètres non nuls pour completer la query en fonction des paramètres disponibles
+        if($search !== null){
+            $query .= ', search: "' . $search . '"';
+        }
+        if($season !== null){
+            $query .= ', season: ' . $season;
+        }
+        if($seasonYear !== null){
+            $query .= ', seasonYear: ' . $seasonYear;
+        }
+        if($genre !== null){
+            $query .= ', genre: "' . $genre . '"';
+        }
+        if($format !== null){
+            $query .= ', format: ' . $format;
+        }
+        
+        /* Ajout du reste de la query */
+        $query .= '
+                    ){
                         id
                         title{
                             romaji
@@ -502,21 +523,11 @@ class AnimeCallApiService{
                 }
             }
         ';
-
-        // Définition des variables utilisées dans la query
-        $variables = [
-            'search' => $search,
-            'season' => $season,
-            'seasonYear' => $seasonYear,
-            'genre' => $genre,
-            'format' => $format,
-        ];
         
         // Appel à l'API
         $response = $this->client->request('POST', 'https://graphql.anilist.co', [
             'json' => [
                 'query' => $query,
-                'variables' => $variables,
             ]
         ]);
 

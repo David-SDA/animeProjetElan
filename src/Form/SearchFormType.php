@@ -12,7 +12,9 @@ class SearchFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /* On récupère l'année actuelle sous forme d'entier */
         $currentYear = (int) date('Y');
+        /* Et on crée un tableau avec les années allant de cette année + 2 à 1940 */
         $years = array_reverse(range(1940, $currentYear + 2));
 
         $builder

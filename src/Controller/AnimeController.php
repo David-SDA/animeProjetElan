@@ -20,16 +20,28 @@ class AnimeController extends AbstractController
         if($this->getUser() && $this->getUser()->isEstBanni()){
             return $this->redirectToRoute('app_banned');
         }
-
-        $dataAnimes = $animeCallApiService->getMultipleAnimesSearch();
-
+        
         /* Création du formulaire pour les filtres et recherche */
         $form = $this->createForm(SearchFormType::class);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
-        if($form->isSubmitted() && $form->isValid()){}
+        if($form->isSubmitted() && $form->isValid()){
+            /* Récupération des données du formulaire */
+            $search = $form->get('search')->getData();
+            $season = $form->get('season')->getData();
+            $seasonYear = $form->get('seasonYear')->getData();
+            $genre = $form->get('genre')->getData();
+            $format = $form->get('format')->getData();
+            
+            /* Récupération des données de l'API */
+            $dataAnimes = $animeCallApiService->getMultipleAnimesSearch($search, $season, $seasonYear, $genre, $format);
+        }
+        else{
+            /* Récupération des données de l'API */
+            $dataAnimes = $animeCallApiService->getMultipleAnimesSearch();
+        }
 
         return $this->render('anime/search.html.twig', [
             'form' => $form,
