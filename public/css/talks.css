@@ -9,14 +9,18 @@
     margin: auto auto 1em auto;
 }
 
+/* La ligne des filtres */
 .filterElementLine{
     display: flex;
     justify-content: space-between;
     overflow: scroll;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 .filterElementLine::-webkit-scrollbar{
     height: 5px;
+}
+.filterElementLine::-webkit-scrollbar-corner{
+    background-color: transparent;
 }
 .filterElementLine::-webkit-scrollbar-thumb{
     background-color: #bbb;
