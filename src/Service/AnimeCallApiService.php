@@ -478,7 +478,7 @@ class AnimeCallApiService{
         $query = '
             query($search: String, $season: MediaSeason, $seasonYear: Int, $genre: String, $format: MediaFormat){
                 Page(page: 1, perPage: 50){
-                    media(type: ANIME, sort: SCORE_DESC, isAdult: false, search: $search, season: $season, seasonYear: $seasonYear, genre: $genre, format: $format){
+                    media(type: ANIME, sort: START_DATE_DESC, isAdult: false, search: $search, season: $season, seasonYear: $seasonYear, genre: $genre, format: $format){
                         id
                         title{
                             romaji

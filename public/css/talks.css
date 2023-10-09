@@ -9,17 +9,44 @@
     margin: auto auto 1em auto;
 }
 
+.filterElementLine{
+    display: flex;
+    justify-content: space-between;
+    overflow: scroll;
+    padding-bottom: 10px;
+}
+.filterElementLine::-webkit-scrollbar{
+    height: 5px;
+}
+.filterElementLine::-webkit-scrollbar-thumb{
+    background-color: #bbb;
+    border-radius: 10px;
+}
+
 /* Un élement de formulaire de filtre */
-.filterElementForm{
+.filterElementFormElement{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.filterElementForm select{
+.filterElementFormElement:first-of-type{
+    margin-right: 10px;
+}
+.filterElementFormElement:not(:first-of-type){
+    margin: 0 5px;
+}
+.filterElementFormElement:last-of-type{
+    margin: 0 0 0 5px;
+}
+.filterElementFormElement select, .filterElementFormElement input[type="search"]{
+    width: 200px;
     border-radius: 10px;
     border: 1px solid #B4B4B4;
     padding: 10px;
     cursor: pointer;
+}
+.filterElementFormElement input[type="search"]{
+    cursor: unset;
 }
 
 /* Le bouton pour soumettre les filtres */

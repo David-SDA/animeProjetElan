@@ -28,7 +28,7 @@ class SearchFormType extends AbstractType
                     'Fall' => 'FALL',
                 ],
             ])
-            ->add('year', ChoiceType::class, [
+            ->add('seasonYear', ChoiceType::class, [
                 'required' => false,
                 'choices' => array_combine($years, $years),
             ])

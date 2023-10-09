@@ -4,21 +4,36 @@ namespace App\Controller;
 
 use App\Form\SearchFormType;
 use App\Repository\AnimeRepository;
-use App\Repository\UserRegarderAnimeRepository;
 use App\Service\AnimeCallApiService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\UserRegarderAnimeRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/anime')]
 class AnimeController extends AbstractController
 {   
     #[Route('/search', name: 'search_anime')]
-    public function search(AnimeCallApiService $animeCallApiService): Response{
+    public function search(AnimeCallApiService $animeCallApiService, Request $request): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        $dataAnimes = $animeCallApiService->getMultipleAnimesSearch();
+
+        /* Création du formulaire pour les filtres et recherche */
         $form = $this->createForm(SearchFormType::class);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){}
 
         return $this->render('anime/search.html.twig', [
             'form' => $form,
+            'dataAnimes' => $dataAnimes,
         ]);
     }
 

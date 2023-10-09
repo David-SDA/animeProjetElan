@@ -4,12 +4,65 @@
 
 {% block body %}
     <h1 class="title">Search</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.search) }}
-        {{ form_row(form.season) }}
-        {{ form_row(form.year) }}
-        {{ form_row(form.genre) }}
-        {{ form_row(form.format) }}
-        <button type="submit" class="filterSubmitButton">Apply Filters</button>
-    {{ form_end(form) }}
+    <main class="homeContainer">
+        {{ form_start(form) }}
+            <div class="filterElementLine">
+                <div class="filterElementFormElement">
+                    {{ form_label(form.search, 'Search') }}
+                    {{ form_widget(form.search) }}
+                </div>
+                <div class="filterElementFormElement">
+                    {{ form_label(form.season, 'Season') }}
+                    {{ form_widget(form.season) }}
+                </div>
+                <div class="filterElementFormElement">
+                    {{ form_label(form.seasonYear, 'Year') }}
+                    {{ form_widget(form.seasonYear) }}
+                </div>
+                <div class="filterElementFormElement">
+                    {{ form_label(form.genre, 'Genre') }}
+                    {{ form_widget(form.genre) }}
+                </div>
+                <div class="filterElementFormElement">
+                    {{ form_label(form.format, 'Format') }}
+                    {{ form_widget(form.format) }}
+                </div>
+            </div>
+            <button type="submit" class="filterSubmitButton">Apply Filters</button>
+        {{ form_end(form) }}
+
+        <div class="homeMultipleAnimes autoFill">
+        {% for media in dataAnimes.data.Page.media %}
+            <figure class="homeOneAnime top">
+                <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                    <div class="homeOneAnimeImageInfo">
+                        <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
+                        <section class="homeHoverContent">
+                            <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji|default('Unknown') }}</h2>
+                            {% if media.episodes %}
+                                <p class="homeOneAnimeInfoSmallerInfos">{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</p>
+                            {% else %}    
+                                <p class="homeOneAnimeInfoSmallerInfos">? episodes - {{ media.format|default('?') }}</p>
+                            {% endif %}
+                            {# On crée un tableau qu'on va remplir de tout les studios principaux (souvent 1 seul mais possibilité d'en avoir plusieurs) #}
+                            {% set mainStudios = [] %}
+                            {% for studio in media.studios.edges %}
+                                {% if studio.isMain %}
+                                    {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                {% endif %}
+                            {% endfor %}
+                            <p class="homeOneAnimeInfoSmallerInfos">{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</p>
+                            <div class="homeOneAnimeInfoGenres">
+                            {% for genre in media.genres %}
+                                <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color ? media.coverImage.color : '#4169e1' }};">{{ genre }}</p>
+                            {% endfor %}
+                            </div>
+                        </section>
+                    </div>
+                </a>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
+            </figure>
+        {% endfor %}
+        </div>
+    </main>
 {% endblock %}
