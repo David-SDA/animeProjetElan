@@ -20,6 +20,9 @@ class SearchFormType extends AbstractType
         $builder
             ->add('search', SearchType::class, [
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'Search'
+                ]
             ])
             ->add('season', ChoiceType::class, [
                 'required' => false,
@@ -29,10 +32,12 @@ class SearchFormType extends AbstractType
                     'Summer' => 'SUMMER',
                     'Fall' => 'FALL',
                 ],
+                'placeholder' => 'Any',
             ])
             ->add('seasonYear', ChoiceType::class, [
                 'required' => false,
                 'choices' => array_combine($years, $years),
+                'placeholder' => 'Any',
             ])
             ->add('genre', ChoiceType::class, [
                 'required' => false,
@@ -55,7 +60,8 @@ class SearchFormType extends AbstractType
                     'Sports' => 'Sports',
                     'Supernatural' => 'Supernatural',
                     'Thriller' => 'Thriller',
-                ]
+                ],
+                'placeholder' => 'Any',
             ])
             ->add('format', ChoiceType::class, [
                 'required' => false,
@@ -67,7 +73,8 @@ class SearchFormType extends AbstractType
                     'OVA' => 'OVA',
                     'ONA' => 'ONA',
                     'Music' => 'MUSIC',
-                ]
+                ],
+                'placeholder' => 'Any',
             ])
         ;
     }
