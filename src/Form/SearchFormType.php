@@ -22,10 +22,10 @@ class SearchFormType extends AbstractType
             ->add('season', ChoiceType::class, [
                 'required' => false,
                 'choices' => [
-                    'Winter' => 'Winter',
-                    'Spring' => 'Spring',
-                    'Summer' => 'Summer',
-                    'Fall' => 'Fall',
+                    'Winter' => 'WINTER',
+                    'Spring' => 'SPRING',
+                    'Summer' => 'SUMMER',
+                    'Fall' => 'FALL',
                 ],
             ])
             ->add('year', ChoiceType::class, [

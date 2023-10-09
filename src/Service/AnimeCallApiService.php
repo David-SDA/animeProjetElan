@@ -469,4 +469,57 @@ class AnimeCallApiService{
 
         return $response->toArray(); // On retourne les données sous forme de tableau
     }
+
+    /**
+     * Fonction qui permet d'obtenir des animés selon des filtres ou recherche
+     */
+    public function getMultipleAnimesSearch(string $search = null, string $season = null, int $seasonYear = null, string $genre = null, string $format = null){
+        // Définition de la query
+        $query = '
+            query($search: String, $season: MediaSeason, $seasonYear: Int, $genre: String, $format: MediaFormat){
+                Page(page: 1, perPage: 50){
+                    media(type: ANIME, sort: SCORE_DESC, isAdult: false, search: $search, season: $season, seasonYear: $seasonYear, genre: $genre, format: $format){
+                        id
+                        title{
+                            romaji
+                        }
+                        coverImage{
+                            large
+                            color
+                        }
+                        genres
+                        episodes
+                        format
+                        studios{
+                            edges{
+                                isMain
+                                node{
+                                    name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'search' => $search,
+            'season' => $season,
+            'seasonYear' => $seasonYear,
+            'genre' => $genre,
+            'format' => $format,
+        ];
+        
+        // Appel à l'API
+        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
+            'json' => [
+                'query' => $query,
+                'variables' => $variables,
+            ]
+        ]);
+
+        return $response->toArray(); // On retourne les données sous forme de tableau
+    }
 }

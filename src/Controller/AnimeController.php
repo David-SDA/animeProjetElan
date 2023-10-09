@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnimeController extends AbstractController
 {   
     #[Route('/search', name: 'search_anime')]
-    public function search(): Response{
+    public function search(AnimeCallApiService $animeCallApiService): Response{
         $form = $this->createForm(SearchFormType::class);
 
         return $this->render('anime/search.html.twig', [
