@@ -44,17 +44,39 @@ class CharacterController extends AbstractController
         $characterDetails = $characterCallApiService->getCharacterDetails($id);
         
         /* Regex qui match les liens que l'on veut remplacer */
-        /* Par exemple doit des chaîne de caractères de ce genre : [Fern](https://anilist.co/character/183965) et [Fern](https://anilist.co/character/183965/Fern) */
-        $regex = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)(?:\/\S+)?\)/';
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965) et [Fern](https://anilist.co/character/183965/Fern) */
+        $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)(?:\/\S+)?\)/';
 
-        /* Modification des lien de la description pour qu'il redirige vers les liens de notre site */
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $characterDetails['data']['Character']['description'] = preg_replace_callback(
-            $regex,
+            $regexLinks,
             function($matches){
                 $characterId = $matches[2];
                 $characterName = $matches[1];
                 return '<a href="' . $this->generateUrl('show_character', ['id' => $characterId]) . '">' . $characterName . '</a>';
             },
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les textes entouré de double underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : __Age__ */
+        $regexBold = '/__([^__]+)__/';
+
+        /* Modification des textes entouré de double underscore pour l'entouré de balise b */
+        $characterDetails['data']['Character']['description'] = preg_replace(
+            $regexBold,
+            '<b>$1</b>',
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les textes entouré d'un underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : _Age_ */
+        $regexBold = '/_([^_]+)_/';
+
+        /* Modification des textes entouré d'un underscore pour l'entouré de balise i */
+        $characterDetails['data']['Character']['description'] = preg_replace(
+            $regexBold,
+            '<i>$1</i>',
             $characterDetails['data']['Character']['description']
         );
         
