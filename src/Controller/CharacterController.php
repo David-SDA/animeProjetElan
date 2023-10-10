@@ -71,15 +71,37 @@ class CharacterController extends AbstractController
 
         /* Regex qui match les textes entouré d'un underscore */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : _Age_ */
-        $regexBold = '/_([^_]+)_/';
+        $regexItalic = '/_([^_]+)_/';
 
         /* Modification des textes entouré d'un underscore pour l'entouré de balise i */
         $characterDetails['data']['Character']['description'] = preg_replace(
-            $regexBold,
+            $regexItalic,
             '<i>$1</i>',
             $characterDetails['data']['Character']['description']
         );
-        
+
+        /* Regex qui match les textes entouré d'une étoile */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
+        $regexStar = '/\*([^_]+)\*/';
+
+        /* Modification des textes entouré d'une étoile pour l'entouré de balise i */
+        $characterDetails['data']['Character']['description'] = preg_replace(
+            $regexStar,
+            '<i>$1</i>',
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les textes entouré de ~! et !~ qui correspond à des spoils */
+        /* Par exemple, doit matcher des chaîne de caractères de ce genre : ~!Age!~ */
+        $regexSpoil = '/~!(.*?)!~/';
+
+        /* Modification des textes spoil pour le remplacer par un le spoil caché */
+        $characterDetails['data']['Character']['description'] = preg_replace(
+            $regexSpoil,
+            '<span class="spoilerContent">$1</span>',
+            $characterDetails['data']['Character']['description']
+        );
+
         return $this->render('character/show.html.twig', [
             'dataOneCharacter' => $characterDetails,
             'characterIsInFavorites' => $characterIsInFavorites,

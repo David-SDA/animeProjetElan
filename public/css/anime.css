@@ -406,6 +406,21 @@
     margin: 0.5em 0;
 }
 
+/* Un contenu considéré comme spoil */
+.spoilerContent{
+    display: none;
+}
+.spoilerContent.visible{
+    display: block;
+}
+
+/* Le texte qui sert à afficher ou ne pas afficher un spoil */
+.spoiler{
+    color: #00BFFF;
+    cursor: pointer;
+    user-select: none;
+}
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
     /* Partie du haut de la page d'un animé */

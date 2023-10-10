@@ -48,3 +48,27 @@
         </div>
     </main>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // On sélectionne tout les textes de spoils
+        const spoilerContentSpans = document.querySelectorAll('.spoilerContent');
+        
+        // Pour chaque spoil
+        spoilerContentSpans.forEach(spoilerContent => {
+            // On crée un span qui servira à afficher le texte spoil
+            const spoilerButton = document.createElement('span');
+            // On lui ajoute une classe
+            spoilerButton.className = 'spoiler';
+            // On lui ajoute du texte
+            spoilerButton.textContent = '[SPOILER]';
+            // Et on ajoute un écouteur d'évènement click sur celui-ci
+            spoilerButton.addEventListener('click', () => {
+                // On affiche/n'affiche pas le contenu spoil en fonction de chaque click
+                spoilerContent.classList.toggle('visible');
+            });
+            // Le span créé sera placé avant le texte spoil qui lui correspond
+            spoilerContent.parentNode.insertBefore(spoilerButton, spoilerContent);
+        });
+    </script>
+{% endblock %}
