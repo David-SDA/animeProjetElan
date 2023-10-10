@@ -88,6 +88,9 @@
     color: #636363;
     overflow-wrap: anywhere;
 }
+.animeSynopsisContent a{
+    color: #00BFFF;
+}
 
 /* Contenu de la partie restante de la page d'un animé */
 .animeRemainingContainer{
