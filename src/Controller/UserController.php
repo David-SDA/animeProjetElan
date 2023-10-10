@@ -742,19 +742,29 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
+        /* Si l'animé est dans les favoris de l'utilisateur */
+        elseif($user->getAnimes()->contains($animeInDatabase)){
+            /* On enlève l'animé à la collection d'animé d'un utilisateur (et donc à ses favoris) */
+            $user->removeAnime($animeInDatabase);
+    
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+    
+            /* On indique la réussite du changement */
+            $this->addFlash(
+                'success',
+                'This anime has been removed from your favorites'
+            );
+        }
+        else{
+            /* On indique que l'animé n'est déjà pas dans les favoris */
+            $this->addFlash(
+                'error',
+                'This anime is already not in your favorites'
+            );
+        }
 
-        /* On enlève l'animé à la collection d'animé d'un utilisateur (et donc à ses favoris) */
-        $user->removeAnime($animeInDatabase);
-
-        /* On sauvegarde ces changements dans la base de données */
-        $entityManagerInterface->persist($user);
-        $entityManagerInterface->flush();
-
-        /* On indique la réussite du changement */
-        $this->addFlash(
-            'success',
-            'This anime has been removed from your favorites'
-        );
 
         return $this->redirectToRoute('show_anime', ['id' => $animeInDatabase->getIdApi()]);
     }
@@ -785,19 +795,29 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
+        /* Si le personnage est dans les favoris de l'utilisateur */
+        elseif($user->getPersonnages()->contains($characterInDatabase)){
+            /* On enlève le personnage à la collection de personnage d'un utilisateur (et donc à ses favoris) */
+            $user->removePersonnage($characterInDatabase);
+    
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+    
+            /* On indique la réussite du changement */
+            $this->addFlash(
+                'success',
+                'This character has been removed from your favorites'
+            );
+        }
+        else{
+            /* On indique que le personnage n'est déjà pas dans les favoris */
+            $this->addFlash(
+                'error',
+                'This character is already not in your favorites'
+            );
+        }
 
-        /* On enlève le personnage à la collection de personnage d'un utilisateur (et donc à ses favoris) */
-        $user->removePersonnage($characterInDatabase);
-
-        /* On sauvegarde ces changements dans la base de données */
-        $entityManagerInterface->persist($user);
-        $entityManagerInterface->flush();
-
-        /* On indique la réussite du changement */
-        $this->addFlash(
-            'success',
-            'This character has been removed from your favorites'
-        );
 
         return $this->redirectToRoute('show_character', ['id' => $characterInDatabase->getIdApi()]);
     }
