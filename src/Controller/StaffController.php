@@ -35,6 +35,39 @@ class StaffController extends AbstractController
             $staffDetails['data']['Staff']['description']
         );
 
+        /* Regex qui match les textes entouré de double underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : __Age__ */
+        $regexBold = '/__([^__]+)__/';
+
+        /* Modification des textes entouré de double underscore pour l'entouré de balise b */
+        $staffDetails['data']['Staff']['description'] = preg_replace(
+            $regexBold,
+            '<b>$1</b>',
+            $staffDetails['data']['Staff']['description']
+        );
+
+        /* Regex qui match les textes entouré d'un underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : _Age_ */
+        $regexItalic = '/_([^_]+)_/';
+
+        /* Modification des textes entouré d'un underscore pour l'entouré de balise i */
+        $staffDetails['data']['Staff']['description'] = preg_replace(
+            $regexItalic,
+            '<i>$1</i>',
+            $staffDetails['data']['Staff']['description']
+        );
+
+        /* Regex qui match les textes entouré d'une étoile */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
+        $regexStar = '/\*([^_]+)\*/';
+
+        /* Modification des textes entouré d'une étoile pour l'entouré de balise i */
+        $staffDetails['data']['Staff']['description'] = preg_replace(
+            $regexStar,
+            '<i>$1</i>',
+            $staffDetails['data']['Staff']['description']
+        );
+
         return $this->render('staff/show.html.twig', [
             'dataOneStaff' => $staffDetails,
         ]);
