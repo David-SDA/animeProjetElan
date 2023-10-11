@@ -46,7 +46,7 @@ class CharacterController extends AbstractController
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */
         $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)\/*(?:(.*))?\)/';
-
+        
         /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $characterDetails['data']['Character']['description'] = preg_replace_callback(
             $regexLinks,
@@ -58,13 +58,69 @@ class CharacterController extends AbstractController
             $characterDetails['data']['Character']['description']
         );
 
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/staff/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinksStaff = '/\[(.*?)\]\(https:\/\/anilist\.co\/staff\/(\d+)\/*(?:(.*))?\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $characterDetails['data']['Character']['description'] = preg_replace_callback(
+            $regexLinksStaff,
+            function($matches){
+                $staffId = $matches[2];
+                $staffName = $matches[1];
+                return '<a href="' . $this->generateUrl('show_staff', ['id' => $staffId]) . '">' . $staffName . '</a>';
+            },
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/anime/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinksAnime = '/\[(.*?)\]\(https:\/\/anilist\.co\/anime\/(\d+)\/*(?:(.*))?\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $characterDetails['data']['Character']['description'] = preg_replace_callback(
+            $regexLinksAnime,
+            function($matches){
+                $animeId = $matches[2];
+                $animeName = $matches[1];
+                return '<a href="' . $this->generateUrl('show_anime', ['id' => $animeId]) . '">' . $animeName . '</a>';
+            },
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Twitter](https://twitter.com/824aoi) */
+        $regexExternalLinks = '/\[(.*?)\]\((http.*?)\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $characterDetails['data']['Character']['description'] = preg_replace_callback(
+            $regexExternalLinks,
+            function($matches){
+                $link = $matches[2];
+                $site = $matches[1];
+                return '<a href="' . $link . '">' . $site . '</a>';
+            },
+            $characterDetails['data']['Character']['description']
+        );
+
         /* Regex qui match les textes entouré de double underscore */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : __Age__ */
-        $regexBold = '/__([^__]+)__/';
+        $regexBoldUnderscore = '/__([^__]+)__/';
 
         /* Modification des textes entouré de double underscore pour l'entouré de balise b */
         $characterDetails['data']['Character']['description'] = preg_replace(
-            $regexBold,
+            $regexBoldUnderscore,
+            '<b>$1</b>',
+            $characterDetails['data']['Character']['description']
+        );
+
+        /* Regex qui match les textes entouré de double underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
+        $regexBoldStar = '/\*\*([^__]+)\*\*/';
+
+        /* Modification des textes entouré de double underscore pour l'entouré de balise b */
+        $characterDetails['data']['Character']['description'] = preg_replace(
+            $regexBoldStar,
             '<b>$1</b>',
             $characterDetails['data']['Character']['description']
         );
