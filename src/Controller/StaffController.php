@@ -22,7 +22,7 @@ class StaffController extends AbstractController
 
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */
-        $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)\/*(?:(.*))?\)/';
+        $regexLinks = '/\[([^[\]]+)\]\(https:\/\/anilist\.co\/character\/(\d+)(?:\/[^)]*)?\)/';
         
         /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $staffDetails['data']['Staff']['description'] = preg_replace_callback(
@@ -37,7 +37,7 @@ class StaffController extends AbstractController
 
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/staff/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
-        $regexLinksStaff = '/\[(.*?)\]\(https:\/\/anilist\.co\/staff\/(\d+)\/*(?:(.*))?\)/';
+        $regexLinksStaff = '/\[([^[\]]+)\]\(https:\/\/anilist\.co\/staff\/(\d+)(?:\/[^)]*)?\)/';
         
         /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $staffDetails['data']['Staff']['description'] = preg_replace_callback(
@@ -52,7 +52,7 @@ class StaffController extends AbstractController
 
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/anime/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
-        $regexLinksAnime = '/\[(.*?)\]\(https:\/\/anilist\.co\/anime\/(\d+)\/*(?:(.*))?\)/';
+        $regexLinksAnime = '/\[([^[\]]+)\]\(https:\/\/anilist\.co\/anime\/(\d+)(?:\/[^)]*)?\)/';
         
         /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $staffDetails['data']['Staff']['description'] = preg_replace_callback(
@@ -91,9 +91,9 @@ class StaffController extends AbstractController
             $staffDetails['data']['Staff']['description']
         );
 
-        /* Regex qui match les textes entouré de double underscore */
-        /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
-        $regexBoldStar = '/\*\*([^__]+)\*\*/';
+        /* Regex qui match les textes entouré de double étoile */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : **Age** */
+        $regexBoldStar = '/\*\*([^__]+?)\*\*/';
 
         /* Modification des textes entouré de double underscore pour l'entouré de balise b */
         $staffDetails['data']['Staff']['description'] = preg_replace(
@@ -115,7 +115,7 @@ class StaffController extends AbstractController
 
         /* Regex qui match les textes entouré d'une étoile */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
-        $regexStar = '/\*([^_\s]+)\*/';
+        $regexStar = '/\*([^_]+?)\*/';
 
         /* Modification des textes entouré d'une étoile pour l'entouré de balise i */
         $staffDetails['data']['Staff']['description'] = preg_replace(
