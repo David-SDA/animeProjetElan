@@ -93,7 +93,7 @@ class CharacterController extends AbstractController
 
         /* Regex qui match les textes entouré de ~! et !~ qui correspond à des spoils */
         /* Par exemple, doit matcher des chaîne de caractères de ce genre : ~!Age!~ */
-        $regexSpoil = '/~!(.*?)!~/';
+        $regexSpoil = '/~!([\s\S]*?)!~/';
 
         /* Modification des textes spoil pour le remplacer par un le spoil caché */
         $characterDetails['data']['Character']['description'] = preg_replace(

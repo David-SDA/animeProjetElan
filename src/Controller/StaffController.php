@@ -68,6 +68,17 @@ class StaffController extends AbstractController
             $staffDetails['data']['Staff']['description']
         );
 
+        /* Regex qui match les textes entouré de ~! et !~ qui correspond à des spoils */
+        /* Par exemple, doit matcher des chaîne de caractères de ce genre : ~!Age!~ */
+        $regexSpoil = '/~!([\s\S]*?)!~/';
+
+        /* Modification des textes spoil pour le remplacer par un le spoil caché */
+        $staffDetails['data']['Staff']['description'] = preg_replace(
+            $regexSpoil,
+            '<span class="spoilerContent">$1</span>',
+            $staffDetails['data']['Staff']['description']
+        );
+
         return $this->render('staff/show.html.twig', [
             'dataOneStaff' => $staffDetails,
         ]);
