@@ -36,6 +36,36 @@ class StaffController extends AbstractController
         );
 
         /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/staff/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinksStaff = '/\[(.*?)\]\(https:\/\/anilist\.co\/staff\/(\d+)\/*(?:(.*))?\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $staffDetails['data']['Staff']['description'] = preg_replace_callback(
+            $regexLinksStaff,
+            function($matches){
+                $staffId = $matches[2];
+                $staffName = $matches[1];
+                return '<a href="' . $this->generateUrl('show_staff', ['id' => $staffId]) . '">' . $staffName . '</a>';
+            },
+            $staffDetails['data']['Staff']['description']
+        );
+
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Name](https://anilist.co/anime/1234*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinksAnime = '/\[(.*?)\]\(https:\/\/anilist\.co\/anime\/(\d+)\/*(?:(.*))?\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $staffDetails['data']['Staff']['description'] = preg_replace_callback(
+            $regexLinksAnime,
+            function($matches){
+                $animeId = $matches[2];
+                $animeName = $matches[1];
+                return '<a href="' . $this->generateUrl('show_anime', ['id' => $animeId]) . '">' . $animeName . '</a>';
+            },
+            $staffDetails['data']['Staff']['description']
+        );
+
+        /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Twitter](https://twitter.com/824aoi) */
         $regexExternalLinks = '/\[(.*?)\]\((http.*?)\)/';
         
