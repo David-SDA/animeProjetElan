@@ -35,20 +35,46 @@ class StaffController extends AbstractController
             $staffDetails['data']['Staff']['description']
         );
 
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Twitter](https://twitter.com/824aoi) */
+        $regexExternalLinks = '/\[(.*?)\]\((http.*?)\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $staffDetails['data']['Staff']['description'] = preg_replace_callback(
+            $regexExternalLinks,
+            function($matches){
+                $link = $matches[2];
+                $site = $matches[1];
+                return '<a href="' . $link . '">' . $site . '</a>';
+            },
+            $staffDetails['data']['Staff']['description']
+        );
+
         /* Regex qui match les textes entouré de double underscore */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : __Age__ */
-        $regexBold = '/__([^__]+)__/';
+        $regexBoldUnderscore = '/__([^__]+)__/';
 
         /* Modification des textes entouré de double underscore pour l'entouré de balise b */
         $staffDetails['data']['Staff']['description'] = preg_replace(
-            $regexBold,
+            $regexBoldUnderscore,
             '<b>$1</b>',
             $staffDetails['data']['Staff']['description']
         );
 
-        /* Regex qui match les textes entouré d'un underscore */
+        /* Regex qui match les textes entouré de double underscore */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
+        $regexBoldStar = '/\*\*([^__]+)\*\*/';
+
+        /* Modification des textes entouré de double underscore pour l'entouré de balise b */
+        $staffDetails['data']['Staff']['description'] = preg_replace(
+            $regexBoldStar,
+            '<b>$1</b>',
+            $staffDetails['data']['Staff']['description']
+        );
+
+        /* Regex qui match les textes entouré d'un underscore avec rien avant et après */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : _Age_ */
-        $regexItalic = '/_([^_]+)_/';
+        $regexItalic = '/(?<!\w)_([^_]+)_(?!\w)/';
 
         /* Modification des textes entouré d'un underscore pour l'entouré de balise i */
         $staffDetails['data']['Staff']['description'] = preg_replace(

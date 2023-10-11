@@ -69,9 +69,9 @@ class CharacterController extends AbstractController
             $characterDetails['data']['Character']['description']
         );
 
-        /* Regex qui match les textes entouré d'un underscore */
+        /* Regex qui match les textes entouré d'un underscore avec rien avant et après */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : _Age_ */
-        $regexItalic = '/_([^_]+)_/';
+        $regexItalic = '/(?<!\w)_([^_]+)_(?!\w)/';
 
         /* Modification des textes entouré d'un underscore pour l'entouré de balise i */
         $characterDetails['data']['Character']['description'] = preg_replace(
