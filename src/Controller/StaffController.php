@@ -17,8 +17,26 @@ class StaffController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
+        /* Récupération des données de l'API */
+        $staffDetails = $staffCallApiService->getStaffDetails($id);
+
+        /* Regex qui match les liens que l'on veut remplacer */
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)\/*(?:(.*))?\)/';
+        
+        /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
+        $staffDetails['data']['Staff']['description'] = preg_replace_callback(
+            $regexLinks,
+            function($matches){
+                $characterId = $matches[2];
+                $characterName = $matches[1];
+                return '<a href="' . $this->generateUrl('show_character', ['id' => $characterId]) . '">' . $characterName . '</a>';
+            },
+            $staffDetails['data']['Staff']['description']
+        );
+
         return $this->render('staff/show.html.twig', [
-            'dataOneStaff' => $staffCallApiService->getStaffDetails($id),
+            'dataOneStaff' => $staffDetails,
         ]);
     }
 }

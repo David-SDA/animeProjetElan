@@ -44,8 +44,8 @@ class CharacterController extends AbstractController
         $characterDetails = $characterCallApiService->getCharacterDetails($id);
         
         /* Regex qui match les liens que l'on veut remplacer */
-        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965) et [Fern](https://anilist.co/character/183965/Fern) */
-        $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)(?:\/\S+)?\)/';
+        /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */
+        $regexLinks = '/\[(.*?)\]\(https:\/\/anilist\.co\/character\/(\d+)\/*(?:(.*))?\)/';
 
         /* Modification des liens de la description pour qu'ils redirigent vers les pages de notre site */
         $characterDetails['data']['Character']['description'] = preg_replace_callback(
