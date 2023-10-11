@@ -138,7 +138,7 @@ class CharacterController extends AbstractController
 
         /* Regex qui match les textes entouré d'une étoile */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : *Age* */
-        $regexStar = '/\*([^_]+)\*/';
+        $regexStar = '/\*([^_\s]+)\*/';
 
         /* Modification des textes entouré d'une étoile pour l'entouré de balise i */
         $characterDetails['data']['Character']['description'] = preg_replace(
