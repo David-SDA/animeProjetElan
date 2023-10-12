@@ -13,7 +13,7 @@ use App\Form\ChangeInfosFormType;
 use App\Repository\AnimeRepository;
 use App\Service\CharacterCallApiService;
 use Symfony\Component\Mime\Address;
-use App\Form\ChangePasswordFormType;
+use App\Form\ModifyPasswordFormType;
 use App\Form\ChangeUsernameFormType;
 use App\Service\AnimeCallApiService;
 use App\Form\ChangeDescriptionFormType;
@@ -396,8 +396,8 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/settings/changePassword', name: 'change_password_user')]
-    public function changePassword(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
+    #[Route('/settings/modifyPassword', name: 'modify_password_user')]
+    public function modifyPassword(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordHasherInterface $hasher): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         
@@ -412,7 +412,7 @@ class UserController extends AbstractController
         }
 
         /* Création du formulaire */
-        $form = $this->createForm(ChangePasswordFormType::class);
+        $form = $this->createForm(ModifyPasswordFormType::class);
 
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
@@ -445,7 +445,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/changePassword.html.twig', [
+        return $this->render('user/modifyPassword.html.twig', [
             'form' => $form->createView(),
         ]);
     }
