@@ -334,6 +334,11 @@ ul{
     overflow: hidden;
 }
 
+/* Les liens que l'on veut de couleur bleu */
+.coloredLink{
+    color: #00BFFF;
+}
+
 /* Pour tablette et mobile */
 @media screen and (max-width: 1024px){
     /* L'élement qui ouvre la barre de navigation */

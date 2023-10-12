@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+    <div class="securityFormContainer">
+        {{ form_start(resetForm) }}
+        <h1 class="securityFormTitle">Reset your password</h1>
+        <div class="securityFormRow">
+            {{ form_label(resetForm.plainPassword.first, 'Password*') }}
+            {{ form_widget(resetForm.plainPassword.first) }}
+        </div>
+        <div class="securityFormRow">
+            {{ form_label(resetForm.plainPassword.second, 'Confirm Password*') }}
+            {{ form_widget(resetForm.plainPassword.second) }}
+        </div>
+        <button class="securityFormSubmitButton">Reset password</button>
+        {{ form_end(resetForm) }}
+    </div>
+{% endblock %}

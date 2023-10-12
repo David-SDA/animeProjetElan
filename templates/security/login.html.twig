@@ -25,7 +25,7 @@
                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
             </div>
             <div class="securityFormRowTerms">
-                <input type="checkbox" name="_remember_me" checked>
+                <input type="checkbox" name="_remember_me">
                 <label for="_remember_me">Remember me</label>
             </div>
     
@@ -35,7 +35,7 @@
     
             <button type="submit" class="securityFormSubmitButton">LOG IN</button>
             <div class="securityFormLinksEnd">
-                <a href="#" class="securityFormLinkEnd">Forgot password ?</a>
+                <a href="{{ path('app_forgot_password_request') }}" class="securityFormLinkEnd">Forgot password ?</a>
                 <a href="{{ path('app_register') }}" class="securityFormLinkEnd">No account ? Register here !</a>
             </div>
         </form>
