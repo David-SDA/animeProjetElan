@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `anime` (
   UNIQUE KEY `UNIQ_1304594233A13055` (`id_api`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.anime : ~10 rows (environ)
+-- Listage des données de la table animeprojetelan.anime : ~9 rows (environ)
 INSERT INTO `anime` (`id`, `id_api`) VALUES
 	(12, 21),
 	(13, 16498),
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `personnage` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.personnage : ~8 rows (environ)
+-- Listage des données de la table animeprojetelan.personnage : ~6 rows (environ)
 INSERT INTO `personnage` (`id`, `id_api`) VALUES
 	(1, 90169),
 	(2, 124790),
@@ -195,6 +195,21 @@ INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `conten
 	(26, '2023-10-05 11:35:19', '2023-10-05 11:35:19', 'test', 13, 13),
 	(27, '2023-10-06 16:11:39', '2023-10-06 16:11:39', 'test', 13, 13);
 
+-- Listage de la structure de table animeprojetelan. reset_password_request
+CREATE TABLE IF NOT EXISTS `reset_password_request` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `selector` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hashed_token` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `requested_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  `expires_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  PRIMARY KEY (`id`),
+  KEY `IDX_7CE748AA76ED395` (`user_id`),
+  CONSTRAINT `FK_7CE748AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table animeprojetelan.reset_password_request : ~0 rows (environ)
+
 -- Listage de la structure de table animeprojetelan. user
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -219,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Listage des données de la table animeprojetelan.user : ~14 rows (environ)
 INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`, `date_naissance`, `pays`, `ville`, `description`, `est_visible`, `roles`, `password`, `is_verified`, `est_banni`) VALUES
 	(1, 'user1@user1.com', 'user1', '2023-09-01 06:56:03', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$Gb.FWdfanrFiySEQfAxbQ.ZPt4CSYxr1Q0GY1d/SBxFEGCl/UpH/u', 1, 1),
-	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$NKDfkWnxZ8FLs1P63GHscO6Ad0Vcgi/Q6msLS50H913z7M9NQvrPC', 1, 0),
+	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$xabZZkOxw9qQEafjsDZFM.kCzxA73VYSrqDqaqAtTapqQezk1zYtS', 1, 0),
 	(4, 'user3@user3.com', 'user3', '2023-09-01 07:14:13', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$F/y9v.g6j8/Sc0BLqibmsueZCKaOwfqXnXYyiZzchun2N.JWqsRoG', 0, 0),
 	(5, 'user4@user4.com', 'user4', '2023-09-01 07:19:59', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$Mk8FeUNfSexvRysP.zV77eIrER6Oa7gNj31NjNgLq/WxQUFDd52vi', 1, 0),
 	(6, 'user5@user5.com', 'user5', '2023-09-01 08:35:53', NULL, NULL, NULL, NULL, NULL, 1, '[]', '$2y$13$G7onYkk8669blLK8GhVpdeGXlBSsjVBj283/iqUQsCJjrdhVWknai', 1, 0),
