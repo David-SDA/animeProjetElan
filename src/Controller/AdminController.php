@@ -3,19 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\PersonnageRepository;
 use App\Security\EmailVerifier;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\AnimeRepository;
 use Symfony\Component\Mime\Address;
 use App\Repository\DiscussionRepository;
+use App\Repository\PersonnageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
