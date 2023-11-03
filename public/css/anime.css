@@ -137,6 +137,7 @@
 /* Contenu à droite de la partie restante */
 .animeRemainingRightContent{
     margin-left: 1.5em;
+    width: 100%;
 }
 
 /* Temps avant le prochain épisode */
@@ -161,10 +162,7 @@
     color: #333333;
     margin-bottom: 0.5em;
 }
-/* Pour la partie des commentaires sur l'animé */
-.animeRemainingRightContentPartTitle:last-of-type{
-    margin-bottom: 0;
-}
+
 
 /* Le texte qui permet de voir plus (pour les personnages et staff) */
 .animeRemainingRightContentPartMore{
