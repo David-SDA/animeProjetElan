@@ -4,11 +4,12 @@
 
 {% block body %}
     {% if app.user %}
-        <h1 class="title">Welcome {{ app.user.pseudo }} !</h1>
+        <h1 class="title">Welcome {{ app.user.pseudo }} ! Explore our catalog</h1>
     {% else %}
-        <h1 class="title">Welcome !</h1>
+        <h1 class="title">Discover anime !</h1>
     {% endif %}
     <main class="homeContainer">
+        <p>Explore the world of <strong>anime</strong>! Browse our extensive <strong>anime catalog</strong>, stay up-to-date with your <strong>anime calendar</strong>, and <strong>engage in discussions</strong> about your favorite series!</p>
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">BEST THIS SEASON</h2>
