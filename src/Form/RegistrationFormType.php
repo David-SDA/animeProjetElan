@@ -27,16 +27,6 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo', TextType::class, [
                 'required' => true,
             ])
-            ->add('pays', TextType::class, [
-                'required' => false,
-            ])
-            ->add('ville', TextType::class, [
-                'required' => false,
-            ])
-            ->add('dateNaissance', DateType::class,[
-                'widget' => 'single_text',
-                'required' => false,
-            ])
             ->add('imageProfil', FileType::class, [
                 'required' => false,
                 'constraints' => [

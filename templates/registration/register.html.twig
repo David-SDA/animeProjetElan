@@ -16,18 +16,6 @@
                 {{ form_widget(registrationForm.email) }}
             </div>
             <div class="securityFormRow">
-                {{ form_label(registrationForm.pays, 'Country') }}
-                {{ form_widget(registrationForm.pays) }}
-            </div>
-            <div class="securityFormRow">
-                {{ form_label(registrationForm.ville, 'City') }}
-                {{ form_widget(registrationForm.ville) }}
-            </div>
-            <div class="securityFormRow">
-                {{ form_label(registrationForm.dateNaissance, 'Date of birth') }}
-                {{ form_widget(registrationForm.dateNaissance) }}
-            </div>
-            <div class="securityFormRow">
                 {{ form_label(registrationForm.imageProfil, 'Profile picture') }}
                 {{ form_widget(registrationForm.imageProfil) }}
             </div>
@@ -43,6 +31,7 @@
                 {{ form_widget(registrationForm.agreeTerms) }}
                 {{ form_label(registrationForm.agreeTerms, 'Agree Terms of Use') }}
             </div>
+            <a href="#" class="securityFormLinkEnd">Read Term of Use</a>
             <button type="submit" class="securityFormSubmitButton">REGISTER</button>
             <a href="{{ path('app_login') }}" class="securityFormLinkEnd">Already have an account ? Login here !</a>
         {{ form_end(registrationForm) }}
