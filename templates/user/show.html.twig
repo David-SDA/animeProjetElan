@@ -44,18 +44,6 @@
         </div>
         <div class="animeRemainingContainer profile">
             <div class="profileInfosLine">
-                <section class="profileInfos">
-                    <h2 class="profileInfosTitle">Details</h2>
-                    <p class="profileInfo"><span class="profileInfoTitle">Joined : </span>{{ user.dateInscription|date("m/d/Y H:i:s") }} <i>(UTC)</i></p>
-                    <p class="profileInfo"><span class="profileInfoTitle">Date of birth : </span>{{ user.dateNaissance ? user.dateNaissance|date("m/d/Y") : '<i>Not specified</i>' }}</p>
-                    {% if user.pays and user.ville %}
-                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays }}, {{ user.ville }}</p>
-                    {% elseif user.pays or user.ville %}
-                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span>{{ user.pays ? user.pays : user.ville }}</p>
-                    {% else %}
-                        <p class="profileInfo"><span class="profileInfoTitle">Location : </span><i>Not specified</i></p>
-                    {% endif %}
-                </section>
                 <div class="profileInfos">
                     <p><i>A venir...</i></p>
                 </div>

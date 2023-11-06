@@ -423,17 +423,20 @@
 @media screen and (max-width: 767px){
     /* Partie du haut de la page d'un animé */
     .animeTopContainer{
+        flex-direction: column;
         padding: 1.5em 2.5%;
     }
 
     /* L'image de l'animé */
     .animeImage{
         width: 125px;
+        margin: auto;
     }
 
     /* La partie droite du contenu du haut de la page d'un animé */
     .animeTopRightContent{
         margin-left: 1em;
+        margin-top: 10px;
     }
 
     /* Le titre de l'animé */
