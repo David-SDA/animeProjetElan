@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   PRIMARY KEY (`id`),
   KEY `IDX_B26681EA76ED395` (`user_id`),
   CONSTRAINT `FK_B26681EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.evenement : ~5 rows (environ)
 INSERT INTO `evenement` (`id`, `nom_evenement`, `date_debut`, `date_fin`, `user_id`, `est_recurrent`) VALUES
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `reset_password_request` (
   PRIMARY KEY (`id`),
   KEY `IDX_7CE748AA76ED395` (`user_id`),
   CONSTRAINT `FK_7CE748AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.reset_password_request : ~0 rows (environ)
 
@@ -230,9 +230,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
   UNIQUE KEY `UNIQ_8D93D64986CC499D` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user : ~15 rows (environ)
+-- Listage des données de la table animeprojetelan.user : ~16 rows (environ)
 INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`, `description`, `est_visible`, `roles`, `password`, `is_verified`, `est_banni`) VALUES
 	(1, 'user1@user1.com', 'user1', '2023-09-01 06:56:03', NULL, NULL, 1, '[]', '$2y$13$Gb.FWdfanrFiySEQfAxbQ.ZPt4CSYxr1Q0GY1d/SBxFEGCl/UpH/u', 1, 1),
 	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, 1, '[]', '$2y$13$xabZZkOxw9qQEafjsDZFM.kCzxA73VYSrqDqaqAtTapqQezk1zYtS', 1, 0),
@@ -248,7 +248,8 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`,
 	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-6544ec9e133e0.jpg', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$mKcdfV90IOFI.qynODxJGOFdUurtw8meO1o4UqATO20AUOhFqlgWC', 1, 0),
 	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0),
 	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, 1, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 0),
-	(16, 'usertest@usertest.com', 'User test', '2023-11-08 14:49:27', NULL, NULL, 1, '[]', '$2y$13$XfYCicvLaUCbtm2quL3PS./cMw69.VHZcOcHmhZ9LceyFjD1ZStUi', 1, 0);
+	(16, 'usertest@usertest.com', 'User test', '2023-11-08 14:49:27', NULL, NULL, 1, '[]', '$2y$13$XfYCicvLaUCbtm2quL3PS./cMw69.VHZcOcHmhZ9LceyFjD1ZStUi', 1, 0),
+	(17, 'user14@user14.com', 'user14', '2023-11-08 16:26:56', NULL, NULL, 1, '[]', '$2y$13$0RfB0uMnLTfKsOviKfHAluF4t5C7jJjGo5ReI1dEU/Y7h2bU4C8jq', 1, 0);
 
 -- Listage de la structure de table animeprojetelan. user_anime
 CREATE TABLE IF NOT EXISTS `user_anime` (
@@ -265,7 +266,6 @@ CREATE TABLE IF NOT EXISTS `user_anime` (
 INSERT INTO `user_anime` (`user_id`, `anime_id`) VALUES
 	(13, 1),
 	(13, 2),
-	(13, 8),
 	(13, 10),
 	(13, 11),
 	(13, 13),
@@ -333,12 +333,10 @@ INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_
 	(2, 13, 2, 'Watching', 11, NULL, NULL),
 	(4, 13, 4, 'Completed', 24, NULL, NULL),
 	(5, 1, 1, 'Completed', 25, NULL, NULL),
-	(8, 13, 8, 'Watching', 9, '2023-10-05', '2023-10-13'),
 	(10, 13, 9, 'Completed', 13, NULL, NULL),
 	(12, 13, 3, 'Plan to watch', 0, NULL, NULL),
 	(16, 13, 15, 'Watching', 7, '2023-09-29', NULL),
-	(17, 13, 16, 'Plan to watch', 1, NULL, NULL),
-	(18, 13, 17, 'Watching', 148, NULL, NULL);
+	(17, 13, 16, 'Plan to watch', 1, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
