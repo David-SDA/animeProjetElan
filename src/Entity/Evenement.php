@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -18,9 +19,27 @@ class Evenement
     private ?string $nomEvenement = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\When(
+        expression: 'this.getDateFin() != null',
+        constraints: [
+            new Assert\LessThan(
+                propertyPath: 'dateFin',
+                message: 'Start date must be before end date !'
+            )
+        ]
+    )]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\When(
+        expression: 'this.getDateDebut() != null',
+        constraints: [
+            new Assert\GreaterThan(
+                propertyPath: 'dateDebut',
+                message: 'End date must be after start date !'
+            )
+        ]
+    )]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]

@@ -30,10 +30,12 @@
                 <div class="securityFormRow">
                     {{ form_label(form.dateDebut, 'Start Date* (if it is a weekly event, this date is the first occurence of it)') }}
                     {{ form_widget(form.dateDebut) }}
+                    {{ form_errors(form.dateDebut) }}
                 </div>
                 <div class="securityFormRow">
                     {{ form_label(form.dateFin, 'End Date* (if it is a weekly event, this date is the last occurence of it)') }}
                     {{ form_widget(form.dateFin) }}
+                    {{ form_errors(form.dateFin) }}
                 </div>
             {% if eventExist %}
                 <button type="submit" class="securityFormSubmitButton large">Edit event</button>
