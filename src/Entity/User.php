@@ -42,15 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageProfil = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateNaissance = null;
-
-    #[ORM\Column(length: 60, nullable: true)]
-    private ?string $pays = null;
-
-    #[ORM\Column(length: 100, nullable: true)]
-    private ?string $ville = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
@@ -200,42 +191,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImageProfil(?string $imageProfil): static
     {
         $this->imageProfil = $imageProfil;
-
-        return $this;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
-    {
-        $this->dateNaissance = $dateNaissance;
-
-        return $this;
-    }
-
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
-
-    public function setPays(?string $pays): static
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(?string $ville): static
-    {
-        $this->ville = $ville;
 
         return $this;
     }
