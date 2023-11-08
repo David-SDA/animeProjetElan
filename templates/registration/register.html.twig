@@ -22,6 +22,8 @@
             <div class="securityFormRow">
                 {{ form_label(registrationForm.plainPassword.first, 'Password*') }}
                 {{ form_widget(registrationForm.plainPassword.first) }}
+                {{ form_errors(registrationForm.plainPassword.first) }}
+                <p class="securityFormLinkEnd"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
             </div>
             <div class="securityFormRow">
                 {{ form_label(registrationForm.plainPassword.second, 'Confirm Password*') }}

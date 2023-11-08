@@ -9,6 +9,8 @@
         <div class="securityFormRow">
             {{ form_label(resetForm.plainPassword.first, 'Password*') }}
             {{ form_widget(resetForm.plainPassword.first) }}
+            {{ form_errors(resetForm.plainPassword.first) }}
+                <p class="securityFormLinkEnd"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
         </div>
         <div class="securityFormRow">
             {{ form_label(resetForm.plainPassword.second, 'Confirm Password*') }}

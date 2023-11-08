@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangePasswordFormType extends AbstractType
 {
@@ -27,11 +27,11 @@ class ChangePasswordFormType extends AbstractType
                         new NotBlank([
                             'message' => 'Please enter a password',
                         ]),
-                        new Length([
-                            'min' => 4,
-                            'minMessage' => 'Your password should be at least 8 characters',
-                            'max' => 255,
-                        ]),
+                        new Regex([
+                            'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,40}$/',
+                            'match' => 'true',
+                            'message' => 'This password does not match the required pattern bellow :'
+                        ])
                     ],
                     'label' => 'New password',
                 ],
