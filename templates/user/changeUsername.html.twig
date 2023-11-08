@@ -11,6 +11,7 @@
                 <div class="securityFormRow">
                     {{ form_label(form.pseudo, 'Username') }}
                     {{ form_widget(form.pseudo) }}
+                    {{ form_errors(form.pseudo) }}
                 </div>
                 <button type="submit" class="securityFormSubmitButton large">Change Username</button>
             {{ form_end(form) }}

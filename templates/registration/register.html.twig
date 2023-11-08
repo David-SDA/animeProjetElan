@@ -10,6 +10,7 @@
             <div class="securityFormRow">
                 {{ form_label(registrationForm.pseudo, 'Username*') }}
                 {{ form_widget(registrationForm.pseudo) }}
+                {{ form_errors(registrationForm.pseudo) }}
             </div>
             <div class="securityFormRow">
                 {{ form_label(registrationForm.email, 'Email*') }}
