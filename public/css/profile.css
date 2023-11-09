@@ -253,8 +253,7 @@
         width: 100px;
     }
     .profileInfosButton.talks{
-        top: auto;
-        bottom: 40px;
+        top: 90px;
     }
     .profileInfosButton.addPost{
         display: flex;
