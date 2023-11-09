@@ -21,16 +21,15 @@ class Anime
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'animes')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: Discussion::class, inversedBy: 'animes')]
-    private Collection $discussions;
-
     #[ORM\OneToMany(mappedBy: 'anime', targetEntity: UserRegarderAnime::class, orphanRemoval: true)]
     private Collection $userRegarderAnimes;
+
+    #[ORM\OneToOne(inversedBy: 'anime', cascade: ['persist', 'remove'])]
+    private ?Discussion $discussion = null;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->discussions = new ArrayCollection();
         $this->userRegarderAnimes = new ArrayCollection();
     }
 
@@ -79,30 +78,6 @@ class Anime
     }
 
     /**
-     * @return Collection<int, Discussion>
-     */
-    public function getDiscussions(): Collection
-    {
-        return $this->discussions;
-    }
-
-    public function addDiscussion(Discussion $discussion): static
-    {
-        if (!$this->discussions->contains($discussion)) {
-            $this->discussions->add($discussion);
-        }
-
-        return $this;
-    }
-
-    public function removeDiscussion(Discussion $discussion): static
-    {
-        $this->discussions->removeElement($discussion);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, UserRegarderAnime>
      */
     public function getUserRegarderAnimes(): Collection
@@ -128,6 +103,18 @@ class Anime
                 $userRegarderAnime->setAnime(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDiscussion(): ?Discussion
+    {
+        return $this->discussion;
+    }
+
+    public function setDiscussion(?Discussion $discussion): static
+    {
+        $this->discussion = $discussion;
 
         return $this;
     }

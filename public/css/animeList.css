@@ -100,6 +100,7 @@
 .animeEpisodesWatched{
     font-weight: 500;
     color: #fff;
+    margin: auto;
 }
 
 /* L'image d'un animé dans la liste */

@@ -28,15 +28,14 @@ class Discussion
     #[ORM\ManyToOne(inversedBy: 'discussions')]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Anime::class, mappedBy: 'discussions')]
-    private Collection $animes;
-
     #[ORM\OneToMany(mappedBy: 'discussion', targetEntity: Post::class, orphanRemoval: true)]
     private Collection $posts;
 
+    #[ORM\OneToOne(mappedBy: 'discussion', cascade: ['persist', 'remove'])]
+    private ?Anime $anime = null;
+
     public function __construct()
     {
-        $this->animes = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
 
@@ -94,33 +93,6 @@ class Discussion
     }
 
     /**
-     * @return Collection<int, Anime>
-     */
-    public function getAnimes(): Collection
-    {
-        return $this->animes;
-    }
-
-    public function addAnime(Anime $anime): static
-    {
-        if (!$this->animes->contains($anime)) {
-            $this->animes->add($anime);
-            $anime->addDiscussion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnime(Anime $anime): static
-    {
-        if ($this->animes->removeElement($anime)) {
-            $anime->removeDiscussion($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
@@ -146,6 +118,28 @@ class Discussion
                 $post->setDiscussion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnime(): ?Anime
+    {
+        return $this->anime;
+    }
+
+    public function setAnime(?Anime $anime): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($anime === null && $this->anime !== null) {
+            $this->anime->setDiscussion(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($anime !== null && $anime->getDiscussion() !== $this) {
+            $anime->setDiscussion($this);
+        }
+
+        $this->anime = $anime;
 
         return $this;
     }

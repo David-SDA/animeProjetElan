@@ -426,6 +426,9 @@
         flex-direction: column;
         padding: 1.5em 2.5%;
     }
+    .animeTopContainer figure{
+        margin: auto;
+    }
 
     /* L'image de l'animé */
     .animeImage{

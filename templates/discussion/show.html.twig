@@ -53,7 +53,7 @@
             <div class="onePostTopContainer">
                 <figure class="oneTalkUserContainer">
                     <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
-                    <figcaption class="oneTalkUsername post">{{ talk.user.pseudo }}</figcaption>
+                    <figcaption class="oneTalkUsername post"><a href="{{ path('show_user', { id: talk.user.id }) }}">{{ talk.user.pseudo }}</a></figcaption>
                 </figure>
                 {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
                 {% set textCreation = _self.textTimeAgo(talk.posts|first.dateCreation) %}
@@ -101,7 +101,7 @@
                 <div class="onePostTopContainer">
                     <figure class="oneTalkUserContainer">
                         <img src="{{ post.user.imageProfil ? asset('uploads/' ~ post.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.pseudo }} profile picture" class="oneTalkUserImage">
-                        <figcaption class="oneTalkUsername post">{{ post.user.pseudo }}</figcaption>
+                        <figcaption class="oneTalkUsername post"><a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.pseudo }}</a></figcaption>
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
                     {% set textPublication = _self.textTimeAgo(post.dateCreation) %}
