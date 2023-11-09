@@ -45,6 +45,8 @@
     {% set jsonTalks = jsonTalks|merge([jsonTalk]) %}
 {% endfor %}
 
+{% block meta_description %}Find out what people are talking about right now!{% endblock %}
+
 {% block title %}Talks{% endblock %}
 
 {% block body %}

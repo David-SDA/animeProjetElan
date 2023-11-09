@@ -3,6 +3,8 @@
 {# Permet de rendre la récuperation des données plus pratique #}
 {% set dataThisStaff = dataOneStaff.data.Staff %}
 
+{% block meta_description %}Discover all the details about {{ dataThisStaff.name.full|default('Unknown') }}{% endblock %}
+
 {% block title %}{{ dataThisStaff.name.full|default('Unknown') }}{% endblock %}
 
 {% block body %}

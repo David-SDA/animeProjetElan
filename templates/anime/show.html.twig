@@ -3,6 +3,8 @@
 {# Permet de rendre la récuperation des données plus pratique #}
 {% set dataThisAnime = dataOneAnime.data.Media %}
 
+{% block meta_description %}{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : dataThisAnime.title.romaji }}{% endblock %}
+
 {% block title %}{{ dataThisAnime.title.romaji ? dataThisAnime.title.romaji : "?" }}{% endblock %}
 
 {% block body %}
@@ -254,11 +256,11 @@
                     </section>
                 {% endfor %}
                 </div> #}
-                <h2 class="animeRemainingRightContentPartTitle">Give your opinion about this anime !</h2>
+                {# <h2 class="animeRemainingRightContentPartTitle">Give your opinion about this anime !</h2>
                 <div class="animeRemainingRightContentPartYourOpinionContainer">
                     <textarea name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
                     <input type="submit" value="Publish your opinion" class="animeRemainingRightContentPartYourOpinionSubmit">
-                </div>
+                </div> #}
                 {# <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it !</h2>
                 <p class="animeRemainingRightContentPartOpinionsFilter">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
                 <div class="animeRemainingRightContentPartOpinionsContainer">

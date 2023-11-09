@@ -3,6 +3,8 @@
 {# Permet de rendre la récuperation des données plus pratique #}
 {% set dataThisCharacter = dataOneCharacter.data.Character %}
 
+{% block meta_description %}Discover all the details about {{ dataThisCharacter.name.full|default('Unknown') }}{% endblock %}
+
 {% block title %}{{ dataThisCharacter.name.full|default('Unknown') }}{% endblock %}
 
 {% block body %}
