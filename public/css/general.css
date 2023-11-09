@@ -6,6 +6,9 @@
 }
 body{
     background-color: #F5F5F5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column
 }
 a{
     text-decoration: none;
@@ -16,6 +19,24 @@ a.securityFormLinkEnd:hover{
 }
 ul{
     list-style-type: none;
+}
+main{
+    margin-top: 0 !important;
+}
+footer{
+    background-color: #48466D;
+    color: #fff;
+    width: 100%;
+    margin-top: auto;
+}
+footer ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 1em;
+}
+footer ul a:hover{
+    text-decoration: underline;
 }
 
 /* Les messages flashs */
@@ -340,6 +361,18 @@ ul{
 /* Les liens que l'on veut de couleur bleu */
 .coloredLink{
     color: #00BFFF;
+}
+
+@media screen and (max-width: 767px){
+    footer ul{
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 1em;
+    }
+    footer ul li{
+        margin: 5px 0;
+    }
 }
 
 /* Pour tablette et mobile */
