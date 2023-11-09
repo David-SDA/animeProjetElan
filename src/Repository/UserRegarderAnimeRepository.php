@@ -21,6 +21,16 @@ class UserRegarderAnimeRepository extends ServiceEntityRepository
         parent::__construct($registry, UserRegarderAnime::class);
     }
 
+    public function getNbAnimesStatus(int $userId, string $status): int{
+        return $this->createQueryBuilder('list') // Création d'un query builder avec un alias pour l'entité actuel
+            ->select('COUNT(list.id)') // Sélection du nombre d'id des utilisateurs
+            ->andWhere('list.user = :userId')
+            ->andWhere('list.etat = :etat')
+            ->setParameters(['userId' => $userId, 'etat' => $status])
+            ->getQuery() // Obtention de la query construite
+            ->getSingleScalarResult(); // Execution de la query et obtention du résultat sous forme d'un nombre
+    }
+
 //    /**
 //     * @return UserRegarderAnime[] Returns an array of UserRegarderAnime objects
 //     */

@@ -47,7 +47,9 @@
         <div class="animeRemainingContainer profile">
             <div class="profileInfosLine">
                 <div class="profileInfos">
-                    <p><i>A venir...</i></p>
+                    <p>Animes watching : <i>{{ nbAnimesWatching }}</i></p>
+                    <p>Animes completed : <i>{{ nbAnimesCompleted }}</i></p>
+                    <p>Animes planned : <i>{{ nbAnimesPlanned }}</i></p>
                 </div>
                 <div class="profileInfos buttons">
                     <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>

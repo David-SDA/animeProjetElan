@@ -2,26 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Personnage;
 use App\Entity\User;
 use App\Entity\Anime;
-use App\Repository\EvenementRepository;
-use App\Repository\PersonnageRepository;
+use App\Entity\Personnage;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
 use App\Repository\AnimeRepository;
-use App\Service\CharacterCallApiService;
 use Symfony\Component\Mime\Address;
-use App\Form\ModifyPasswordFormType;
 use App\Form\ChangeUsernameFormType;
+use App\Form\ModifyPasswordFormType;
 use App\Service\AnimeCallApiService;
 use App\Form\ChangeDescriptionFormType;
+use App\Repository\EvenementRepository;
+use App\Repository\PersonnageRepository;
+use App\Service\CharacterCallApiService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ChangeProfilePictureFormType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\UserRegarderAnimeRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -451,11 +452,16 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_user')]
-    public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService): Response{
+    public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isEstBanni()){
             return $this->redirectToRoute('app_banned');
         }
+
+        /* Definition de statistiques sur la liste */
+        $nbAnimesWatching = $userRegarderAnimeRepository->getNbAnimesStatus($user->getId(), 'Watching');
+        $nbAnimesCompleted = $userRegarderAnimeRepository->getNbAnimesStatus($user->getId(), 'Completed');
+        $nbAnimesPlanned = $userRegarderAnimeRepository->getNbAnimesStatus($user->getId(), 'Plan to watch');
         
         /* On récupère la collection d'animés d'un utilisateur (qui représente les animés favoris d'un utilisateur) */
         $favoriteAnimes = $user->getAnimes();
@@ -483,6 +489,9 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'nbAnimesWatching' => $nbAnimesWatching,
+            'nbAnimesCompleted' => $nbAnimesCompleted,
+            'nbAnimesPlanned' => $nbAnimesPlanned,
             'favoriteAnimesData' => $favoriteAnimesData['data']['Page']['media'],
             'favoriteCharactersData' => $favoriteCharactersData['data']['Page']['characters'],
         ]);
