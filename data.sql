@@ -23,41 +23,31 @@ USE `animeprojetelan`;
 CREATE TABLE IF NOT EXISTS `anime` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_api` int NOT NULL,
+  `discussion_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_1304594233A13055` (`id_api`)
+  UNIQUE KEY `UNIQ_1304594233A13055` (`id_api`),
+  UNIQUE KEY `UNIQ_130459421ADED311` (`discussion_id`),
+  CONSTRAINT `FK_130459421ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.anime : ~9 rows (environ)
-INSERT INTO `anime` (`id`, `id_api`) VALUES
-	(12, 21),
-	(17, 11061),
-	(13, 16498),
-	(10, 103047),
-	(4, 113415),
-	(9, 125367),
-	(2, 145064),
-	(15, 154587),
-	(11, 154966),
-	(3, 158927),
-	(5, 159322),
-	(8, 159831),
-	(14, 161964),
-	(16, 162314),
-	(1, 163132),
-	(6, 163263);
-
--- Listage de la structure de table animeprojetelan. anime_discussion
-CREATE TABLE IF NOT EXISTS `anime_discussion` (
-  `anime_id` int NOT NULL,
-  `discussion_id` int NOT NULL,
-  PRIMARY KEY (`anime_id`,`discussion_id`),
-  KEY `IDX_C70F631F794BBE89` (`anime_id`),
-  KEY `IDX_C70F631F1ADED311` (`discussion_id`),
-  CONSTRAINT `FK_C70F631F1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_C70F631F794BBE89` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Listage des données de la table animeprojetelan.anime_discussion : ~0 rows (environ)
+INSERT INTO `anime` (`id`, `id_api`, `discussion_id`) VALUES
+	(1, 163132, NULL),
+	(2, 145064, NULL),
+	(3, 158927, NULL),
+	(4, 113415, NULL),
+	(5, 159322, NULL),
+	(6, 163263, NULL),
+	(8, 159831, NULL),
+	(9, 125367, NULL),
+	(10, 103047, NULL),
+	(11, 154966, NULL),
+	(12, 21, NULL),
+	(13, 16498, NULL),
+	(14, 161964, NULL),
+	(15, 154587, NULL),
+	(16, 162314, NULL),
+	(17, 11061, NULL);
 
 -- Listage de la structure de table animeprojetelan. discussion
 CREATE TABLE IF NOT EXISTS `discussion` (
@@ -69,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
 INSERT INTO `discussion` (`id`, `titre`, `date_creation`, `est_verrouiller`, `user_id`) VALUES
@@ -174,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.post : ~18 rows (environ)
 INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
@@ -303,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `user_post` (
   CONSTRAINT `FK_200B2044A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_post : ~2 rows (environ)
+-- Listage des données de la table animeprojetelan.user_post : ~5 rows (environ)
 INSERT INTO `user_post` (`user_id`, `post_id`) VALUES
 	(13, 1),
 	(13, 17),
@@ -327,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
   CONSTRAINT `FK_57428AE9A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_regarder_anime : ~9 rows (environ)
+-- Listage des données de la table animeprojetelan.user_regarder_anime : ~8 rows (environ)
 INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
 	(1, 13, 1, 'Completed', 13, '2023-09-07', '2023-09-20'),
 	(2, 13, 2, 'Watching', 11, NULL, NULL),
