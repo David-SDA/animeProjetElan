@@ -18,6 +18,12 @@ class ChangeProfilePictureFormType extends AbstractType
                 'constraints' => [
                     new Image([
                         'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Only JPG, JPEG or PNG images are accepted',
                     ])
                 ]
             ])
