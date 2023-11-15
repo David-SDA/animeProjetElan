@@ -154,7 +154,7 @@ class DiscussionController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier la discussion */
-        if(!$user || $user !== $discussion->getUser() || $discussion->isEstVerrouiller()){
+        if(!$user || $user !== $discussion->getUser() || $discussion->isEstVerrouiller() || !$discussion->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',

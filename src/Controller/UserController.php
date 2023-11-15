@@ -451,6 +451,35 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/settings/deleteAccount', name:'delete_account_user')]
+    public function deleteAccount(EntityManagerInterface $entityManagerInterface): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+        
+        /* Si l'utilisateur n'est pas connecté, il n'a pas accès à la suppression de compte */
+        if(!$currentUser){
+            return $this->redirectToRoute('app_home');
+        }
+        
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isEstBanni()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        foreach($currentUser->getDiscussions() as $discussion){
+            $discussion->setUser(null);
+        }
+
+        foreach($currentUser->getPosts() as $post){
+            $post->setUser(null);
+        }
+
+        $entityManagerInterface->remove($currentUser);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
+
     #[Route('/{id}', name: 'show_user')]
     public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */

@@ -52,8 +52,13 @@
                 <div class="oneTalkPartContainer">
                     <h2 class="oneTalkTitle">{{ talk.titre }}</h2>
                     <figure class="oneTalkUserContainer">
-                        <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
-                        <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
+                        {% if talk.user %}
+                            <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo|default('Deleted user') }} profile picture" class="oneTalkUserImage">
+                            <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
+                        {% else %}
+                            <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
+                            <figcaption class="oneTalkUsername">Deleted User</figcaption>
+                        {% endif %}
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
                     {% set textCreation = _self.textTimeAgo(talk.dateCreation) %}
@@ -63,8 +68,13 @@
                     <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
                     {% set lastPost = talk.posts|last %}
                     <figure class="oneTalkUserContainer right">
-                        <img src="{{ lastPost.user.imageProfil ? asset('uploads/' ~ lastPost.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.pseudo }} profile picture" class="oneTalkUserImage small">
-                        <figcaption class="oneTalkUsername small">{{ lastPost.user.pseudo }}</figcaption>
+                        {% if lastPost.user %}
+                            <img src="{{ lastPost.user.imageProfil ? asset('uploads/' ~ lastPost.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.pseudo|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
+                            <figcaption class="oneTalkUsername small">{{ lastPost.user.pseudo }}</figcaption>
+                        {% else %}
+                            <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted User profile picture" class="oneTalkUserImage small">
+                            <figcaption class="oneTalkUsername small">Deleted User</figcaption>
+                        {% endif %}
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la publication du dernier post et maintenant #}
                     {% set textPublication = _self.textTimeAgo(lastPost.dateCreation) %}

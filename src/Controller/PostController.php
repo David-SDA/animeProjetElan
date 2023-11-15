@@ -85,7 +85,7 @@ class PostController extends AbstractController
            ou que la discussion est verrouiller
            ou que le post est le premier de la discussion,
            on l'empeche de modifier le post */
-        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller() || $post === $discussion_id->getPosts()->first()){
+        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller() || $post === $discussion_id->getPosts()->first() || !$post->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -188,7 +188,7 @@ class PostController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas connecté */
-        if(!$user){
+        if(!$user || !$post->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -231,7 +231,7 @@ class PostController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas connecté */
-        if(!$user){
+        if(!$user || !$post->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
