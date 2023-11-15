@@ -117,7 +117,7 @@
     background-color: #fff;
     width: 80%;
     display: flex;
-    margin: 1em auto;
+    margin: 1em auto !important;
     padding: 1em;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
