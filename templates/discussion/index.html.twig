@@ -77,8 +77,8 @@
                         {% endif %}
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la publication du dernier post et maintenant #}
-                    {% set textPublication = _self.textTimeAgo(lastPost.dateCreation) %}
-                    <p class="oneTalkUserTime small" title="{{ lastPost.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
+                    {% set textPublication = _self.textTimeAgo(lastPost.creationDate) %}
+                    <p class="oneTalkUserTime small" title="{{ lastPost.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
                 </div>
             </a>
         </section>

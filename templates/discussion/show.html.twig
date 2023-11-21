@@ -66,9 +66,9 @@
                     </figcaption>
                 </figure>
                 {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
-                {% set textCreation = _self.textTimeAgo(talk.posts|first.dateCreation) %}
+                {% set textCreation = _self.textTimeAgo(talk.posts|first.creationDate) %}
                 <div class="oneTalkTopRightContainer">
-                    <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
+                    <p class="oneTalkUserTime post" title="{{ talk.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
                     {# Si la discussion appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, la discussion peut être supprimer #}
                     {% if (talk.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
                         {% if app.user %}
@@ -77,12 +77,12 @@
                     {% endif %}
                 </div>
             </div>
-            <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.contenu }}</p>
+            <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.content }}</p>
             <div class="onePostBottomContainer">
-            {% if talk.posts|first.dateCreation != talk.posts|first.dateDerniereModification %}
+            {% if talk.posts|first.creationDate != talk.posts|first.lastModifiedDate %}
                 {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification de la discussion et maintenant #}
-                {% set textFirstModified = _self.textTimeAgo(talk.posts|first.dateDerniereModification) %}
-                <p class="oneTalkUserTime post bottom" title="{{ talk.posts|first.dateDerniereModification|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textFirstModified }}</i></p>
+                {% set textFirstModified = _self.textTimeAgo(talk.posts|first.lastModifiedDate) %}
+                <p class="oneTalkUserTime post bottom" title="{{ talk.posts|first.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textFirstModified }}</i></p>
             {% endif %}
             {% if app.user %}
                 {# Si le post est liké par l'utilisateur #}
@@ -130,9 +130,9 @@
                         </figcaption>
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
-                    {% set textPublication = _self.textTimeAgo(post.dateCreation) %}
+                    {% set textPublication = _self.textTimeAgo(post.creationDate) %}
                     <div class="oneTalkTopRightContainer">
-                        <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                        <p class="oneTalkUserTime post" title="{{ post.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
                         <div class="oneTalkTopRightBottomLine">
                             {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
                             {% if post.user == app.user and not talk.locked and post.user %}
@@ -147,12 +147,12 @@
                         </div>
                     </div>
                 </div>
-                <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.contenu }}</p>
+                <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
                 <div class="onePostBottomContainer">
-                {% if post.dateCreation != post.dateDerniereModification %}
+                {% if post.creationDate != post.lastModifiedDate %}
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
-                    {% set textModified = _self.textTimeAgo(post.dateDerniereModification) %}
-                    <p class="oneTalkUserTime post bottom" title="{{ post.dateDerniereModification|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
+                    {% set textModified = _self.textTimeAgo(post.lastModifiedDate) %}
+                    <p class="oneTalkUserTime post bottom" title="{{ post.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
                 {% endif %}
                 {% if post.user %}
                     {% if app.user %}

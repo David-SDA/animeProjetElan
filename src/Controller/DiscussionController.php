@@ -117,9 +117,9 @@ class DiscussionController extends AbstractController
             $discussion->setUser($user);
 
             /* Ajout des données à l'entité post */
-            $firstPost->setDateCreation(new \DateTime());
-            $firstPost->setDateDerniereModification(new \DateTime());
-            $firstPost->setContenu($form->get('firstPost')->getData());
+            $firstPost->setCreationDate(new \DateTime());
+            $firstPost->setLastModifiedDate(new \DateTime());
+            $firstPost->setContent($form->get('firstPost')->getData());
             $firstPost->setUser($user);
             $firstPost->setDiscussion($discussion);
 
@@ -167,7 +167,7 @@ class DiscussionController extends AbstractController
         /* Création du formulaire */
         $form = $this->createForm(DiscussionFormType::class, null, [
             'title' => $discussion->getTitle(),
-            'firstPostContent' => $discussion->getPosts()->first()->getContenu(),
+            'firstPostContent' => $discussion->getPosts()->first()->getContent(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
@@ -179,7 +179,7 @@ class DiscussionController extends AbstractController
             $talkFirstPost = $form->get('firstPost')->getData();
 
             /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
-            if($talkTitle === $discussion->getTitle() && $talkFirstPost === $discussion->getPosts()->first()->getContenu()){
+            if($talkTitle === $discussion->getTitle() && $talkFirstPost === $discussion->getPosts()->first()->getContent()){
                 $this->addFlash(
                     'error',
                     'You need to change something to edit the talk'
@@ -190,8 +190,8 @@ class DiscussionController extends AbstractController
                 $discussion->setTitle($talkTitle);
     
                 /* On modifie le contenu et la date de dernière modification du premier post de la discussion */
-                $discussion->getPosts()->first()->setContenu($talkFirstPost);
-                $discussion->getPosts()->first()->setDateDerniereModification(new \DateTime());
+                $discussion->getPosts()->first()->setContent($talkFirstPost);
+                $discussion->getPosts()->first()->setLastModifiedDate(new \DateTime());
     
                 /* On sauvegarde ces changements dans la base de données */
                 $entityManagerInterface->persist($discussion);

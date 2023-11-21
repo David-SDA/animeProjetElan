@@ -45,9 +45,9 @@ class PostController extends AbstractController
         
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
-            $post->setDateCreation(new \DateTime());
-            $post->setDateDerniereModification(new \DateTime());
-            $post->setContenu($form->get('content')->getData());
+            $post->setCreationDate(new \DateTime());
+            $post->setLastModifiedDate(new \DateTime());
+            $post->setContent($form->get('content')->getData());
             $post->setUser($user);
             $post->setDiscussion($discussion);
 
@@ -97,7 +97,7 @@ class PostController extends AbstractController
 
         /* Création du formulaire */
         $form = $this->createForm(PostFormType::class, null, [
-            'content' => $post->getContenu(),
+            'content' => $post->getContent(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
@@ -108,7 +108,7 @@ class PostController extends AbstractController
             $postContent = $form->get('content')->getData();
 
             /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
-            if($postContent === $post->getContenu()){
+            if($postContent === $post->getContent()){
                 $this->addFlash(
                     'error',
                     'You need to change the content of the post'
@@ -116,8 +116,8 @@ class PostController extends AbstractController
             }
             else{
                 /* On modifie le contenu du post et sa date de dernière modification */
-                $post->setContenu($postContent);
-                $post->setDateDerniereModification(new \DateTime());
+                $post->setContent($postContent);
+                $post->setLastModifiedDate(new \DateTime());
     
                 /* On sauvegarde ces changements dans la base de données */
                 $entityManagerInterface->persist($post);

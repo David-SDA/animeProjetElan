@@ -17,13 +17,13 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $dateCreation = null;
+    private ?\DateTimeInterface $creationDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $dateDerniereModification = null;
+    private ?\DateTimeInterface $lastModifiedDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $contenu = null;
+    private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
@@ -45,38 +45,38 @@ class Post
         return $this->id;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->dateCreation;
+        return $this->creationDate;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setCreationDate(\DateTimeInterface $creationDate): static
     {
-        $this->dateCreation = $dateCreation;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
 
-    public function getDateDerniereModification(): ?\DateTimeInterface
+    public function getLastModifiedDate(): ?\DateTimeInterface
     {
-        return $this->dateDerniereModification;
+        return $this->lastModifiedDate;
     }
 
-    public function setDateDerniereModification(\DateTimeInterface $dateDerniereModification): static
+    public function setLastModifiedDate(\DateTimeInterface $lastModifiedDate): static
     {
-        $this->dateDerniereModification = $dateDerniereModification;
+        $this->lastModifiedDate = $lastModifiedDate;
 
         return $this;
     }
 
-    public function getContenu(): ?string
+    public function getContent(): ?string
     {
-        return $this->contenu;
+        return $this->content;
     }
 
-    public function setContenu(string $contenu): static
+    public function setContent(string $content): static
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
 
         return $this;
     }
