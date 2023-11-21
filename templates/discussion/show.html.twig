@@ -29,23 +29,23 @@
     {% endif %}
 {% endmacro %}
 
-{% block meta_description %}Find out what people think about this topic : {{ talk.titre }}{% endblock %}
+{% block meta_description %}Find out what people think about this topic : {{ talk.title }}{% endblock %}
 
-{% block title %}{{ talk.titre }}{% endblock %}
+{% block title %}{{ talk.title }}{% endblock %}
 
 {% block body %}
     <main class="talkContainer">
         <h1 class="title talks">
-            {{ talk.titre }}
+            {{ talk.title }}
             {# Si la discussion appartient à l'utilisateur et n'est pas verrouillé, il pourra la modifier #}
-            {% if talk.user == app.user and not talk.estVerrouiller and app.user %}
+            {% if talk.user == app.user and not talk.locked and app.user %}
                 <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
             {% endif %}
             {# Si l'utilisateur est un admin et la discussion est verrouillé, il pourra déverrouiller celle-ci #}
             {# Si l'utilisateur est un admin et la discussion n'est pas verrouillé, il pourra verrouiller celle-ci #}
-            {% if is_granted('ROLE_ADMIN') and talk.estVerrouiller %}
+            {% if is_granted('ROLE_ADMIN') and talk.locked %}
                 <a href="{{ path('unlock_discussion', { id: talk.id }) }}" title="Unlock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock"></i></a>
-            {% elseif is_granted('ROLE_ADMIN') and not talk.estVerrouiller %}
+            {% elseif is_granted('ROLE_ADMIN') and not talk.locked %}
                 <a href="{{ path('lock_discussion', { id: talk.id }) }}" title="Lock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock-open"></i></a>
             {% endif %}
         </h1>
@@ -70,7 +70,7 @@
                 <div class="oneTalkTopRightContainer">
                     <p class="oneTalkUserTime post" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
                     {# Si la discussion appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, la discussion peut être supprimer #}
-                    {% if (talk.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
+                    {% if (talk.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
                         {% if app.user %}
                             <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
                         {% endif %}
@@ -105,7 +105,7 @@
             <p class="oneTalkRepliesNumber">
                 {{ responseNumber }} {{ responseNumber > 1 ? 'Replies' : 'Reply' }}
                 {# Si l'utilisateur est connecté et la discussion n'est pas verrouiller, l'utilisateur peut créer une discussion #}
-                {% if app.user and not talk.estVerrouiller %}
+                {% if app.user and not talk.locked %}
                     <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost" title="Reply to this discussion">Reply</a>
                 {% endif %}
             </p>
@@ -135,11 +135,11 @@
                         <p class="oneTalkUserTime post" title="{{ post.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
                         <div class="oneTalkTopRightBottomLine">
                             {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
-                            {% if post.user == app.user and not talk.estVerrouiller and post.user %}
+                            {% if post.user == app.user and not talk.locked and post.user %}
                                 <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
                             {% endif %}
                             {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
-                            {% if (post.user == app.user and not talk.estVerrouiller) or is_granted('ROLE_ADMIN') %}
+                            {% if (post.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
                                 {% if app.user %}
                                     <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
                                 {% endif %}

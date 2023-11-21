@@ -29,7 +29,7 @@ class DiscussionController extends AbstractController
         $form->handleRequest($request);
         
         /* On cherche toutes les discussions en fonction */
-        $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
+        $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
@@ -37,22 +37,22 @@ class DiscussionController extends AbstractController
             switch($form->get('filter')->getData()){
                 /* Cas des titres de A à Z */
                 case 'titreAsc':
-                    $talks = $discussionRepository->findBy([], ['titre' => 'ASC']);
+                    $talks = $discussionRepository->findBy([], ['title' => 'ASC']);
                     break;
                 
                 /* Cas des titres de Z à A */
                 case 'titreDesc':
-                    $talks = $discussionRepository->findBy([], ['titre' => 'DESC']);
+                    $talks = $discussionRepository->findBy([], ['title' => 'DESC']);
                     break;
 
                 /* Cas des date de creation des plus ancien aux plus récent */
                 case 'dateCreationAsc':
-                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'ASC']);
+                    $talks = $discussionRepository->findBy([], ['creationDate' => 'ASC']);
                     break;
 
                 /* Cas des date de creation des plus récent aux plus ancien */
                 case 'dateCreationDesc':
-                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
+                    $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
                     break;
 
                 /* Cas du nombre de posts du plus petit au plus grand */
@@ -67,7 +67,7 @@ class DiscussionController extends AbstractController
 
                 /* Cas par défaut : cas dateCreationDesc */
                 default:
-                    $talks = $discussionRepository->findBy([], ['dateCreation' => 'DESC']);
+                    $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
                     break;
             }
         }
@@ -111,9 +111,9 @@ class DiscussionController extends AbstractController
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* Ajout des données à l'entité discussion */
-            $discussion->setTitre($form->get('title')->getData());
-            $discussion->setDateCreation(new \DateTime());
-            $discussion->setEstVerrouiller(false);
+            $discussion->setTitle($form->get('title')->getData());
+            $discussion->setCreationDate(new \DateTime());
+            $discussion->setLocked(false);
             $discussion->setUser($user);
 
             /* Ajout des données à l'entité post */
@@ -154,7 +154,7 @@ class DiscussionController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas connecté ou que la discussion n'a pas été crée par lui ou que la discussion est verrouiller, on l'empeche de modifier la discussion */
-        if(!$user || $user !== $discussion->getUser() || $discussion->isEstVerrouiller() || !$discussion->getUser()){
+        if(!$user || $user !== $discussion->getUser() || $discussion->isLocked() || !$discussion->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -166,7 +166,7 @@ class DiscussionController extends AbstractController
 
         /* Création du formulaire */
         $form = $this->createForm(DiscussionFormType::class, null, [
-            'title' => $discussion->getTitre(),
+            'title' => $discussion->getTitle(),
             'firstPostContent' => $discussion->getPosts()->first()->getContenu(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
@@ -179,7 +179,7 @@ class DiscussionController extends AbstractController
             $talkFirstPost = $form->get('firstPost')->getData();
 
             /* On vérifie si les données indiquées sont tous les même ou pas que ceux actuelles */
-            if($talkTitle === $discussion->getTitre() && $talkFirstPost === $discussion->getPosts()->first()->getContenu()){
+            if($talkTitle === $discussion->getTitle() && $talkFirstPost === $discussion->getPosts()->first()->getContenu()){
                 $this->addFlash(
                     'error',
                     'You need to change something to edit the talk'
@@ -187,7 +187,7 @@ class DiscussionController extends AbstractController
             }
             else{
                 /* On modifie le titre de la discussion */
-                $discussion->setTitre($talkTitle);
+                $discussion->setTitle($talkTitle);
     
                 /* On modifie le contenu et la date de dernière modification du premier post de la discussion */
                 $discussion->getPosts()->first()->setContenu($talkFirstPost);
@@ -229,7 +229,7 @@ class DiscussionController extends AbstractController
            on l'empeche de supprimer la discussion */
         if(!$user
             || $user !== $discussion->getUser() && !$this->isGranted('ROLE_ADMIN')
-            || $discussion->isEstVerrouiller() && !$this->isGranted('ROLE_ADMIN')){
+            || $discussion->isLocked() && !$this->isGranted('ROLE_ADMIN')){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -240,7 +240,7 @@ class DiscussionController extends AbstractController
         }
 
         /* On récupère le titre de la discussion qui va être supprimer */
-        $talkTitle = $discussion->getTitre();
+        $talkTitle = $discussion->getTitle();
 
         /* On supprime la discussion et on sauvegarde ces changements dans la base de données */
         $entityManagerInterface->remove($discussion);
@@ -263,7 +263,7 @@ class DiscussionController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas un admin et que la discussion est déjà verrouillé, il n'est pas autorisé à verrouiller la discussion */
-        if(!$this->isGranted('ROLE_ADMIN') && $discussion->isEstVerrouiller()){
+        if(!$this->isGranted('ROLE_ADMIN') && $discussion->isLocked()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -274,7 +274,7 @@ class DiscussionController extends AbstractController
         }
 
         /* On verrouille la discussion */
-        $discussion->setEstVerrouiller(true);
+        $discussion->setLocked(true);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($discussion);
@@ -297,7 +297,7 @@ class DiscussionController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas un admin et que la discussion n'est déjà pas verrouiller , il n'est pas autorisé à déverrouiller la discussion */
-        if(!$this->isGranted('ROLE_ADMIN') && !$discussion->isEstVerrouiller()){
+        if(!$this->isGranted('ROLE_ADMIN') && !$discussion->isLocked()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -308,7 +308,7 @@ class DiscussionController extends AbstractController
         }
 
         /* On déverrouille la discussion */
-        $discussion->setEstVerrouiller(false);
+        $discussion->setLocked(false);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($discussion);

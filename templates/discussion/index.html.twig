@@ -50,7 +50,7 @@
         <section>
             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer">
                 <div class="oneTalkPartContainer">
-                    <h2 class="oneTalkTitle">{{ talk.titre }}</h2>
+                    <h2 class="oneTalkTitle">{{ talk.title }}</h2>
                     <figure class="oneTalkUserContainer">
                         {% if talk.user %}
                             <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo|default('Deleted user') }} profile picture" class="oneTalkUserImage">
@@ -61,8 +61,8 @@
                         {% endif %}
                     </figure>
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
-                    {% set textCreation = _self.textTimeAgo(talk.dateCreation) %}
-                    <p class="oneTalkUserTime" title="{{ talk.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
+                    {% set textCreation = _self.textTimeAgo(talk.creationDate) %}
+                    <p class="oneTalkUserTime" title="{{ talk.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
                 </div>
                 <div class="oneTalkPartContainer">
                     <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>

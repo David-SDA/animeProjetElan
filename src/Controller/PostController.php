@@ -25,7 +25,7 @@ class PostController extends AbstractController
         }
 
         /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
-        if(!$user || $discussion->isEstVerrouiller()){
+        if(!$user || $discussion->isLocked()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -85,7 +85,7 @@ class PostController extends AbstractController
            ou que la discussion est verrouiller
            ou que le post est le premier de la discussion,
            on l'empeche de modifier le post */
-        if(!$user || $user !== $post->getUser() || $discussion_id->isEstVerrouiller() || $post === $discussion_id->getPosts()->first() || !$post->getUser()){
+        if(!$user || $user !== $post->getUser() || $discussion_id->isLocked() || $post === $discussion_id->getPosts()->first() || !$post->getUser()){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -154,7 +154,7 @@ class PostController extends AbstractController
            ou que le post est le premier de la discussion
            ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
            on l'empeche de supprimer le post */
-        if(!$user || $user !== $post->getUser() && !$this->isGranted('ROLE_ADMIN') || $post === $discussion_id->getPosts()->first() || $discussion_id->isEstVerrouiller() && !$this->isGranted('ROLE_ADMIN')){
+        if(!$user || $user !== $post->getUser() && !$this->isGranted('ROLE_ADMIN') || $post === $discussion_id->getPosts()->first() || $discussion_id->isLocked() && !$this->isGranted('ROLE_ADMIN')){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',

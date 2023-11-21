@@ -17,13 +17,13 @@ class Discussion
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $dateCreation = null;
+    private ?\DateTimeInterface $creationDate = null;
 
     #[ORM\Column(options:["default" => "false"])]
-    private ?bool $estVerrouiller = null;
+    private ?bool $locked = null;
 
     #[ORM\ManyToOne(inversedBy: 'discussions')]
     private ?User $user = null;
@@ -44,38 +44,38 @@ class Discussion
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->titre;
+        return $this->title;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitle(string $title): static
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->dateCreation;
+        return $this->creationDate;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    public function setCreationDate(\DateTimeInterface $creationDate): static
     {
-        $this->dateCreation = $dateCreation;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
 
-    public function isEstVerrouiller(): ?bool
+    public function isLocked(): ?bool
     {
-        return $this->estVerrouiller;
+        return $this->locked;
     }
 
-    public function setEstVerrouiller(bool $estVerrouiller): static
+    public function setLocked(bool $locked): static
     {
-        $this->estVerrouiller = $estVerrouiller;
+        $this->locked = $locked;
 
         return $this;
     }

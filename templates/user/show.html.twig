@@ -123,8 +123,8 @@
                         <section style="width: 100%;">
                             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
                                 <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ talk.titre }}</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.dateCreation) }}</i></p>
+                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ talk.title }}</h2>
+                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ talk.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.creationDate) }}</i></p>
                                 </div>
                                 <div class="animeRemainingRightContentPartCardsCommentContainer">
                                     <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ talk.posts|length }}</span></p>
@@ -150,8 +150,8 @@
                             <section style="width: 100%;">
                                 <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.titre }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.dateCreation) }}</i></p>
+                                        <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.title }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.dateCreation|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.creationDate) }}</i></p>
                                     </div>
                                     <div class="animeRemainingRightContentPartCardsCommentContainer">
                                         <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
