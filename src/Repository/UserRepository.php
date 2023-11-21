@@ -58,14 +58,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByStatus(bool $isBanned){
         /* Query qui permet d'obtenir les utilisateurs non bannis */
         $usersByStatus = $this->createQueryBuilder('u') // Création d'un query builder avec un alias pour l'entité actuel
-                        ->select('u.id, u.email, u.pseudo, u.dateInscription, u.roles'); // Sélection de l'id, email, pseudo, date d'inscription et rôles des utilisateurs
+                        ->select('u.id, u.email, u.username, u.registrationDate, u.roles'); // Sélection de l'id, email, pseudo, date d'inscription et rôles des utilisateurs
         
         /* Si on veut les utilisateurs bannis */                        
         if($isBanned){
-            $usersByStatus->andWhere('u.estBanni = true'); // On restreint la query aux utilisateurs bannis
+            $usersByStatus->andWhere('u.banned = true'); // On restreint la query aux utilisateurs bannis
         }
         else{
-            $usersByStatus->andWhere('u.estBanni = false'); // On restreint la query aux utilisateurs non bannis
+            $usersByStatus->andWhere('u.banned = false'); // On restreint la query aux utilisateurs non bannis
         }
 
         return $usersByStatus->getQuery()->getResult(); // Obtention de la query construite, execution de la query et obtention du résultat
@@ -77,7 +77,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUnverifiedUsers(){
         /* Query qui permet d'obtenir les utilisateurs non vérifiés */
         $unverifiedUsers = $this->createQueryBuilder('u') // Création d'un query builder avec un alias pour l'entité actuel
-                            ->select('u.id, u.email, u.pseudo, u.dateInscription') // Sélection de l'id, email, pseudo et date d'inscription des utilisateurs
+                            ->select('u.id, u.email, u.username, u.registrationDate') // Sélection de l'id, email, pseudo et date d'inscription des utilisateurs
                             ->andWhere('u.isVerified = false') // On restreint la query aux utilisateurs non vérifié
                             ->getQuery() // Obtention de la query construite
                             ->getResult(); // Execution de la query et obtention du résultat

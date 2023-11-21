@@ -12,7 +12,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(HomeCallApiService $homeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         

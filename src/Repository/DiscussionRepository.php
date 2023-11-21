@@ -40,7 +40,7 @@ class DiscussionRepository extends ServiceEntityRepository
     public function usersMostTalksCreated(){
         /* Query qui permet d'obtenir les utilisateurs avec le plus de discussions créé */
         $usersMostTalksCreated = $this->createQueryBuilder('d') // Création d'un query builder avec un alias pour identifier l'entité actuel
-                                ->select('u.id AS userId, u.pseudo AS pseudo, COUNT(d.id) as talksCount') // Sélection des ids et pseudos des utilisateurs et du nombre de discussions
+                                ->select('u.id AS userId, u.username AS username, COUNT(d.id) as talksCount') // Sélection des ids et pseudos des utilisateurs et du nombre de discussions
                                 ->join('d.user', 'u') // Association avec les utilisateurs
                                 ->groupby('d.user') // Grouper par les utilisateurs
                                 ->orderBy('talksCount', 'DESC') // Ordre décroissant du nombre de discussion

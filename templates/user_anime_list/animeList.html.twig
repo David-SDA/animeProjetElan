@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block meta_description %}Look what anime there is in {{ user.pseudo }}'s anime list!{% endblock %}
+{% block meta_description %}Look what anime there is in {{ user.username }}'s anime list!{% endblock %}
 
-{% block title %}{{ user.pseudo }}'s Anime List{% endblock %}
+{% block title %}{{ user.username }}'s Anime List{% endblock %}
 
 {% block body %}
     <main>
-        <h1 class="title">{{ user.pseudo }}'s Anime List</h1>
+        <h1 class="title">{{ user.username }}'s Anime List</h1>
         <div class="animeListButtonsContainer">
             <button class="animeListButton active" id="animeListButtonAll">ALL</button>
             <button class="animeListButton" id="animeListButtonWatching">WATCHING</button>

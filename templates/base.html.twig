@@ -33,7 +33,7 @@
         {% endfor %}
         <div class="navBarContainer">
             <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
-            {% if not app.user or not app.user.isEstBanni %}
+            {% if not app.user or not app.user.isBanned %}
                 <nav class="navBar">
                     <ul class="navBarContent">
                         <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink">HOME</a></li>
@@ -52,8 +52,8 @@
             <div class="navBarProfile">
                 {% if app.user %}
                 <div class="navBarProfileContainer">
-                    <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
-                    <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                    <p class="navBarProfilePseudo">{{ app.user.username }}</p>
+                    <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
                 </div>
                 {% else %}
                 <a href="{{ path('app_login') }}" class="navBarButton">LOG IN</a>
@@ -63,12 +63,12 @@
             {% if app.user %}
                 <div class="navBarUserMenu">
                     <div class="navBarUserMenuTop">
-                        <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
-                        <p class="navBarProfilePseudo">{{ app.user.pseudo }}</p>
+                        <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
+                        <p class="navBarProfilePseudo">{{ app.user.username }}</p>
                         <i class="fa-solid fa-xmark navBarUserMenuClose"></i>
                     </div>
                     <ul>
-                    {% if not app.user.isEstBanni %}
+                    {% if not app.user.isBanned %}
                         <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}"><i class="fa-regular fa-user"></i>Profile</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('anime_list_user', { id: app.user.id }) }}"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
                         <li class="navBarUserMenuLink"><a href="{{ path('calendar_user') }}"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
@@ -76,7 +76,7 @@
                     {% endif %}
                         <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
-                    {% if is_granted('ROLE_ADMIN') and not app.user.isEstBanni %}
+                    {% if is_granted('ROLE_ADMIN') and not app.user.isBanned %}
                         <a href="{{ path('app_admin') }}" class="navBarAdmin">ADMIN SPACE</a>
                     {% endif %}
                 </div>

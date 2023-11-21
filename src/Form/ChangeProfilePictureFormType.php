@@ -13,7 +13,7 @@ class ChangeProfilePictureFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('imageProfil', FileType::class, [
+            ->add('profilePicture', FileType::class, [
                 'required' => false,
                 'constraints' => [
                     new Image([

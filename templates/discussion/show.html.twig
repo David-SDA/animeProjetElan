@@ -53,13 +53,13 @@
             <div class="onePostTopContainer">
                 <figure class="oneTalkUserContainer">
                     {% if talk.user %}
-                        <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo }} profile picture" class="oneTalkUserImage">
+                        <img src="{{ talk.user.profilePicture ? asset('uploads/' ~ talk.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.username }} profile picture" class="oneTalkUserImage">
                     {% else %}
                         <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
                     {% endif %}
                     <figcaption class="oneTalkUsername post">
                         {% if talk.user %}
-                            <a href="{{ path('show_user', { id: talk.user.id }) }}">{{ talk.user.pseudo }}</a>
+                            <a href="{{ path('show_user', { id: talk.user.id }) }}">{{ talk.user.username }}</a>
                         {% else %}
                             <p>Deleted User</p>
                         {% endif %}
@@ -117,13 +117,13 @@
                 <div class="onePostTopContainer">
                     <figure class="oneTalkUserContainer">
                         {% if post.user %}
-                            <img src="{{ post.user.imageProfil ? asset('uploads/' ~ post.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.pseudo }} profile picture" class="oneTalkUserImage">
+                            <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
                         {% else %}
                             <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
                         {% endif %}
                         <figcaption class="oneTalkUsername post">
                             {% if post.user %}
-                                <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.pseudo }}</a>
+                                <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.username }}</a>
                             {% else %}
                                 <p>Deleted user</p>
                             {% endif %}

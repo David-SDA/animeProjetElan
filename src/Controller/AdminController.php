@@ -29,7 +29,7 @@ class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
-        if($this->getUser()->isEstBanni()){
+        if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -46,7 +46,7 @@ class AdminController extends AbstractController
     #[Route('/admin/users', name: 'users_admin')]
     public function users(UserRepository $userRepository): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
-        if($this->getUser()->isEstBanni()){
+        if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -60,14 +60,14 @@ class AdminController extends AbstractController
     #[Route('/admin/user/{id}/ban', name: 'ban_user_admin')]
     public function ban(EntityManagerInterface $entityManagerInterface, User $user): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
-        if($this->getUser()->isEstBanni()){
+        if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         /* Si l'utilisateur n'est pas banni */
-        if(!$user->isEstBanni()){
+        if(!$user->isBanned()){
             /* On le banni */
-            $user->setEstBanni(true);
+            $user->setBanned(true);
 
             /* On sauvegarde les changements en base de données */
             $entityManagerInterface->persist($user);
@@ -76,14 +76,14 @@ class AdminController extends AbstractController
             /* On indique la réussite du bannissement */
             $this->addFlash(
                 'success',
-                'The user "' . $user->getPseudo() . '" has been banned successfully'
+                'The user "' . $user->getUsername() . '" has been banned successfully'
             );
         }
         else{
             /* On indique l'échec du bannissement */
             $this->addFlash(
                 'error',
-                'The user "' . $user->getPseudo() . '" is already banned'
+                'The user "' . $user->getUsername() . '" is already banned'
             );
         }
 
@@ -93,14 +93,14 @@ class AdminController extends AbstractController
     #[Route('/admin/user/{id}/unban', name: 'unban_user_admin')]
     public function unban(EntityManagerInterface $entityManagerInterface, User $user): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
-        if($this->getUser()->isEstBanni()){
+        if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         /* Si l'utilisateur est banni */
-        if($user->isEstBanni()){
+        if($user->isBanned()){
             /* On le débanni */
-            $user->setEstBanni(false);
+            $user->setBanned(false);
 
             /* On sauvegarde les changements en base de données */
             $entityManagerInterface->persist($user);
@@ -109,14 +109,14 @@ class AdminController extends AbstractController
             /* On indique la réussite du débannissement */
             $this->addFlash(
                 'success',
-                'The user "' . $user->getPseudo() . '" has been unbanned successfully'
+                'The user "' . $user->getUsername() . '" has been unbanned successfully'
             );
         }
         else{
             /* On indique l'échec du débannissement */
             $this->addFlash(
                 'error',
-                'The user "' . $user->getPseudo() . '" is already unbanned'
+                'The user "' . $user->getUsername() . '" is already unbanned'
             );
         }
 
@@ -126,7 +126,7 @@ class AdminController extends AbstractController
     #[Route('/admin/user/{id}/resendConfirmation', name: 'resend_confirmation_user_admin')]
     public function resendConfirmation(User $user): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
-        if($this->getUser()->isEstBanni()){
+        if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -144,14 +144,14 @@ class AdminController extends AbstractController
             /* On indique le succès de l'envoie d'email */
             $this->addFlash(
                 'success',
-                'The confirmation of the email of the user "' . $user->getPseudo() . '" has been sended successfully'
+                'The confirmation of the email of the user "' . $user->getUsername() . '" has been sended successfully'
             );
         }
         else{
             /* On indique l'échec de l'envoie d'email */
             $this->addFlash(
                 'error',
-                'The user "' . $user->getPseudo() . '" is already verified'
+                'The user "' . $user->getUsername() . '" is already verified'
             );
         }
 

@@ -13,7 +13,7 @@ class StaffController extends AbstractController
     #[Route('/{id}', name: 'show_staff')]
     public function show(int $id, StaffCallApiService $staffCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 

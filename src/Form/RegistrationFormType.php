@@ -25,10 +25,10 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => true,
             ])
-            ->add('pseudo', TextType::class, [
+            ->add('username', TextType::class, [
                 'required' => true,
             ])
-            ->add('imageProfil', FileType::class, [
+            ->add('profilePicture', FileType::class, [
                 'required' => false,
                 'constraints' => [
                     new Image([

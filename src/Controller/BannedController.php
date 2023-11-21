@@ -14,7 +14,7 @@ class BannedController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur n'est pas connecté ou si il n'est pas banni */
-        if(!$user || !$user->isEstBanni()){
+        if(!$user || !$user->isBanned()){
             return $this->redirectToRoute('app_home');
         }
 

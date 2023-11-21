@@ -7,12 +7,12 @@
         <div class="animeTopContainer">            
             <div class="animeTopLeftContent settings">
                 <figure>
-                    <img src="{{ app.user.imageProfil ? asset('uploads/' ~ app.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.pseudo }}" class="profileImage">
+                    <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.username }}" class="profileImage">
                 </figure>
                 <a href="{{ path('change_profile_picture_user') }}" class="profileInfosButton settings full">CHANGE PICTURE</a>
             </div>
             <div class="animeTopRightContent">
-                <h1 class="profilePseudo">{{ app.user.pseudo }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
+                <h1 class="profilePseudo">{{ app.user.username }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
                 <p class="profileDescription">{{ app.user.description ? app.user.description : "<i>No description yet ...</i>" }}</p>
                 <a href="{{ path('change_description_user') }}" class="profileInfosButton settings large">CHANGE DESCRIPTION</a>
             </div>

@@ -48,7 +48,7 @@ class RegistrationController extends AbstractController
             );
 
             /* On récupère le possible fichier */
-            $profilePicture = $form->get('imageProfil')->getData();
+            $profilePicture = $form->get('profilePicture')->getData();
 
             /* Et on le traite si il y a bien un fichier à upload */
             if($profilePicture){
@@ -67,7 +67,7 @@ class RegistrationController extends AbstractController
                     error_log($e->getMessage());
                 }
                 /* On stocke le nom du fichier */
-                $user->setImageProfil($newFilename);
+                $user->setProfilePicture($newFilename);
             }
 
             $entityManager->persist($user);

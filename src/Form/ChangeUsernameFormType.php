@@ -13,7 +13,7 @@ class ChangeUsernameFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', TextType::class, [
+            ->add('username', TextType::class, [
                 'attr' => [
                     'value' => $options['currentUsername'],
                 ],

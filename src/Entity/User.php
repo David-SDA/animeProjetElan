@@ -41,22 +41,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Your username must be at least 4 characters long',
         maxMessage: 'Your username cannot be longer than 40 characters long',
     )]
-    private ?string $pseudo = null;
+    private ?string $username = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $dateInscription = null;
+    private ?\DateTimeInterface $registrationDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageProfil = null;
+    private ?string $profilePicture = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(options:["default" => "true"])]
-    private ?bool $estVisible = null;
+    private ?bool $visible = null;
 
     #[ORM\Column(options:["default" => "false"])]
-    private ?bool $estBanni = null;
+    private ?bool $banned = null;
 
     #[ORM\ManyToMany(targetEntity: Personnage::class, inversedBy: 'users')]
     private Collection $personnages;
@@ -84,9 +84,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->dateInscription = new DateTime();
-        $this->estVisible = true;
-        $this->estBanni = false;
+        $this->registrationDate = new DateTime();
+        $this->visible = true;
+        $this->banned = false;
         $this->personnages = new ArrayCollection();
         $this->animes = new ArrayCollection();
         $this->evenements = new ArrayCollection();
@@ -166,38 +166,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getPseudo(): ?string
+    public function getUsername(): ?string
     {
-        return $this->pseudo;
+        return $this->username;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setUsername(string $username): static
     {
-        $this->pseudo = $pseudo;
+        $this->username = $username;
 
         return $this;
     }
 
-    public function getDateInscription(): ?\DateTimeInterface
+    public function getRegistrationDate(): ?\DateTimeInterface
     {
-        return $this->dateInscription;
+        return $this->registrationDate;
     }
 
-    public function setDateInscription(\DateTimeInterface $dateInscription): static
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): static
     {
-        $this->dateInscription = $dateInscription;
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }
 
-    public function getImageProfil(): ?string
+    public function getProfilePicture(): ?string
     {
-        return $this->imageProfil;
+        return $this->profilePicture;
     }
 
-    public function setImageProfil(?string $imageProfil): static
+    public function setProfilePicture(?string $profilePicture): static
     {
-        $this->imageProfil = $imageProfil;
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }
@@ -214,26 +214,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isEstVisible(): ?bool
+    public function isVisible(): ?bool
     {
-        return $this->estVisible;
+        return $this->visible;
     }
 
-    public function setEstVisible(bool $estVisible): static
+    public function setVisible(bool $visible): static
     {
-        $this->estVisible = $estVisible;
+        $this->visible = $visible;
 
         return $this;
     }
 
-    public function isEstBanni(): ?bool
+    public function isBanned(): ?bool
     {
-        return $this->estBanni;
+        return $this->banned;
     }
 
-    public function setEstBanni(bool $estBanni): static
+    public function setBanned(bool $banned): static
     {
-        $this->estBanni = $estBanni;
+        $this->banned = $banned;
 
         return $this;
     }

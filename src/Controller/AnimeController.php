@@ -17,7 +17,7 @@ class AnimeController extends AbstractController
     #[Route('/search', name: 'search_anime')]
     public function search(AnimeCallApiService $animeCallApiService, Request $request): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
@@ -52,7 +52,7 @@ class AnimeController extends AbstractController
     #[Route('/top', name: 'top_anime')]
     public function top(AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
@@ -64,7 +64,7 @@ class AnimeController extends AbstractController
     #[Route('/seasonal', name: 'seasonal_anime')]
     public function seasonal(AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -79,7 +79,7 @@ class AnimeController extends AbstractController
         $currentUser = $this->getUser();
         
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
@@ -120,7 +120,7 @@ class AnimeController extends AbstractController
     #[Route('/{id}/characters', name: 'characters_anime')]
     public function characters(int $id, AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -132,7 +132,7 @@ class AnimeController extends AbstractController
     #[Route('/{id}/staff', name: 'staff_anime')]
     public function staff(int $id, AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 

@@ -29,18 +29,18 @@
     {% endif %}
 {% endmacro %}
 
-{% block meta_description %}Discover what {{ user.pseudo }} watch, love and think about anime!{% endblock %}
+{% block meta_description %}Discover what {{ user.username }} watch, love and think about anime!{% endblock %}
 
-{% block title %}{{ user.pseudo }}{% endblock %}
+{% block title %}{{ user.username }}{% endblock %}
 
 {% block body %}
     <main class="animeContainer">
         <div class="animeTopContainer">            
             <figure>
-                <img src="{{ user.imageProfil ? asset('uploads/' ~ user.imageProfil) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.pseudo }}" class="profileImage">
+                <img src="{{ user.profilePicture ? asset('uploads/' ~ user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.username }}" class="profileImage">
             </figure>
             <div class="animeTopRightContent">
-                <h1 class="profilePseudo">{{ user.pseudo }}</h1>
+                <h1 class="profilePseudo">{{ user.username }}</h1>
                 <p class="profileDescription">{{ user.description ? user.description : '<i>No description yet ...</i>' }}</p>
             </div>
         </div>

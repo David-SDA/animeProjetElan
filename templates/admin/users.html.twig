@@ -19,9 +19,9 @@
                 <tbody>
                 {% for nonBannedUser in nonBannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: nonBannedUser.id }) }}" class="adminLinkText">{{ nonBannedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: nonBannedUser.id }) }}" class="adminLinkText">{{ nonBannedUser.username }}</a></td>
                         <td>{{ nonBannedUser.email }}</td>
-                        <td>{{ nonBannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                        <td>{{ nonBannedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
                         <td>
                             {% if 'ROLE_ADMIN' not in nonBannedUser.roles %}
                                 <a href="{{ path('ban_user_admin', { id: nonBannedUser.id }) }}" title="Ban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-xmark"></i>
@@ -46,9 +46,9 @@
                 <tbody>
                 {% for bannedUser in bannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: bannedUser.id }) }}" class="adminLinkText">{{ bannedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: bannedUser.id }) }}" class="adminLinkText">{{ bannedUser.username }}</a></td>
                         <td>{{ bannedUser.email }}</td>
-                        <td>{{ bannedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                        <td>{{ bannedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
                         <td><a href="{{ path('unban_user_admin', { id:bannedUser.id }) }}" title="Unban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-plus"></i></a></td>
                     </tr>        
                 {% endfor %}
@@ -69,9 +69,9 @@
                 <tbody>
                 {% for unverifiedUser in unverifiedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: unverifiedUser.id }) }}" class="adminLinkText">{{ unverifiedUser.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user', { id: unverifiedUser.id }) }}" class="adminLinkText">{{ unverifiedUser.username }}</a></td>
                         <td>{{ unverifiedUser.email }}</td>
-                        <td>{{ unverifiedUser.dateInscription|date('m/d/Y H:i:s') }}</td>
+                        <td>{{ unverifiedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
                         <td><a href="{{ path('resend_confirmation_user_admin', { id: unverifiedUser.id }) }}" title="Resend an email confirmation" class="settingsChangePseudo"><i class="fa-solid fa-envelope"></i></a></td>
                     </tr>        
                 {% endfor %}
@@ -92,9 +92,9 @@
                 {% for user in nonBannedUsers %}
                     {% if 'ROLE_ADMIN' in user.roles %}
                         <tr>
-                            <td><a href="{{ path('show_user', { id: user.id }) }}" class="adminLinkText">{{ user.pseudo }}</a></td>
+                            <td><a href="{{ path('show_user', { id: user.id }) }}" class="adminLinkText">{{ user.username }}</a></td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.dateInscription|date('m/d/Y H:i:s') }}</td>
+                            <td>{{ user.registrationDate|date('m/d/Y H:i:s') }}</td>
                         </tr>       
                     {% endif %}
                 {% endfor %}

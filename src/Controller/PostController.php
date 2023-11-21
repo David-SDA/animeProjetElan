@@ -20,7 +20,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -76,7 +76,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -145,7 +145,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -183,7 +183,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -200,7 +200,7 @@ class PostController extends AbstractController
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This post from "' . $post->getUser()->getPseudo() . '" is already liked'
+                'This post from "' . $post->getUser()->getUsername() . '" is already liked'
             );
         }
         else{
@@ -213,7 +213,7 @@ class PostController extends AbstractController
             /* On indique le succès du like d'un post */
             $this->addFlash(
                 'success',
-                'This post from "' . $post->getUser()->getPseudo() . '" has been liked successfully'
+                'This post from "' . $post->getUser()->getUsername() . '" has been liked successfully'
             );
         }
 
@@ -226,7 +226,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -243,7 +243,7 @@ class PostController extends AbstractController
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This post from "' . $post->getUser()->getPseudo() . '" is already not liked'
+                'This post from "' . $post->getUser()->getUsername() . '" is already not liked'
             );
         }
         else{
@@ -256,7 +256,7 @@ class PostController extends AbstractController
             /* On indique le succès du unlike d'un post */
             $this->addFlash(
                 'success',
-                'This post from "' . $post->getUser()->getPseudo() . '" has been unliked successfully'
+                'This post from "' . $post->getUser()->getUsername() . '" has been unliked successfully'
             );
         }
 

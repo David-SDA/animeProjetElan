@@ -27,7 +27,7 @@ class PostRepository extends ServiceEntityRepository
     public function usersMostPostsCreated(){
         /* Query qui permet d'obtenir les utilisateurs avec le plus de post créé */
         $usersMostPostsCreated = $this->createQueryBuilder('p') // Création d'un query builder avec un alias pour identifier l'entité actuel
-                                ->select('u.id AS userId, u.pseudo AS pseudo, COUNT(p.id) as postsCount') // Sélection des ids et pseudos des utilisateurs et du nombre de posts
+                                ->select('u.id AS userId, u.username AS username, COUNT(p.id) as postsCount') // Sélection des ids et pseudos des utilisateurs et du nombre de posts
                                 ->join('p.user', 'u') // Association avec les utilisateurs
                                 ->groupby('p.user') // Grouper par les utilisateurs
                                 ->orderBy('postsCount', 'DESC') // Ordre décroissant du nombre de post

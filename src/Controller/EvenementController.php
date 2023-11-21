@@ -19,7 +19,7 @@ class EvenementController extends AbstractController
         $currentUser = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -72,7 +72,7 @@ class EvenementController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -119,7 +119,7 @@ class EvenementController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 

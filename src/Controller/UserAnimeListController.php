@@ -21,7 +21,7 @@ class UserAnimeListController extends AbstractController
     #[Route('/{id}/animeList', name: 'anime_list_user')]
     public function animeList(User $user, AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -86,7 +86,7 @@ class UserAnimeListController extends AbstractController
     #[Route('/animeList/modify/{id}', name: 'change_anime_list_user')]
     public function modifyAnimeList(Request $request, UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -175,7 +175,7 @@ class UserAnimeListController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
@@ -244,7 +244,7 @@ class UserAnimeListController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -311,7 +311,7 @@ class UserAnimeListController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -375,7 +375,7 @@ class UserAnimeListController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 

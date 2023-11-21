@@ -46,7 +46,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -70,7 +70,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -124,13 +124,13 @@ class UserController extends AbstractController
         }
         
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         /* Création du formulaire */
         $form = $this->createForm(ChangeUsernameFormType::class, null, [
-            'currentUsername' => $currentUser->getPseudo(),
+            'currentUsername' => $currentUser->getUsername(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
@@ -138,10 +138,10 @@ class UserController extends AbstractController
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère le pseudo du formulaire */
-            $newUsername = $form->get('pseudo')->getData();
+            $newUsername = $form->get('username')->getData();
 
             /* On vérifie si le pseudo indiqué est le même ou pas que celui actuelle */
-            if($newUsername === $currentUser->getPseudo()){
+            if($newUsername === $currentUser->getUsername()){
                 $this->addFlash(
                     'error',
                     'The new username cannot be the same as the current one'
@@ -149,7 +149,7 @@ class UserController extends AbstractController
             }
             else{
                 /* On chercher l'existance du pseudo indiqué */
-                $existingUser = $entityManagerInterface->getRepository(User::class)->findOneBy(['pseudo' => $newUsername]);
+                $existingUser = $entityManagerInterface->getRepository(User::class)->findOneBy(['username' => $newUsername]);
 
                 /* On vérifie que le pseudo existe ou pas */
                 if($existingUser){
@@ -160,7 +160,7 @@ class UserController extends AbstractController
                 }
                 else{
                     /* On change le pseudo actuel par le nouveau pseudo */
-                    $currentUser->setPseudo($newUsername);
+                    $currentUser->setUsername($newUsername);
         
                     /* On sauvegarde ces changements dans la base de données */
                     $entityManagerInterface->persist($currentUser);
@@ -195,7 +195,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -255,7 +255,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -267,7 +267,7 @@ class UserController extends AbstractController
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
             /* On récupère l'image de profil actuelle */
-            $currentProfilePicture = $currentUser->getImageProfil();
+            $currentProfilePicture = $currentUser->getProfilePicture();
 
             /* On supprime l'image actuel dans le stockage local */
             if($currentProfilePicture){
@@ -275,7 +275,7 @@ class UserController extends AbstractController
             }
 
             /* On récupère le possible fichier */
-            $submittedProfilePicture = $form->get('imageProfil')->getData();
+            $submittedProfilePicture = $form->get('profilePicture')->getData();
 
             /* Et on le traite si il y a bien un fichier à upload */
             if($submittedProfilePicture){
@@ -296,11 +296,11 @@ class UserController extends AbstractController
                     error_log($e->getMessage());
                 }
                 /* On stocke le nom du fichier */
-                $currentUser->setImageProfil($newFilename);
+                $currentUser->setProfilePicture($newFilename);
             }
             else{
                 /* On ne met pas d'image */
-                $currentUser->setImageProfil(null);
+                $currentUser->setProfilePicture(null);
             }
 
             /* On sauvegarde ces changements dans la base de données */
@@ -335,7 +335,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -408,7 +408,7 @@ class UserController extends AbstractController
         }
         
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -462,7 +462,7 @@ class UserController extends AbstractController
         }
         
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($currentUser && $currentUser->isEstBanni()){
+        if($currentUser && $currentUser->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -483,7 +483,7 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'show_user')]
     public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -536,7 +536,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -611,7 +611,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -686,7 +686,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -739,7 +739,7 @@ class UserController extends AbstractController
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 

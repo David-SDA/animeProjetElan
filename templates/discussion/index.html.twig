@@ -53,8 +53,8 @@
                     <h2 class="oneTalkTitle">{{ talk.title }}</h2>
                     <figure class="oneTalkUserContainer">
                         {% if talk.user %}
-                            <img src="{{ talk.user.imageProfil ? asset('uploads/' ~ talk.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.pseudo|default('Deleted user') }} profile picture" class="oneTalkUserImage">
-                            <figcaption class="oneTalkUsername">{{ talk.user.pseudo }}</figcaption>
+                            <img src="{{ talk.user.profilePicture ? asset('uploads/' ~ talk.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.username|default('Deleted user') }} profile picture" class="oneTalkUserImage">
+                            <figcaption class="oneTalkUsername">{{ talk.user.username }}</figcaption>
                         {% else %}
                             <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
                             <figcaption class="oneTalkUsername">Deleted User</figcaption>
@@ -69,8 +69,8 @@
                     {% set lastPost = talk.posts|last %}
                     <figure class="oneTalkUserContainer right">
                         {% if lastPost.user %}
-                            <img src="{{ lastPost.user.imageProfil ? asset('uploads/' ~ lastPost.user.imageProfil) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.pseudo|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
-                            <figcaption class="oneTalkUsername small">{{ lastPost.user.pseudo }}</figcaption>
+                            <img src="{{ lastPost.user.profilePicture ? asset('uploads/' ~ lastPost.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.username|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
+                            <figcaption class="oneTalkUsername small">{{ lastPost.user.username }}</figcaption>
                         {% else %}
                             <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted User profile picture" class="oneTalkUserImage small">
                             <figcaption class="oneTalkUsername small">Deleted User</figcaption>

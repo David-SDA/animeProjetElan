@@ -4,7 +4,7 @@
 
 {% block body %}
 <main>
-    <h1 class="title">Admin Space : {{ app.user.pseudo }}</h1>
+    <h1 class="title">Admin Space : {{ app.user.username }}</h1>
     <div class="adminStats">
         <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" class="adminLink">See all users</a></p>
         <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
@@ -27,7 +27,7 @@
                 <tbody>
                 {% for userMostTalksCreated in usersMostTalksCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}" class="adminLinkText">{{ userMostTalksCreated.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}" class="adminLinkText">{{ userMostTalksCreated.username }}</a></td>
                         <td>{{ userMostTalksCreated.talksCount }}</td>
                     </tr>
                 {% endfor %}
@@ -46,7 +46,7 @@
                 <tbody>
                 {% for userMostPostsCreated in usersMostPostsCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}" class="adminLinkText">{{ userMostPostsCreated.pseudo }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}" class="adminLinkText">{{ userMostPostsCreated.username }}</a></td>
                         <td>{{ userMostPostsCreated.postsCount }}</td>
                     </tr>
                 {% endfor %}

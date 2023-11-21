@@ -19,7 +19,7 @@ class DiscussionController extends AbstractController
     #[Route('', name: 'app_discussion')]
     public function index(DiscussionRepository $discussionRepository, Request $request): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -84,7 +84,7 @@ class DiscussionController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -149,7 +149,7 @@ class DiscussionController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -219,7 +219,7 @@ class DiscussionController extends AbstractController
         $user = $this->getUser();
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isEstBanni()){
+        if($user && $user->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -258,7 +258,7 @@ class DiscussionController extends AbstractController
     #[Route('/{id}/lock', name: 'lock_discussion')]
     public function lock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -292,7 +292,7 @@ class DiscussionController extends AbstractController
     #[Route('/{id}/unlock', name: 'unlock_discussion')]
     public function unlock(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
@@ -326,7 +326,7 @@ class DiscussionController extends AbstractController
     #[Route('/{id}', name: 'show_discussion')]
     public function show(Discussion $discussion){
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($this->getUser() && $this->getUser()->isEstBanni()){
+        if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
