@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~9 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
 INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) VALUES
 	(1, 'Talk 1', '2023-09-25 15:38:58', NULL, 0),
 	(2, 'Talk 2', '2023-09-26 16:15:11', 13, 0),
@@ -89,18 +89,18 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 -- Listage de la structure de table animeprojetelan. evenement
 CREATE TABLE IF NOT EXISTS `evenement` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom_evenement` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_debut` datetime NOT NULL,
-  `date_fin` datetime NOT NULL,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
   `user_id` int NOT NULL,
-  `est_recurrent` tinyint(1) NOT NULL,
+  `recurrent` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_B26681EA76ED395` (`user_id`),
   CONSTRAINT `FK_B26681EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.evenement : ~5 rows (environ)
-INSERT INTO `evenement` (`id`, `nom_evenement`, `date_debut`, `date_fin`, `user_id`, `est_recurrent`) VALUES
+INSERT INTO `evenement` (`id`, `title`, `start_date`, `end_date`, `user_id`, `recurrent`) VALUES
 	(1, 'Event test 1', '2023-09-29 13:20:00', '2023-09-29 17:00:00', 13, 0),
 	(3, 'Event test 2', '2023-09-29 17:00:00', '2023-09-29 19:00:00', 13, 0),
 	(4, 'Event test 3', '2023-09-29 20:30:00', '2023-09-30 01:00:00', 13, 0),
