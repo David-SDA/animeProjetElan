@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
 INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) VALUES
@@ -156,9 +156,9 @@ INSERT INTO `personnage` (`id`, `id_api`) VALUES
 -- Listage de la structure de table animeprojetelan. post
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `date_creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_derniere_modification` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `contenu` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int DEFAULT NULL,
   `discussion_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -166,10 +166,10 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.post : ~18 rows (environ)
-INSERT INTO `post` (`id`, `date_creation`, `date_derniere_modification`, `contenu`, `user_id`, `discussion_id`) VALUES
+INSERT INTO `post` (`id`, `creation_date`, `last_modified_date`, `content`, `user_id`, `discussion_id`) VALUES
 	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', NULL, 1),
 	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
 	(3, '2023-09-25 15:50:00', '2023-09-25 15:50:00', 'Post 3', NULL, 1),
