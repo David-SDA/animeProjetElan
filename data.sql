@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
 INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) VALUES
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.post : ~18 rows (environ)
 INSERT INTO `post` (`id`, `creation_date`, `last_modified_date`, `content`, `user_id`, `discussion_id`) VALUES
@@ -208,37 +208,37 @@ CREATE TABLE IF NOT EXISTS `reset_password_request` (
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pseudo` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `image_profil` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `registration_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `profile_picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `est_visible` tinyint(1) NOT NULL DEFAULT '1',
   `roles` json NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_verified` tinyint(1) NOT NULL,
-  `est_banni` tinyint(1) NOT NULL DEFAULT '0',
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `banned` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
-  UNIQUE KEY `UNIQ_8D93D64986CC499D` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.user : ~16 rows (environ)
-INSERT INTO `user` (`id`, `email`, `pseudo`, `date_inscription`, `image_profil`, `description`, `est_visible`, `roles`, `password`, `is_verified`, `est_banni`) VALUES
-	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, 1, '[]', '$2y$13$xabZZkOxw9qQEafjsDZFM.kCzxA73VYSrqDqaqAtTapqQezk1zYtS', 1, 0),
-	(4, 'user3@user3.com', 'user3', '2023-09-01 07:14:13', NULL, NULL, 1, '[]', '$2y$13$F/y9v.g6j8/Sc0BLqibmsueZCKaOwfqXnXYyiZzchun2N.JWqsRoG', 0, 0),
-	(5, 'user4@user4.com', 'user4', '2023-09-01 07:19:59', NULL, NULL, 1, '[]', '$2y$13$Mk8FeUNfSexvRysP.zV77eIrER6Oa7gNj31NjNgLq/WxQUFDd52vi', 1, 0),
-	(6, 'user5@user5.com', 'user5', '2023-09-01 08:35:53', NULL, NULL, 1, '[]', '$2y$13$G7onYkk8669blLK8GhVpdeGXlBSsjVBj283/iqUQsCJjrdhVWknai', 1, 0),
-	(7, 'user6@user6.com', 'user6', '2023-09-01 13:46:28', NULL, NULL, 1, '[]', '$2y$13$DSa2Ij.6u6MFXDP8avfbPeILFUTEId3UsbLIYcgO64A.SH78ix8ma', 1, 0),
-	(8, 'user7@user7.com', 'user7', '2023-09-03 18:31:09', NULL, NULL, 1, '[]', '$2y$13$6kNBNqIu4PO6IQUhYzVgdO6sQjtOx7qgMFM/6csglxnTj.ggQ8ow.', 1, 0),
-	(9, 'user8@user8.com', 'user8', '2023-09-03 18:42:09', NULL, NULL, 1, '[]', '$2y$13$QvDjn/tsqfC53aZVeYaieuRAGpuQpexZ4WnvjaUURSroBHR03npTS', 1, 0),
-	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, 1, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 0),
-	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, 1, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 0),
-	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, 1, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 0),
-	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-654d540c0f95c.jpg', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', 1, '[]', '$2y$13$mKcdfV90IOFI.qynODxJGOFdUurtw8meO1o4UqATO20AUOhFqlgWC', 1, 0),
-	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, 1, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 0),
-	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, 1, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 0),
-	(16, 'usertest@usertest.com', 'User test', '2023-11-08 14:49:27', NULL, NULL, 1, '[]', '$2y$13$XfYCicvLaUCbtm2quL3PS./cMw69.VHZcOcHmhZ9LceyFjD1ZStUi', 1, 0),
-	(17, 'user14@user14.com', 'user14', '2023-11-08 16:26:56', NULL, NULL, 1, '[]', '$2y$13$0RfB0uMnLTfKsOviKfHAluF4t5C7jJjGo5ReI1dEU/Y7h2bU4C8jq', 1, 0);
+INSERT INTO `user` (`id`, `email`, `username`, `registration_date`, `profile_picture`, `description`, `roles`, `password`, `is_verified`, `visible`, `banned`) VALUES
+	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, '[]', '$2y$13$xabZZkOxw9qQEafjsDZFM.kCzxA73VYSrqDqaqAtTapqQezk1zYtS', 1, 1, 0),
+	(4, 'user3@user3.com', 'user3', '2023-09-01 07:14:13', NULL, NULL, '[]', '$2y$13$F/y9v.g6j8/Sc0BLqibmsueZCKaOwfqXnXYyiZzchun2N.JWqsRoG', 0, 1, 0),
+	(5, 'user4@user4.com', 'user4', '2023-09-01 07:19:59', NULL, NULL, '[]', '$2y$13$Mk8FeUNfSexvRysP.zV77eIrER6Oa7gNj31NjNgLq/WxQUFDd52vi', 1, 1, 0),
+	(6, 'user5@user5.com', 'user5', '2023-09-01 08:35:53', NULL, NULL, '[]', '$2y$13$G7onYkk8669blLK8GhVpdeGXlBSsjVBj283/iqUQsCJjrdhVWknai', 1, 1, 0),
+	(7, 'user6@user6.com', 'user6', '2023-09-01 13:46:28', NULL, NULL, '[]', '$2y$13$DSa2Ij.6u6MFXDP8avfbPeILFUTEId3UsbLIYcgO64A.SH78ix8ma', 1, 1, 0),
+	(8, 'user7@user7.com', 'user7', '2023-09-03 18:31:09', NULL, NULL, '[]', '$2y$13$6kNBNqIu4PO6IQUhYzVgdO6sQjtOx7qgMFM/6csglxnTj.ggQ8ow.', 1, 1, 0),
+	(9, 'user8@user8.com', 'user8', '2023-09-03 18:42:09', NULL, NULL, '[]', '$2y$13$QvDjn/tsqfC53aZVeYaieuRAGpuQpexZ4WnvjaUURSroBHR03npTS', 1, 1, 0),
+	(10, 'user9@user9.com', 'user9', '2023-09-03 18:43:28', NULL, NULL, '[]', '$2y$13$uA7agNDlIpt.dvmDA01MHuWl6eijEpi0L5g9FA9om2QgHvXbXnm0C', 1, 1, 0),
+	(11, 'user10@user10.com', 'user10', '2023-09-04 10:43:42', NULL, NULL, '[]', '$2y$13$/ia/B3CTqM1.j0nzjfpU6OQoQMrYtgsEoWvHmt1tLjxG1XgxcWh.O', 1, 1, 0),
+	(12, 'admin1@admin1.com', 'admin1', '2023-09-05 06:35:10', NULL, NULL, '["ROLE_ADMIN"]', '$2y$13$ciZDz0LUQnjf7paBnkvX4OZNutbCu9pMdVUKyjz./S.Q4N1joRYAy', 1, 1, 0),
+	(13, 'user11@user11.com', 'user11', '2023-09-05 07:41:46', 'pomme-655cb24158367.jpg', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam voluptates at nobis vel hic illo odio iure, voluptas suscipit consectetur debitis harum architecto! Placeat dignissimos ipsam aspernatur quis libero impedit!!', '[]', '$2y$13$mKcdfV90IOFI.qynODxJGOFdUurtw8meO1o4UqATO20AUOhFqlgWC', 1, 1, 0),
+	(14, 'user12@user12.com', 'user12', '2023-09-05 08:04:05', NULL, NULL, '[]', '$2y$13$.rKf3aMEiRteA0TdwhC/Pe6SjfgQOQxLlbukv4NiS41kViry.hA6.', 1, 1, 0),
+	(15, 'user13@user13.com', 'user13', '2023-09-08 07:29:56', NULL, NULL, '[]', '$2y$13$UmH5yWDSYUawcdS2kOfDMeYDGZie1oQ/nO/rkY1VBBOIrRX5yCkwy', 1, 1, 0),
+	(16, 'usertest@usertest.com', 'User test', '2023-11-08 14:49:27', NULL, NULL, '[]', '$2y$13$XfYCicvLaUCbtm2quL3PS./cMw69.VHZcOcHmhZ9LceyFjD1ZStUi', 1, 1, 0),
+	(17, 'user14@user14.com', 'user14', '2023-11-08 16:26:56', NULL, NULL, '[]', '$2y$13$0RfB0uMnLTfKsOviKfHAluF4t5C7jJjGo5ReI1dEU/Y7h2bU4C8jq', 1, 1, 0);
 
 -- Listage de la structure de table animeprojetelan. user_anime
 CREATE TABLE IF NOT EXISTS `user_anime` (
