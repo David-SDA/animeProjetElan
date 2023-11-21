@@ -82,24 +82,24 @@ class UserController extends AbstractController
 
         /* On boucle sur les évènements récuperer */
         foreach($events as $event){
-            if($event->isEstRecurrent()){
+            if($event->isRecurrent()){
                 $eventsData[] = [
                     'id' => $event->getId(),
-                    'daysOfWeek' => $event->getDateDebut()->format('N'),
-                    'startRecur' => $event->getDateDebut()->format('Y-m-d'),
-                    'startTime' => $event->getDateDebut()->format('H:i'),
-                    'endRecur' => $event->getDateFin()->format('Y-m-d'),
-                    'endTime' => $event->getDateFin()->format('H:i'),
-                    'title' => $event->getNomEvenement(),
+                    'daysOfWeek' => $event->getStartDate()->format('N'),
+                    'startRecur' => $event->getStartDate()->format('Y-m-d'),
+                    'startTime' => $event->getStartDate()->format('H:i'),
+                    'endRecur' => $event->getEndDate()->format('Y-m-d'),
+                    'endTime' => $event->getEndDate()->format('H:i'),
+                    'title' => $event->getTitle(),
                 ];
             }
             else{
                 /* On ajoute au tabeau les informations nécessaires */
                 $eventsData[] = [
                     'id' => $event->getId(),
-                    'start' => $event->getDateDebut()->format('Y-m-d H:i:s'),
-                    'end' => $event->getDateFin()->format('Y-m-d H:i:s'),
-                    'title' => $event->getNomEvenement(),
+                    'start' => $event->getStartDate()->format('Y-m-d H:i:s'),
+                    'end' => $event->getEndDate()->format('Y-m-d H:i:s'),
+                    'title' => $event->getTitle(),
                 ];
             }
         }

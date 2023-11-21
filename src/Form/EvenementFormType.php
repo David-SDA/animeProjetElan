@@ -16,14 +16,14 @@ class EvenementFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomEvenement', TextType::class, [
+            ->add('title', TextType::class, [
                 'constraints' => [
                     new Length([
                         'max' => 100,
                     ])
                 ]
             ])
-            ->add('estRecurrent', ChoiceType::class, [
+            ->add('recurrent', ChoiceType::class, [
                 'choices' => [
                     'Yes' => true,
                     'No' => false,
@@ -31,10 +31,10 @@ class EvenementFormType extends AbstractType
                 'expanded' => true,
                 'required' => true,
             ])
-            ->add('dateDebut', DateTimeType::class, [
+            ->add('startDate', DateTimeType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('dateFin', DateTimeType::class, [
+            ->add('endDate', DateTimeType::class, [
                 'widget' => 'single_text'
             ])
         ;

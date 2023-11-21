@@ -16,76 +16,76 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $nomEvenement = null;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\When(
-        expression: 'this.getDateFin() != null',
+        expression: 'this.getEndDate() != null',
         constraints: [
             new Assert\LessThan(
-                propertyPath: 'dateFin',
+                propertyPath: 'endDate',
                 message: 'Start date must be before end date !'
             )
         ]
     )]
-    private ?\DateTimeInterface $dateDebut = null;
+    private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\When(
-        expression: 'this.getDateDebut() != null',
+        expression: 'this.getStartDate() != null',
         constraints: [
             new Assert\GreaterThan(
-                propertyPath: 'dateDebut',
+                propertyPath: 'startDate',
                 message: 'End date must be after start date !'
             )
         ]
     )]
-    private ?\DateTimeInterface $dateFin = null;
+    private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\Column]
-    private ?bool $estRecurrent = null;
+    private ?bool $recurrent = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNomEvenement(): ?string
+    public function getTitle(): ?string
     {
-        return $this->nomEvenement;
+        return $this->title;
     }
 
-    public function setNomEvenement(string $nomEvenement): static
+    public function setTitle(string $title): static
     {
-        $this->nomEvenement = $nomEvenement;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->dateDebut;
+        return $this->startDate;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): static
+    public function setStartDate(\DateTimeInterface $startDate): static
     {
-        $this->dateDebut = $dateDebut;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->dateFin;
+        return $this->endDate;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): static
+    public function setEndDate(\DateTimeInterface $endDate): static
     {
-        $this->dateFin = $dateFin;
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -102,14 +102,14 @@ class Evenement
         return $this;
     }
 
-    public function isEstRecurrent(): ?bool
+    public function isRecurrent(): ?bool
     {
-        return $this->estRecurrent;
+        return $this->recurrent;
     }
 
-    public function setEstRecurrent(bool $estRecurrent): static
+    public function setRecurrent(bool $recurrent): static
     {
-        $this->estRecurrent = $estRecurrent;
+        $this->recurrent = $recurrent;
 
         return $this;
     }

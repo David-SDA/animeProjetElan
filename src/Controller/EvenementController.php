@@ -135,7 +135,7 @@ class EvenementController extends AbstractController
         }
 
         /* On récupère le nom de l'évènement */
-        $eventTitle = $evenement->getNomEvenement();
+        $eventTitle = $evenement->getTitle();
 
         /* On supprime l'évènement et on sauvegarde ces changements dans la base de données */
         $entityManagerInterface->remove($evenement);
