@@ -9,6 +9,7 @@ use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
 use App\Form\ChangeInfosFormType;
 use App\Repository\AnimeRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangeUsernameFormType;
 use App\Form\ModifyPasswordFormType;
@@ -452,7 +453,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/settings/deleteAccount', name:'delete_account_user')]
-    public function deleteAccount(EntityManagerInterface $entityManagerInterface): Response{
+    public function deleteAccount(Request $request, EntityManagerInterface $entityManagerInterface): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         
@@ -466,18 +467,30 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-        foreach($currentUser->getDiscussions() as $discussion){
-            $discussion->setUser(null);
+        $confirmationForm = $this->createFormBuilder()
+            ->add('confirm', SubmitType::class, ['label' => 'Confirm Account Deletion'])
+            ->getForm();
+
+        $confirmationForm->handleRequest($request);
+
+        if($confirmationForm->isSubmitted() && $confirmationForm->isValid()){
+            foreach($currentUser->getDiscussions() as $discussion){
+                $discussion->setUser(null);
+            }
+    
+            foreach($currentUser->getPosts() as $post){
+                $post->setUser(null);
+            }
+    
+            $entityManagerInterface->remove($currentUser);
+            $entityManagerInterface->flush();
+    
+            return $this->redirectToRoute('app_home');
         }
 
-        foreach($currentUser->getPosts() as $post){
-            $post->setUser(null);
-        }
-
-        $entityManagerInterface->remove($currentUser);
-        $entityManagerInterface->flush();
-
-        return $this->redirectToRoute('app_home');
+        return $this->render('user/deleteAccount.html.twig', [
+            'confirmationForm' => $confirmationForm->createView(),
+        ]);
     }
 
     #[Route('/{id}', name: 'show_user')]

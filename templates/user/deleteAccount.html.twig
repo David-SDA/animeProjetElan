@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Delete your account
+{% endblock %}
+
+{% block body %}
+    <main>
+        <h1 class="title">Do you really want to delete your account ? This action is irrversible</h1>
+        {{ form_start(confirmationForm) }}
+            {{ form_widget(confirmationForm.confirm) }}
+        {{ form_end(confirmationForm) }}
+    </main>
+{% endblock %}
