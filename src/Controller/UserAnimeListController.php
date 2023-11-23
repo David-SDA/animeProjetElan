@@ -34,7 +34,7 @@ class UserAnimeListController extends AbstractController
     
         /* Pour chaque instance dans la liste d'un utilisateur, on intégre au tableau l'anime de la base de données concerné en fonction de son état  */
         foreach($user->getUserRegarderAnimes() as $userAnime){
-            $state = $userAnime->getEtat();
+            $state = $userAnime->getStatus();
             $animesByState[$state][] = $userAnime;
         }
         
@@ -70,7 +70,7 @@ class UserAnimeListController extends AbstractController
                             'title' => $anime['title'],
                             'coverImage' => $anime['coverImage'],
                             'episodes' => $anime['episodes'],
-                            'episodesWatched' => $userAnime->getNombreEpisodeVu(),
+                            'episodesWatched' => $userAnime->getNbEpisodesWatched(),
                         ];
                     }
                 }
@@ -102,23 +102,23 @@ class UserAnimeListController extends AbstractController
         /* Création du formulaire */
         $form = $this->createForm(ModifyAnimeListFormType::class, null, [
             'maxEpisodes' => $animeData['data']['Media']['episodes'],
-            'startDate' => $userRegarderAnime->getDateDebutVisionnage(),
-            'endDate' => $userRegarderAnime->getDateFinVisionnage(),
-            'status' => $userRegarderAnime->getEtat(),
-            'numberEpisodes' => $userRegarderAnime->getNombreEpisodeVu(),
+            'startDate' => $userRegarderAnime->getStartedWatching(),
+            'endDate' => $userRegarderAnime->getEndedWatching(),
+            'status' => $userRegarderAnime->getStatus(),
+            'numberEpisodes' => $userRegarderAnime->getNbEpisodesWatched(),
         ]);
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
-            $newStartDate = $form->get('dateDebutVisionnage')->getData();
-            $newEndDate = $form->get('dateFinVisionnage')->getData();
-            $newStatus = $form->get('etat')->getData();
-            $newEpisodesWatched = intval($form->get('nombreEpisodeVu')->getData());
+            $newStartDate = $form->get('startedWatching')->getData();
+            $newEndDate = $form->get('endedWatching')->getData();
+            $newStatus = $form->get('status')->getData();
+            $newEpisodesWatched = intval($form->get('nbEpisodesWatched')->getData());
 
             /* Si toute les données sont le même qu'en base de données, alors on ne soumet pas le formulaire */
-            if($newStartDate == $userRegarderAnime->getDateDebutVisionnage() && $newEndDate == $userRegarderAnime->getDateFinVisionnage() && $newStatus === $userRegarderAnime->getEtat() && $newEpisodesWatched === $userRegarderAnime->getNombreEpisodeVu()){
+            if($newStartDate == $userRegarderAnime->getStartedWatching() && $newEndDate == $userRegarderAnime->getEndedWatching() && $newStatus === $userRegarderAnime->getStatus() && $newEpisodesWatched === $userRegarderAnime->getNbEpisodesWatched()){
                 $this->addFlash(
                     'error',
                     'The infos cannot be the same as the current ones'
@@ -133,20 +133,20 @@ class UserAnimeListController extends AbstractController
             }
             else{
                 /* Si la date de début de visionnage est différente que celle actuelle, on la modifie */
-                if($newStartDate !== $userRegarderAnime->getDateDebutVisionnage()){
-                    $userRegarderAnime->setDateDebutVisionnage($newStartDate);
+                if($newStartDate !== $userRegarderAnime->getStartedWatching()){
+                    $userRegarderAnime->setStartedWatching($newStartDate);
                 }
                 /* Si la date de fin de visionnage est différente que celle actuelle, on la modifie */
-                if($newEndDate !== $userRegarderAnime->getDateFinVisionnage()){
-                    $userRegarderAnime->setDateFinVisionnage($newEndDate);
+                if($newEndDate !== $userRegarderAnime->getEndedWatching()){
+                    $userRegarderAnime->setEndedWatching($newEndDate);
                 }
                 /* Si l'état est différent que celui actuel, on le modifie */
-                if($newStatus !== $userRegarderAnime->getEtat()){
-                    $userRegarderAnime->setEtat($newStatus);
+                if($newStatus !== $userRegarderAnime->getStatus()){
+                    $userRegarderAnime->setStatus($newStatus);
                 }
                 /* Si le nombre d'épisodes vu est différent que celui actuel, on le modifie */
-                if($newEpisodesWatched !== $userRegarderAnime->getNombreEpisodeVu()){
-                    $userRegarderAnime->setNombreEpisodeVu($newEpisodesWatched);
+                if($newEpisodesWatched !== $userRegarderAnime->getNbEpisodesWatched()){
+                    $userRegarderAnime->setNbEpisodesWatched($newEpisodesWatched);
                 }
 
                 /* On sauvegarde ces changements dans la base de données */
@@ -222,8 +222,8 @@ class UserAnimeListController extends AbstractController
         /* Et on y définit les informations nécessaires */
         $animeInList->setUser($this->getUser());
         $animeInList->setAnime($animeInDatabase);
-        $animeInList->setEtat("Watching");
-        $animeInList->setNombreEpisodeVu(0);
+        $animeInList->setStatus("Watching");
+        $animeInList->setNbEpisodesWatched(0);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($animeInList);
@@ -259,7 +259,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* Si l'animé auquel on veut ajouter un épisode n'est pas un animé qui est en cours de visionnage */
-        if($userRegarderAnime->getEtat() !== 'Watching'){
+        if($userRegarderAnime->getStatus() !== 'Watching'){
             /* On l'en empêche, on l'indique et on revient à la liste */
             $this->addFlash(
                 'error',
@@ -269,7 +269,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
-        $currentEpisodesWatched = $userRegarderAnime->getNombreEpisodeVu();
+        $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
         /* On récupère les données de l'API de l'animé en question */
         $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
@@ -289,7 +289,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* On rajoute un épisode à l'animé */
-        $userRegarderAnime->setNombreEpisodeVu($currentEpisodesWatched + 1);
+        $userRegarderAnime->setNbEpisodesWatched($currentEpisodesWatched + 1);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($userRegarderAnime);
@@ -326,7 +326,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* Si l'animé auquel on veut supprimer un épisode n'est pas un animé qui est en cours de visionnage */
-        if($userRegarderAnime->getEtat() !== 'Watching'){
+        if($userRegarderAnime->getStatus() !== 'Watching'){
             /* On l'en empêche, on l'indique et on revient à la liste */
             $this->addFlash(
                 'error',
@@ -336,7 +336,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
-        $currentEpisodesWatched = $userRegarderAnime->getNombreEpisodeVu();
+        $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
         /* On récupère les données de l'API de l'animé en question */
         $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
@@ -353,7 +353,7 @@ class UserAnimeListController extends AbstractController
         }
 
         /* On enlève un épisode à l'animé */
-        $userRegarderAnime->setNombreEpisodeVu($currentEpisodesWatched - 1);
+        $userRegarderAnime->setNbEpisodesWatched($currentEpisodesWatched - 1);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($userRegarderAnime);

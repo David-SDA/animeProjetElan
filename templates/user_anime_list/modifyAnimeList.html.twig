@@ -16,20 +16,20 @@
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
             <div class="securityFormRow animeList">
-                {{ form_label(form.dateDebutVisionnage, 'Started Watching') }}
-                {{ form_widget(form.dateDebutVisionnage) }}
+                {{ form_label(form.startedWatching, 'Started Watching') }}
+                {{ form_widget(form.startedWatching) }}
             </div>
             <div class="securityFormRow animeList">
-                {{ form_label(form.dateFinVisionnage, 'Finished Watching') }}
-                {{ form_widget(form.dateFinVisionnage) }}
+                {{ form_label(form.endedWatching, 'Finished Watching') }}
+                {{ form_widget(form.endedWatching) }}
             </div>
             <div class="securityFormRow animeList">
-                {{ form_label(form.etat, 'Status') }}
-                {{ form_widget(form.etat) }}
+                {{ form_label(form.status, 'Status') }}
+                {{ form_widget(form.status) }}
             </div>
             <div class="securityFormRow animeList">
-                {{ form_label(form.nombreEpisodeVu, 'Episodes Watched') }}
-                {{ form_widget(form.nombreEpisodeVu) }}
+                {{ form_label(form.nbEpisodesWatched, 'Episodes Watched') }}
+                {{ form_widget(form.nbEpisodesWatched) }}
             </div>
             <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete">Delete</a>
             <button type="submit" class="securityFormSubmitButton">Save</button>
@@ -43,7 +43,7 @@
             // On crée un écouteur quand la page est bien chargé
             document.addEventListener("DOMContentLoaded", function (){
                 // On récupère les inputs concernés (état et nombre d'épisodes vu)
-                var statusField = document.getElementById("modify_anime_list_form_etat");
+                var statusField = document.getElementById("modify_anime_list_form_status");
                 var episodesWatchedField = document.getElementById("modify_anime_list_form_nombreEpisodeVu");
             
                 // On crée une fonction qui change l'input du nombre d'épisodes vu en fonction de l'état

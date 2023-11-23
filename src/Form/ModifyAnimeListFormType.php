@@ -15,17 +15,17 @@ class ModifyAnimeListFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebutVisionnage', DateType::class, [
+            ->add('startedWatching', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
                 'data' => $options['startDate'],
             ])
-            ->add('dateFinVisionnage', DateType::class, [
+            ->add('endedWatching', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
                 'data' => $options['endDate'],
             ])
-            ->add('etat', ChoiceType::class, [
+            ->add('status', ChoiceType::class, [
                 'required' => true,
                 'choices' => [
                     'Watching' => 'Watching',
@@ -34,7 +34,7 @@ class ModifyAnimeListFormType extends AbstractType
                 ],
                 'data' => $options['status'],
             ])
-            ->add('nombreEpisodeVu', NumberType::class, [
+            ->add('nbEpisodesWatched', NumberType::class, [
                 'html5' => true,
                 'attr' => [
                     'min' => 0,

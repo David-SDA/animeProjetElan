@@ -15,16 +15,16 @@ class UserRegarderAnime
     private ?int $id = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $etat = null;
+    private ?string $status = null;
 
     #[ORM\Column]
-    private ?int $nombreEpisodeVu = null;
+    private ?int $nbEpisodesWatched = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateDebutVisionnage = null;
+    private ?\DateTimeInterface $startedWatching = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateFinVisionnage = null;
+    private ?\DateTimeInterface $endedWatching = null;
 
     #[ORM\ManyToOne(inversedBy: 'userRegarderAnimes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,50 +39,50 @@ class UserRegarderAnime
         return $this->id;
     }
 
-    public function getEtat(): ?string
+    public function getStatus(): ?string
     {
-        return $this->etat;
+        return $this->status;
     }
 
-    public function setEtat(string $etat): static
+    public function setStatus(string $status): static
     {
-        $this->etat = $etat;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getNombreEpisodeVu(): ?int
+    public function getNbEpisodesWatched(): ?int
     {
-        return $this->nombreEpisodeVu;
+        return $this->nbEpisodesWatched;
     }
 
-    public function setNombreEpisodeVu(int $nombreEpisodeVu): static
+    public function setNbEpisodesWatched(int $nbEpisodesWatched): static
     {
-        $this->nombreEpisodeVu = $nombreEpisodeVu;
+        $this->nbEpisodesWatched = $nbEpisodesWatched;
 
         return $this;
     }
 
-    public function getDateDebutVisionnage(): ?\DateTimeInterface
+    public function getStartedWatching(): ?\DateTimeInterface
     {
-        return $this->dateDebutVisionnage;
+        return $this->startedWatching;
     }
 
-    public function setDateDebutVisionnage(?\DateTimeInterface $dateDebutVisionnage): static
+    public function setStartedWatching(?\DateTimeInterface $startedWatching): static
     {
-        $this->dateDebutVisionnage = $dateDebutVisionnage;
+        $this->startedWatching = $startedWatching;
 
         return $this;
     }
 
-    public function getDateFinVisionnage(): ?\DateTimeInterface
+    public function getEndedWatching(): ?\DateTimeInterface
     {
-        return $this->dateFinVisionnage;
+        return $this->endedWatching;
     }
 
-    public function setDateFinVisionnage(?\DateTimeInterface $dateFinVisionnage): static
+    public function setEndedWatching(?\DateTimeInterface $endedWatching): static
     {
-        $this->dateFinVisionnage = $dateFinVisionnage;
+        $this->endedWatching = $endedWatching;
 
         return $this;
     }

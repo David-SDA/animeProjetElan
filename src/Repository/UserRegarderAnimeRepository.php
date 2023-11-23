@@ -25,8 +25,8 @@ class UserRegarderAnimeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('list') // Création d'un query builder avec un alias pour l'entité actuel
             ->select('COUNT(list.id)') // Sélection du nombre d'id des utilisateurs
             ->andWhere('list.user = :userId')
-            ->andWhere('list.etat = :etat')
-            ->setParameters(['userId' => $userId, 'etat' => $status])
+            ->andWhere('list.status = :status')
+            ->setParameters(['userId' => $userId, 'status' => $status])
             ->getQuery() // Obtention de la query construite
             ->getSingleScalarResult(); // Execution de la query et obtention du résultat sous forme d'un nombre
     }
