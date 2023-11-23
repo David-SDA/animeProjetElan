@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.discussion : ~8 rows (environ)
+-- Listage des données de la table animeprojetelan.discussion : ~9 rows (environ)
 INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) VALUES
 	(1, 'Talk 1', '2023-09-25 15:38:58', NULL, 0),
 	(2, 'Talk 2', '2023-09-26 16:15:11', 13, 0),
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `evenement` (
   CONSTRAINT `FK_B26681EA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.evenement : ~5 rows (environ)
+-- Listage des données de la table animeprojetelan.evenement : ~6 rows (environ)
 INSERT INTO `evenement` (`id`, `title`, `start_date`, `end_date`, `user_id`, `recurrent`) VALUES
 	(1, 'Event test 1', '2023-09-29 13:20:00', '2023-09-29 17:00:00', 13, 0),
 	(3, 'Event test 2', '2023-09-29 17:00:00', '2023-09-29 19:00:00', 13, 0),
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.post : ~18 rows (environ)
+-- Listage des données de la table animeprojetelan.post : ~20 rows (environ)
 INSERT INTO `post` (`id`, `creation_date`, `last_modified_date`, `content`, `user_id`, `discussion_id`) VALUES
 	(1, '2023-09-25 15:41:06', '2023-09-25 15:41:06', 'Test of talk 1, post 1', NULL, 1),
 	(2, '2023-09-25 15:49:31', '2023-09-25 15:49:31', 'Post 2', 2, 1),
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_8D93D649F85E0677` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user : ~16 rows (environ)
+-- Listage des données de la table animeprojetelan.user : ~15 rows (environ)
 INSERT INTO `user` (`id`, `email`, `username`, `registration_date`, `profile_picture`, `description`, `roles`, `password`, `is_verified`, `visible`, `banned`) VALUES
 	(2, 'user2@user2.com', 'user2', '2023-09-01 07:00:13', NULL, NULL, '[]', '$2y$13$xabZZkOxw9qQEafjsDZFM.kCzxA73VYSrqDqaqAtTapqQezk1zYtS', 1, 1, 0),
 	(4, 'user3@user3.com', 'user3', '2023-09-01 07:14:13', NULL, NULL, '[]', '$2y$13$F/y9v.g6j8/Sc0BLqibmsueZCKaOwfqXnXYyiZzchun2N.JWqsRoG', 0, 1, 0),
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `user_post` (
   CONSTRAINT `FK_200B2044A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_post : ~3 rows (environ)
+-- Listage des données de la table animeprojetelan.user_post : ~5 rows (environ)
 INSERT INTO `user_post` (`user_id`, `post_id`) VALUES
 	(12, 40),
 	(13, 1),
@@ -307,10 +307,10 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `anime_id` int NOT NULL,
-  `etat` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_episode_vu` int NOT NULL,
-  `date_debut_visionnage` date DEFAULT NULL,
-  `date_fin_visionnage` date DEFAULT NULL,
+  `status` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nb_episodes_watched` int NOT NULL,
+  `started_watching` date DEFAULT NULL,
+  `ended_watching` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_57428AE9A76ED395` (`user_id`),
   KEY `IDX_57428AE9794BBE89` (`anime_id`),
@@ -319,16 +319,15 @@ CREATE TABLE IF NOT EXISTS `user_regarder_anime` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.user_regarder_anime : ~10 rows (environ)
-INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `etat`, `nombre_episode_vu`, `date_debut_visionnage`, `date_fin_visionnage`) VALUES
-	(1, 13, 1, 'Completed', 13, '2023-09-07', '2023-09-20'),
+INSERT INTO `user_regarder_anime` (`id`, `user_id`, `anime_id`, `status`, `nb_episodes_watched`, `started_watching`, `ended_watching`) VALUES
+	(1, 13, 1, 'Completed', 13, '2023-09-07', '2023-09-24'),
 	(2, 13, 2, 'Watching', 11, NULL, NULL),
 	(4, 13, 4, 'Completed', 24, NULL, NULL),
 	(10, 13, 9, 'Completed', 13, NULL, NULL),
 	(12, 13, 3, 'Plan to watch', 0, NULL, NULL),
-	(16, 13, 15, 'Watching', 7, '2023-09-29', NULL),
+	(16, 13, 15, 'Watching', 8, '2023-09-30', NULL),
 	(17, 13, 16, 'Plan to watch', 1, NULL, NULL),
 	(19, 2, 15, 'Watching', 0, NULL, NULL),
-	(22, 13, 18, 'Watching', 0, NULL, NULL),
 	(23, 13, 8, 'Watching', 9, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
