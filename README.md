@@ -24,3 +24,7 @@ La grande majorité des animés diffuse leurs épisodes de façon hebdomadaire s
 Le projet a été coder en Symfony et ses outils liés.
 
 ## Illustrations
+### Inscription - Connexion
+| Inscription | Connexion |
+| - | - |
+| ![Page d'inscription](https://github.com/David-SDA/animeProjetElan/blob/master/images/page_inscription.png) | ![Page de connexion](https://github.com/David-SDA/animeProjetElan/blob/master/images/page_connexion.png) |
