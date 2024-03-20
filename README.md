@@ -27,4 +27,14 @@ Le projet a été coder en Symfony et ses outils liés.
 ### Inscription - Connexion
 | Inscription | Connexion |
 | - | - |
-| ![Page d'inscription](https://github.com/David-SDA/animeProjetElan/blob/master/images/page_inscription.png) | ![Page de connexion](https://github.com/David-SDA/animeProjetElan/blob/master/images/page_connexion.png) |
+| ![Page d'inscription](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_inscription.png) | ![Page de connexion](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_connexion.png) |
+
+### Accueil
+| Accueil |
+| - |
+| ![Page d'accueil](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil.png) |
+
+### Animes
+| Animés d'une saison | Meilleurs animés | Recherche d'animés |
+| - | - | - |
+| ![Page animés d'une saison](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_anime_saison.png) | ![Page des meilleurs animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_top_anime.png) | ![Page de recherche d'animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_recherche.png) |
