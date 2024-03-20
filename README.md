@@ -38,3 +38,8 @@ Le projet a été coder en Symfony et ses outils liés.
 | Animés d'une saison | Meilleurs animés | Recherche d'animés |
 | - | - | - |
 | ![Page animés d'une saison](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_anime_saison.png) | ![Page des meilleurs animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_top_anime.png) | ![Page de recherche d'animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_recherche.png) |
+
+### Discussion
+| Discussions | Une discussion | Ajout d'un post |
+| - | - | - |
+| ![Page des discussions](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_discussions.png) | ![Page d'une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_une_discussion.png) | ![Page d'ajout d'un post à une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_ajout_post.png) |
