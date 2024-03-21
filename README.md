@@ -43,6 +43,10 @@ Le projet a été coder en Symfony et ses outils liés.
 | - | - | - |
 | ![Page d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_anime.png) | ![Page de personnage d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_personnage_un_anime.png) | ![Page de staff d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_staff_un_anime.png) |
 
+| Un personnage | Un staff |
+| - | - |
+| ![Page d'un personnage](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_personnage.png) | ![Page d'un staff](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_staff.png) |
+
 ### Discussion
 | Discussions | Une discussion | Ajout d'un post |
 | - | - | - |
