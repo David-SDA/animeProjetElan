@@ -51,3 +51,8 @@ Le projet a été coder en Symfony et ses outils liés.
 | Discussions | Une discussion | Ajout d'un post |
 | - | - | - |
 | ![Page des discussions](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_discussions.png) | ![Page d'une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_une_discussion.png) | ![Page d'ajout d'un post à une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_ajout_post.png) |
+
+### Profil
+| Profil | Option de profil |
+| - | - |
+| ![Page de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_profil.png) | ![Page d'option de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_option_profil.png) |
