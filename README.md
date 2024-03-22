@@ -56,3 +56,21 @@ Le projet a été coder en Symfony et ses outils liés.
 | Profil | Option de profil |
 | - | - |
 | ![Page de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_profil.png) | ![Page d'option de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_option_profil.png) |
+
+### Liste d'animé
+| Liste d'animé en cours de visionnage | Liste d'animé terminé | Liste d'animé prévu |
+| - | - | - |
+| ![Page de la liste d'animé en cours](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_en_cours.png) | ![Page de la liste d'animé terminé](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_termine.png) | ![Page de la liste d'animé prévu](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_prevu.png) |
+
+| Liste d'animé | Modification de la liste d'animé |
+| - | - |
+| ![Page de la liste d'animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_tout.png) | ![Page de modification d'un animé de la liste](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_modification_anime_liste.png) |
+
+### Calendrier
+| Calendrier version mois | Calendrier version semaine |
+| - | - |
+| ![Page du calendrier du mois](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_mois.png) | ![Page du calendrier de la semaine](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_semaine.png) |
+
+| Calendrier version liste | Modification du calendrier |
+| - | - |
+| ![Page du calendrier en liste](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_liste.png) | ![Page de modification du calendrier](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_modification_calendrier.png) |
