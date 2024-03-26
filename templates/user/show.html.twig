@@ -47,10 +47,13 @@
         <div class="animeRemainingContainer profile">
             <div class="profileInfosLine">
                 <div class="profileInfos">
+                    <canvas id="myChart"></canvas>
+                </div>
+                {# <div class="profileInfos">
                     <p>Animes watching : <i>{{ nbAnimesWatching }}</i></p>
                     <p>Animes completed : <i>{{ nbAnimesCompleted }}</i></p>
                     <p>Animes planned : <i>{{ nbAnimesPlanned }}</i></p>
-                </div>
+                </div> #}
                 <div class="profileInfos buttons">
                     <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
                     {% if app.user == user %}
@@ -165,4 +168,23 @@
             {% endif %}
         </div>
     </main>
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('myChart');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Watching', 'Completed', 'Planned'],
+                    datasets: [{
+                        data: [{{ nbAnimesWatching }}, {{ nbAnimesCompleted }}, {{ nbAnimesPlanned }}],
+                        borderWidth: 1
+                    }]
+                },
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
