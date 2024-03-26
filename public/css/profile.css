@@ -50,6 +50,13 @@
 .profileInfos.settings{
     padding: 0 1.5em;
 }
+.profileInfos.chart{
+    justify-content: center;
+    align-items: center;
+}
+#myChart{
+    width: 300px;
+}
 
 /* Le titre d'une partie des infos de l'utilisateur */
 .profileInfosTitle{

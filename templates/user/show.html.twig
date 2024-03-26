@@ -46,8 +46,8 @@
         </div>
         <div class="animeRemainingContainer profile">
             <div class="profileInfosLine">
-                <div class="profileInfos">
-                    <canvas id="myChart"></canvas>
+                <div class="profileInfos chart">
+                    <canvas id="myChart" width="300"></canvas>
                 </div>
                 {# <div class="profileInfos">
                     <p>Animes watching : <i>{{ nbAnimesWatching }}</i></p>
@@ -181,9 +181,33 @@
                     labels: ['Watching', 'Completed', 'Planned'],
                     datasets: [{
                         data: [{{ nbAnimesWatching }}, {{ nbAnimesCompleted }}, {{ nbAnimesPlanned }}],
+                        backgroundColor: [
+                            '#2db039',
+                            '#48466D',
+                            '#8f8f8f'
+                        ],
                         borderWidth: 1
                     }]
                 },
+                options: {
+                    width: 300,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Anime list stats'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#333333',
+                                font:{
+                                    family: "'Inter', sans-serif"
+                                }
+                            },
+                        }
+                    }
+                }
             });
         </script>
     {% endblock %}
