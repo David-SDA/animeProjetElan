@@ -49,11 +49,6 @@
                 <div class="profileInfos chart">
                     <canvas id="myChart" width="300"></canvas>
                 </div>
-                {# <div class="profileInfos">
-                    <p>Animes watching : <i>{{ nbAnimesWatching }}</i></p>
-                    <p>Animes completed : <i>{{ nbAnimesCompleted }}</i></p>
-                    <p>Animes planned : <i>{{ nbAnimesPlanned }}</i></p>
-                </div> #}
                 <div class="profileInfos buttons">
                     <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
                     {% if app.user == user %}
@@ -170,17 +165,23 @@
     </main>
     {% block javascripts %}
         {{ parent() }}
-
+        
+        {# Ajout de ChartJs #}
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            // Récupération de l'élement qui sera le graphique
             const ctx = document.getElementById('myChart');
 
             new Chart(ctx, {
+                // Type camembert
                 type: 'pie',
                 data: {
+                    // Les labels
                     labels: ['Watching', 'Completed', 'Planned'],
                     datasets: [{
+                        // Les données du profil
                         data: [{{ nbAnimesWatching }}, {{ nbAnimesCompleted }}, {{ nbAnimesPlanned }}],
+                        // Les couleurs spécifiques
                         backgroundColor: [
                             '#2db039',
                             '#48466D',
@@ -190,12 +191,15 @@
                     }]
                 },
                 options: {
+                    // Taille
                     width: 300,
                     plugins: {
+                        // Titre du graph
                         title: {
                             display: true,
                             text: 'Anime list stats'
                         },
+                        // Options de la légende
                         legend: {
                             display: true,
                             position: 'bottom',
