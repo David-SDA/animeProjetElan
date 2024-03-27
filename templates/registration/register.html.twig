@@ -34,7 +34,7 @@
                 {{ form_widget(registrationForm.agreeTerms) }}
                 {{ form_label(registrationForm.agreeTerms, 'Agree Terms of Use') }}
             </div>
-            <a href="#" class="securityFormLinkEnd">Read Term of Use</a>
+            <a href="{{ path('app_terms_of_use') }}" class="securityFormLinkEnd">Read Terms of Use</a>
             <button type="submit" class="securityFormSubmitButton">REGISTER</button>
             <a href="{{ path('app_login') }}" class="securityFormLinkEnd">Already have an account ? Login here !</a>
         {{ form_end(registrationForm) }}

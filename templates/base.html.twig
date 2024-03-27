@@ -87,9 +87,9 @@
         {% endblock %}
         <footer>
             <ul>
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Provacy Policy</a></li>
-                <li><a href="#">Contact us</a></li>
+                <li><a href="{{ path('app_terms_of_use') }}">Terms of Use</a></li>
+                <li><a href="{{ path('app_privacy_policy') }}">Privacy Policy</a></li>
+                <li><a href="{{ path('app_contact') }}">Contact us</a></li>
             </ul>
         </footer>
         {% block javascripts %}
