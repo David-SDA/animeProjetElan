@@ -76,7 +76,11 @@ Le projet a été coder en Symfony et ses outils liés.
 | ![Page du calendrier en liste](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_liste.png) | ![Page de modification du calendrier](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_modification_calendrier.png) |
 
 ### Autres
-*Pages temporairement incomplètes*
 | Conditions d'utilisation | Politique de confidentialité | Contact |
 | - | - | - |
 | ![Page des conditions d'utilisation](https://github.com/David-SDA/animeProjetElan/blob/master/images/footer/page_conditions_utilisation.png) | ![Page de la politique de confidentialité](https://github.com/David-SDA/animeProjetElan/blob/master/images/footer/page_politique_confidentialit%C3%A9.png) | ![Page de contact](https://github.com/David-SDA/animeProjetElan/blob/master/images/footer/page_contact.png) |
+
+### Admin
+| Panel admin | Liste d'utilisateurs |
+| - | - |
+| ![Page du panel admin](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_admin.png) | ![Page de la liste des utilisateurs](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_liste_utilisateurs.png) |
