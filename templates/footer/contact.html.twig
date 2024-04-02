@@ -3,5 +3,23 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-    <h1 class="title">Contact Us</h1>
+    {{ form_errors(form) }}
+    <div class="securityFormContainer">
+        {{ form_start(form) }}
+        <h1 class="securityFormTitle">Contact Us</h1>
+        <div class="securityFormRow">
+            {{ form_label(form.email, 'Email*') }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="securityFormRow">
+            {{ form_label(form.subject, 'Subject*') }}
+            {{ form_widget(form.subject) }}
+        </div>
+        <div class="securityFormRow">
+            {{ form_label(form.message, 'Message*') }}
+            {{ form_widget(form.message) }}
+        </div>
+        <button type="submit" class="securityFormSubmitButton">SEND</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
