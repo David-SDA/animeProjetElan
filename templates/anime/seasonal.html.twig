@@ -22,7 +22,7 @@
         <div class="homeMultipleAnimes autoFill">
         {% for media in dataSeasonalAnimes.data.Page.media %}
             <figure class="homeOneAnime top">
-                <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                     <div class="homeOneAnimeImageInfo">
                         <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                         <section class="homeHoverContent">

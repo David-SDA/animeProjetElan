@@ -10,7 +10,7 @@
         <div class="homeMultipleAnimes autoFill">
         {% for media in dataTopAnimes.data.Page.media %}
             <figure class="homeOneAnime top">
-                <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                     <div class="homeOneAnimeImageInfo">
                         <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                         <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">

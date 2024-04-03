@@ -12,7 +12,7 @@
         <h1 class="animeCharactersTitle">Staff of {{ dataAllStaffThisAnime.title.romaji|default('?') }}</h1>
         <div class="animeRemainingRightContentPartCardsContainer">
         {% for staffMember in dataAllStaffThisAnime.staff.edges %}
-            <a href="{{ path('show_staff', { 'id' : staffMember.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+            <a href="{{ path('show_staff', { 'id' : staffMember.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ staffMember.node.name.full|default('Unknown') }}">
                 <figure>
                     <img src="{{ staffMember.node.image.medium }}" alt="{{ staffMember.node.name.full|default('Unknown') }}" class="animeRemainingRightContentPartCardsImage">
                 </figure>

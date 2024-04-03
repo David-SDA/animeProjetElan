@@ -15,12 +15,12 @@
                     <img src="{{ dataThisAnime.coverImage.large }}" alt="Cover Image of {{ dataThisAnime.title.romaji|default('Unknown') }}" class="animeImage">
                 </figure>
                 {% if app.user and not animeIsInList %}
-                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list">Add to your list</a>
+                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list" title="Add to your list">Add to your list</a>
                 {% endif %}
                 {% if app.user and not animeIsInFavorites %}
-                    <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
+                    <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites" title="Add to your favorites">Add to your favorites</a>
                 {% elseif app.user and animeIsInFavorites and animeInDatabase %}
-                    <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites">Remove from favorites</a>
+                    <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites" title="Remove from favorites">Remove from favorites</a>
                 {% endif %}
             </div>
             <div class="animeTopRightContent">
@@ -203,11 +203,11 @@
             {% if dataThisAnime.characters.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
                     <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                    <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                    <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for character in dataThisAnime.characters.edges|slice(0, 8) %}
-                    <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+                    <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ character.node.name.full|default('Unknown') }}">
                         <figure>
                             <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full|default('Image of the character') }}" class="animeRemainingRightContentPartCardsImage">
                         </figure>
@@ -222,11 +222,11 @@
             {% if dataThisAnime.staff.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
                     <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
-                    <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore">View more</a>
+                    <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for staff in dataThisAnime.staff.edges|slice(0, 8) %}
-                    <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent">
+                    <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ staff.node.name.full|default('Unknown') }}">
                         <figure>
                             <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full|default('Image of the staff member') }}" class="animeRemainingRightContentPartCardsImage">
                         </figure>
