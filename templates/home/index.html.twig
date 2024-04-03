@@ -13,12 +13,12 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">BEST THIS SEASON</h2>
-                <a href="{{ path('seasonal_anime') }}" class="animeRemainingRightContentPartMore">View more</a>
+                <a href="{{ path('seasonal_anime') }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataBestAnimeThisSeason.data.Page.media %}
                 <figure class="homeOneAnime">
-                    <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                    <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                         <div class="homeOneAnimeImageInfo">
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
@@ -52,12 +52,12 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">NEXT SEASON</h2>
-                <a href="#" class="animeRemainingRightContentPartMore">View more</a>
+                <a href="#" title="View more" class="animeRemainingRightContentPartMore">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataNextSeasonAnime.data.Page.media %}
                 <figure class="homeOneAnime">
-                    <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                    <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                         <div class="homeOneAnimeImageInfo">
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
@@ -91,12 +91,12 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">POPULAR</h2>
-                <a href="#" class="animeRemainingRightContentPartMore">View more</a>
+                <a href="#" class="animeRemainingRightContentPartMore" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataPopularAnime.data.Page.media %}
                 <figure class="homeOneAnime">
-                    <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                    <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                         <div class="homeOneAnimeImageInfo">
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                             <section class="homeHoverContent">
@@ -130,12 +130,12 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle">TOP 10</h2>
-                <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore">View more</a>
+                <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes autoFill">
             {% for media in dataTopTenAnime.data.Page.media %}
                 <figure class="homeOneAnime">
-                    <a href="{{ path('show_anime', { 'id' : media.id }) }}">
+                    <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                         <div class="homeOneAnimeImageInfo">
                             <div class="homeOneAnimeTopRanking">{{ loop.index }}</div>
                             <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
