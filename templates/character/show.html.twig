@@ -36,14 +36,14 @@
             {% for anime in dataThisCharacter.media.edges %}
                 <figure class="homeOneAnime">
                 {% if anime.voiceActors %}
-                    <a href="{{ path('show_staff', { 'id' :  anime.voiceActors[0].id }) }}"><img src="{{ anime.voiceActors[0].image.medium }}" alt="{{ anime.voiceActors[0].name.full }}" class="characterRemainingVoiceActorImage"></a>
+                    <a href="{{ path('show_staff', { 'id' :  anime.voiceActors[0].id }) }}" title="{{ anime.voiceActors[0].name.full }}"><img src="{{ anime.voiceActors[0].image.medium }}" alt="{{ anime.voiceActors[0].name.full }}" class="characterRemainingVoiceActorImage"></a>
                 {% endif %}
-                    <a href="{{ path('show_anime', { 'id' : anime.node.id }) }}">
+                    <a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">
                         <div class="homeOneAnimeImageInfo">
                             <img src="{{ anime.node.coverImage.large }}" alt="Cover Image of {{ anime.node.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                         </div>
                     </a>
-                    <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
+                    <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
                 </figure>
             {% endfor %}
             </div>
