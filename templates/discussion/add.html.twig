@@ -15,9 +15,9 @@
             {{ form_start(form) }}
             {# On change le titre de la page en fonction de l'existence de la discussion #}
             {% if discussionExist %}
-                <h1 class="securityFormTitle">Edit talk</h1>
+                <h1 class="securityFormTitle">Edit Talk</h1>
             {% else %}
-                <h1 class="securityFormTitle">Create a new talk</h1>
+                <h1 class="securityFormTitle">Create a new Talk</h1>
             {% endif %}
                 <div class="securityFormRow">
                     {{ form_label(form.title, 'Title*') }}
@@ -28,9 +28,9 @@
                     {{ form_widget(form.firstPost) }}
                 </div>
             {% if discussionExist %}
-                <button type="submit" class="securityFormSubmitButton large">Edit talk</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Edit Talk">Edit Talk</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large">Create talk</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Create Talk">Create Talk</button>
             {% endif %}
             {% if not discussionExist %}
                 <p class="securityFormLinkEnd"><i>

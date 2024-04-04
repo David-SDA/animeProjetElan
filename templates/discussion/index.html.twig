@@ -37,18 +37,18 @@
     <main>     
         <h1 class="title talks">All Talks</h1>
         {% if app.user %}
-            <a href="{{ path('add_discussion') }}" class="profileInfosButton talks">Create Talk</a>
+            <a href="{{ path('add_discussion') }}" class="profileInfosButton talks" title="Create Talk">Create Talk</a>
         {% endif %}
         {{ form_start(form, {'attr': {'class': 'filterForm'}}) }}
             <div class="filterElementFormElement">
                 {{ form_label(form.filter, 'Filter by') }}
                 {{ form_widget(form.filter) }}
             </div>
-            <button type="submit" class="filterSubmitButton">Apply Filter</button>
+            <button type="submit" class="filterSubmitButton" title="Apply Filter">Apply Filter</button>
         {{ form_end(form) }}
         {% for talk in talks %}
         <section>
-            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer">
+            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer" title="{{ talk.title }}">
                 <div class="oneTalkPartContainer">
                     <h2 class="oneTalkTitle">{{ talk.title }}</h2>
                     <figure class="oneTalkUserContainer">

@@ -59,7 +59,7 @@
                     {% endif %}
                     <figcaption class="oneTalkUsername post">
                         {% if talk.user %}
-                            <a href="{{ path('show_user', { id: talk.user.id }) }}">{{ talk.user.username }}</a>
+                            <a href="{{ path('show_user', { id: talk.user.id }) }}" title="{{ talk.user.username }}">{{ talk.user.username }}</a>
                         {% else %}
                             <p>Deleted User</p>
                         {% endif %}
