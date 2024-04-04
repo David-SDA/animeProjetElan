@@ -33,10 +33,10 @@
                 value="{{ csrf_token('authenticate') }}"
             >
     
-            <button type="submit" class="securityFormSubmitButton">LOG IN</button>
+            <button type="submit" class="securityFormSubmitButton" title="Log in">LOG IN</button>
             <div class="securityFormLinksEnd">
-                <a href="{{ path('app_forgot_password_request') }}" class="securityFormLinkEnd">Forgot password ?</a>
-                <a href="{{ path('app_register') }}" class="securityFormLinkEnd">No account ? Register here !</a>
+                <a href="{{ path('app_forgot_password_request') }}" class="securityFormLinkEnd" title="Reset password">Forgot password ?</a>
+                <a href="{{ path('app_register') }}" class="securityFormLinkEnd" title="Register">No account ? Register here !</a>
             </div>
         </form>
     </div>
