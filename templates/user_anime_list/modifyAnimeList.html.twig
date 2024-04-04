@@ -8,10 +8,10 @@
     <main class="animeListModifyContainer">
         <div>
             <figure>
-                <a href="{{ path('show_anime', { 'id' : idApi }) }}">
+                <a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
                     <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="animeImage">
                 </a>
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : idApi }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
@@ -31,8 +31,8 @@
                 {{ form_label(form.nbEpisodesWatched, 'Episodes Watched') }}
                 {{ form_widget(form.nbEpisodesWatched) }}
             </div>
-            <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete">Delete</a>
-            <button type="submit" class="securityFormSubmitButton">Save</button>
+            <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete" title="Delete from list">Delete</a>
+            <button type="submit" class="securityFormSubmitButton" title="Save Changes">Save</button>
         {{ form_end(form) }}
     </main>
 

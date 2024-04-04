@@ -50,9 +50,9 @@
                     <canvas id="myChart" width="300"></canvas>
                 </div>
                 <div class="profileInfos buttons">
-                    <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton">ANIME LIST</a>
+                    <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton" title="See Anime List">ANIME LIST</a>
                     {% if app.user == user %}
-                        <a href="{{ path('calendar_user') }}" class="profileInfosButton">CALENDAR</a>
+                        <a href="{{ path('calendar_user') }}" class="profileInfosButton" title="See Calendar">CALENDAR</a>
                     {% endif %}
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     <div class="homeMultipleAnimes autoFill profile">
                     {% for anime in favoriteAnimesData %}
                         <figure class="homeOneAnime">
-                            <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
+                            <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
                                 <div class="homeOneAnimeImageInfo">
                                     <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="homeOneAnimeImage profile">
                                     <section class="homeHoverContent">
@@ -89,7 +89,7 @@
                                     </section>
                                 </div>
                             </a>
-                            <figcaption class="homeOneAnimeTitle profile"><a href="{{ path('show_anime', { 'id' : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle profile"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
                         </figure>
                     {% endfor %}
                     </div>
@@ -102,10 +102,10 @@
                     <div class="profileInfosFavoritesCharacters">
                     {% for character in favoriteCharactersData %}
                         <figure class="favoriteCharacter">
-                            <a href="{{ path('show_character', { id: character.id }) }}">
+                            <a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">
                                 <img src="{{ character.image.large }}" alt="Image of {{ character.name.full|default('Unknown') }}" class="favoriteCharacterImage">
                             </a>
-                            <figcaption class="homeOneAnimeTitle favorites"><a href="{{ path('show_character', { id: character.id }) }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle favorites"><a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
                         </figure>
                     {% endfor %}
                     </div>
@@ -119,7 +119,7 @@
                     {# Boucle sur les 6 dernières discussions créées #}
                     {% for talk in user.discussions|reverse|slice(0, 6) %}
                         <section style="width: 100%;">
-                            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
+                            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile" title="{{ talk.title }}">
                                 <div class="animeRemainingRightContentPartCardsTextContainer">
                                     <h2 class="animeRemainingRightContentPartCardsTop profile">{{ talk.title }}</h2>
                                     <p class="animeRemainingRightContentPartCardsBottom" title="{{ talk.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.creationDate) }}</i></p>
@@ -146,7 +146,7 @@
                         {% if post.discussion not in uniqueTalks and uniqueTalks|length < 6 %}
                             {% set uniqueTalks = uniqueTalks|merge([post.discussion]) %}
                             <section style="width: 100%;">
-                                <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile">
+                                <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile" title="{{ post.discussion.title }}">
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
                                         <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.title }}</h2>
                                         <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.creationDate) }}</i></p>

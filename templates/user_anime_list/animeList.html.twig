@@ -8,49 +8,49 @@
     <main>
         <h1 class="title">{{ user.username }}'s Anime List</h1>
         <div class="animeListButtonsContainer">
-            <button class="animeListButton active" id="animeListButtonAll">ALL</button>
-            <button class="animeListButton" id="animeListButtonWatching">WATCHING</button>
-            <button class="animeListButton" id="animeListButtonCompleted">COMPLETED</button>
-            <button class="animeListButton" id="animeListButtonPlanned">PLANNED TO WATCH</button>
+            <button class="animeListButton active" id="animeListButtonAll" title="All">ALL</button>
+            <button class="animeListButton" id="animeListButtonWatching" title="Watching">WATCHING</button>
+            <button class="animeListButton" id="animeListButtonCompleted" title="Completed">COMPLETED</button>
+            <button class="animeListButton" id="animeListButtonPlanned" title="Planned to Watch">PLANNED TO WATCH</button>
         </div>
         <div class="animeListContainer">
             {% for key, anime in animesDataByState["Watching"] %}
             {# La classe ci-dessous sert uniquement pour le JavaScript #}
             <figure class="animeListWatching">
                 {% if app.user == user %}
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}" title="Modify Anime"><i class="fa-solid fa-bars animeMenu"></i></a>
                 {% endif %}
                 <div class="animeEpisodesWatchedContainer">
                     {% if app.user == user %}
-                        <a href="{{ path('remove_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
+                        <a href="{{ path('remove_episode_anime_list_user', { id : key }) }}" title="Remove Episode"><i class="fa-solid fa-minus animeEpisodesWatchedControl minus"></i></a>
                     {% endif %}
                     <p class="animeEpisodesWatched">{{ anime.episodesWatched }}/{{ anime.episodes|default('?') }}</p>
                     {% if app.user == user %}
-                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
+                        <a href="{{ path('add_episode_anime_list_user', { id : key }) }}" title="Add Episode"><i class="fa-solid fa-plus animeEpisodesWatchedControl plus"></i></a>
                     {% endif %}
                 </div>
                 <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
             {% endfor %}
             {% for key, anime in animesDataByState["Completed"] %}
             {# La classe ci-dessous sert uniquement pour le JavaScript #}
             <figure class="animeListCompleted">
                 {% if app.user == user %}
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}" title="Modify Anime"><i class="fa-solid fa-bars animeMenu"></i></a>
                 {% endif %}
                 <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
             {% endfor %}
             {% for key, anime in animesDataByState["Plan to watch"] %}
             {# La classe ci-dessous sert uniquement pour le JavaScript #}
             <figure class="animeListPlanned" >
                 {% if app.user == user %}
-                    <a href="{{ path('change_anime_list_user', { id: key }) }}"><i class="fa-solid fa-bars animeMenu"></i></a>                    
+                    <a href="{{ path('change_anime_list_user', { id: key }) }}" title="Modify Anime"><i class="fa-solid fa-bars animeMenu"></i></a>                    
                 {% endif %}
                 <img src="{{ anime.coverImage.large }}" alt="Cover image of {{ anime.title.romaji|default('Unknown') }}" class="animeListAnimeImage">
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { id : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
             {% endfor %}
         </div>
