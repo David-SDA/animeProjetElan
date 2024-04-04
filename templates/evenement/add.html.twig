@@ -15,9 +15,9 @@
             {{ form_start(form) }}
             {# On change le titre de la page en fonction de l'existence de l'évènement #}
             {% if eventExist %}
-                <h1 class="securityFormTitle">Edit event</h1>
+                <h1 class="securityFormTitle">Edit Event</h1>
             {% else %}
-                <h1 class="securityFormTitle">Create a new event</h1>
+                <h1 class="securityFormTitle">Create a new Event</h1>
             {% endif %}
                 <div class="securityFormRow">
                     {{ form_label(form.title, 'Event Name*') }}
@@ -38,9 +38,9 @@
                     {{ form_errors(form.endDate) }}
                 </div>
             {% if eventExist %}
-                <button type="submit" class="securityFormSubmitButton large">Edit event</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Edit Event">Edit Event</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large">Create event</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Create a new Event">Create Event</button>
             {% endif %}
             {{ form_end(form) }}
         </div>

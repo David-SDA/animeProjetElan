@@ -44,13 +44,13 @@
                         {% set animeTitle = anime.title.romaji|default('Unknown') %}
                         {% set animeCoverImage = anime.coverImage.large %}
                         <figure class="homeOneAnime">
-                            <a href="{{ path('show_character', { 'id' : characterId }) }}"><img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage"></a>
-                            <a href="{{ path('show_anime', { 'id' : animeId }) }}">
+                            <a href="{{ path('show_character', { 'id' : characterId }) }}" title="{{ characterName }}"><img src="{{ characterImage }}" alt="{{ characterName }}" class="characterRemainingVoiceActorImage"></a>
+                            <a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">
                                 <div class="homeOneAnimeImageInfo">
                                     <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
                                 </div>
                             </a>
-                            <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : animeId }) }}">{{ animeTitle }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">{{ animeTitle }}</a></figcaption>
                         </figure>
                     {% endfor %}
                 {% endfor %}
@@ -82,7 +82,7 @@
                 {# On fait l'affichage grâce a animeRoles #}
                 {% for anime in animeRoles %}
                     <figure class="homeOneAnime">
-                        <a href="{{ path('show_anime', { 'id' : anime.id }) }}">
+                        <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title|default('Unknown') }}" class="homeOneAnimeImage">
                                 <div class="homeHoverContent">
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.id }) }}">{{ anime.title|default('Unknown') }}</a></figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">{{ anime.title|default('Unknown') }}</a></figcaption>
                     </figure>
                 {% endfor %}
                 </div>

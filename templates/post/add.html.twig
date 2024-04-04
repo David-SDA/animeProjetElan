@@ -24,9 +24,9 @@
                     {{ form_widget(form.content) }}
                 </div>
             {% if postExist %}
-                <button type="submit" class="securityFormSubmitButton large">Edit post</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Edit Post">Edit Post</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large">Create post</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Create Post">Create Post</button>
             {% endif %}
             {{ form_end(form) }}
         </div>
