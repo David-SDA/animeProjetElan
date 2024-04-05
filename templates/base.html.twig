@@ -23,29 +23,29 @@
             <link rel="stylesheet" href="{{ asset("css/responsive.css") }}">
         {% endblock %}
     </head>
-    <body>
+    <body {{ app.user.darkMode ? 'class="dark"' }}>
         {% for type, messages in app.flashes %}
             {% for message in messages %}
-                <div class="flashMessage flashMessage-{{ type }}">
+                <div class="flashMessage flashMessage-{{ type }} {{ app.user.darkMode ? 'dark' }}">
                     <b>{{ message }}</b>
                 </div>
             {% endfor %}
         {% endfor %}
-        <div class="navBarContainer">
-            <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
+        <div class="navBarContainer {{ app.user.darkMode ? 'dark' }}">
+            <i class="fa-solid fa-bars responsiveNavBarOpen {{ app.user.darkMode ? 'dark' }}"></i>
             {% if not app.user or not app.user.isBanned %}
                 <nav class="navBar">
                     <ul class="navBarContent">
-                        <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink" title="Home">HOME</a></li>
-                        <li class="navBarElementDropdown">
-                            <button class="navBarElementDropdownButton" title="Anime">ANIME</button>
-                            <ul class="navBarElementDropdownContent">
-                                <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink" title="Top Animes">TOP</a></li>
-                                <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last" title="Seasonial Anime">SEASONIAL</a></li>
+                        <li class="navBarElement {{ app.user.darkMode ? 'dark' }}"><a href="{{ path('app_home') }}" class="navBarElementLink {{ app.user.darkMode ? 'dark' }}" title="Home">HOME</a></li>
+                        <li class="navBarElementDropdown {{ app.user.darkMode ? 'dark' }}">
+                            <button class="navBarElementDropdownButton {{ app.user.darkMode ? 'dark' }}" title="Anime">ANIME</button>
+                            <ul class="navBarElementDropdownContent {{ app.user.darkMode ? 'dark' }}">
+                                <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink {{ app.user.darkMode ? 'dark' }}" title="Top Animes">TOP</a></li>
+                                <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last {{ app.user.darkMode ? 'dark' }}" title="Seasonial Anime">SEASONIAL</a></li>
                             </ul>
                         </li>
-                        <li class="navBarElement"><a href="{{ path('search_anime') }}" class="navBarElementLink" title="Search">SEARCH</a></li>
-                        <li class="navBarElement"><a href="{{ path('app_discussion') }}" class="navBarElementLink" title="Talks">TALKS</a></li>                    
+                        <li class="navBarElement {{ app.user.darkMode ? 'dark' }}"><a href="{{ path('search_anime') }}" class="navBarElementLink {{ app.user.darkMode ? 'dark' }}" title="Search">SEARCH</a></li>
+                        <li class="navBarElement {{ app.user.darkMode ? 'dark' }}"><a href="{{ path('app_discussion') }}" class="navBarElementLink {{ app.user.darkMode ? 'dark' }}" title="Talks">TALKS</a></li>                    
                     </ul>   
                 </nav>
             {% endif %}
@@ -85,7 +85,7 @@
         </div>
         {% block body %}
         {% endblock %}
-        <footer>
+        <footer {{ app.user.darkMode ? 'class="dark"' }}>
             <ul>
                 <li><a href="{{ path('app_terms_of_use') }}" title="Terms of Use">Terms of Use</a></li>
                 <li><a href="{{ path('app_privacy_policy') }}" title="Privacy Policy">Privacy Policy</a></li>

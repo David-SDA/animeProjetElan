@@ -10,6 +10,9 @@ body{
     display: flex;
     flex-direction: column
 }
+body.dark{
+    background-color: #1e1e1e;
+}
 a{
     text-decoration: none;
     color: inherit;
@@ -28,6 +31,10 @@ footer{
     color: #fff;
     width: 100%;
     margin-top: auto;
+}
+footer.dark{
+    opacity: 0.9;
+    color: #e6edf3;
 }
 footer ul{
     display: flex;
@@ -55,15 +62,24 @@ footer ul a:hover{
     opacity: 0;
     pointer-events: none;
 }
+.flashMessage.dark{
+    color: #e6edf3;
+}
 
 /* Les messages de succès */
 .flashMessage-success{
     background-color: #4bb543;
 }
+.flashMessage-success.dark{
+    background-color: rgba(75, 181, 67, 0.9);
+}
 
 /* Les messages d'erreurs */
 .flashMessage-error{
     background-color: #cc0000;
+}
+.flashMessage-error.dark{
+    background-color: rgba(204, 0, 0, 0.9);
 }
 
 /* Création d'une animation de fade in */
@@ -84,6 +100,10 @@ footer ul a:hover{
     justify-content: space-between;
     align-items: center;
 }
+.navBarContainer.dark{
+    color: #e6edf3;
+    opacity: 0.9;
+}
 
 /* L'élement qui ouvre la barre de navigation */
 .responsiveNavBarOpen{
@@ -97,6 +117,9 @@ footer ul a:hover{
     border-radius: 10px;
     place-items: center;
     cursor: pointer;
+}
+.responsiveNavBarOpen.dark{
+    background-color: rgba(65, 105, 225, 0.9);
 }
 
 /* Le contenu de la barre de navigation */
@@ -123,6 +146,9 @@ footer ul a:hover{
 .navBarElement:hover{
     background-color: #4169E1;
 }
+.navBarElement.dark:hover{
+    background-color: rgba(65, 105, 225, 0.9);
+}
 
 /* Le lien a l'intérieur d'un élément de la liste */
 .navBarElementLink{
@@ -136,6 +162,9 @@ footer ul a:hover{
     justify-content: center;
     align-items: center;
 }
+.navBarElementLink.dark{
+    color: #e6edf3;
+}
 
 /* Un élément de la liste de la barre de navigation qui est un menu déroulant */
 .navBarElementDropdown{
@@ -145,6 +174,9 @@ footer ul a:hover{
 }
 .navBarElementDropdown:hover{
     background-color: #4169E1;
+}
+.navBarElementDropdown.dark:hover{
+    background-color: rgba(65, 105, 225, 0.9);
 }
 .navBarElementDropdown:hover .navBarElementDropdownContent{
     display: block;
@@ -161,6 +193,9 @@ footer ul a:hover{
     font-weight: 600;
     cursor: pointer;
 }
+.navBarElementDropdownButton.dark{
+    color: #e6edf3;
+}
 
 /* Le contenu du menu déroulant */
 .navBarElementDropdownContent{
@@ -174,6 +209,9 @@ footer ul a:hover{
     z-index: 1;
     list-style-type: none;
 }
+.navBarElementDropdownContent.dark{
+    background-color: rgba(65, 105, 225, 0.9);
+}
 
 /* Un lien du menu déroulant */
 .navBarElementDropdownLink{
@@ -181,6 +219,9 @@ footer ul a:hover{
 }
 .navBarElementDropdownLink:hover{
     background-color: #00BFFF;
+}
+.navBarElementDropdownLink.dark:hover{
+    background-color: rgba(0, 191, 255, 0.9);
 }
 
 /* Le dernier lien du menu déroulant */
