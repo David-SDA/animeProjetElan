@@ -20,9 +20,11 @@
         <div class="animeRemainingContainer profileInfos settings">
             <div class="settingsOne">
                 <h2 class="settingsTitle">Theme</h2>
+                <p><i>Current Theme : {{ app.user.darkMode ? 'Dark' : 'Light' }}</i></p>
+                <br>
                 <div class="settingsThemes">
-                    <a href="#" class="settingsTheme light" title="Switch to light theme">A</a>
-                    <a href="#" class="settingsTheme dark" title="Switch to dark theme">A</a>
+                    <a href="{{ path('update_theme_user', { theme: 0 }) }}" class="settingsTheme light" title="Switch to light theme">A</a>
+                    <a href="{{ path('update_theme_user', { theme: 1 }) }}" class="settingsTheme dark" title="Switch to dark theme">A</a>
                 </div>
             </div>
             <div class="settingsOne">

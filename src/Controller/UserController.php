@@ -794,4 +794,28 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('show_character', ['id' => $characterInDatabase->getIdApi()]);
     }
+
+    #[Route('/switchTheme/{theme}', name: 'update_theme_user')]
+    public function updateTheme(Request $request, bool $theme, EntityManagerInterface $entityManagerInterface): Response{
+        /* On récupère l'utilisateur actuel */
+        $user = $this->getUser();
+        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        if(!$user){
+            return $this->redirectToRoute('app_home');
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($user && $user->isBanned()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        /* On modifie le theme de l'utilisateur */
+        $user->setDarkMode($theme);
+
+        /* On sauvegarde ces changements dans la base de données */
+        $entityManagerInterface->persist($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('settings_user');
+    }
 }
