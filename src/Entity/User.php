@@ -82,6 +82,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $darkMode = null;
+
     public function __construct()
     {
         $this->registrationDate = new DateTime();
@@ -438,6 +441,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isDarkMode(): ?bool
+    {
+        return $this->darkMode;
+    }
+
+    public function setDarkMode(?bool $darkMode): static
+    {
+        $this->darkMode = $darkMode;
 
         return $this;
     }
