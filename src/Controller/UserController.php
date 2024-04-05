@@ -816,6 +816,11 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        $this->addFlash(
+            'success',
+            'Theme has been updated'
+        );
+
         return $this->redirectToRoute('settings_user');
     }
 }
