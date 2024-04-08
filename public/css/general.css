@@ -33,7 +33,7 @@ footer{
     margin-top: auto;
 }
 footer.dark{
-    opacity: 0.9;
+    background-color: #2b2a41;
     color: #e6edf3;
 }
 footer ul{
@@ -71,7 +71,7 @@ footer ul a:hover{
     background-color: #4bb543;
 }
 .flashMessage-success.dark{
-    background-color: rgba(75, 181, 67, 0.9);
+    background-color: #44a33c;
 }
 
 /* Les messages d'erreurs */
@@ -79,7 +79,7 @@ footer ul a:hover{
     background-color: #cc0000;
 }
 .flashMessage-error.dark{
-    background-color: rgba(204, 0, 0, 0.9);
+    background-color: #b80000;
 }
 
 /* Création d'une animation de fade in */
@@ -102,7 +102,7 @@ footer ul a:hover{
 }
 .navBarContainer.dark{
     color: #e6edf3;
-    opacity: 0.9;
+    background-color: #2b2a41;
 }
 
 /* L'élement qui ouvre la barre de navigation */
@@ -119,7 +119,7 @@ footer ul a:hover{
     cursor: pointer;
 }
 .responsiveNavBarOpen.dark{
-    background-color: rgba(65, 105, 225, 0.9);
+    background-color: #204ac8;
 }
 
 /* Le contenu de la barre de navigation */
@@ -147,7 +147,7 @@ footer ul a:hover{
     background-color: #4169E1;
 }
 .navBarElement.dark:hover{
-    background-color: rgba(65, 105, 225, 0.9);
+    background-color: #204ac8;
 }
 
 /* Le lien a l'intérieur d'un élément de la liste */
@@ -176,7 +176,7 @@ footer ul a:hover{
     background-color: #4169E1;
 }
 .navBarElementDropdown.dark:hover{
-    background-color: rgba(65, 105, 225, 0.9);
+    background-color: #204ac8;
 }
 .navBarElementDropdown:hover .navBarElementDropdownContent{
     display: block;
@@ -210,7 +210,7 @@ footer ul a:hover{
     list-style-type: none;
 }
 .navBarElementDropdownContent.dark{
-    background-color: rgba(65, 105, 225, 0.9);
+    background-color: #204ac8;
 }
 
 /* Un lien du menu déroulant */
@@ -221,7 +221,7 @@ footer ul a:hover{
     background-color: #00BFFF;
 }
 .navBarElementDropdownLink.dark:hover{
-    background-color: rgba(0, 191, 255, 0.9);
+    background-color: #0099cc;
 }
 
 /* Le dernier lien du menu déroulant */
@@ -255,6 +255,9 @@ footer ul a:hover{
 .navBarProfileContainer:hover{
     background-color: rgba(211, 211, 211, 0.2);
 }
+.navBarProfileContainer.dark:hover{
+    background-color: rgba(211, 211, 211, 0.1);
+}
 
 /* Le pseudo de l'utilisateur connecté */
 .navBarProfilePseudo{
@@ -266,6 +269,9 @@ footer ul a:hover{
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 180px;
+}
+.navBarProfilePseudo.dark{
+    color: #e6edf3;
 }
 
 /* L'image de profil de l'utilisateur connecté */
@@ -314,6 +320,9 @@ footer ul a:hover{
 .navBarUserMenu.visible{
     right: 0;
 }
+.navBarUserMenu.dark{
+    background-color: #2b2a41;
+}
 
 /* Le haut du menu pour un utilisateur connecté */
 .navBarUserMenuTop{
@@ -338,6 +347,9 @@ footer ul a:hover{
 .navBarUserMenuClose:hover{
     background-color: rgba(211, 211, 211, 0.2);
 }
+.navBarUserMenuClose.dark:hover{
+    background-color: rgba(211, 211, 211, 0.1);
+}
 
 /* Un lien dans le menu d'un utilisateur */
 .navBarUserMenuLink{
@@ -351,6 +363,9 @@ footer ul a:hover{
 }
 .navBarUserMenuLink:hover{
     background-color: rgba(211, 211, 211, 0.2);
+}
+.navBarUserMenuLink.dark:hover{
+    background-color: rgba(211, 211, 211, 0.1);
 }
 .navBarUserMenuLink .fa-regular, .navBarUserMenuLink .fa-solid{
     width: 16px;
