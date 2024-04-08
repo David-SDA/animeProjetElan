@@ -12,6 +12,10 @@
     margin: auto;
 }
 
+.simpleText{
+    color: #333;
+}
+
 /* Les titres secondaires */
 .homeSecondaryTitle{
     margin-top: 1em;
