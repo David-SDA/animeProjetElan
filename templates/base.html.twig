@@ -77,7 +77,7 @@
                         <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('app_logout') }}" title="Logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
                     {% if is_granted('ROLE_ADMIN') and not app.user.isBanned %}
-                        <a href="{{ path('app_admin') }}" class="navBarAdmin" title="Admin Space">ADMIN SPACE</a>
+                        <a href="{{ path('app_admin') }}" class="navBarAdmin {{ app.user and app.user.darkMode ? 'dark' }}" title="Admin Space">ADMIN SPACE</a>
                     {% endif %}
                 </div>
                 <div class="navBarUserMenuOverlay"></div>

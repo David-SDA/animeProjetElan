@@ -393,6 +393,10 @@ footer ul a:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
 }
+.navBarAdmin.dark{
+    color: #e6edf3;
+    background-color: #aa2424;
+}
 
 /* Le background quand le menu de l'utilisateur est ouvert */
 .navBarUserMenuOverlay{
@@ -460,6 +464,9 @@ footer ul a:hover{
     }
     .navBar.navBarOpen, .navBarContent.navBarOpen{
         margin-left: 0;
+    }
+    .navBarContent.dark{
+        background-color: #2b2a41;
     }
     
     /* L'élément qui ouvre le menu dropdown */
