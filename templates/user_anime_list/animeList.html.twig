@@ -6,7 +6,7 @@
 
 {% block body %}
     <main>
-        <h1 class="title">{{ user.username }}'s Anime List</h1>
+        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">{{ user.username }}'s Anime List</h1>
         <div class="animeListButtonsContainer">
             <button class="animeListButton active" id="animeListButtonAll" title="All">ALL</button>
             <button class="animeListButton" id="animeListButtonWatching" title="Watching">WATCHING</button>

@@ -3,7 +3,7 @@
 {% block title %}Terms of Use{% endblock %}
 
 {% block body %}
-    <h1 class="title">Terms of Use</h1>
+    <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Terms of Use</h1>
     <main class="homeContainer simpleText">
         <p>Welcome to Anime Tracker!</p>
         <br>

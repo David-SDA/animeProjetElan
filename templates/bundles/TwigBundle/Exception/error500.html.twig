@@ -6,7 +6,7 @@
 
 {% block body %}
     <main class="homeContainer">
-        <h1 class="title">Internal Server Error</h1>
+        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Internal Server Error</h1>
         <p>There is an error</p>
     </main>
 {% endblock %}

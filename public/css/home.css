@@ -5,6 +5,9 @@
     margin: 0.5em 0;
     padding: 0.5em;
 }
+.title.dark{
+    color: #e6edf3;
+}
 
 /* Contenu de toute la page */
 .homeContainer{

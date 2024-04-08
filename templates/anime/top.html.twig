@@ -6,7 +6,7 @@
 
 {% block body %}
     <main class="homeContainer">
-        <h1 class="title">TOP ANIME</h1>
+        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">TOP ANIME</h1>
         <div class="homeMultipleAnimes autoFill">
         {% for media in dataTopAnimes.data.Page.media %}
             <figure class="homeOneAnime top">

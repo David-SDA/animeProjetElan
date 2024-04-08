@@ -35,7 +35,7 @@
 
 {% block body %}
     <main class="talkContainer">
-        <h1 class="title talks">
+        <h1 class="title talks {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ talk.title }}
             {# Si la discussion appartient à l'utilisateur et n'est pas verrouillé, il pourra la modifier #}
             {% if talk.user == app.user and not talk.locked and app.user %}

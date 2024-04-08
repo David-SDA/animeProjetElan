@@ -4,7 +4,7 @@
 
 {% block body %}
 <main>
-    <h1 class="title">Admin Space : {{ app.user.username }}</h1>
+    <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Admin Space : {{ app.user.username }}</h1>
     <div class="adminStats">
         <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" title="See all users" class="adminLink">See all users</a></p>
         <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>

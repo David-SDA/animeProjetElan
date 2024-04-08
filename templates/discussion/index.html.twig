@@ -35,7 +35,7 @@
 
 {% block body %}
     <main>     
-        <h1 class="title talks">All Talks</h1>
+        <h1 class="title talks {{ app.user and app.user.darkMode ? 'dark' }}">All Talks</h1>
         {% if app.user %}
             <a href="{{ path('add_discussion') }}" class="profileInfosButton talks" title="Create Talk">Create Talk</a>
         {% endif %}

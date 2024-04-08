@@ -4,7 +4,7 @@
 
 {% block body %}
     <main>
-        <h1 class="title">Admin Space : Users</h1>
+        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Admin Space : Users</h1>
         <section class="adminSection">
             <h2>Non banned Users</h2>
             <table class="adminTable full">
