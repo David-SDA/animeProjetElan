@@ -203,7 +203,7 @@
             {% if dataThisAnime.characters.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
                     <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
-                    <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
+                    <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for character in dataThisAnime.characters.edges|slice(0, 8) %}
@@ -222,7 +222,7 @@
             {% if dataThisAnime.staff.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
                     <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
-                    <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
+                    <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for staff in dataThisAnime.staff.edges|slice(0, 8) %}
@@ -241,7 +241,7 @@
             {# Rajouter une condition quand les talks seront fait #}
                 {# <div class="animeRemainingRightContentPartTitleContainer">
                     <h2 class="animeRemainingRightContentPartTitle">Talks</h2>
-                    <a href="#" class="animeRemainingRightContentPartMore">View more</a>
+                    <a href="#" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer talk anime">
                 {% for i in range(1, 5) %}

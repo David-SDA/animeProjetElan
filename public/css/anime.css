@@ -172,8 +172,14 @@
     text-decoration: none;
     align-self: end;
 }
+.animeRemainingRightContentPartMore.dark{
+    color: #e6edf4
+}
 .animeRemainingRightContentPartMore:hover{
     color: #00BFFF;
+}
+.animeRemainingRightContentPartMore.dark:hover{
+    color: #0099cc;
 }
 
 /* Partie qui contient des cartes */

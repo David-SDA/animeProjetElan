@@ -13,7 +13,7 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle {{ app.user and app.user.darkMode ? 'dark' }}">BEST THIS SEASON</h2>
-                <a href="{{ path('seasonal_anime') }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
+                <a href="{{ path('seasonal_anime') }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataBestAnimeThisSeason.data.Page.media %}
@@ -52,7 +52,7 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle {{ app.user and app.user.darkMode ? 'dark' }}">NEXT SEASON</h2>
-                <a href="#" title="View more" class="animeRemainingRightContentPartMore">View more</a>
+                <a href="#" title="View more" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataNextSeasonAnime.data.Page.media %}
@@ -91,7 +91,7 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle {{ app.user and app.user.darkMode ? 'dark' }}">POPULAR</h2>
-                <a href="#" class="animeRemainingRightContentPartMore" title="View more">View more</a>
+                <a href="#" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes">
             {% for media in dataPopularAnime.data.Page.media %}
@@ -130,7 +130,7 @@
         <section>
             <div class="animeRemainingRightContentPartTitleContainer">
                 <h2 class="homeSecondaryTitle {{ app.user and app.user.darkMode ? 'dark' }}">TOP 10</h2>
-                <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore" title="View more">View more</a>
+                <a href="{{ path('top_anime') }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
             </div>
             <div class="homeMultipleAnimes autoFill">
             {% for media in dataTopTenAnime.data.Page.media %}
