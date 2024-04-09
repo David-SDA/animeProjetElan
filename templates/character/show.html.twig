@@ -43,7 +43,7 @@
                             <img src="{{ anime.node.coverImage.large }}" alt="Cover Image of {{ anime.node.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                         </div>
                     </a>
-                    <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
+                    <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
                 </figure>
             {% endfor %}
             </div>

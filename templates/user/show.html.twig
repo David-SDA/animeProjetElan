@@ -66,7 +66,7 @@
                             <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
                                 <div class="homeOneAnimeImageInfo">
                                     <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="homeOneAnimeImage profile">
-                                    <section class="homeHoverContent">
+                                    <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                         <h2 class="homeOneAnimeInfoTitle profile">{{ anime.title.romaji|default('Unknown') }}</h2>
                                         {% if anime.episodes %}
                                             <p class="homeOneAnimeInfoSmallerInfos">{{ anime.episodes == 1 ? anime.episodes ~ ' episode' : anime.episodes ~ ' episodes' }} - {{ anime.format|default('?') }}</p>
@@ -89,7 +89,7 @@
                                     </section>
                                 </div>
                             </a>
-                            <figcaption class="homeOneAnimeTitle profile"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle profile {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
                         </figure>
                     {% endfor %}
                     </div>
@@ -105,7 +105,7 @@
                             <a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">
                                 <img src="{{ character.image.large }}" alt="Image of {{ character.name.full|default('Unknown') }}" class="favoriteCharacterImage">
                             </a>
-                            <figcaption class="homeOneAnimeTitle favorites"><a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle favorites {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
                         </figure>
                     {% endfor %}
                     </div>

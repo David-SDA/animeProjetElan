@@ -18,12 +18,18 @@
 .simpleText{
     color: #333;
 }
+.simpleText.dark{
+    color: #e6edf3;
+}
 
 /* Les titres secondaires */
 .homeSecondaryTitle{
     margin-top: 1em;
     font-weight: 600;
     color: #333;
+}
+.homeSecondaryTitle.dark{
+    color: #e6edf3;
 }
 
 /* Liste des animé d'une section */
@@ -106,6 +112,9 @@
     opacity: 0;
     transition: all 0.5s ease;
 }
+.homeHoverContent.dark{
+    color: #e6edf3;
+}
 
 /* Titre de l'animé dans la partie des informations supplémentaires */
 .homeOneAnimeInfoTitle{
@@ -163,6 +172,9 @@
     color: #333;
     font-weight: 600;
 }
+.homeOneAnimeTitle.dark{
+    color: #e6edf3;
+}
 .homeOneAnimeTitle.favorites{
     padding-top: 0;
 }
@@ -181,6 +193,10 @@
     font-weight: 600;
     color: #fff;
     transform: translate(5px, 5px);
+}
+.homeOneAnimeTopRanking.dark{
+    background-color: #204ac8;
+    color: #e6edf3;
 }
 
 /* Pour mobile */

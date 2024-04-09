@@ -25,7 +25,7 @@
                 <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                     <div class="homeOneAnimeImageInfo">
                         <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
-                        <section class="homeHoverContent">
+                        <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
                             <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji|default('Unknown') }}</h2>
                             {% if media.episodes %}
                                 <p class="homeOneAnimeInfoSmallerInfos">{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</p>
@@ -48,7 +48,7 @@
                         </section>
                     </div>
                 </a>
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
         {% endfor %}
         </div>

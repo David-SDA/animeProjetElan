@@ -50,7 +50,7 @@
                                     <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
                                 </div>
                             </a>
-                            <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">{{ animeTitle }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">{{ animeTitle }}</a></figcaption>
                         </figure>
                     {% endfor %}
                 {% endfor %}
@@ -85,14 +85,14 @@
                         <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title|default('Unknown') }}" class="homeOneAnimeImage">
-                                <div class="homeHoverContent">
+                                <div class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                 {% for role in anime.roles %}
                                     <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
                                 {% endfor %}
                                 </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">{{ anime.title|default('Unknown') }}</a></figcaption>
+                        <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">{{ anime.title|default('Unknown') }}</a></figcaption>
                     </figure>
                 {% endfor %}
                 </div>

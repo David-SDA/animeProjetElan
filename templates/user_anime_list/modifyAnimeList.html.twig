@@ -11,7 +11,7 @@
                 <a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
                     <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="animeImage">
                 </a>
-                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
