@@ -30,9 +30,13 @@ Le projet a été coder en Symfony et ses outils liés.
 | ![Page d'inscription](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_inscription.png) | ![Page de connexion](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_connexion.png) |
 
 ### Accueil
-| Accueil |
-| - |
-| ![Page d'accueil](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil.png) |
+| Accueil | Responsive |
+| - | - |
+| ![Page d'accueil](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil.png) | <img src="https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil_responsive.png" alt="Page d'accueil responsive" height="auto" width="300"> |
+
+| Accueil Dark | Responsive Dark |
+| - | - |
+| ![Page d'accueil dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil_dark.png) | <img src="https://github.com/David-SDA/animeProjetElan/blob/master/images/base/page_accueil_responsive_dark.png" alt="Page d'accueil responsive dark" height="auto" width="300"> |
 
 ### Animes
 | Animés d'une saison | Meilleurs animés | Recherche d'animés |
