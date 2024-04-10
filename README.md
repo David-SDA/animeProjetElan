@@ -88,3 +88,7 @@ Le projet a été coder en Symfony et ses outils liés.
 | Panel admin | Liste d'utilisateurs |
 | - | - |
 | ![Page du panel admin](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_admin.png) | ![Page de la liste des utilisateurs](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_liste_utilisateurs.png) |
+
+| Panel admin Dark | Liste d'utilisateurs Dark |
+| - | - |
+| ![Page du panel admin](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_admin_dark.png) | ![Page de la liste des utilisateurs](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_liste_utilisateurs_dark.png) |
