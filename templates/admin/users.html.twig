@@ -6,8 +6,8 @@
     <main>
         <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Admin Space : Users</h1>
         <section class="adminSection">
-            <h2>Non banned Users</h2>
-            <table class="adminTable full">
+            <h2 class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">Non banned Users</h2>
+            <table class="adminTable full {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -19,12 +19,12 @@
                 <tbody>
                 {% for nonBannedUser in nonBannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: nonBannedUser.id }) }}" title="{{ nonBannedUser.username }}" class="adminLinkText">{{ nonBannedUser.username }}</a></td>
+                        <td><a href="{{ path('show_user', { id: nonBannedUser.id }) }}" title="{{ nonBannedUser.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ nonBannedUser.username }}</a></td>
                         <td>{{ nonBannedUser.email }}</td>
                         <td>{{ nonBannedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
                         <td>
                             {% if 'ROLE_ADMIN' not in nonBannedUser.roles %}
-                                <a href="{{ path('ban_user_admin', { id: nonBannedUser.id }) }}" title="Ban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-xmark"></i>
+                                <a href="{{ path('ban_user_admin', { id: nonBannedUser.id }) }}" title="Ban this user" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-user-xmark"></i>
                             {% endif %}
                         </td>
                     </tr>        
@@ -33,8 +33,8 @@
             </table>
         </section>
         <section class="adminSection">
-            <h2>Banned Users</h2>
-            <table class="adminTable full">
+            <h2 class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">Banned Users</h2>
+            <table class="adminTable full {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -46,18 +46,18 @@
                 <tbody>
                 {% for bannedUser in bannedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: bannedUser.id }) }}" title="{{ bannedUser.username }}" class="adminLinkText">{{ bannedUser.username }}</a></td>
+                        <td><a href="{{ path('show_user', { id: bannedUser.id }) }}" title="{{ bannedUser.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ bannedUser.username }}</a></td>
                         <td>{{ bannedUser.email }}</td>
                         <td>{{ bannedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
-                        <td><a href="{{ path('unban_user_admin', { id:bannedUser.id }) }}" title="Unban this user" class="settingsChangePseudo"><i class="fa-solid fa-user-plus"></i></a></td>
+                        <td><a href="{{ path('unban_user_admin', { id:bannedUser.id }) }}" title="Unban this user" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-user-plus"></i></a></td>
                     </tr>        
                 {% endfor %}
                 </tbody>
             </table>
         </section>
         <section class="adminSection">
-            <h2>Unverified Users</h2>
-            <table class="adminTable full">
+            <h2 class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">Unverified Users</h2>
+            <table class="adminTable full {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -69,18 +69,18 @@
                 <tbody>
                 {% for unverifiedUser in unverifiedUsers %}
                     <tr>
-                        <td><a href="{{ path('show_user', { id: unverifiedUser.id }) }}" title="{{ unverifiedUser.username }}" class="adminLinkText">{{ unverifiedUser.username }}</a></td>
+                        <td><a href="{{ path('show_user', { id: unverifiedUser.id }) }}" title="{{ unverifiedUser.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ unverifiedUser.username }}</a></td>
                         <td>{{ unverifiedUser.email }}</td>
                         <td>{{ unverifiedUser.registrationDate|date('m/d/Y H:i:s') }}</td>
-                        <td><a href="{{ path('resend_confirmation_user_admin', { id: unverifiedUser.id }) }}" title="Resend an email confirmation" class="settingsChangePseudo"><i class="fa-solid fa-envelope"></i></a></td>
+                        <td><a href="{{ path('resend_confirmation_user_admin', { id: unverifiedUser.id }) }}" title="Resend an email confirmation" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-envelope"></i></a></td>
                     </tr>        
                 {% endfor %}
                 </tbody>
             </table>
         </section>
         <section class="adminSection">
-            <h2>Admins</h2>
-            <table class="adminTable full">
+            <h2 class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">Admins</h2>
+            <table class="adminTable full {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -92,7 +92,7 @@
                 {% for user in nonBannedUsers %}
                     {% if 'ROLE_ADMIN' in user.roles %}
                         <tr>
-                            <td><a href="{{ path('show_user', { id: user.id }) }}" title="{{ user.username }}" class="adminLinkText">{{ user.username }}</a></td>
+                            <td><a href="{{ path('show_user', { id: user.id }) }}" title="{{ user.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ user.username }}</a></td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.registrationDate|date('m/d/Y H:i:s') }}</td>
                         </tr>       

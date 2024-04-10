@@ -71,6 +71,7 @@
                             let editLink = document.createElement("a");
                             // Ajout d'une classe
                             editLink.classList.add("settingsChangePseudo");
+                            
                             // Ajout du chemin du lien
                             editLink.href = "{{ path('edit_evenement', { id: 'EVENT_ID' }) }}".replace("EVENT_ID", args.event.id);
                             // Ajout du texte du lien

@@ -6,15 +6,15 @@
 <main>
     <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Admin Space : {{ app.user.username }}</h1>
     <div class="adminStats">
-        <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" title="See all users" class="adminLink">See all users</a></p>
-        <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
-        <p class="adminStatsOneLine"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b></p>
-        <p class="adminStatsOneLine"><i>Number of characters in our database:</i> <b>{{ totalCharacters }}</b></p>
+        <p class="adminStatsOneLine {{ app.user and app.user.darkMode ? 'dark' }}"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" title="See all users" class="adminLink {{ app.user and app.user.darkMode ? 'dark' }}">See all users</a></p>
+        <p class="adminStatsOneLine {{ app.user and app.user.darkMode ? 'dark' }}"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
+        <p class="adminStatsOneLine {{ app.user and app.user.darkMode ? 'dark' }}"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b></p>
+        <p class="adminStatsOneLine {{ app.user and app.user.darkMode ? 'dark' }}"><i>Number of characters in our database:</i> <b>{{ totalCharacters }}</b></p>
     </div>
     <section class="adminSection">
-        <h2>Most active users</h2>
+        <h2 class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">Most active users</h2>
         <div class="adminTableContainer">
-            <table class="adminTable">
+            <table class="adminTable {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th colspan="2">Talks</th>
@@ -27,13 +27,13 @@
                 <tbody>
                 {% for userMostTalksCreated in usersMostTalksCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}" title="{{ userMostTalksCreated.username }}" class="adminLinkText">{{ userMostTalksCreated.username }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostTalksCreated.userId }) }}" title="{{ userMostTalksCreated.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ userMostTalksCreated.username }}</a></td>
                         <td>{{ userMostTalksCreated.talksCount }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <table class="adminTable">
+            <table class="adminTable {{ app.user and app.user.darkMode ? 'dark' }}">
                 <thead>
                     <tr>
                         <th colspan="2">Posts</th>
@@ -46,7 +46,7 @@
                 <tbody>
                 {% for userMostPostsCreated in usersMostPostsCreated %}
                     <tr>
-                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}" title="{{ userMostPostsCreated.username }}" class="adminLinkText">{{ userMostPostsCreated.username }}</a></td>
+                        <td><a href="{{ path('show_user' , { id: userMostPostsCreated.userId }) }}" title="{{ userMostPostsCreated.username }}" class="adminLinkText {{ app.user and app.user.darkMode ? 'dark' }}">{{ userMostPostsCreated.username }}</a></td>
                         <td>{{ userMostPostsCreated.postsCount }}</td>
                     </tr>
                 {% endfor %}

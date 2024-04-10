@@ -39,14 +39,14 @@
             {{ talk.title }}
             {# Si la discussion appartient à l'utilisateur et n'est pas verrouillé, il pourra la modifier #}
             {% if talk.user == app.user and not talk.locked and app.user %}
-                <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
+                <a href="{{ path('edit_discussion', { id: talk.id }) }}" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit this talk"><i class="fa-solid fa-pen-to-square"></i></a>            
             {% endif %}
             {# Si l'utilisateur est un admin et la discussion est verrouillé, il pourra déverrouiller celle-ci #}
             {# Si l'utilisateur est un admin et la discussion n'est pas verrouillé, il pourra verrouiller celle-ci #}
             {% if is_granted('ROLE_ADMIN') and talk.locked %}
-                <a href="{{ path('unlock_discussion', { id: talk.id }) }}" title="Unlock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock"></i></a>
+                <a href="{{ path('unlock_discussion', { id: talk.id }) }}" title="Unlock this talk" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-lock"></i></a>
             {% elseif is_granted('ROLE_ADMIN') and not talk.locked %}
-                <a href="{{ path('lock_discussion', { id: talk.id }) }}" title="Lock this talk" class="settingsChangePseudo"><i class="fa-solid fa-lock-open"></i></a>
+                <a href="{{ path('lock_discussion', { id: talk.id }) }}" title="Lock this talk" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-lock-open"></i></a>
             {% endif %}
         </h1>
         <div class="onePostContainer">
@@ -136,7 +136,7 @@
                         <div class="oneTalkTopRightBottomLine">
                             {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
                             {% if post.user == app.user and not talk.locked and post.user %}
-                                <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
+                                <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
                             {% endif %}
                             {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
                             {% if (post.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}

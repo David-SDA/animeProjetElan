@@ -9,6 +9,12 @@
 }
 
 /* Les lignes de stats qui ne sont pas le premier ni le dernier */
+.adminStatsOneLine{
+    color: #333;
+}
+.adminStatsOneLine.dark{
+    color: #e6edf3;
+}
 .adminStatsOneLine:not(:first-child), .adminStatsOneLine:not(:last-child){
     margin: 0 10px;
 }
@@ -23,6 +29,10 @@
     border-radius: 10px;
     padding: 3px;
     transition: all 0.25s ease;
+}
+.adminLink.dark{
+    background-color: #204ac8;
+    color: #e6edf3;
 }
 .adminLink:hover{
     filter: saturate(200%);
@@ -44,14 +54,21 @@
 /* Les tableau de la partie admin */
 .adminTable{
     width: 48%;
+    color: #333;
+}
+.adminTable.dark{
+    color: #e6edf3;
 }
 .adminTable.full{
     width: 100%;
 }
 .adminTable, .adminTable th, .adminTable td{
-    border: 1px solid;
+    border: 1px solid #333;
     border-collapse: collapse;
     text-align: center;
+}
+.adminTable.dark, .adminTable.dark th, .adminTable.dark td{
+    border: 1px solid #e6edf3;
 }
 .adminTable td{
     padding: 5px 10px;
@@ -59,8 +76,11 @@
 
 /* Les liens de la page admin pour du simple texte */
 .adminLinkText{
-    color: blue;
+    color: #204ac8;
     text-decoration: underline;
+}
+.adminLinkText{
+    color: #4169E1;
 }
 
 

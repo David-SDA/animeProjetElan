@@ -177,6 +177,9 @@
 .settingsChangePseudo{
     color: #00BFFF !important;
 }
+.settingsChangePseudo.dark{
+    color: #0099cc !important;
+}
 .settingsChangePseudo:hover{
     filter: saturate(150%);
 }

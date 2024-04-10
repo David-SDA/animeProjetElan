@@ -12,7 +12,7 @@
                 <a href="{{ path('change_profile_picture_user') }}" class="profileInfosButton settings full" title="Change Picture">CHANGE PICTURE</a>
             </div>
             <div class="animeTopRightContent">
-                <h1 class="profilePseudo">{{ app.user.username }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo" title="Change Username"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
+                <h1 class="profilePseudo">{{ app.user.username }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Username"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
                 <p class="profileDescription">{{ app.user.description ? app.user.description : "<i>No description yet ...</i>" }}</p>
                 <a href="{{ path('change_description_user') }}" class="profileInfosButton settings large" title="Change Description">CHANGE DESCRIPTION</a>
             </div>
