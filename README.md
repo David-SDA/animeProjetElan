@@ -43,9 +43,17 @@ Le projet a été coder en Symfony et ses outils liés.
 | - | - | - |
 | ![Page animés d'une saison](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_anime_saison.png) | ![Page des meilleurs animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_top_anime.png) | ![Page de recherche d'animés](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_recherche.png) |
 
+| Animés d'une saison Dark | Meilleurs animés Dark | Recherche d'animés Dark |
+| - | - | - |
+| ![Page animés d'une saison dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_anime_saison_dark.png) | ![Page des meilleurs animés dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_top_anime_dark.png) | *à venir* |
+
 | Un animé | Personnage d'un animé | Staff d'un animé |
 | - | - | - |
 | ![Page d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_anime.png) | ![Page de personnage d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_personnage_un_anime.png) | ![Page de staff d'un animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_staff_un_anime.png) |
+
+| Un animé Dark | Personnage d'un animé Dark | Staff d'un animé Dark |
+| - | - | - |
+| ![Page d'un animé dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_anime_dark.png) | ![Page de personnage d'un animé dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_personnage_un_anime_dark.png) | ![Page de staff d'un animé dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_staff_un_anime_dark.png) |
 
 | Un personnage | Un staff |
 | - | - |
