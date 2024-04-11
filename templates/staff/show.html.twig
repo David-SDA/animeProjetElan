@@ -9,18 +9,18 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer">
+        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             <div class="animeTopLeftContent">
                 <figure>
                     <img src="{{ dataThisStaff.image.large }}" alt="{{ dataThisStaff.name.full|default('Unknown') }}" class="animeImage">
                 </figure>
             </div>
             <div class="animeTopRightContent">
-                <h1 class="animeTitle">{{ dataThisStaff.name.full|default('Unknown') }}</h1>
-                <p class="animeSynopsisContent"><b>Age :</b> {{ dataThisStaff.age|default('Unknown') }}</p>
-                <p class="animeSynopsisContent"><b>Gender :</b> {{ dataThisStaff.gender|default('Unknown') }}</p>
+                <h1 class="animeTitle {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisStaff.name.full|default('Unknown') }}</h1>
+                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Age :</b> {{ dataThisStaff.age|default('Unknown') }}</p>
+                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Gender :</b> {{ dataThisStaff.gender|default('Unknown') }}</p>
                 {# Voir les différents contenu des description pour adapter l'affichage #}
-                <p class="animeSynopsisContent">
+                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ dataThisStaff.description ? dataThisStaff.description|raw|nl2br : "No description yet" }}
                 </p>
             </div>

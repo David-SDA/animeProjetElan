@@ -4,7 +4,7 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer">            
+        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">            
             <div class="animeTopLeftContent settings">
                 <figure>
                     <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.username }}" class="profileImage">

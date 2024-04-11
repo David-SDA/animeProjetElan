@@ -11,6 +11,9 @@
     padding: 1.5em 10%;
     display: flex;
 }
+.animeTopContainer.dark{
+    background-color: #3e3e42;
+}
 
 /* Contenu de la partie du haut de la page d'un animé */
 .animeTopContent{
@@ -47,6 +50,9 @@
     text-align: center;
     transition: all 0.25s ease;
 }
+.animeButtonAddTo.dark{
+    color: #e6edf3;
+}
 .animeButtonAddTo:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
@@ -56,10 +62,16 @@
     margin: 1em 0 0.5em 0;
     background-color: #00BFFF;
 }
+.animeButtonAddTo.list.dark{
+    background-color: #0099cc;
+}
 /* Le bouton pour ajouter l'animé à ses favoris */
 .animeButtonAddTo.favorites{
     margin-top: 0.5em;
     background-color: #FF4136;
+}
+.animeButtonAddTo.favorites.dark{
+    background-color: #b90a00;
 }
 
 /* La partie droite du contenu du haut de la page d'un animé */
@@ -74,6 +86,9 @@
     color: #636363;
     margin-bottom: 0.5em;
 }
+.animeTitle.dark{
+    color: #fff;
+}
 
 /* Le titre de la description de l'animé */
 .animeSynopsisTitle{
@@ -82,14 +97,23 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
+.animeSynopsisTitle.dark{
+    color: #e6edf3;
+}
 
 /* Le contenu de la description de l'animé */
 .animeSynopsisContent{
     color: #636363;
     overflow-wrap: anywhere;
 }
+.animeSynopsisContent.dark{
+    color: #e6edf3;
+}
 .animeSynopsisContent a{
     color: #00BFFF;
+}
+.animeSynopsisContent.dark a{
+    color: #0099cc;
 }
 
 /* Contenu de la partie restante de la page d'un animé */
@@ -112,6 +136,9 @@
     padding: 0 1em 1em 1em;
     margin-right: 1.5em;
 }
+.animeRemainingLeftContent.dark{
+    background-color: #3e3e42;
+}
 
 /* Une information sur l'animé */
 .animeRemainingLeftContentInfo{
@@ -127,11 +154,17 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
+.animeRemainingLeftContentInfoTitle.dark{
+    color: #fff;
+}
 
 /* Le contenu de l'information sur l'animé */
 .animeRemainingLeftContentInfoContent{
     font-weight: 400;
     color: #636363;
+}
+.animeRemainingLeftContentInfoContent.dark{
+    color: #e6edf3;
 }
 
 /* Contenu à droite de la partie restante */
@@ -146,6 +179,9 @@
     font-size: 1.25em;
     color: #333333;
     margin-bottom: 1em;
+}
+.animeRemainingRightContentTimeBeforeEpisode.dark{
+    color: #e6edf3;
 }
 
 /* La partie qui contient le titre d'une partie */
@@ -162,7 +198,9 @@
     color: #333333;
     margin-bottom: 0.5em;
 }
-
+.animeRemainingRightContentPartTitle.dark{
+    color: #e6edf3;
+}
 
 /* Le texte qui permet de voir plus (pour les personnages et staff) */
 .animeRemainingRightContentPartMore{
@@ -173,7 +211,7 @@
     align-self: end;
 }
 .animeRemainingRightContentPartMore.dark{
-    color: #e6edf4
+    color: #e6edf3
 }
 .animeRemainingRightContentPartMore:hover{
     color: #00BFFF;

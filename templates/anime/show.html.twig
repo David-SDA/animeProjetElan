@@ -9,67 +9,67 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer">
+        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             <div class="animeTopLeftContent">
                 <figure>
                     <img src="{{ dataThisAnime.coverImage.large }}" alt="Cover Image of {{ dataThisAnime.title.romaji|default('Unknown') }}" class="animeImage">
                 </figure>
                 {% if app.user and not animeIsInList %}
-                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list" title="Add to your list">Add to your list</a>
+                    <a href="{{ path('add_anime_to_list_user', { idApi: dataThisAnime.id }) }}" class="animeButtonAddTo list {{ app.user and app.user.darkMode ? 'dark' }}" title="Add to your list">Add to your list</a>
                 {% endif %}
                 {% if app.user and not animeIsInFavorites %}
-                    <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites" title="Add to your favorites">Add to your favorites</a>
+                    <a href="{{ path('add_anime_to_favorites_user', { idApi : dataThisAnime.id }) }}" class="animeButtonAddTo favorites {{ app.user and app.user.darkMode ? 'dark' }}" title="Add to your favorites">Add to your favorites</a>
                 {% elseif app.user and animeIsInFavorites and animeInDatabase %}
-                    <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites" title="Remove from favorites">Remove from favorites</a>
+                    <a href="{{ path('remove_anime_from_favorites_user', { id : animeInDatabase.id }) }}" class="animeButtonAddTo favorites {{ app.user and app.user.darkMode ? 'dark' }}" title="Remove from favorites">Remove from favorites</a>
                 {% endif %}
             </div>
             <div class="animeTopRightContent">
-                <h1 class="animeTitle">{{ dataThisAnime.title.romaji|default('Unknown') }}</h1>
-                <h2 class="animeSynopsisTitle"><i>Synopsis</i></h2>
-                <p class="animeSynopsisContent">{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : '<i>No synopsis yet</i>' }}</p>
+                <h1 class="animeTitle {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.title.romaji|default('Unknown') }}</h1>
+                <h2 class="animeSynopsisTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Synopsis</i></h2>
+                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : '<i>No synopsis yet</i>' }}</p>
             </div>
         </div>
         <div class="animeRemainingContainer">
-            <div class="animeRemainingLeftContent">
+            <div class="animeRemainingLeftContent {{ app.user and app.user.darkMode ? 'dark' }}">
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Format</i></h2>
-                    <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Format</i></h2>
+                    <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.format ? dataThisAnime.format|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Status</i></h2>
-                    <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.status ? dataThisAnime.status|title|replace({'_' : ' '}) }}</p>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Status</i></h2>
+                    <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.status ? dataThisAnime.status|title|replace({'_' : ' '}) }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle">{{ dataThisAnime.startDate == dataThisAnime.endDate ? '<i>Airing Date</i>' : '<i>Airing Dates</i>' }}</h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.startDate == dataThisAnime.endDate ? '<i>Airing Date</i>' : '<i>Airing Dates</i>' }}</h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                     {# Différentes vérifications par rapport aux dates d'un animé, on est obligés de vérifier l'année, le mois et le jour pour adapter l'affichage #}
                     {# Cas pas de date de début et de fin #}
                     {% if dataThisAnime.startDate.year == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.day == null and dataThisAnime.endDate.year == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.day == null %}
-                        <p class="animeRemainingLeftContentInfoContent">TBA</p>
+                        <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">TBA</p>
                     {# Cas date de début = date de fin (pour les films par exemple) #}
                     {% elseif dataThisAnime.startDate.year == dataThisAnime.endDate.year and dataThisAnime.startDate.month == dataThisAnime.endDate.month and dataThisAnime.startDate.day == dataThisAnime.endDate.day %}
-                        <p class="animeRemainingLeftContentInfoContent">
+                        <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">
                             {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? '0' : '' ) ~ dataThisAnime.startDate.month ~ '/' : '' }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? '0' : '') ~ dataThisAnime.startDate.day ~ '/' : '' }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : '' }}
                         </p>
                     {% else %}
                     {# Sinon, il y a au moins une date donc on affiche la date de début et de fin #}
                         {# Cas où il n'y a pas de date de début #}
                         {% if dataThisAnime.startDate.day == null and dataThisAnime.startDate.month == null and dataThisAnime.startDate.year == null %}
-                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i>&nbsp;</p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i>&nbsp;</p>
                         {# Cas où il y a une date de début #}
                         {% else %}
-                            <p class="animeRemainingLeftContentInfoContent">
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                 {{ dataThisAnime.startDate.month ? (dataThisAnime.startDate.month < 10 ? '0' : '') ~ dataThisAnime.startDate.month ~ '/' : '' }}{{ dataThisAnime.startDate.day ? (dataThisAnime.startDate.day < 10 ? '0' : '') ~ dataThisAnime.startDate.day ~ '/' : '' }}{{ dataThisAnime.startDate.year ? dataThisAnime.startDate.year : '' }}&nbsp;
                             </p>
                         {% endif %}
                         {# Séparation des dates de début et de fin #}
-                        <p class="animeRemainingLeftContentInfoContent">to&nbsp;</p>
+                        <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">to&nbsp;</p>
                         {# Cas où il n'y a pas de date de fin #}
                         {% if dataThisAnime.endDate.day == null and dataThisAnime.endDate.month == null and dataThisAnime.endDate.year == null %}
-                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i></p>
                         {# Cas où il y a une date de fin #}
                         {% else %}
-                            <p class="animeRemainingLeftContentInfoContent">
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                 {{ dataThisAnime.endDate.month ? (dataThisAnime.endDate.month < 10 ? '0' : '') ~ dataThisAnime.endDate.month ~ '/' : '' }}{{ dataThisAnime.endDate.day ? (dataThisAnime.endDate.day < 10 ? '0' : '') ~ dataThisAnime.endDate.day ~ '/' : '' }}{{ dataThisAnime.endDate.year ? dataThisAnime.endDate.year : '' }}
                             </p>
                         {% endif %}
@@ -77,19 +77,19 @@
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Season</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Season</i></h2>
                     {% if dataThisAnime.season and dataThisAnime.seasonYear %}
-                        <p class="animeRemainingLeftContentInfoContent season">{{ dataThisAnime.season|title }} {{ dataThisAnime.seasonYear }}</p>
+                        <p class="animeRemainingLeftContentInfoContent season {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.season|title }} {{ dataThisAnime.seasonYear }}</p>
                     {% else %}
-                        <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i></p>
                     {% endif %}
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Episodes</i></h2>
-                    <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.episodes ? dataThisAnime.episodes : '<i>TBA</i>' }}</p>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Episodes</i></h2>
+                    <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.episodes ? dataThisAnime.episodes : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Episode Duration</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Episode Duration</i></h2>
                     {# On effectue la conversion de minutes en heures si nécessaires et adaptations de l'affichage en fonction de cela #}
                     {% if dataThisAnime.duration %}
                         {% set duration = dataThisAnime.duration %}
@@ -98,33 +98,33 @@
                             {% set minutes = duration % 60 %}
                             {% set hoursText = hours > 1 ? 'hours' : 'hour' %}
                             {% set minText = minutes > 1 ? 'mins' : 'min' %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ hours }} {{ hoursText }} {{ minutes }} {{ minText }}</p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ hours }} {{ hoursText }} {{ minutes }} {{ minText }}</p>
                         {% else %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ duration > 1 ? duration ~ ' mins' : duration ~ ' min' }}</p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ duration > 1 ? duration ~ ' mins' : duration ~ ' min' }}</p>
                         {% endif %}
                     {% else %}
-                        <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                        <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i></p>
                     {% endif %}
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Source</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Source</i></h2>
                     {# Si il y a une source, on affiche de telle manière à ce que les underscores soient replacés par un espace et que chaque mot ait une majuscule au début ce celui-ci #}
-                    <p class="animeRemainingLeftContentInfoContent">{{ dataThisAnime.source ? dataThisAnime.source|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
+                    <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisAnime.source ? dataThisAnime.source|title|replace({'_' : ' '}) : '<i>TBA</i>' }}</p>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Genres</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Genres</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                     {% if dataThisAnime.genres %}
                         {% for genre in dataThisAnime.genres %}
-                            <p class="animeRemainingLeftContentInfoContent">{{ genre|capitalize }}&nbsp;</p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ genre|capitalize }}&nbsp;</p>
                         {% endfor %}
                     {% else %}
-                    <p class="animeRemainingLeftContentInfoContent"><i>None</i></p>
+                    <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>None</i></p>
                     {% endif %}
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Studio</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Studio</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                         {# Un animé a souvent 1 seul studio d'animation, mais il peut en avoir plusieurs, donc on prends cela en compte pour les mettre dans un tableau #}
                         {% if dataThisAnime.studios %}
@@ -139,15 +139,15 @@
                             {% endfor %}
                             {# On affiche les studios principaux #}
                             {% for mainStudio in mainStudios %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ mainStudio }}&nbsp;</p>
+                                <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ mainStudio }}&nbsp;</p>
                             {% endfor %}
                         {% else %}
-                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i></p>
                         {% endif %}
                     </div>
                 </section>
                 <section class="animeRemainingLeftContentInfo">
-                    <h2 class="animeRemainingLeftContentInfoTitle"><i>Producers</i></h2>
+                    <h2 class="animeRemainingLeftContentInfoTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Producers</i></h2>
                     <div class="animeRemainingLeftContentInfoContentContainer">
                         {# Les studios qui ne sont pas principaux sont des producteurs #}
                         {% if dataThisAnime.studios %}
@@ -161,10 +161,10 @@
                                 {% endif %}
                             {% endfor %}
                             {% for producer in producers %}
-                                <p class="animeRemainingLeftContentInfoContent">{{ producer|capitalize }}&nbsp;</p>
+                                <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ producer|capitalize }}&nbsp;</p>
                             {% endfor %}
                         {% else %}
-                            <p class="animeRemainingLeftContentInfoContent"><i>TBA</i></p>
+                            <p class="animeRemainingLeftContentInfoContent {{ app.user and app.user.darkMode ? 'dark' }}"><i>TBA</i></p>
                         {% endif %}
                     </div>
                 </section>
@@ -196,13 +196,13 @@
 
                 {# On récupère la date et l'heure de sortie de l'épisode #}
                 {% set UTCDate = airingAt|date('D, d M Y,  H:i', 'UTC') %}
-                <h2 class="animeRemainingRightContentTimeBeforeEpisode" title="{{ UTCDate ~ ' (UTC)' }}">
+                <h2 class="animeRemainingRightContentTimeBeforeEpisode {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ UTCDate ~ ' (UTC)' }}">
                     <i>Time before next episode{{ episodeText }}: {{ days >= 1 ? daysText : '' }}{{ hours >= 1 ? hoursText : "" }}{{ minutes >= 1 ? minText : "" }}</i>
                 </h2>
             {% endif %}
             {% if dataThisAnime.characters.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
-                    <h2 class="animeRemainingRightContentPartTitle">Characters</h2>
+                    <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Characters</h2>
                     <a href="{{ path('characters_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
@@ -221,7 +221,7 @@
             {% endif %}
             {% if dataThisAnime.staff.edges %}
                 <div class="animeRemainingRightContentPartTitleContainer">
-                    <h2 class="animeRemainingRightContentPartTitle">Staff</h2>
+                    <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Staff</h2>
                     <a href="{{ path('staff_anime', { 'id' : dataThisAnime.id }) }}" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}" title="View more">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
@@ -240,7 +240,7 @@
             {% endif %}
             {# Rajouter une condition quand les talks seront fait #}
                 {# <div class="animeRemainingRightContentPartTitleContainer">
-                    <h2 class="animeRemainingRightContentPartTitle">Talks</h2>
+                    <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Talks</h2>
                     <a href="#" class="animeRemainingRightContentPartMore {{ app.user and app.user.darkMode ? 'dark' }}">View more</a>
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer talk anime">
@@ -256,12 +256,12 @@
                     </section>
                 {% endfor %}
                 </div> #}
-                {# <h2 class="animeRemainingRightContentPartTitle">Give your opinion about this anime !</h2>
+                {# <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Give your opinion about this anime !</h2>
                 <div class="animeRemainingRightContentPartYourOpinionContainer">
                     <textarea name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
                     <input type="submit" value="Publish your opinion" class="animeRemainingRightContentPartYourOpinionSubmit">
                 </div> #}
-                {# <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it !</h2>
+                {# <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Here's what people think about it !</h2>
                 <p class="animeRemainingRightContentPartOpinionsFilter">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
                 <div class="animeRemainingRightContentPartOpinionsContainer">
                 {% for i in range(1, 5) %}
