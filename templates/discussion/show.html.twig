@@ -77,7 +77,7 @@
                     {% endif %}
                 </div>
             </div>
-            <p class="animeRemainingRightContentPartOpinionsMidContent">{{ talk.posts|first.content }}</p>
+            <p class="animeRemainingRightContentPartOpinionsMidContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ talk.posts|first.content }}</p>
             <div class="onePostBottomContainer">
             {% if talk.posts|first.creationDate != talk.posts|first.lastModifiedDate %}
                 {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification de la discussion et maintenant #}
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
+                <p class="animeRemainingRightContentPartOpinionsMidContent {{ app.user and app.user.darkMode ? 'dark' }}">{{ post.content }}</p>
                 <div class="onePostBottomContainer">
                 {% if post.creationDate != post.lastModifiedDate %}
                     {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}

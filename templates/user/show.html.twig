@@ -119,13 +119,13 @@
                     {# Boucle sur les 6 dernières discussions créées #}
                     {% for talk in user.discussions|reverse|slice(0, 6) %}
                         <section style="width: 100%;">
-                            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile" title="{{ talk.title }}">
+                            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="animeRemainingRightContentPartCardsContent profile {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ talk.title }}">
                                 <div class="animeRemainingRightContentPartCardsTextContainer">
-                                    <h2 class="animeRemainingRightContentPartCardsTop profile">{{ talk.title }}</h2>
-                                    <p class="animeRemainingRightContentPartCardsBottom" title="{{ talk.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.creationDate) }}</i></p>
+                                    <h2 class="animeRemainingRightContentPartCardsTop profile {{ app.user and app.user.darkMode ? 'dark' }}">{{ talk.title }}</h2>
+                                    <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ talk.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(talk.creationDate) }}</i></p>
                                 </div>
                                 <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                    <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ talk.posts|length }}</span></p>
+                                    <p class="animeRemainingRightContentPartCardsCommentText {{ app.user and app.user.darkMode ? 'dark' }}"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ talk.posts|length }}</span></p>
                                 </div>
                             </a>
                         </section>
@@ -146,13 +146,13 @@
                         {% if post.discussion not in uniqueTalks and uniqueTalks|length < 6 %}
                             {% set uniqueTalks = uniqueTalks|merge([post.discussion]) %}
                             <section style="width: 100%;">
-                                <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile" title="{{ post.discussion.title }}">
+                                <a href="{{ path('show_discussion', { id: post.discussion.id }) }}" class="animeRemainingRightContentPartCardsContent profile {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ post.discussion.title }}">
                                     <div class="animeRemainingRightContentPartCardsTextContainer">
-                                        <h2 class="animeRemainingRightContentPartCardsTop profile">{{ post.discussion.title }}</h2>
-                                        <p class="animeRemainingRightContentPartCardsBottom" title="{{ post.discussion.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.creationDate) }}</i></p>
+                                        <h2 class="animeRemainingRightContentPartCardsTop profile {{ app.user and app.user.darkMode ? 'dark' }}">{{ post.discussion.title }}</h2>
+                                        <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ post.discussion.posts|first.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ _self.textTimeAgo(post.discussion.creationDate) }}</i></p>
                                     </div>
                                     <div class="animeRemainingRightContentPartCardsCommentContainer">
-                                        <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
+                                        <p class="animeRemainingRightContentPartCardsCommentText {{ app.user and app.user.darkMode ? 'dark' }}"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">{{ post.discussion.posts|length }}</span></p>
                                     </div>
                                 </a>
                             </section>

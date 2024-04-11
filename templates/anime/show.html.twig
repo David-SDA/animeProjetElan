@@ -207,13 +207,13 @@
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for character in dataThisAnime.characters.edges|slice(0, 8) %}
-                    <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ character.node.name.full|default('Unknown') }}">
+                    <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ character.node.name.full|default('Unknown') }}">
                         <figure>
                             <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full|default('Image of the character') }}" class="animeRemainingRightContentPartCardsImage">
                         </figure>
                         <div class="animeRemainingRightContentPartCardsTextContainer">
-                            <h3 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full|default('Unknown') }}</h3>
-                            <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
+                            <h3 class="animeRemainingRightContentPartCardsTop {{ app.user and app.user.darkMode ? 'dark' }}">{{ character.node.name.full|default('Unknown') }}</h3>
+                            <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
                         </div>
                     </a>
                 {% endfor %}
@@ -226,13 +226,13 @@
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer">
                 {% for staff in dataThisAnime.staff.edges|slice(0, 8) %}
-                    <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ staff.node.name.full|default('Unknown') }}">
+                    <a href="{{ path('show_staff', { 'id' : staff.node.id }) }}" class="animeRemainingRightContentPartCardsContent {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ staff.node.name.full|default('Unknown') }}">
                         <figure>
                             <img src="{{ staff.node.image.medium }}" alt="{{ staff.node.name.full|default('Image of the staff member') }}" class="animeRemainingRightContentPartCardsImage">
                         </figure>
                         <div class="animeRemainingRightContentPartCardsTextContainer">
-                            <h3 class="animeRemainingRightContentPartCardsTop">{{ staff.node.name.full|default('Unknown') }}</h3>
-                            <p class="animeRemainingRightContentPartCardsBottom"><i>{{ staff.role|default('Unknown') }}</i></p>
+                            <h3 class="animeRemainingRightContentPartCardsTop {{ app.user and app.user.darkMode ? 'dark' }}">{{ staff.node.name.full|default('Unknown') }}</h3>
+                            <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}"><i>{{ staff.role|default('Unknown') }}</i></p>
                         </div>
                     </a>
                 {% endfor %}
@@ -245,36 +245,36 @@
                 </div>
                 <div class="animeRemainingRightContentPartCardsContainer talk anime">
                 {% for i in range(1, 5) %}
-                    <section class="animeRemainingRightContentPartCardsContent talk">
+                    <section class="animeRemainingRightContentPartCardsContent talk {{ app.user and app.user.darkMode ? 'dark' }}">
                         <div class="animeRemainingRightContentPartCardsTextContainer">
-                            <h3 class="animeRemainingRightContentPartCardsTop anime">(Spoiler Alert !) Episode 5 Talk</h3>
-                            <p class="animeRemainingRightContentPartCardsBottom"><i>Created 12 days ago</i></p>
+                            <h3 class="animeRemainingRightContentPartCardsTop anime {{ app.user and app.user.darkMode ? 'dark' }}">(Spoiler Alert !) Episode 5 Talk</h3>
+                            <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}"><i>Created 12 days ago</i></p>
                         </div>
                         <div class="animeRemainingRightContentPartCardsCommentContainer">
-                            <p class="animeRemainingRightContentPartCardsCommentText"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
+                            <p class="animeRemainingRightContentPartCardsCommentText {{ app.user and app.user.darkMode ? 'dark' }}"><span class="animeRemainingRightContentPartCardsCommentTextIcon"><i class="fa-solid fa-comments"></i></span> <span class="animeRemainingRightContentPartCardsCommentTextNumber">42</span></p>
                         </div>
                     </section>
                 {% endfor %}
-                </div> #}
-                {# <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Give your opinion about this anime !</h2>
+                </div>
+                <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Give your opinion about this anime !</h2>
                 <div class="animeRemainingRightContentPartYourOpinionContainer">
                     <textarea name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
-                    <input type="submit" value="Publish your opinion" class="animeRemainingRightContentPartYourOpinionSubmit">
-                </div> #}
-                {# <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Here's what people think about it !</h2>
-                <p class="animeRemainingRightContentPartOpinionsFilter">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
+                    <input type="submit" value="Publish your opinion" class="animeRemainingRightContentPartYourOpinionSubmit {{ app.user and app.user.darkMode ? 'dark' }}">
+                </div>
+                <h2 class="animeRemainingRightContentPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">Here's what people think about it !</h2>
+                <p class="animeRemainingRightContentPartOpinionsFilter {{ app.user and app.user.darkMode ? 'dark' }}">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
                 <div class="animeRemainingRightContentPartOpinionsContainer">
                 {% for i in range(1, 5) %}
-                    <div class="animeRemainingRightContentPartOpinionsContent">
+                    <div class="animeRemainingRightContentPartOpinionsContent {{ app.user and app.user.darkMode ? 'dark' }}">
                         <div class="animeRemainingRightContentPartOpinionsTopContent">
                             <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="animeRemainingRightContentPartOpinionsProfilePicture">
-                            <h2 class="animeRemainingRightContentPartOpinionsPseudo">Username</h2>
-                            <p class="animeRemainingRightContentPartOpinionsPublicationTime">5 days ago</p>
+                            <h2 class="animeRemainingRightContentPartOpinionsPseudo {{ app.user and app.user.darkMode ? 'dark' }}">Username</h2>
+                            <p class="animeRemainingRightContentPartOpinionsPublicationTime {{ app.user and app.user.darkMode ? 'dark' }}">5 days ago</p>
                         </div>
-                        <p class="animeRemainingRightContentPartOpinionsMidContent">
+                        <p class="animeRemainingRightContentPartOpinionsMidContent {{ app.user and app.user.darkMode ? 'dark' }}">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor. Ut vel diam lobortis, eleifend erat eu, tristique justo. Suspendisse rhoncus ante at nibh sodales, condimentum varius felis rhoncus. Morbi viverra aliquam lectus, sollicitudin tincidunt nisl commodo ut. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam faucibus porttitor nisl, quis maximus ipsum egestas eu. Proin at molestie tortor.
                         </p>
-                        <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-solid fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
+                        <p class="animeRemainingRightContentPartOpinionsBottomContent {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber {{ app.user and app.user.darkMode ? 'dark' }}" >42</span></p>
                     </div>
                 {% endfor %}
                 </div> #}

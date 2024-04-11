@@ -237,11 +237,17 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all 0.25s ease;
 }
+.animeRemainingRightContentPartCardsContent.dark{
+    background-color: #3e3e42;
+}
 .animeRemainingRightContentPartCardsContent.profile, .animeRemainingRightContentPartCardsContent.talk{
     height: 120px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+.animeRemainingRightContentPartCardsContent.profile.dark{
+    background-color: #1e1e1e;
 }
 .animeRemainingRightContentPartCardsContent:hover{
     transform: translateY(-2px);
@@ -270,6 +276,9 @@
     font-size: 1.25em;
     color: #636363;
 }
+.animeRemainingRightContentPartCardsTop.dark{
+    color: #e6edf3;
+}
 .animeRemainingRightContentPartCardsTop.profile, .animeRemainingRightContentPartCardsTop.anime{
     max-width: 270px;
     white-space: nowrap;
@@ -282,6 +291,9 @@
     font-weight: 400;
     color: #636363;
 }
+.animeRemainingRightContentPartCardsBottom.dark{
+    color: #e6edf3;
+}
 
 /* Partie qui contient le nombre de commentaires d'une discussion */
 .animeRemainingRightContentPartCardsCommentContainer{
@@ -292,6 +304,9 @@
 /* Texte du nombre de commentaires et icône d'une discussion */
 .animeRemainingRightContentPartCardsCommentText{
     color: #636363;
+}
+.animeRemainingRightContentPartCardsCommentText.dark{
+    color: #e6edf3;
 }
 
 /* Icône du nombre de commentaires d'une discussion */
@@ -340,6 +355,10 @@
     cursor: pointer;
     transition: all 0.25s ease;
 }
+.animeRemainingRightContentPartYourOpinionSubmit.dark{
+    color: #e6edf3;
+    background-color: #204ac8;
+}
 .animeRemainingRightContentPartYourOpinionSubmit:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
@@ -353,6 +372,9 @@
     font-weight: 500;
     font-size: 1em;
     color: #333333;
+}
+.animeRemainingRightContentPartOpinionsFilter.dark{
+    color: #e6edf3;
 }
 
 /* Un choix de filtre dans la partie qui contient les opinions sur l'animé */
@@ -376,6 +398,9 @@
     margin-bottom: 2em;
     padding: 1em;
     border-radius: 10px;
+}
+.animeRemainingRightContentPartOpinionsContent.dark{
+    background-color: #3e3e42;
 }
 
 /* Partie du haut de la partie qui contient une opinion sur l'animé */
@@ -403,11 +428,18 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.animeRemainingRightContentPartOpinionsPseudo.dark{
+    color: #e6edf3;
+}
 
 /* Temps de la publication de l'opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsPublicationTime{
     margin-left: auto;
     align-self: flex-start;
+    color: #333333;
+}
+.animeRemainingRightContentPartOpinionsPublicationTime.dark{
+    color: #e6edf3;
 }
 
 /* L'opinion sur l'animé */
@@ -418,6 +450,10 @@
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
+.animeRemainingRightContentPartOpinionsMidContent.dark{
+    color: #e6edf3;
+    background-color: #1e1e1e;
+}
 
 /* Partie des likes d'une opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsBottomContent{
@@ -427,12 +463,18 @@
     color: #ff0000;
     cursor: pointer;
 }
+.animeRemainingRightContentPartOpinionsBottomContent.dark{
+    color: #cc0000;
+}
 
 /* Le nombre de likes d'une opinion */
 .animeRemainingRightContentPartOpinionsLikesNumber{
     font-weight: 500;
     font-size: 1em;
     color: #ff0000;
+}
+.animeRemainingRightContentPartOpinionsLikesNumber.dark{
+    color: #cc0000;
 }
 
 /* Contenu de toute la page des personnages d'un animé */
@@ -446,6 +488,9 @@
     color: #636363;
     text-align: center;
     margin: 0.5em 0;
+}
+.animeCharactersTitle.dark{
+    color: #e6edf3;
 }
 
 /* Un contenu considéré comme spoil */
