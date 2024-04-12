@@ -60,6 +60,17 @@
     border-radius: 10px;
     color: #333;
 }
+#calendar.dark{
+    color: #e6edf3;
+    background-color: #3e3e42;
+}
+
+.dark .fc .fc-button-primary{
+    background-color: #1e1e1e;
+    color: #e6edf3;
+    border-color: #dddddd;
+    font-weight: 600;
+}
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
