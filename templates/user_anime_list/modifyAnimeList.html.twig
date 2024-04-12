@@ -5,7 +5,7 @@
 {% set idApi = userRegarderAnime.anime.idApi %}
 
 {% block body %}
-    <main class="animeListModifyContainer">
+    <main class="animeListModifyContainer {{ app.user and app.user.darkMode ? 'dark' }}">
         <div>
             <figure>
                 <a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
@@ -15,19 +15,19 @@
             </figure>
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
-            <div class="securityFormRow animeList">
+            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
                 {{ form_label(form.startedWatching, 'Started Watching') }}
                 {{ form_widget(form.startedWatching) }}
             </div>
-            <div class="securityFormRow animeList">
+            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
                 {{ form_label(form.endedWatching, 'Finished Watching') }}
                 {{ form_widget(form.endedWatching) }}
             </div>
-            <div class="securityFormRow animeList">
+            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
                 {{ form_label(form.status, 'Status') }}
                 {{ form_widget(form.status) }}
             </div>
-            <div class="securityFormRow animeList">
+            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
                 {{ form_label(form.nbEpisodesWatched, 'Episodes Watched') }}
                 {{ form_widget(form.nbEpisodesWatched) }}
             </div>

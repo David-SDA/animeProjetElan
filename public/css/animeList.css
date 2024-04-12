@@ -21,8 +21,15 @@
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.animeListButton.dark{
+    color: #e6edf3;
+    background-color: #204ac8;
+}
 .animeListButton.active{
     background-color: #00BFFF;
+}
+.animeListButton.active.dark{
+    background-color: #0099cc;
 }
 
 /* La partie qui contient une liste d'animé */
@@ -37,6 +44,9 @@
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px 10px;
     justify-items: center;
+}
+.animeListContainer.dark{
+    background-color: #3e3e42;
 }
 .animeListContainer figure{
     width: 150px;
@@ -60,6 +70,10 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+}
+.animeMenu.dark{
+    background-color: #0099cc;
+    color: #e6edf3;
 }
 
 /* Les parties pour gérer le nombre d'épisodes vus */
@@ -91,9 +105,15 @@
     background-color: #FF4136;
     margin-left: 8px;
 }
+.animeEpisodesWatchedControl.minus.dark{
+    background-color: #b90a00;
+}
 .animeEpisodesWatchedControl.plus{
     background-color: #2ECC71;
     margin-right: 8px;
+}
+.animeEpisodesWatchedControl.plus.dark{
+    background-color: #1c7a44;
 }
 
 /* Les textes du nombre d'épisodes vu d'un animé */
@@ -101,6 +121,9 @@
     font-weight: 500;
     color: #fff;
     margin: auto;
+}
+.animeEpisodesWatched.dark{
+    color: #e6edf3;
 }
 
 /* L'image d'un animé dans la liste */
@@ -121,6 +144,9 @@
     padding: 1em;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.animeListModifyContainer.dark{
+    background-color: #3e3e42;
 }
 .animeListModifyContainer figure{
     width: min-content;
@@ -147,6 +173,14 @@
     border: 1px solid #B4B4B4;
     padding: 0 10px;
 }
+.securityFormRow.animeList.dark select, .securityFormRow.animeList.dark input[type="number"], .securityFormRow.animeList.dark input[type="date"]{
+    background-color: #1e1e1e;
+    border: 1px solid #1e1e1e;
+    color: #e6edf3;
+}
+.securityFormRow.animeList.dark input[type="date"]::-webkit-calendar-picker-indicator{
+    filter: invert(1);
+}
 .securityFormRow.animeList button{
     height: 50px;
     margin: 0;
@@ -163,6 +197,9 @@
     display: grid;
     place-items: center;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.animeButtonAddTo.delete.dark{
+    background-color: #b90a00;
 }
 
 /* Pour mobile */
