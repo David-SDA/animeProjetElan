@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="characterRemainingContainer">
-            <h2 class="characterPartTitle">APPEARANCES</h2>
+            <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">APPEARANCES</h2>
             <div class="homeMultipleAnimes autoFill">
             {% for anime in dataThisCharacter.media.edges %}
                 <figure class="homeOneAnime">

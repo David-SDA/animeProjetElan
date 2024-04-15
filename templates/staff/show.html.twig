@@ -28,7 +28,7 @@
         <div class="characterRemainingContainer">
             {# Si ce membre de staff a doublé des personnages, alors on l'affiche #}
             {% if dataThisStaff.characters.edges %}
-                <h2 class="characterPartTitle">APPEARANCES</h2>
+                <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">APPEARANCES</h2>
                 <div class="homeMultipleAnimes autoFill">
                 {# Pour chaque personnage incarné par le doubleur #}
                 {% for character in dataThisStaff.characters.edges %}
@@ -77,7 +77,7 @@
             
             {# Si ce membre de staff est dans des staffs d'animés, alors on l'affiche #}
             {% if animeRoles|length > 0 %}
-                <h2 class="characterPartTitle">ROLES IN ANIME STAFFS</h2>
+                <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">ROLES IN ANIME STAFFS</h2>
                 <div class="homeMultipleAnimes autoFill">
                 {# On fait l'affichage grâce a animeRoles #}
                 {% for anime in animeRoles %}

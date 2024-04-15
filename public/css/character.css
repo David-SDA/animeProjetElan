@@ -4,6 +4,9 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
+.characterTopContentTraitText.dark{
+    color: #e6edf3;
+}
 
 /* Partie qui contient le reste de la page */
 .characterRemainingContainer{
@@ -16,6 +19,9 @@
 /* Le titre d'une partie restante de la page */
 .characterPartTitle{
     color: #333333;
+}
+.characterPartTitle.dark{
+    color: #e6edf3;
 }
 
 /* Image du doubleur (japonais) du personnage dans un animé */
