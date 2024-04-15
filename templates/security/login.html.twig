@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="securityFormContainer">
+    <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
         <form method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,12 +15,12 @@
                 </div>
             {% endif %}
     
-            <h1 class="securityFormTitle">Log in</h1>
-            <div class="securityFormRow">
+            <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Log in</h1>
+            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                 <label for="inputEmail">Email</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
             </div>
-            <div class="securityFormRow">
+            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                 <label for="inputPassword">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
             </div>
@@ -33,10 +33,10 @@
                 value="{{ csrf_token('authenticate') }}"
             >
     
-            <button type="submit" class="securityFormSubmitButton" title="Log in">LOG IN</button>
+            <button type="submit" class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Log in">LOG IN</button>
             <div class="securityFormLinksEnd">
-                <a href="{{ path('app_forgot_password_request') }}" class="securityFormLinkEnd" title="Reset password">Forgot password ?</a>
-                <a href="{{ path('app_register') }}" class="securityFormLinkEnd" title="Register">No account ? Register here !</a>
+                <a href="{{ path('app_forgot_password_request') }}" class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}" title="Reset password">Forgot password ?</a>
+                <a href="{{ path('app_register') }}" class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}" title="Register">No account ? Register here !</a>
             </div>
         </form>
     </div>

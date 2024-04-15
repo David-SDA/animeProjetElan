@@ -15,6 +15,9 @@
     padding: 20px;
     margin-bottom: 10px;
 }
+.securityFormContainer.dark form{
+    background-color: #3e3e42;
+}
 
 /* Le titre des formulaires liés à la sécurité */
 .securityFormTitle{
@@ -23,6 +26,9 @@
     font-size: 1.5em;
     color: #333333;
     margin-bottom: 20px;
+}
+.securityFormTitle.dark{
+    color: #e6edf3;
 }
 
 /* Une ligne (label + input) des formulaires liés à la sécurité */
@@ -37,7 +43,11 @@
     color: #333333;
     margin-bottom: 0.3em;
 }
-.securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"], .securityFormRow input[type="datetime-local"], .securityFormRow input[type="password"]{
+.securityFormRow.dark label{
+    color: #e6edf3;
+}
+.securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"],
+.securityFormRow input[type="datetime-local"], .securityFormRow input[type="password"]{
     height: 44px;
     border-radius: 10px;
     border: 1px solid #B4B4B4;
@@ -56,6 +66,7 @@
     width: fit-content;
     height: 46px;
 }
+
 .securityFormRow input[type="file"]::file-selector-button{
     width: 150px;
     height: 44px;
@@ -66,6 +77,10 @@
     background-color: #00BFFF;
     border-radius: 20px;
     cursor: pointer;
+}
+.securityFormRow.dark input[type="file"]::file-selector-button{
+    color: #e6edf3;
+    background-color: #0099cc;
 }
 .securityFormRow input[type="radio"]{
     margin-left: 1em;
@@ -82,6 +97,20 @@
     font-style: italic;
     color: #FF4136;
     font-size: 0.8em;
+}
+
+.securityFormRow.dark input[type="text"], .securityFormRow.dark input[type="email"], .securityFormRow.dark input[type="date"],
+.securityFormRow.dark input[type="datetime-local"], .securityFormRow.dark input[type="password"], 
+.securityFormRow.dark input[type="radio"], .securityFormRow.dark textarea{
+    background-color: #1e1e1e;
+    border: 1px solid #1e1e1e;
+    color: #e6edf3;
+}
+.securityFormRow.dark input[type="file"]{
+    color: #e6edf3;
+}
+.securityFormRow.dark input[type="date"]::-webkit-calendar-picker-indicator, .securityFormRow.dark input[type="datetime-local"]::-webkit-calendar-picker-indicator{
+    filter: invert(1);
 }
 
 /* Une ligne qui contient les terms of use */
@@ -119,6 +148,10 @@
     transition: all 0.25s ease;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
+.securityFormSubmitButton.dark{
+    color: #e6edf3;
+    background-color: #0099cc;
+}
 .securityFormSubmitButton:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
@@ -133,6 +166,9 @@
     font-size: 0.875em;
     color: #636363;
     margin-top: 1em;
+}
+.securityFormLinkEnd.dark{
+    color: #e6edf3;
 }
 .securityFormLinkEnd a:hover{
     text-decoration: underline;

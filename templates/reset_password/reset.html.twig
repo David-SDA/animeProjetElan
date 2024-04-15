@@ -3,20 +3,20 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block body %}
-    <div class="securityFormContainer">
+    <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
         {{ form_start(resetForm) }}
-        <h1 class="securityFormTitle">Reset your password</h1>
-        <div class="securityFormRow">
+        <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Reset your password</h1>
+        <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(resetForm.plainPassword.first, 'Password*') }}
             {{ form_widget(resetForm.plainPassword.first) }}
             {{ form_errors(resetForm.plainPassword.first) }}
-                <p class="securityFormLinkEnd"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
+                <p class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
         </div>
-        <div class="securityFormRow">
+        <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(resetForm.plainPassword.second, 'Confirm Password*') }}
             {{ form_widget(resetForm.plainPassword.second) }}
         </div>
-        <button class="securityFormSubmitButton" title="Reset password">Reset password</button>
+        <button class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Reset password">Reset password</button>
         {{ form_end(resetForm) }}
     </div>
 {% endblock %}

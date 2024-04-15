@@ -5,15 +5,15 @@
 {% block body %}
     <main>
         {# Affichage du formulaire de changement de pseudo #}
-        <div class="securityFormContainer">
+        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_start(form) }}
-                <h1 class="securityFormTitle">Change your Username</h1>
-                <div class="securityFormRow">
+                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Change your Username</h1>
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.username, 'Username') }}
                     {{ form_widget(form.username) }}
                     {{ form_errors(form.username) }}
                 </div>
-                <button type="submit" class="securityFormSubmitButton large" title="Change Username">Change Username</button>
+                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Username">Change Username</button>
             {{ form_end(form) }}
         </div>
     </main>

@@ -11,36 +11,36 @@
 
 {% block body %}
     <main>
-        <div class="securityFormContainer">
+        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_start(form) }}
             {# On change le titre de la page en fonction de l'existence de l'évènement #}
             {% if eventExist %}
-                <h1 class="securityFormTitle">Edit Event</h1>
+                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Edit Event</h1>
             {% else %}
-                <h1 class="securityFormTitle">Create a new Event</h1>
+                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Create a new Event</h1>
             {% endif %}
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.title, 'Event Name*') }}
                     {{ form_widget(form.title) }}
                 </div>
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.recurrent, 'Is it a weekly event ?*') }}
                     {{ form_widget(form.recurrent) }}
                 </div>
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.startDate, 'Start Date* (if it is a weekly event, this date is the first occurence of it)') }}
                     {{ form_widget(form.startDate) }}
                     {{ form_errors(form.startDate) }}
                 </div>
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.endDate, 'End Date* (if it is a weekly event, this date is the last occurence of it)') }}
                     {{ form_widget(form.endDate) }}
                     {{ form_errors(form.endDate) }}
                 </div>
             {% if eventExist %}
-                <button type="submit" class="securityFormSubmitButton large" title="Edit Event">Edit Event</button>
+                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit Event">Edit Event</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large" title="Create a new Event">Create Event</button>
+                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Create a new Event">Create Event</button>
             {% endif %}
             {{ form_end(form) }}
         </div>

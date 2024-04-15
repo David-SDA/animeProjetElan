@@ -11,29 +11,29 @@
 
 {% block body %}
     <main>
-        <div class="securityFormContainer">
+        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_start(form) }}
             {# On change le titre de la page en fonction de l'existence de la discussion #}
             {% if discussionExist %}
-                <h1 class="securityFormTitle">Edit Talk</h1>
+                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Edit Talk</h1>
             {% else %}
-                <h1 class="securityFormTitle">Create a new Talk</h1>
+                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Create a new Talk</h1>
             {% endif %}
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.title, 'Title*') }}
                     {{ form_widget(form.title) }}
                 </div>
-                <div class="securityFormRow">
+                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.firstPost, 'Content*') }}
                     {{ form_widget(form.firstPost) }}
                 </div>
             {% if discussionExist %}
-                <button type="submit" class="securityFormSubmitButton large" title="Edit Talk">Edit Talk</button>
+                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit Talk">Edit Talk</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large" title="Create Talk">Create Talk</button>
+                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Create Talk">Create Talk</button>
             {% endif %}
             {% if not discussionExist %}
-                <p class="securityFormLinkEnd"><i>
+                <p class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}"><i>
                     If you want to create a new talk about an anime, go to that anime page and create a new talk.
                 </i></p>
             {% endif %}
