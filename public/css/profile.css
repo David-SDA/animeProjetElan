@@ -13,12 +13,18 @@
     color: #333333;
     margin-bottom: 0.2em;
 }
+.profilePseudo.dark{
+    color: #e6edf3;
+}
 
 /* La description de l'utilisateur */
 .profileDescription{
     font-weight: 400;
     font-size: 1em;
     color: #333333;
+}
+.profileDescription.dark{
+    color: #e6edf3;
 }
 
 /* La partie restante de la page d'un utilisateur */
@@ -47,6 +53,9 @@
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
 }
+.profileInfos.dark{
+    background-color: #3e3e42;
+}
 .profileInfos.settings{
     padding: 0 1.5em;
 }
@@ -66,12 +75,8 @@
     color: #333333;
     margin-bottom: 0.5em;
 }
-
-/* La ligne d'une info de l'utilisateur */
-.profileInfo{
-    font-weight: 400;
-    font-size: 1em;
-    color: #333333;
+.profileInfosTitle.dark{
+    color: #e6edf3;
 }
 
 /* Le titre d'une info de l'utilisateur */
@@ -94,6 +99,10 @@
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.profileInfosButton.dark{
+    color: #e6edf3;
+    background-color: #0099cc;
 }
 .profileInfosButton:hover{
     transform: translateY(-2px);
@@ -199,6 +208,9 @@
     margin-left: 0.25em;
     margin-bottom: 0.25em;
 }
+.settingsTitle.dark{
+    color: #e6edf3;
+}
 
 /* Paramètre du thème */
 .settingsThemes{
@@ -230,6 +242,9 @@
 /* Un texte classique dans les paramètres */
 .settingsNormalText{
     color: #333333;
+}
+.settingsNormalText.dark{
+    color: #e6edf3;
 }
 
 /* Un text semi bold dans les paramètres */

@@ -8,7 +8,7 @@
     <main>
         <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Your Calendar</h1>
         <div id="calendar" class="{{ app.user and app.user.darkMode ? 'dark' }}">
-            <a href="{{ path('add_evenement') }}" class="profileInfosButton" title="Add a new Event">Add a new Event</a>
+            <a href="{{ path('add_evenement') }}" class="profileInfosButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Add a new Event">Add a new Event</a>
         </div>
     </main>
 {% endblock %}

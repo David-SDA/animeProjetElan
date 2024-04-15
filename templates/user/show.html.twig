@@ -40,26 +40,26 @@
                 <img src="{{ user.profilePicture ? asset('uploads/' ~ user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ user.username }}" class="profileImage">
             </figure>
             <div class="animeTopRightContent">
-                <h1 class="profilePseudo">{{ user.username }}</h1>
-                <p class="profileDescription">{{ user.description ? user.description : '<i>No description yet ...</i>' }}</p>
+                <h1 class="profilePseudo {{ app.user and app.user.darkMode ? 'dark' }}">{{ user.username }}</h1>
+                <p class="profileDescription {{ app.user and app.user.darkMode ? 'dark' }}">{{ user.description ? user.description : '<i>No description yet ...</i>' }}</p>
             </div>
         </div>
         <div class="animeRemainingContainer profile">
             <div class="profileInfosLine">
-                <div class="profileInfos chart">
+                <div class="profileInfos chart {{ app.user and app.user.darkMode ? 'dark' }}">
                     <canvas id="myChart" width="300"></canvas>
                 </div>
-                <div class="profileInfos buttons">
-                    <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton" title="See Anime List">ANIME LIST</a>
+                <div class="profileInfos buttons {{ app.user and app.user.darkMode ? 'dark' }}">
+                    <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton {{ app.user and app.user.darkMode ? 'dark' }}" title="See Anime List">ANIME LIST</a>
                     {% if app.user == user %}
-                        <a href="{{ path('calendar_user') }}" class="profileInfosButton" title="See Calendar">CALENDAR</a>
+                        <a href="{{ path('calendar_user') }}" class="profileInfosButton {{ app.user and app.user.darkMode ? 'dark' }}" title="See Calendar">CALENDAR</a>
                     {% endif %}
                 </div>
             </div>
             {# Si l'utilisateur a des animés favoris #}
             {% if user.animes is not empty %}
-                <section class="profileInfos">
-                    <h2 class="profileInfosTitle">Favorites Animes</h2>
+                <section class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Favorites Animes</h2>
                     <div class="homeMultipleAnimes autoFill profile">
                     {% for anime in favoriteAnimesData %}
                         <figure class="homeOneAnime">
@@ -97,8 +97,8 @@
             {% endif %}
             {# Si l'utilisateur a des personnages favoris #}
             {% if user.personnages is not empty %}
-                <section class="profileInfos">
-                    <h2 class="profileInfosTitle">Favorites Characters</h2>
+                <section class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Favorites Characters</h2>
                     <div class="profileInfosFavoritesCharacters">
                     {% for character in favoriteCharactersData %}
                         <figure class="favoriteCharacter">
@@ -113,8 +113,8 @@
             {% endif %}
             {# Si l'utilisateur à publié de discussions #}
             {% if user.discussions is not empty %}
-                <div class="profileInfos">
-                    <h2 class="profileInfosTitle">Talks recently created</h2>
+                <div class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Talks recently created</h2>
                     <div class="profileInfosTalks">
                     {# Boucle sur les 6 dernières discussions créées #}
                     {% for talk in user.discussions|reverse|slice(0, 6) %}
@@ -135,8 +135,8 @@
             {% endif %}
             {# Si l'utilisateur a publié des posts #}
             {% if user.posts is not empty %}
-                <div class="profileInfos">
-                    <h2 class="profileInfosTitle">Talks recently participated</h2>
+                <div class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Talks recently participated</h2>
                     <div class="profileInfosTalks">
                     {# On définit un tableau pour définir les discussions uniques #}
                     {% set uniqueTalks = [] %}

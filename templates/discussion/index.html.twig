@@ -37,7 +37,7 @@
     <main>     
         <h1 class="title talks {{ app.user and app.user.darkMode ? 'dark' }}">All Talks</h1>
         {% if app.user %}
-            <a href="{{ path('add_discussion') }}" class="profileInfosButton talks" title="Create Talk">Create Talk</a>
+            <a href="{{ path('add_discussion') }}" class="profileInfosButton talks {{ app.user and app.user.darkMode ? 'dark' }}" title="Create Talk">Create Talk</a>
         {% endif %}
         {{ form_start(form, {'attr': {'class': 'filterForm'}}) }}
             <div class="filterElementFormElement">

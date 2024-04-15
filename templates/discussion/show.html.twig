@@ -106,7 +106,7 @@
                 {{ responseNumber }} {{ responseNumber > 1 ? 'Replies' : 'Reply' }}
                 {# Si l'utilisateur est connecté et la discussion n'est pas verrouiller, l'utilisateur peut créer une discussion #}
                 {% if app.user and not talk.locked %}
-                    <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost" title="Reply to this discussion">Reply</a>
+                    <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost {{ app.user and app.user.darkMode ? 'dark' }}" title="Reply to this discussion">Reply</a>
                 {% endif %}
             </p>
             <p class="oneTalkFilterText"><span class="oneTalkFilterTextBefore">Filter by :</span> Date - Likes</p>
