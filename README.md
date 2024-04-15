@@ -59,6 +59,10 @@ Le projet a été coder en Symfony et ses outils liés.
 | - | - |
 | ![Page d'un personnage](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_personnage.png) | ![Page d'un staff](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_staff.png) |
 
+| Un personnage Dark | Un staff Dark |
+| - | - |
+| ![Page d'un personnage dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_personnage_dark.png) | ![Page d'un staff dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/anime/page_un_staff_dark.png) |
+
 ### Discussion
 | Discussions | Une discussion | Ajout d'un post |
 | - | - | - |
