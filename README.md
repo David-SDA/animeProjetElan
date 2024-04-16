@@ -68,10 +68,18 @@ Le projet a été coder en Symfony et ses outils liés.
 | - | - | - |
 | ![Page des discussions](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_discussions.png) | ![Page d'une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_une_discussion.png) | ![Page d'ajout d'un post à une discussion](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_ajout_post.png) |
 
+| Discussions Dark | Une discussion Dark | Ajout d'un post Dark |
+| - | - | - |
+| ![Page des discussions dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_discussions_dark.png) | ![Page d'une discussion dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_une_discussion_dark.png) | ![Page d'ajout d'un post à une discussion dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/discussion/page_ajout_post_dark.png) |
+
 ### Profil
 | Profil | Option de profil |
 | - | - |
 | ![Page de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_profil.png) | ![Page d'option de profil](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_option_profil.png) |
+
+| Profil Dark | Option de profil Dark |
+| - | - |
+| ![Page de profil dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_profil_dark.png) | ![Page d'option de profil dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/profil/page_option_profil_dark.png) |
 
 ### Liste d'animé
 | Liste d'animé en cours de visionnage | Liste d'animé terminé | Liste d'animé prévu |
@@ -82,6 +90,10 @@ Le projet a été coder en Symfony et ses outils liés.
 | - | - |
 | ![Page de la liste d'animé](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_tout.png) | ![Page de modification d'un animé de la liste](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_modification_anime_liste.png) |
 
+| Liste d'animé Dark | Modification de la liste d'animé Dark |
+| - | - |
+| ![Page de la liste d'animé dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_liste_anime_tout_dark.png) | ![Page de modification d'un animé de la liste dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/liste_anime/page_modification_anime_liste_dark.png) |
+
 ### Calendrier
 | Calendrier version mois | Calendrier version semaine |
 | - | - |
@@ -90,6 +102,14 @@ Le projet a été coder en Symfony et ses outils liés.
 | Calendrier version liste | Modification du calendrier |
 | - | - |
 | ![Page du calendrier en liste](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_liste.png) | ![Page de modification du calendrier](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_modification_calendrier.png) |
+
+| Calendrier version mois dark | Calendrier version semaine dark |
+| - | - |
+| ![Page du calendrier du mois dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_mois_dark.png) | ![Page du calendrier de la semaine dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_semaine_dark.png) |
+
+| Calendrier version liste dark | Modification du calendrier dark |
+| - | - |
+| ![Page du calendrier en liste dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_calendrier_liste_dark.png) | ![Page de modification du calendrier dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/calendrier/page_modification_calendrier_dark.png) |
 
 ### Autres
 | Conditions d'utilisation | Politique de confidentialité | Contact |
@@ -100,6 +120,10 @@ Le projet a été coder en Symfony et ses outils liés.
 | Panel admin | Liste d'utilisateurs |
 | - | - |
 | ![Page du panel admin](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_admin.png) | ![Page de la liste des utilisateurs](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_liste_utilisateurs.png) |
+
+| Panel admin dark | Liste d'utilisateurs dark |
+| - | - |
+| ![Page du panel admin dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_admin_dark.png) | ![Page de la liste des utilisateurs dark](https://github.com/David-SDA/animeProjetElan/blob/master/images/admin/page_liste_utilisateurs_dark.png) |
 
 | Panel admin Dark | Liste d'utilisateurs Dark |
 | - | - |
