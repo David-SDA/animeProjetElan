@@ -49,7 +49,7 @@
                 <a href="{{ path('lock_discussion', { id: talk.id }) }}" title="Lock this talk" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}"><i class="fa-solid fa-lock-open"></i></a>
             {% endif %}
         </h1>
-        <div class="onePostContainer">
+        <div class="onePostContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             <div class="onePostTopContainer">
                 <figure class="oneTalkUserContainer">
                     {% if talk.user %}
@@ -72,7 +72,7 @@
                     {# Si la discussion appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, la discussion peut être supprimer #}
                     {% if (talk.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
                         {% if app.user %}
-                            <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{ path('delete_discussion', { id: talk.id }) }}" class="talkDeleteLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Delete this talk"><i class="fa-solid fa-trash-can"></i></a>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -88,19 +88,19 @@
                 {# Si le post est liké par l'utilisateur #}
                 {% if talk.user %}
                     {% if talk.posts|first.users.contains(app.user) %}
-                        <a href="{{ path('unlike_post', { discussion_id: talk.id, id: talk.posts|first.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></a>
+                        <a href="{{ path('unlike_post', { discussion_id: talk.id, id: talk.posts|first.id }) }}" class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></a>
                     {% else %}
-                        <a href="{{ path('like_post', { discussion_id: talk.id, id: talk.posts|first.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></a>
+                        <a href="{{ path('like_post', { discussion_id: talk.id, id: talk.posts|first.id }) }}" class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></a>
                     {% endif %}
                 {% endif %}
             {% else %}
                 {% if talk.user %}
-                    <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></p>
+                    <p class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ talk.posts|first.users|length }}</span></p>
                 {% endif %}
             {% endif %}
             </div>
         </div>
-        <div class="oneTalkRepliesTopContainer">
+        <div class="oneTalkRepliesTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">
             {% set responseNumber = talk.posts|length - 1 %}
             <p class="oneTalkRepliesNumber">
                 {{ responseNumber }} {{ responseNumber > 1 ? 'Replies' : 'Reply' }}
@@ -113,7 +113,7 @@
         </div>
         {% if talk.posts|length > 1 %}
             {% for post in talk.posts|slice(1) %}
-            <div class="onePostContainer">
+            <div class="onePostContainer {{ app.user and app.user.darkMode ? 'dark' }}">
                 <div class="onePostTopContainer">
                     <figure class="oneTalkUserContainer">
                         {% if post.user %}
@@ -141,7 +141,7 @@
                             {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
                             {% if (post.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
                                 {% if app.user %}
-                                    <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                    <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -158,12 +158,12 @@
                     {% if app.user %}
                         {# Si le post est liké par l'utilisateur #}
                         {% if post.users.contains(app.user) %}
-                            <a href="{{ path('unlike_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                            <a href="{{ path('unlike_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
                         {% else %}
-                            <a href="{{ path('like_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                            <a href="{{ path('like_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
                         {% endif %}
                     {% else %}
-                        <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
+                        <p class="onePostLikes {{ app.user and app.user.darkMode ? 'dark' }}" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
                     {% endif %}
                 {% endif %}
                 </div>

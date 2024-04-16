@@ -9,28 +9,28 @@
     <main class="homeContainer">
         {{ form_start(form) }}
             <div class="filterElementLine">
-                <div class="filterElementFormElement">
+                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.search, 'Search') }}
                     {{ form_widget(form.search) }}
                 </div>
-                <div class="filterElementFormElement">
+                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.season, 'Season') }}
                     {{ form_widget(form.season) }}
                 </div>
-                <div class="filterElementFormElement">
+                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.seasonYear, 'Year') }}
                     {{ form_widget(form.seasonYear) }}
                 </div>
-                <div class="filterElementFormElement">
+                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.genre, 'Genre') }}
                     {{ form_widget(form.genre) }}
                 </div>
-                <div class="filterElementFormElement">
+                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.format, 'Format') }}
                     {{ form_widget(form.format) }}
                 </div>
             </div>
-            <button type="submit" class="filterSubmitButton">Apply Filters</button>
+            <button type="submit" class="filterSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}">Apply Filters</button>
         {{ form_end(form) }}
 
         {% if dataAnimes.data.Page.media %}

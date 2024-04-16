@@ -32,6 +32,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: #333;
 }
 .filterElementFormElement:first-of-type{
     margin-right: 10px;
@@ -52,6 +53,14 @@
 .filterElementFormElement input[type="search"]{
     cursor: unset;
 }
+.filterElementFormElement.dark{
+    color: #e6edf3;
+}
+.filterElementFormElement.dark select, .filterElementFormElement.dark input[type="search"]{
+    background-color: #3e3e42;
+    border: 1px solid #1e1e1e;
+    color: #e6edf3;
+}
 
 /* Le bouton pour soumettre les filtres */
 .filterSubmitButton{
@@ -70,6 +79,10 @@
     transform: translateY(-2px);
     filter: saturate(150%);
 }
+.filterSubmitButton.dark{
+    color: #e6edf3;
+    background-color: #0099cc;
+}
 
 /* Le conteneur d'une discussion */
 .oneTalkContainer{
@@ -87,6 +100,10 @@
 }
 .oneTalkContainer:hover{
     transform: translateY(-2px);
+}
+.oneTalkContainer.dark{
+    background-color: #3e3e42;
+    color: #e6edf3;
 }
 
 /* La partie d'un côté d'une discussion */
@@ -181,6 +198,9 @@
 .talkDeleteLink:hover{
     filter: saturate(70%);
 }
+.talkDeleteLink.dark{
+    color: #cc0000;
+}
 
 /* La partie du nombre de post d'une discussion */
 .oneTalkComments{
@@ -202,6 +222,10 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+.onePostContainer.dark{
+    background-color: #3e3e42;
+    color: #e6edf3;
+}
 
 /* La partie du haut du conteneur */
 .onePostTopContainer{
@@ -216,6 +240,10 @@
     justify-content: space-between;
     align-items: center;
     margin: 2em 0 1em 0;
+    color: #333;
+}
+.oneTalkRepliesTopContainer.dark{
+    color: #e6edf3;
 }
 
 /* Le texte du nombre de réponses */
@@ -241,6 +269,9 @@
     color: #ff0000;
     font-size: 1.25em;
     width: fit-content;
+}
+.onePostLikes.dark{
+    color: #cc0000;
 }
 
 /* Le texte du nombre de likes d'un post */
