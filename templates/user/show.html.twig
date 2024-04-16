@@ -169,6 +169,12 @@
         {# Ajout de ChartJs #}
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            let color = '#333333';
+
+            {% if app.user and app.user.darkMode %}
+                color = '#e6edf3';
+            {% endif %}
+
             // Récupération de l'élement qui sera le graphique
             const ctx = document.getElementById('myChart');
 
@@ -197,14 +203,15 @@
                         // Titre du graph
                         title: {
                             display: true,
-                            text: 'Anime list stats'
+                            text: 'Anime list stats',
+                            color: color
                         },
                         // Options de la légende
                         legend: {
                             display: true,
                             position: 'bottom',
                             labels: {
-                                color: '#333333',
+                                color: color,
                                 font:{
                                     family: "'Inter', sans-serif"
                                 }
