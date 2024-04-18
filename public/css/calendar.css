@@ -82,6 +82,9 @@
 .dark .fc-event.fc-event-start.fc-event-end.fc-list-event:hover{
     color: #333;
 }
+.dark .fc-popover.fc-more-popover{
+    color: #333;
+}
 
 /* Pour mobile */
 @media screen and (max-width: 767px){
