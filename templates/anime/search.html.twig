@@ -11,26 +11,32 @@
             <div class="filterElementLine">
                 <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.search, 'Search') }}
+                    {{ form_errors(form.search) }}
                     {{ form_widget(form.search) }}
                 </div>
                 <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.season, 'Season') }}
+                    {{ form_errors(form.season) }}
                     {{ form_widget(form.season) }}
                 </div>
                 <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.seasonYear, 'Year') }}
+                    {{ form_errors(form.seasonYear) }}
                     {{ form_widget(form.seasonYear) }}
                 </div>
                 <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.genre, 'Genre') }}
+                    {{ form_errors(form.genre) }}
                     {{ form_widget(form.genre) }}
                 </div>
                 <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.format, 'Format') }}
+                    {{ form_errors(form.format) }}
                     {{ form_widget(form.format) }}
                 </div>
             </div>
             <button type="submit" class="filterSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}">Apply Filters</button>
+            {{ form_rest(form) }}
         {{ form_end(form) }}
 
         {% if dataAnimes.data.Page.media %}

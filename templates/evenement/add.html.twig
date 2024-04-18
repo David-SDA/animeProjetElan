@@ -21,27 +21,30 @@
             {% endif %}
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.title, 'Event Name*') }}
+                    {{ form_errors(form.title) }}
                     {{ form_widget(form.title) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.recurrent, 'Is it a weekly event ?*') }}
+                    {{ form_errors(form.recurrent) }}
                     {{ form_widget(form.recurrent) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.startDate, 'Start Date* (if it is a weekly event, this date is the first occurence of it)') }}
-                    {{ form_widget(form.startDate) }}
                     {{ form_errors(form.startDate) }}
+                    {{ form_widget(form.startDate) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.endDate, 'End Date* (if it is a weekly event, this date is the last occurence of it)') }}
-                    {{ form_widget(form.endDate) }}
                     {{ form_errors(form.endDate) }}
+                    {{ form_widget(form.endDate) }}
                 </div>
             {% if eventExist %}
                 <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit Event">Edit Event</button>
             {% else %}
                 <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Create a new Event">Create Event</button>
             {% endif %}
+                {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </main>

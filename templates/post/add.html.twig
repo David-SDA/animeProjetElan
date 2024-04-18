@@ -21,6 +21,7 @@
             {% endif %}
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.content, 'Content*') }}
+                    {{ form_errors(form.content) }}
                     {{ form_widget(form.content) }}
                 </div>
             {% if postExist %}
@@ -28,6 +29,7 @@
             {% else %}
                 <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Create Post">Create Post</button>
             {% endif %}
+            {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </main>

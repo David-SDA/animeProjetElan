@@ -21,10 +21,12 @@
             {% endif %}
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.title, 'Title*') }}
+                    {{ form_errors(form.title) }}
                     {{ form_widget(form.title) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.firstPost, 'Content*') }}
+                    {{ form_errors(form.firstPost) }}
                     {{ form_widget(form.firstPost) }}
                 </div>
             {% if discussionExist %}
@@ -37,6 +39,7 @@
                     If you want to create a new talk about an anime, go to that anime page and create a new talk.
                 </i></p>
             {% endif %}
+            {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </main>

@@ -10,9 +10,11 @@
                 <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Change your description</h1>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.description, 'Description') }}
+                    {{ form_errors(form.description) }}
                     {{ form_widget(form.description) }}
                 </div>
                 <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Description">Change Description</button>
+                {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </main>

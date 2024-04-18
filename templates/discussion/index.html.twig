@@ -42,9 +42,11 @@
         {{ form_start(form, {'attr': {'class': 'filterForm'}}) }}
             <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
                 {{ form_label(form.filter, 'Filter by') }}
+                {{ form_errors(form.filter) }}
                 {{ form_widget(form.filter) }}
             </div>
             <button type="submit" class="filterSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Apply Filter">Apply Filter</button>
+            {{ form_rest(form) }}
         {{ form_end(form) }}
         {% for talk in talks %}
         <section>

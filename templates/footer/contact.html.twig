@@ -9,17 +9,21 @@
         <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Contact Us</h1>
         <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(form.email, 'Email*') }}
+            {{ form_errors(form.email) }}
             {{ form_widget(form.email) }}
         </div>
         <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(form.subject, 'Subject*') }}
+            {{ form_errors(form.subject) }}
             {{ form_widget(form.subject) }}
         </div>
         <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(form.message, 'Message*') }}
+            {{ form_errors(form.message) }}
             {{ form_widget(form.message) }}
         </div>
         <button type="submit" class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Send">SEND</button>
+        {{ form_rest(form) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

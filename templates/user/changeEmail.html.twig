@@ -10,14 +10,17 @@
                 <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Change your Email</h1>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.currentEmail, 'Current Email') }}
+                    {{ form_errors(form.currentEmail) }}
                     {{ form_widget(form.currentEmail) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.newEmail.first, 'New Email') }}
+                    {{ form_errors(form.newEmail.first) }}
                     {{ form_widget(form.newEmail.first) }}
                 </div>
                 <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
                     {{ form_label(form.newEmail.second, 'Confirm New Email') }}
+                    {{ form_errors(form.newEmail.second) }}
                     {{ form_widget(form.newEmail.second) }}
                 </div>
                 <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Email">Change Email</button>
@@ -26,6 +29,7 @@
                     You will need to confirm the new email to be able to login again,
                     so be sure that you have access to your new email !
                 </i></p>
+                {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>
     </main>

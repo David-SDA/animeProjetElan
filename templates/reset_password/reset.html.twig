@@ -8,15 +8,17 @@
         <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Reset your password</h1>
         <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(resetForm.plainPassword.first, 'Password*') }}
-            {{ form_widget(resetForm.plainPassword.first) }}
             {{ form_errors(resetForm.plainPassword.first) }}
+            {{ form_widget(resetForm.plainPassword.first) }}
                 <p class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
         </div>
         <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
             {{ form_label(resetForm.plainPassword.second, 'Confirm Password*') }}
+            {{ form_errors(resetForm.plainPassword.second) }}
             {{ form_widget(resetForm.plainPassword.second) }}
         </div>
         <button class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Reset password">Reset password</button>
+        {{ form_rest(resetForm) }}
         {{ form_end(resetForm) }}
     </div>
 {% endblock %}
