@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Bad Request
+{% endblock %}
+
+{% block body %}
+    <main class="homeContainer">
+        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Bad Request</h1>
+        <p>The page you are searching does not exist</p>
+    </main>
+{% endblock %}

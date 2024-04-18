@@ -108,13 +108,19 @@ class AnimeController extends AbstractController
         }
 
         $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
-        
-        return $this->render('anime/show.html.twig', [
-            'dataOneAnime' => $animeCallApiService->getAnimeDetails($id),
-            'animeIsInList' => $animeIsInList,
-            'animeIsInFavorites' => $animeIsInFavorites,
-            'animeInDatabase' => $animeInDatabase,
-        ]);
+
+        try{
+            $dataOneAnime = $animeCallApiService->getAnimeDetails($id);
+
+            return $this->render('anime/show.html.twig', [
+                'dataOneAnime' => $dataOneAnime,
+                'animeIsInList' => $animeIsInList,
+                'animeIsInFavorites' => $animeIsInFavorites,
+                'animeInDatabase' => $animeInDatabase,
+            ]);
+        }catch(\Exception $exception){
+            return $this->render('home/errorAPI.html.twig');
+        }
     }
 
     #[Route('/{id}/characters', name: 'characters_anime')]
