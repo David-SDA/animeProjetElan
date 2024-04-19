@@ -40,8 +40,12 @@ class CharacterController extends AbstractController
         /* On récupère l'animé depuis la base de données si il existe */
         $characterInDatabase = $personnageRepository->findOneBy(['idApi' =>  $id]);
 
-        /* Récupération des données de l'API */
-        $characterDetails = $characterCallApiService->getCharacterDetails($id);
+        try{
+            /* Récupération des données de l'API */
+            $characterDetails = $characterCallApiService->getCharacterDetails($id);
+        }catch(\Exception $e){
+            return $this->render('home/errorAPI.html.twig');
+        }
         
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */

@@ -17,8 +17,12 @@ class StaffController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-        /* Récupération des données de l'API */
-        $staffDetails = $staffCallApiService->getStaffDetails($id);
+        try{
+            /* Récupération des données de l'API */
+            $staffDetails = $staffCallApiService->getStaffDetails($id);
+        }catch(\Exception $e){
+            return $this->render('home/errorAPI.html.twig');
+        }
 
         /* Regex qui match les liens que l'on veut remplacer */
         /* Par exemple, doit matcher des chaînes de caractères de ce genre : [Fern](https://anilist.co/character/183965*) avec * représentant n'importe quel caractères après l'id de l'API */
