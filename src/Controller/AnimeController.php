@@ -130,9 +130,15 @@ class AnimeController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-        return $this->render('anime/characters.html.twig', [
-            'dataAllCharactersOneAnime' => $animeCallApiService->getAllCharactersAnime($id),
-        ]);
+        try{
+            $animeCharacters = $animeCallApiService->getAllCharactersAnime($id);
+
+            return $this->render('anime/characters.html.twig', [
+                'dataAllCharactersOneAnime' => $animeCharacters,
+            ]);
+        }catch(\Exception $exception){
+            return $this->render('home/errorAPI.html.twig');
+        }
     }
 
     #[Route('/{id}/staff', name: 'staff_anime')]
@@ -142,9 +148,15 @@ class AnimeController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-        return $this->render('anime/staff.html.twig', [
-            'dataAllStaffOneAnime' => $animeCallApiService->getAllStaffAnime($id),
-        ]);
+        try{
+            $animeStaff = $animeCallApiService->getAllStaffAnime($id);
+            
+            return $this->render('anime/staff.html.twig', [
+                'dataAllStaffOneAnime' => $animeStaff,
+            ]);
+        }catch(\Exception $exception){
+            return $this->render('home/errorAPI.html.twig');
+        }
     }
 
 }
