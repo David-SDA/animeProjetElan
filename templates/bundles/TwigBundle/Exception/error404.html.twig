@@ -7,6 +7,6 @@
 {% block body %}
     <main class="homeContainer">
         <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Page not found</h1>
-        <p>The page you are searching does not exist</p>
+        <p class="simpleText {{ app.user and app.user.darkMode ? 'dark' }}">The page you are searching does not exist</p>
     </main>
 {% endblock %}
