@@ -809,6 +809,11 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
+        /* On vérifie que le thème est valide */
+         if(!($theme === 0 || $theme === 1)) {
+            throw $this->createNotFoundException();
+        }
+
         /* On modifie le theme de l'utilisateur */
         $user->setDarkMode($theme);
 
