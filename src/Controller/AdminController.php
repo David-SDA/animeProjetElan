@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
@@ -27,19 +29,31 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin', name: 'app_admin')]
-    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository): Response{
+    public function index(UserRepository $userRepository, DiscussionRepository $discussionRepository, PostRepository $postRepository, AnimeRepository $animeRepository, PersonnageRepository $personnageRepository, CacheInterface $cache): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
         if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
+
+        /* Cache pour les utilisateurs qui ont créé le plus de discussions */ 
+        $usersMostTalksCreated = $cache->get('users_most_talks_created', function(ItemInterface $item) use($discussionRepository){
+            $item->expiresAfter(3600);
+            return $discussionRepository->usersMostTalksCreated();
+        });
+
+        /* Cache pour les utilisateurs les plus actifs dans les discussions */
+        $usersMostPostsCreated = $cache->get('users_most_posts_created', function(ItemInterface $item) use($postRepository){
+            $item->expiresAfter(3600);
+            return $postRepository->usersMostPostsCreated();
+        });
 
         return $this->render('admin/index.html.twig', [
             'totalUsers' => $userRepository->countUsers(),
             'totalTalks' => $discussionRepository->countDiscussions(),
             'totalAnimes' => $animeRepository->countAnimes(),
             'totalCharacters' => $personnageRepository->countCharacters(),
-            'usersMostTalksCreated' => $discussionRepository->usersMostTalksCreated(),
-            'usersMostPostsCreated' => $postRepository->usersMostPostsCreated(),
+            'usersMostTalksCreated' => $usersMostTalksCreated,
+            'usersMostPostsCreated' => $usersMostPostsCreated,
         ]);
     }
 
