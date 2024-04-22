@@ -10,12 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
 
 #[Route('/discussion')]
 class PostController extends AbstractController
 {
     #[Route('/{id}/post/add', name: 'add_post')]
-    public function add(EntityManagerInterface $entityManagerInterface, Discussion $discussion, Request $request): Response{
+    public function add(EntityManagerInterface $entityManagerInterface, Discussion $discussion, Request $request, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -54,6 +55,8 @@ class PostController extends AbstractController
             /* On sauvegarde ces changements dans la base de données */
             $entityManagerInterface->persist($post);
             $entityManagerInterface->flush();
+
+            $cache->delete('users_most_posts_created');
 
             /* On indique le succès de la création */
             $this->addFlash(
@@ -140,7 +143,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{discussion_id}/post/{id}/delete', name: 'delete_post')]
-    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -167,6 +170,8 @@ class PostController extends AbstractController
         /* On supprime le post et on sauvegarde ces changements dans la base de données */
         $entityManagerInterface->remove($post);
         $entityManagerInterface->flush();
+
+        $cache->delete('users_most_posts_created');
 
         /* On indique la réussite de la suppression */
         $this->addFlash(

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 #[Route('/discussion')]
 class DiscussionController extends AbstractController
@@ -79,7 +80,7 @@ class DiscussionController extends AbstractController
     }
 
     #[Route('/add', name: 'add_discussion')]
-    public function add(EntityManagerInterface $entityManagerInterface, Request $request): Response{
+    public function add(EntityManagerInterface $entityManagerInterface, Request $request, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -127,6 +128,8 @@ class DiscussionController extends AbstractController
             $entityManagerInterface->persist($discussion);
             $entityManagerInterface->persist($firstPost);
             $entityManagerInterface->flush();
+
+            $cache->delete('users_most_talks_created');
 
             /* On indique le succès de la création */
             $this->addFlash(
@@ -214,7 +217,7 @@ class DiscussionController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'delete_discussion')]
-    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion): Response{
+    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -245,6 +248,8 @@ class DiscussionController extends AbstractController
         /* On supprime la discussion et on sauvegarde ces changements dans la base de données */
         $entityManagerInterface->remove($discussion);
         $entityManagerInterface->flush();
+
+        $cache->delete('users_most_talks_created');
 
         /* On indique la réussite de la suppression */
         $this->addFlash(
