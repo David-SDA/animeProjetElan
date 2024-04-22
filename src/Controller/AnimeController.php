@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Repository\UserRegarderAnimeRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/anime')]
 class AnimeController extends AbstractController
 {   
     #[Route('/search', name: 'search_anime')]
-    public function search(AnimeCallApiService $animeCallApiService, Request $request): Response{
+    public function search(AnimeCallApiService $animeCallApiService, Request $request, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
@@ -39,8 +41,11 @@ class AnimeController extends AbstractController
             $dataAnimes = $animeCallApiService->getMultipleAnimesSearch($search, $season, $seasonYear, $genre, $format);
         }
         else{
-            /* Récupération des données de l'API */
-            $dataAnimes = $animeCallApiService->getMultipleAnimesSearch();
+            /* Récupération des données de l'API avec une mise en cache */
+            $dataAnimes = $cache->get('data_anime_search', function(ItemInterface $item) use($animeCallApiService){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $animeCallApiService->getMultipleAnimesSearch();
+            });
         }
 
         return $this->render('anime/search.html.twig', [
@@ -50,31 +55,43 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/top', name: 'top_anime')]
-    public function top(AnimeCallApiService $animeCallApiService): Response{
+    public function top(AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
+        /* Récupération des données de l'API avec une mise en cache */
+        $dataTopAnimes = $cache->get('data_top_anime', function(ItemInterface $item) use($animeCallApiService){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getTopAnimes();
+        });
+
         return $this->render('anime/top.html.twig', [
-            'dataTopAnimes' => $animeCallApiService->getTopAnimes(),
+            'dataTopAnimes' => $dataTopAnimes,
         ]);
     }
 
     #[Route('/seasonal', name: 'seasonal_anime')]
-    public function seasonal(AnimeCallApiService $animeCallApiService): Response{
+    public function seasonal(AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
+        /* Récupération des données de l'API avec une mise en cache */
+        $dataSeasonalAnime = $cache->get('data_seasonal_anime', function(ItemInterface $item) use($animeCallApiService){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getSeasonalAnimes(1);
+        });
+
         return $this->render('anime/seasonal.html.twig', [
-            'dataSeasonalAnimes' => $animeCallApiService->getSeasonalAnimes(1),
+            'dataSeasonalAnimes' => $dataSeasonalAnime,
         ]);
     }
 
     #[Route('/{id}', name: 'show_anime')]
-    public function show(int $id, AnimeCallApiService $animeCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeRepository $animeRepository): Response{
+    public function show(int $id, AnimeCallApiService $animeCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeRepository $animeRepository, CacheInterface $cache): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         
@@ -106,11 +123,16 @@ class AnimeController extends AbstractController
                 }
             }
         }
-
+        
+        /* TODO : Mettre en cache et gérer les conséquences de modification */
         $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
 
         try{
-            $dataOneAnime = $animeCallApiService->getAnimeDetails($id);
+            /* Récupération des données de l'API avec une mise en cache */
+            $dataOneAnime = $cache->get('data_one_anime_' . $id, function(ItemInterface $item) use($animeCallApiService, $id){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $animeCallApiService->getAnimeDetails($id);
+            });
 
             return $this->render('anime/show.html.twig', [
                 'dataOneAnime' => $dataOneAnime,
@@ -124,14 +146,18 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/{id}/characters', name: 'characters_anime')]
-    public function characters(int $id, AnimeCallApiService $animeCallApiService): Response{
+    public function characters(int $id, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         try{
-            $animeCharacters = $animeCallApiService->getAllCharactersAnime($id);
+            /* Récupération des données de l'API avec une mise en cache */
+            $animeCharacters = $cache->get('one_anime_' . $id . '_characters', function(ItemInterface $item) use($animeCallApiService, $id){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $animeCallApiService->getAllCharactersAnime($id);
+            });
 
             return $this->render('anime/characters.html.twig', [
                 'dataAllCharactersOneAnime' => $animeCharacters,
@@ -142,14 +168,18 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/{id}/staff', name: 'staff_anime')]
-    public function staff(int $id, AnimeCallApiService $animeCallApiService): Response{
+    public function staff(int $id, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         try{
-            $animeStaff = $animeCallApiService->getAllStaffAnime($id);
+            /* Récupération des données de l'API avec une mise en cache */
+            $animeStaff = $cache->get('one_anime_' . $id . '_staff', function(ItemInterface $item) use($animeCallApiService, $id){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $animeCallApiService->getAllStaffAnime($id);
+            });
             
             return $this->render('anime/staff.html.twig', [
                 'dataAllStaffOneAnime' => $animeStaff,
