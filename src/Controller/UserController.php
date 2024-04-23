@@ -29,6 +29,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -494,7 +496,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_user')]
-    public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository): Response{
+    public function show(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
@@ -514,8 +516,12 @@ class UserController extends AbstractController
             /* On insère l'id de l'API dans le tableau créé */
             $favoriteAnimesApiIds[] = $anime->getIdApi();
         }
-        /* On appelle l'API pour obtenir les données des animés favoris */
-        $favoriteAnimesData = $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
+
+        /* Cache + appel API pour obtenir les données des animés favoris */
+        $favoriteAnimesData = $cache->get('favorite_animes_data_' . $user->getId(), function(ItemInterface $item) use($animeCallApiService, $favoriteAnimesApiIds){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
+        });
 
         /* On récupère la collection de personnages d'un utilisateur (qui représente les personnages favoris d'un utilisateurs) */
         $favoriteCharacters = $user->getPersonnages();
@@ -526,8 +532,11 @@ class UserController extends AbstractController
             /* On insère l'id de l'API dans le tableau crée */
             $favoriteCharactersApiIds[] = $character->getIdApi();
         }
-        /* On appelle l'API pour obtenir les données des personnages favoris */
-        $favoriteCharactersData = $characterCallApiService->getMultipleCharactersDetails($favoriteCharactersApiIds);
+        /* Cache + appel API pour obtenir les données des personnages favoris */
+        $favoriteCharactersData = $cache->get('favorite_characters_data_' . $user->getId(), function(ItemInterface $item) use($characterCallApiService, $favoriteCharactersApiIds){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $characterCallApiService->getMultipleCharactersDetails($favoriteCharactersApiIds);
+        });
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -540,7 +549,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
-    public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
+    public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -605,6 +614,9 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        /* Suppression du cache des animés favoris pour le mettre à jour */
+        $cache->delete('favorite_animes_data_' . $user->getId());
+
         /* On indique la réussite du changement */
         $this->addFlash(
             'success',
@@ -615,7 +627,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/addCharacterToFavorites/{idApi}', name: 'add_character_to_favorites_user')]
-    public function addCharacterToFavorites(int $idApi, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CharacterCallApiService $characterCallApiService){
+    public function addCharacterToFavorites(int $idApi, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CharacterCallApiService $characterCallApiService, CacheInterface $cache){
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -680,6 +692,9 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
+        /* Suppression du cache des animés favoris pour le mettre à jour */
+        $cache->delete('favorite_characters_data_' . $user->getId());
+
         /* On indique la réussite du changement */
         $this->addFlash(
             'success',
@@ -690,7 +705,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/removeAnimeFromFavorites/{id}', name: 'remove_anime_from_favorites_user')]
-    public function removeAnimeFromFavorites(Anime $anime, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface): Response{
+    public function removeAnimeFromFavorites(Anime $anime, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -723,6 +738,9 @@ class UserController extends AbstractController
             /* On sauvegarde ces changements dans la base de données */
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
+
+            /* Suppression du cache des animés favoris pour le mettre à jour */
+            $cache->delete('favorite_animes_data_' . $user->getId());
     
             /* On indique la réussite du changement */
             $this->addFlash(
@@ -743,7 +761,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/removeCharacterFromFavorites/{id}', name: 'remove_character_from_favorites_user')]
-    public function removeCharacterFromFavorites(Personnage $personnage, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface): Response{
+    public function removeCharacterFromFavorites(Personnage $personnage, PersonnageRepository $personnageRepository, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
@@ -776,6 +794,9 @@ class UserController extends AbstractController
             /* On sauvegarde ces changements dans la base de données */
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
+
+            /* Suppression du cache des animés favoris pour le mettre à jour */
+            $cache->delete('favorite_characters_data_' . $user->getId());
     
             /* On indique la réussite du changement */
             $this->addFlash(
