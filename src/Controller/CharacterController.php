@@ -7,12 +7,14 @@ use App\Service\CharacterCallApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/character')]
 class CharacterController extends AbstractController
 {
     #[Route('/{id}', name:'show_character')]
-    public function show(int $id, CharacterCallApiService $characterCallApiService, PersonnageRepository $personnageRepository): Response{
+    public function show(int $id, CharacterCallApiService $characterCallApiService, PersonnageRepository $personnageRepository, CacheInterface $cache): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
 
@@ -41,8 +43,11 @@ class CharacterController extends AbstractController
         $characterInDatabase = $personnageRepository->findOneBy(['idApi' =>  $id]);
 
         try{
-            /* Récupération des données de l'API */
-            $characterDetails = $characterCallApiService->getCharacterDetails($id);
+            /* Récupération des données de l'API avec une mise en cache */
+            $characterDetails = $cache->get('character_' . $id . '_details', function(ItemInterface $item) use($characterCallApiService, $id){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $characterCallApiService->getCharacterDetails($id);
+            });
         }catch(\Exception $e){
             return $this->render('home/errorAPI.html.twig');
         }

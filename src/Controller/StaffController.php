@@ -6,20 +6,26 @@ use App\Service\StaffCallApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/staff')]
 class StaffController extends AbstractController
 {
     #[Route('/{id}', name: 'show_staff')]
-    public function show(int $id, StaffCallApiService $staffCallApiService): Response{
+    public function show(int $id, StaffCallApiService $staffCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
         try{
-            /* Récupération des données de l'API */
-            $staffDetails = $staffCallApiService->getStaffDetails($id);
+            /* Récupération des données de l'API avec une mise en cache */
+            //$staffDetails = $staffCallApiService->getStaffDetails($id);
+            $staffDetails = $cache->get('staff_' . $id . '_details', function(ItemInterface $item) use($staffCallApiService, $id){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $staffCallApiService->getStaffDetails($id);
+            });
         }catch(\Exception $e){
             return $this->render('home/errorAPI.html.twig');
         }

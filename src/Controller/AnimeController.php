@@ -124,7 +124,7 @@ class AnimeController extends AbstractController
             }
         }
         
-        /* TODO : Mettre en cache et gérer les conséquences de modification */
+        /* Recherche de l'animé en base de données */
         $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
 
         try{
