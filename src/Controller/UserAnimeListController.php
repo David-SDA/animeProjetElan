@@ -14,12 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/user')]
 class UserAnimeListController extends AbstractController
 {
     #[Route('/{id}/animeList', name: 'anime_list_user')]
-    public function animeList(User $user, AnimeCallApiService $animeCallApiService): Response{
+    public function animeList(User $user, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
@@ -52,8 +54,11 @@ class UserAnimeListController extends AbstractController
                 $animeIds[] = $userAnime->getAnime()->getIdApi();
             }
 
-            /* On récupère les données de l'API grâce au tableau d'id */
-            $animeData = $animeCallApiService->getAnimesFromList($animeIds);
+            /* Cache + récupèration des données de l'API grâce au tableau d'id */
+            $animeData = $cache->get('anime_list_data_user_' . $user->getId() . '_' . $state, function(ItemInterface $item) use($animeCallApiService, $animeIds){
+                $item->expiresAt(new \DateTime('tomorrow'));
+                return $animeCallApiService->getAnimesFromList($animeIds);
+            });
             
             /* On crée un tableau associatifs avec l'état et données de l'API */
             $animesDataByState[$state] = [];
@@ -170,7 +175,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('/animeList/addAnime/{idApi}', name: 'add_anime_to_list_user')]
-    public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+    public function addAnimeToList(int $idApi, AnimeRepository $animeRepository, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -229,6 +234,9 @@ class UserAnimeListController extends AbstractController
         $entityManagerInterface->persist($animeInList);
         $entityManagerInterface->flush();
 
+        /* Suppression du cache pour le mettre à jour */
+        $cache->delete('anime_list_data_user_' . $user->getId() . '_Watching');
+
         /* On indique la réussite de l'ajout à la liste */
         $this->addFlash(
             'success',
@@ -239,7 +247,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('/animeList/addEpisode/{id}', name: 'add_episode_anime_list_user')]
-    public function addEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+    public function addEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -271,8 +279,11 @@ class UserAnimeListController extends AbstractController
         /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
         $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
-        /* On récupère les données de l'API de l'animé en question */
-        $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+        /* Cache + récupération des données de l'API de l'animé en question */
+        $animeData = $cache->get('anime_data_for_episodes_' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+        });
         
         /* On récupère le nombre d'épisodes max et le titre de l'animé */
         $maxEpisodes = $animeData['data']['Media']['episodes'];
@@ -306,7 +317,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('/animeList/removeEpisode/{id}', name: 'remove_episode_anime_list_user')]
-    public function removeEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface): Response{
+    public function removeEpisodeToAnimeInList(Request $request, UserRegarderAnime $userRegarderAnime, AnimeCallApiService $animeCallApiService, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -338,8 +349,11 @@ class UserAnimeListController extends AbstractController
         /* On récupère le nombre d'épisodes déjà vu par l'utilisateur */
         $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
-        /* On récupère les données de l'API de l'animé en question */
-        $animeData = $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+        /* Cache + récupération des données de l'API de l'animé en question */
+        $animeData = $cache->get('anime_data_for_episodes_' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+        });
         $title = $animeData['data']['Media']['title']['romaji'];
 
         /* Si le nombre d'épisode vu est déjà de 0, on l'empêche de supprimer un épisode */
@@ -370,7 +384,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('/animeList/removeAnime/{id}', name: 'remove_anime_from_list_user')]
-    public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface): Response{
+    public function removeAnimeFromList(UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -385,10 +399,14 @@ class UserAnimeListController extends AbstractController
         }
 
         $idApi = $userRegarderAnime->getAnime()->getIdApi();
+        $state = $userRegarderAnime->getStatus();
 
         /* On supprime l'instance de la liste et on sauvegarde ce changement dans la base de données */
         $entityManagerInterface->remove($userRegarderAnime);
         $entityManagerInterface->flush();
+
+        /* Suppression du cache pour le mettre à jour */
+        $cache->delete('anime_list_data_user_' . $user->getId() . '_' . $state);
 
         /* On indique que la suppression a été effectuer */
         $this->addFlash(
