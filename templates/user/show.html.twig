@@ -59,7 +59,7 @@
             {# Si l'utilisateur a des animés favoris #}
             {% if user.animes is not empty %}
                 <section class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
-                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Favorites Animes</h2>
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Favorites Animes</i></h2>
                     <div class="homeMultipleAnimes autoFill profile">
                     {% for anime in favoriteAnimesData %}
                         <figure class="homeOneAnime">
@@ -69,9 +69,9 @@
                                     <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                         <h2 class="homeOneAnimeInfoTitle profile">{{ anime.title.romaji|default('Unknown') }}</h2>
                                         {% if anime.episodes %}
-                                            <p class="homeOneAnimeInfoSmallerInfos">{{ anime.episodes == 1 ? anime.episodes ~ ' episode' : anime.episodes ~ ' episodes' }} - {{ anime.format|default('?') }}</p>
+                                            <p class="homeOneAnimeInfoSmallerInfos"><i>{{ anime.episodes == 1 ? anime.episodes ~ ' episode' : anime.episodes ~ ' episodes' }} - {{ anime.format|default('?') }}</i></p>
                                         {% else %}    
-                                            <p class="homeOneAnimeInfoSmallerInfos">? episodes - {{ anime.format|default('?') }}</p>
+                                            <p class="homeOneAnimeInfoSmallerInfos"><i>? episodes - {{ anime.format|default('?') }}</i></p>
                                         {% endif %}
                                         {# On crée un tableau qu'on va remplir de tout les studios principaux (souvent 1 seuls mais possibilité d'en avoir plusieurs) #}
                                         {% set mainStudios = [] %}
@@ -80,7 +80,7 @@
                                                 {% set mainStudios = mainStudios|merge([studio.node.name]) %}
                                             {% endif %}
                                         {% endfor %}
-                                        <p class="homeOneAnimeInfoSmallerInfos">{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</p>
+                                        <p class="homeOneAnimeInfoSmallerInfos"><i>{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</i></p>
                                         <div class="homeOneAnimeInfoGenres">
                                         {% for genre in anime.genres %}
                                             <p class="homeOneAnimeInfoOneGenre profile" style="--media-color: {{ anime.coverImage.color ? anime.coverImage.color : '#4169e1' }};">{{ genre }}</p>
@@ -98,7 +98,7 @@
             {# Si l'utilisateur a des personnages favoris #}
             {% if user.personnages is not empty %}
                 <section class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
-                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Favorites Characters</h2>
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Favorites Characters</i></h2>
                     <div class="profileInfosFavoritesCharacters">
                     {% for character in favoriteCharactersData %}
                         <figure class="favoriteCharacter">
@@ -114,7 +114,7 @@
             {# Si l'utilisateur à publié de discussions #}
             {% if user.discussions is not empty %}
                 <div class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
-                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Talks recently created</h2>
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Talks recently created</i></h2>
                     <div class="profileInfosTalks">
                     {# Boucle sur les 6 dernières discussions créées #}
                     {% for talk in user.discussions|reverse|slice(0, 6) %}
@@ -136,7 +136,7 @@
             {# Si l'utilisateur a publié des posts #}
             {% if user.posts is not empty %}
                 <div class="profileInfos {{ app.user and app.user.darkMode ? 'dark' }}">
-                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}">Talks recently participated</h2>
+                    <h2 class="profileInfosTitle {{ app.user and app.user.darkMode ? 'dark' }}"><i>Talks recently participated</i></h2>
                     <div class="profileInfosTalks">
                     {# On définit un tableau pour définir les discussions uniques #}
                     {% set uniqueTalks = [] %}

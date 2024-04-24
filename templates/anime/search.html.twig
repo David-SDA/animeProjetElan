@@ -49,9 +49,9 @@
                                 <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
                                     <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji|default('Unknown') }}</h2>
                                     {% if media.episodes %}
-                                        <p class="homeOneAnimeInfoSmallerInfos">{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</p>
+                                        <p class="homeOneAnimeInfoSmallerInfos"><i>{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</i></p>
                                     {% else %}    
-                                        <p class="homeOneAnimeInfoSmallerInfos">? episodes - {{ media.format|default('?') }}</p>
+                                        <p class="homeOneAnimeInfoSmallerInfos"><i>? episodes - {{ media.format|default('?') }}</i></p>
                                     {% endif %}
                                     {# On crée un tableau qu'on va remplir de tout les studios principaux (souvent 1 seul mais possibilité d'en avoir plusieurs) #}
                                     {% set mainStudios = [] %}
@@ -60,7 +60,7 @@
                                             {% set mainStudios = mainStudios|merge([studio.node.name]) %}
                                         {% endif %}
                                     {% endfor %}
-                                    <p class="homeOneAnimeInfoSmallerInfos">{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</p>
+                                    <p class="homeOneAnimeInfoSmallerInfos"><i>{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</i></p>
                                     <div class="homeOneAnimeInfoGenres">
                                     {% for genre in media.genres %}
                                         <p class="homeOneAnimeInfoOneGenre" style="--media-color: {{ media.coverImage.color ? media.coverImage.color : '#4169e1' }};">{{ genre }}</p>
