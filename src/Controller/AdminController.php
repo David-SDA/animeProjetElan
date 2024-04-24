@@ -83,6 +83,15 @@ class AdminController extends AbstractController
             /* On le banni */
             $user->setBanned(true);
 
+            /* On récupère ses discussions */
+            $discussions = $user->getDiscussions();
+
+            /* Pour chacune de ses discussions, on les lock */
+            foreach($discussions as $discussion){
+                $discussion->setLocked(true);
+                $entityManagerInterface->persist($discussion);
+            }
+
             /* On sauvegarde les changements en base de données */
             $entityManagerInterface->persist($user);
             $entityManagerInterface->flush();
@@ -115,6 +124,15 @@ class AdminController extends AbstractController
         if($user->isBanned()){
             /* On le débanni */
             $user->setBanned(false);
+
+            /* On récupère ses discussions */
+            $discussions = $user->getDiscussions();
+
+            /* Pour chacune de ses discussions, on les unlock */
+            foreach($discussions as $discussion){
+                $discussion->setLocked(false);
+                $entityManagerInterface->persist($discussion);
+            }
 
             /* On sauvegarde les changements en base de données */
             $entityManagerInterface->persist($user);
