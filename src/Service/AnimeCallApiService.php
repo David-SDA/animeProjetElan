@@ -357,42 +357,6 @@ class AnimeCallApiService{
     }
 
     /**
-     * Fonction qui permet de récupérer les quelques détails d'un animé pour la liste
-     */
-    public function getAnimeDetailsForList(int $animeId){
-        // Définition de la query
-        $query = '
-            query($animeId: Int){
-                Media(id: $animeId, type: ANIME, isAdult: false){
-                    id
-                    title{
-                        romaji
-                    }
-                    coverImage{
-                        large
-                    }
-                    episodes
-                } 
-            }
-        ';
-
-        // Définition des variables utilisées dans la query
-        $variables = [
-            'animeId' => $animeId,
-        ];
-
-        // Appel à l'API
-        $response = $this->client->request('POST', 'https://graphql.anilist.co', [
-            'json' => [
-                'query' => $query,
-                'variables' => $variables,
-            ]
-        ]);
-
-        return $response->toArray(); // On retourne les données sous forme de tableau
-    }
-
-    /**
      * Fonction qui permet de récupérer la réponse donnée par l'API pour savoir si l'anime existe
      */
     public function getApiResponse(int $animeId){

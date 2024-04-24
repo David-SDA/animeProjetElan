@@ -89,7 +89,7 @@ class UserAnimeListController extends AbstractController
     }
 
     #[Route('/animeList/modify/{id}', name: 'change_anime_list_user')]
-    public function modifyAnimeList(Request $request, UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService): Response{
+    public function modifyAnimeList(Request $request, UserRegarderAnime $userRegarderAnime, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
@@ -102,7 +102,11 @@ class UserAnimeListController extends AbstractController
 
         /* On récupère l'id de l'API de l'animé puis ses données de l'API */
         $animeApiId = $userRegarderAnime->getAnime()->getIdApi();
-        $animeData = $animeCallApiService->getAnimeDetailsForList($animeApiId);
+        //$animeData = $animeCallApiService->getAnimeDetailsForList($animeApiId);
+        $animeData = $cache->get('data_one_anime_' . $animeApiId, function(ItemInterface $item) use($animeCallApiService, $animeApiId){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getAnimeDetails($animeApiId);
+        });
 
         /* Création du formulaire */
         $form = $this->createForm(ModifyAnimeListFormType::class, null, [
@@ -280,9 +284,9 @@ class UserAnimeListController extends AbstractController
         $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
         /* Cache + récupération des données de l'API de l'animé en question */
-        $animeData = $cache->get('anime_data_for_episodes_' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
+        $animeData = $cache->get('anime_one_data_' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
             $item->expiresAt(new \DateTime('tomorrow'));
-            return $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+            return $animeCallApiService->getAnimeDetails($userRegarderAnime->getAnime()->getIdApi());
         });
         
         /* On récupère le nombre d'épisodes max et le titre de l'animé */
@@ -350,9 +354,9 @@ class UserAnimeListController extends AbstractController
         $currentEpisodesWatched = $userRegarderAnime->getNbEpisodesWatched();
 
         /* Cache + récupération des données de l'API de l'animé en question */
-        $animeData = $cache->get('anime_data_for_episodes_' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
+        $animeData = $cache->get('anime_one_data' . $userRegarderAnime->getAnime()->getIdApi(), function(ItemInterface $item) use($animeCallApiService, $userRegarderAnime){
             $item->expiresAt(new \DateTime('tomorrow'));
-            return $animeCallApiService->getAnimeDetailsForList($userRegarderAnime->getAnime()->getIdApi());
+            return $animeCallApiService->getAnimeDetails($userRegarderAnime->getAnime()->getIdApi());
         });
         $title = $animeData['data']['Media']['title']['romaji'];
 
