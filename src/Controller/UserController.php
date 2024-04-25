@@ -831,7 +831,7 @@ class UserController extends AbstractController
         }
 
         /* On vérifie que le thème est valide */
-         if(!($theme === 0 || $theme === 1)) {
+         if(!($theme == 0 || $theme == 1)) {
             throw $this->createNotFoundException();
         }
 
