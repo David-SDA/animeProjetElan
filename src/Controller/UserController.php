@@ -7,7 +7,6 @@ use App\Entity\Anime;
 use App\Entity\Personnage;
 use App\Security\EmailVerifier;
 use App\Form\ChangeEmailFormType;
-use App\Form\ChangeInfosFormType;
 use App\Repository\AnimeRepository;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Mime\Address;
@@ -820,33 +819,29 @@ class UserController extends AbstractController
     public function updateTheme(Request $request, bool $theme, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
-        /* Si l'utilisateur n'est pas connecté, on l'empeche d'ajouter à sa liste */
+        
+        /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter à sa liste */
         if(!$user){
-            return $this->redirectToRoute('app_home');
+            return new Response('User not authenticated', Response::HTTP_UNAUTHORIZED);
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
-        if($user && $user->isBanned()){
-            return $this->redirectToRoute('app_banned');
+        if($user->isBanned()){
+            return new Response('User is banned', Response::HTTP_FORBIDDEN);
         }
 
         /* On vérifie que le thème est valide */
-         if(!($theme == 0 || $theme == 1)) {
-            throw $this->createNotFoundException();
+        if(!($theme == 0 || $theme == 1)){
+            return new Response('Invalid theme value', Response::HTTP_BAD_REQUEST);
         }
 
-        /* On modifie le theme de l'utilisateur */
+        /* On modifie le thème de l'utilisateur */
         $user->setDarkMode($theme);
 
         /* On sauvegarde ces changements dans la base de données */
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
-        $this->addFlash(
-            'success',
-            'Theme has been updated'
-        );
-
-        return $this->redirectToRoute('settings_user');
+        return new Response('Theme updated successfully', Response::HTTP_OK);
     }
 }

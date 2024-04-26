@@ -57,3 +57,41 @@
         </div>
     </main>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Récupération des boutons de changement de thème
+        var themeToggles = document.querySelectorAll('.settingsTheme');
+        // TODO: FAIRE UN MEILLEUR BOUTON + GERER LE CHANGEMENT EN BDD
+        // Ajout d'un écouteur d'événements pour le clic sur le bouton de bascule de thème
+        themeToggles.forEach(function(themeToggle) {
+            themeToggle.addEventListener('click', function(event) {
+                event.preventDefault(); // Empêcher le comportement par défaut du lien
+                
+                // Récupérer le thème actuel
+                var currentTheme = document.body.classList.contains('dark') ? 1 : 0;
+                var theme = currentTheme == 1 ? 0 : 1;
+
+                // Envoyer une requête fetch pour changer le thème
+                fetch("{{ path('update_theme_user', { theme: 1 }) }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => {
+                    if(!response.ok){
+                        throw new Error('Failed to update theme');
+                    }
+                    // Ajouter ou supprimer la classe 'dark' du body en fonction du thème actuel
+                    document.body.classList.toggle('dark');
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Failed to update theme');
+                });
+            });
+        });
+    </script>
+{% endblock %}
