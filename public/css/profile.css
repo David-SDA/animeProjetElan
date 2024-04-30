@@ -227,6 +227,7 @@
     font-weight: 600;
     font-size: 1.25em;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    user-select: none;
 }
 .settingsTheme.light{
     color: #333333;
@@ -236,6 +237,13 @@
     color: #E6EDF3;
     background-color: #1E1E1E;
     margin-left: 1em;
+}
+
+/* Le bouton du thème actuel */
+.selectedTheme{
+    border: 2px solid #00BFFF;
+    pointer-events: none;
+    
 }
 
 /* Un texte classique dans les paramètres */

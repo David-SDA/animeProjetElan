@@ -820,19 +820,32 @@ class UserController extends AbstractController
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         
-        /* Si l'utilisateur n'est pas connecté, on l'empêche d'ajouter à sa liste */
+        /* Si l'utilisateur n'est pas connecté, on l'empeche de faire */
         if(!$user){
-            return new Response('User not authenticated', Response::HTTP_UNAUTHORIZED);
+            $this->addFlash(
+                'error',
+                'You are not authenticated'
+            );
+            return $this->redirectToRoute('app_home');
         }
 
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($user->isBanned()){
-            return new Response('User is banned', Response::HTTP_FORBIDDEN);
+            return $this->redirectToRoute('app_banned');
         }
 
         /* On vérifie que le thème est valide */
         if(!($theme == 0 || $theme == 1)){
-            return new Response('Invalid theme value', Response::HTTP_BAD_REQUEST);
+            $this->addFlash(
+                'error',
+                'Invalid theme value'
+            );
+            return $this->redirectToRoute('settings_user');
+        }
+
+        /* On vérifie si le thème demandé est identique au thème actuel de l'utilisateur */
+        if($user->isDarkMode() === ($theme == 1)) {
+            return $this->redirectToRoute('settings_user');
         }
 
         /* On modifie le thème de l'utilisateur */
@@ -842,6 +855,7 @@ class UserController extends AbstractController
         $entityManagerInterface->persist($user);
         $entityManagerInterface->flush();
 
-        return new Response('Theme updated successfully', Response::HTTP_OK);
+        //return new Response('Theme updated successfully', Response::HTTP_OK);
+        return $this->redirectToRoute('settings_user');
     }
 }
