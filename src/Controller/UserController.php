@@ -816,7 +816,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/switchTheme/{theme}', name: 'update_theme_user')]
-    public function updateTheme(Request $request, bool $theme, EntityManagerInterface $entityManagerInterface): Response{
+    public function updateTheme(Request $request, int $theme, EntityManagerInterface $entityManagerInterface): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
         
@@ -845,6 +845,10 @@ class UserController extends AbstractController
 
         /* On vérifie si le thème demandé est identique au thème actuel de l'utilisateur */
         if($user->isDarkMode() === ($theme == 1)) {
+            $this->addFlash(
+                'error',
+                'This theme is already selected'
+            );
             return $this->redirectToRoute('settings_user');
         }
 
