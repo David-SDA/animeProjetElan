@@ -4,54 +4,52 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">            
+        <div class="animeTopContainer">            
             <div class="animeTopLeftContent settings">
                 <figure>
                     <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Profile Picture of {{ app.user.username }}" class="profileImage">
                 </figure>
-                <a href="{{ path('change_profile_picture_user') }}" class="profileInfosButton settings full {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Picture">CHANGE PICTURE</a>
+                <a href="{{ path('change_profile_picture_user') }}" class="profileInfosButton settings full" title="Change Picture">CHANGE PICTURE</a>
             </div>
             <div class="animeTopRightContent">
-                <h1 class="profilePseudo {{ app.user and app.user.darkMode ? 'dark' }}">{{ app.user.username }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Username"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
-                <p class="profileDescription {{ app.user and app.user.darkMode ? 'dark' }}">{{ app.user.description ? app.user.description : "<i>No description yet ...</i>" }}</p>
-                <a href="{{ path('change_description_user') }}" class="profileInfosButton settings large {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Description">CHANGE DESCRIPTION</a>
+                <h1 class="profilePseudo">{{ app.user.username }} <a href="{{ path('change_username_user') }}" class="settingsChangePseudo" title="Change Username"><i class="fa-solid fa-pen-to-square"></i></a> </h1>
+                <p class="profileDescription">{{ app.user.description ? app.user.description : "<i>No description yet ...</i>" }}</p>
+                <a href="{{ path('change_description_user') }}" class="profileInfosButton settings large" title="Change Description">CHANGE DESCRIPTION</a>
             </div>
         </div>
-        <div class="animeRemainingContainer profileInfos settings {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="animeRemainingContainer profileInfos settings">
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Theme</h2>
-                <p class="settingsNormalText {{ app.user and app.user.darkMode ? 'dark' }}"><i>Current Theme : {{ app.user.darkMode ? 'Dark' : 'Light' }}</i></p>
-                <br>
+                <h2 class="settingsTitle">Theme</h2>
                 <div class="settingsThemes">
                     <a href="{{ path('update_theme_user', { theme: 0 }) }}" class="settingsTheme light" title="Switch to light theme">A</a>
                     <a href="{{ path('update_theme_user', { theme: 1 }) }}" class="settingsTheme dark" title="Switch to dark theme">A</a>
                 </div>
             </div>
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Email</h2>
+                <h2 class="settingsTitle">Email</h2>
                 <div>
-                    <p class="settingsNormalText {{ app.user and app.user.darkMode ? 'dark' }}"><span class="settingsSemiBoldText">Your Email : </span><i>{{ app.user.email }}</i></p>
-                    <a href="{{ path('change_email_user') }}" class="profileInfosButton settings fit {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Email">CHANGE EMAIL</a>
+                    <p class="settingsNormalText"><span class="settingsSemiBoldText">Your Email : </span><i>{{ app.user.email }}</i></p>
+                    <a href="{{ path('change_email_user') }}" class="profileInfosButton settings fit" title="Change Email">CHANGE EMAIL</a>
                 </div>
             </div>
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Password</h2>
+                <h2 class="settingsTitle">Password</h2>
                 <div>
-                    <a href="{{ path('modify_password_user') }}" class="profileInfosButton settings fit {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Password">CHANGE PASSWORD</a>
+                    <a href="{{ path('modify_password_user') }}" class="profileInfosButton settings fit" title="Change Password">CHANGE PASSWORD</a>
                 </div>
             </div>
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Account visibility</h2>
-                <p class="settingsNormalText {{ app.user and app.user.darkMode ? 'dark' }}"><i>Still to come ...</i></p>
+                <h2 class="settingsTitle">Account visibility</h2>
+                <p class="settingsNormalText"><i>Still to come ...</i></p>
             </div>
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Calendar notifications</h2>
-                <p class="settingsNormalText {{ app.user and app.user.darkMode ? 'dark' }}"><i>Still to come ...</i></p>
+                <h2 class="settingsTitle">Calendar notifications</h2>
+                <p class="settingsNormalText"><i>Still to come ...</i></p>
             </div>
             <div class="settingsOne">
-                <h2 class="settingsTitle {{ app.user and app.user.darkMode ? 'dark' }}">Delete account</h2>
+                <h2 class="settingsTitle">Delete account</h2>
                 <div>
-                    <a href="{{ path('delete_account_user') }}" class="profileInfosButton settings fit {{ app.user and app.user.darkMode ? 'dark' }}" style="background-color: #FF4136;" title="Delete Account">DELETE ACCOUNT</a>
+                    <a href="{{ path('delete_account_user') }}" class="profileInfosButton settings fit" style="background-color: #FF4136;" title="Delete Account">DELETE ACCOUNT</a>
                 </div>
             </div>
         </div>

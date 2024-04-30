@@ -11,7 +11,7 @@
     padding: 1.5em 10%;
     display: flex;
 }
-.animeTopContainer.dark{
+.dark .animeTopContainer{
     background-color: #3e3e42;
 }
 
