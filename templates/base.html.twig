@@ -26,33 +26,33 @@
     <body {{ app.user and app.user.darkMode ? 'class="dark"' }}>
         {% for type, messages in app.flashes %}
             {% for message in messages %}
-                <div class="flashMessage flashMessage-{{ type }} {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="flashMessage flashMessage-{{ type }}">
                     <b>{{ message }}</b>
                 </div>
             {% endfor %}
         {% endfor %}
-        <div class="navBarContainer {{ app.user and app.user.darkMode ? 'dark' }}">
-            <i class="fa-solid fa-bars responsiveNavBarOpen {{ app.user and app.user.darkMode ? 'dark' }}"></i>
+        <div class="navBarContainer">
+            <i class="fa-solid fa-bars responsiveNavBarOpen"></i>
             {% if not app.user or not app.user.isBanned %}
                 <nav class="navBar">
                     <ul class="navBarContent">
-                        <li class="navBarElement {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('app_home') }}" class="navBarElementLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Home">HOME</a></li>
-                        <li class="navBarElementDropdown {{ app.user and app.user.darkMode ? 'dark' }}">
-                            <button class="navBarElementDropdownButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Anime">ANIME</button>
-                            <ul class="navBarElementDropdownContent {{ app.user and app.user.darkMode ? 'dark' }}">
-                                <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Top Animes">TOP</a></li>
-                                <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last {{ app.user and app.user.darkMode ? 'dark' }}" title="Seasonial Anime">SEASONIAL</a></li>
+                        <li class="navBarElement"><a href="{{ path('app_home') }}" class="navBarElementLink" title="Home">HOME</a></li>
+                        <li class="navBarElementDropdown">
+                            <button class="navBarElementDropdownButton" title="Anime">ANIME</button>
+                            <ul class="navBarElementDropdownContent">
+                                <li><a href="{{ path('top_anime') }}" class="navBarElementLink navBarElementDropdownLink" title="Top Animes">TOP</a></li>
+                                <li><a href="{{ path('seasonal_anime') }}" class="navBarElementLink navBarElementDropdownLink last" title="Seasonial Anime">SEASONIAL</a></li>
                             </ul>
                         </li>
-                        <li class="navBarElement {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('search_anime') }}" class="navBarElementLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Search">SEARCH</a></li>
-                        <li class="navBarElement {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('app_discussion') }}" class="navBarElementLink {{ app.user and app.user.darkMode ? 'dark' }}" title="Talks">TALKS</a></li>                    
+                        <li class="navBarElement"><a href="{{ path('search_anime') }}" class="navBarElementLink" title="Search">SEARCH</a></li>
+                        <li class="navBarElement"><a href="{{ path('app_discussion') }}" class="navBarElementLink" title="Talks">TALKS</a></li>                    
                     </ul>   
                 </nav>
             {% endif %}
             <div class="navBarProfile">
                 {% if app.user %}
-                <div class="navBarProfileContainer {{ app.user and app.user.darkMode ? 'dark' }}" title="Open Menu">
-                    <p class="navBarProfilePseudo {{ app.user and app.user.darkMode ? 'dark' }}">{{ app.user.username }}</p>
+                <div class="navBarProfileContainer" title="Open Menu">
+                    <p class="navBarProfilePseudo">{{ app.user.username }}</p>
                     <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
                 </div>
                 {% else %}
@@ -61,23 +61,23 @@
                 {% endif %}
             </div>
             {% if app.user %}
-                <div class="navBarUserMenu {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="navBarUserMenu">
                     <div class="navBarUserMenuTop">
                         <img src="{{ app.user.profilePicture ? asset('uploads/' ~ app.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="Your Profile Picture" class="navBarProfilePicture">
-                        <p class="navBarProfilePseudo {{ app.user and app.user.darkMode ? 'dark' }}">{{ app.user.username }}</p>
-                        <i class="fa-solid fa-xmark navBarUserMenuClose {{ app.user and app.user.darkMode ? 'dark' }}" title="Close Menu"></i>
+                        <p class="navBarProfilePseudo">{{ app.user.username }}</p>
+                        <i class="fa-solid fa-xmark navBarUserMenuClose" title="Close Menu"></i>
                     </div>
                     <ul>
                     {% if not app.user.isBanned %}
-                        <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_user', { id: app.user.id }) }}" title="Profile"><i class="fa-regular fa-user"></i>Profile</a></li>
-                        <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('anime_list_user', { id: app.user.id }) }}" title="Anime List"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
-                        <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('calendar_user') }}" title="Calendar"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
-                        <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('settings_user') }}" title="Settings"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('show_user', { id: app.user.id }) }}" title="Profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('anime_list_user', { id: app.user.id }) }}" title="Anime List"><i class="fa-solid fa-table-list"></i>Anime List</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('calendar_user') }}" title="Calendar"><i class="fa-regular fa-calendar"></i>Calendar</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('settings_user') }}" title="Settings"><i class="fa-solid fa-user-gear"></i>Settings</a></li>
                     {% endif %}
-                        <li class="navBarUserMenuLink {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('app_logout') }}" title="Logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+                        <li class="navBarUserMenuLink"><a href="{{ path('app_logout') }}" title="Logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
                     </ul>
                     {% if is_granted('ROLE_ADMIN') and not app.user.isBanned %}
-                        <a href="{{ path('app_admin') }}" class="navBarAdmin {{ app.user and app.user.darkMode ? 'dark' }}" title="Admin Space">ADMIN SPACE</a>
+                        <a href="{{ path('app_admin') }}" class="navBarAdmin" title="Admin Space">ADMIN SPACE</a>
                     {% endif %}
                 </div>
                 <div class="navBarUserMenuOverlay"></div>
@@ -85,7 +85,7 @@
         </div>
         {% block body %}
         {% endblock %}
-        <footer {{ app.user and app.user.darkMode ? 'class="dark"' }}>
+        <footer>
             <ul>
                 <li><a href="{{ path('app_terms_of_use') }}" title="Terms of Use">Terms of Use</a></li>
                 <li><a href="{{ path('app_privacy_policy') }}" title="Privacy Policy">Privacy Policy</a></li>

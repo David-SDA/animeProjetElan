@@ -32,7 +32,7 @@ footer{
     width: 100%;
     margin-top: auto;
 }
-footer.dark{
+.dark footer{
     background-color: #2b2a41;
     color: #e6edf3;
 }
@@ -62,7 +62,7 @@ footer ul a:hover{
     opacity: 0;
     pointer-events: none;
 }
-.flashMessage.dark{
+.dark .flashMessage{
     color: #e6edf3;
 }
 
@@ -100,7 +100,7 @@ footer ul a:hover{
     justify-content: space-between;
     align-items: center;
 }
-.navBarContainer.dark{
+.dark .navBarContainer{
     color: #e6edf3;
     background-color: #2b2a41;
 }
@@ -118,7 +118,7 @@ footer ul a:hover{
     place-items: center;
     cursor: pointer;
 }
-.responsiveNavBarOpen.dark{
+.dark .responsiveNavBarOpen{
     background-color: #204ac8;
 }
 
@@ -146,7 +146,7 @@ footer ul a:hover{
 .navBarElement:hover{
     background-color: #4169E1;
 }
-.navBarElement.dark:hover{
+.dark .navBarElement:hover{
     background-color: #204ac8;
 }
 
@@ -162,7 +162,7 @@ footer ul a:hover{
     justify-content: center;
     align-items: center;
 }
-.navBarElementLink.dark{
+.dark .navBarElementLink{
     color: #e6edf3;
 }
 
@@ -175,7 +175,7 @@ footer ul a:hover{
 .navBarElementDropdown:hover{
     background-color: #4169E1;
 }
-.navBarElementDropdown.dark:hover{
+.dark .navBarElementDropdown:hover{
     background-color: #204ac8;
 }
 .navBarElementDropdown:hover .navBarElementDropdownContent{
@@ -193,7 +193,7 @@ footer ul a:hover{
     font-weight: 600;
     cursor: pointer;
 }
-.navBarElementDropdownButton.dark{
+.dark .navBarElementDropdownButton{
     color: #e6edf3;
 }
 
@@ -209,7 +209,7 @@ footer ul a:hover{
     z-index: 1;
     list-style-type: none;
 }
-.navBarElementDropdownContent.dark{
+.dark .navBarElementDropdownContent{
     background-color: #204ac8;
 }
 
@@ -220,7 +220,7 @@ footer ul a:hover{
 .navBarElementDropdownLink:hover{
     background-color: #00BFFF;
 }
-.navBarElementDropdownLink.dark:hover{
+.dark .navBarElementDropdownLink:hover{
     background-color: #0099cc;
 }
 
@@ -255,7 +255,7 @@ footer ul a:hover{
 .navBarProfileContainer:hover{
     background-color: rgba(211, 211, 211, 0.2);
 }
-.navBarProfileContainer.dark:hover{
+.dark .navBarProfileContainer:hover{
     background-color: rgba(211, 211, 211, 0.1);
 }
 
@@ -270,7 +270,7 @@ footer ul a:hover{
     text-overflow: ellipsis;
     max-width: 180px;
 }
-.navBarProfilePseudo.dark{
+.dark .navBarProfilePseudo{
     color: #e6edf3;
 }
 
@@ -320,7 +320,7 @@ footer ul a:hover{
 .navBarUserMenu.visible{
     right: 0;
 }
-.navBarUserMenu.dark{
+.dark .navBarUserMenu{
     background-color: #2b2a41;
 }
 
@@ -347,7 +347,7 @@ footer ul a:hover{
 .navBarUserMenuClose:hover{
     background-color: rgba(211, 211, 211, 0.2);
 }
-.navBarUserMenuClose.dark:hover{
+.dark .navBarUserMenuClose:hover{
     background-color: rgba(211, 211, 211, 0.1);
 }
 
@@ -364,7 +364,7 @@ footer ul a:hover{
 .navBarUserMenuLink:hover{
     background-color: rgba(211, 211, 211, 0.2);
 }
-.navBarUserMenuLink.dark:hover{
+.dark .navBarUserMenuLink:hover{
     background-color: rgba(211, 211, 211, 0.1);
 }
 .navBarUserMenuLink .fa-regular, .navBarUserMenuLink .fa-solid{
@@ -393,7 +393,7 @@ footer ul a:hover{
     transform: translateY(-2px);
     filter: saturate(150%);
 }
-.navBarAdmin.dark{
+.dark .navBarAdmin{
     color: #e6edf3;
     background-color: #aa2424;
 }
