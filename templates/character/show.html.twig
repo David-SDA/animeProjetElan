@@ -9,29 +9,29 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="animeTopContainer">
             <div class="animeTopLeftContent">
                 <figure>
                     <img src="{{ dataThisCharacter.image.large }}" alt="{{ dataThisCharacter.name.full|default('Unknown') }}" class="animeImage">
                 </figure>
                 {% if app.user and not characterIsInFavorites %}
-                    <a href="{{ path('add_character_to_favorites_user', { idApi : dataThisCharacter.id }) }}" class="animeButtonAddTo favorites {{ app.user and app.user.darkMode ? 'dark' }}">Add to your favorites</a>
+                    <a href="{{ path('add_character_to_favorites_user', { idApi : dataThisCharacter.id }) }}" class="animeButtonAddTo favorites">Add to your favorites</a>
                 {% elseif app.user and characterIsInFavorites and characterInDatabase %}
-                    <a href="{{ path('remove_character_from_favorites_user', { id : characterInDatabase.id }) }}" class="animeButtonAddTo favorites {{ app.user and app.user.darkMode ? 'dark' }}">Remove from favorites</a>
+                    <a href="{{ path('remove_character_from_favorites_user', { id : characterInDatabase.id }) }}" class="animeButtonAddTo favorites">Remove from favorites</a>
                 {% endif %}
             </div>
             <div class="animeTopRightContent">
-                <h1 class="animeTitle {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisCharacter.name.full|default('Unknown') }}</h1>
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Age :</b> {{ dataThisCharacter.age|default('Unknown') }}</p>
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Gender :</b> {{ dataThisCharacter.gender|default('Unknown') }}</p>
+                <h1 class="animeTitle">{{ dataThisCharacter.name.full|default('Unknown') }}</h1>
+                <p class="animeSynopsisContent"><b>Age :</b> {{ dataThisCharacter.age|default('Unknown') }}</p>
+                <p class="animeSynopsisContent"><b>Gender :</b> {{ dataThisCharacter.gender|default('Unknown') }}</p>
                 {# Voir les différents contenu des description pour adapter l'affichage #}
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}">
+                <p class="animeSynopsisContent">
                     {{ dataThisCharacter.description ? dataThisCharacter.description|raw|nl2br : "No description yet" }}
                 </p>
             </div>
         </div>
         <div class="characterRemainingContainer">
-            <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">APPEARANCES</h2>
+            <h2 class="characterPartTitle">APPEARANCES</h2>
             <div class="homeMultipleAnimes autoFill">
             {% for anime in dataThisCharacter.media.edges %}
                 <figure class="homeOneAnime">
@@ -43,7 +43,7 @@
                             <img src="{{ anime.node.coverImage.large }}" alt="Cover Image of {{ anime.node.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
                         </div>
                     </a>
-                    <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
+                    <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.node.id }) }}" title="{{ anime.node.title.romaji|default('Unknown') }}">{{ anime.node.title.romaji|default('Unknown') }}</a></figcaption>
                 </figure>
             {% endfor %}
             </div>

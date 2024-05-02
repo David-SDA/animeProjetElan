@@ -9,18 +9,18 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="animeTopContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="animeTopContainer">
             <div class="animeTopLeftContent">
                 <figure>
                     <img src="{{ dataThisStaff.image.large }}" alt="{{ dataThisStaff.name.full|default('Unknown') }}" class="animeImage">
                 </figure>
             </div>
             <div class="animeTopRightContent">
-                <h1 class="animeTitle {{ app.user and app.user.darkMode ? 'dark' }}">{{ dataThisStaff.name.full|default('Unknown') }}</h1>
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Age :</b> {{ dataThisStaff.age|default('Unknown') }}</p>
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}"><b>Gender :</b> {{ dataThisStaff.gender|default('Unknown') }}</p>
+                <h1 class="animeTitle">{{ dataThisStaff.name.full|default('Unknown') }}</h1>
+                <p class="animeSynopsisContent"><b>Age :</b> {{ dataThisStaff.age|default('Unknown') }}</p>
+                <p class="animeSynopsisContent"><b>Gender :</b> {{ dataThisStaff.gender|default('Unknown') }}</p>
                 {# Voir les différents contenu des description pour adapter l'affichage #}
-                <p class="animeSynopsisContent {{ app.user and app.user.darkMode ? 'dark' }}">
+                <p class="animeSynopsisContent">
                     {{ dataThisStaff.description ? dataThisStaff.description|raw|nl2br : "No description yet" }}
                 </p>
             </div>
@@ -28,7 +28,7 @@
         <div class="characterRemainingContainer">
             {# Si ce membre de staff a doublé des personnages, alors on l'affiche #}
             {% if dataThisStaff.characters.edges %}
-                <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">APPEARANCES</h2>
+                <h2 class="characterPartTitle">APPEARANCES</h2>
                 <div class="homeMultipleAnimes autoFill">
                 {# Pour chaque personnage incarné par le doubleur #}
                 {% for character in dataThisStaff.characters.edges %}
@@ -50,7 +50,7 @@
                                     <img src="{{ animeCoverImage }}" alt="Cover Image of {{ animeTitle }}" class="homeOneAnimeImage">
                                 </div>
                             </a>
-                            <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">{{ animeTitle }}</a></figcaption>
+                            <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : animeId }) }}" title="{{ animeTitle }}">{{ animeTitle }}</a></figcaption>
                         </figure>
                     {% endfor %}
                 {% endfor %}
@@ -77,7 +77,7 @@
             
             {# Si ce membre de staff est dans des staffs d'animés, alors on l'affiche #}
             {% if animeRoles|length > 0 %}
-                <h2 class="characterPartTitle {{ app.user and app.user.darkMode ? 'dark' }}">ROLES IN ANIME STAFFS</h2>
+                <h2 class="characterPartTitle">ROLES IN ANIME STAFFS</h2>
                 <div class="homeMultipleAnimes autoFill">
                 {# On fait l'affichage grâce a animeRoles #}
                 {% for anime in animeRoles %}
@@ -85,14 +85,14 @@
                         <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ anime.coverImage }}" alt="Cover Image of {{ anime.title|default('Unknown') }}" class="homeOneAnimeImage">
-                                <div class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
+                                <div class="homeHoverContent">
                                 {% for role in anime.roles %}
                                     <p class="characterRemainingVoiceActorName roles">- {{ role }}</p>
                                 {% endfor %}
                                 </div>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">{{ anime.title|default('Unknown') }}</a></figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title|default('Unknown') }}">{{ anime.title|default('Unknown') }}</a></figcaption>
                     </figure>
                 {% endfor %}
                 </div>

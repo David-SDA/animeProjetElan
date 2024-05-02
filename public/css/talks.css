@@ -101,7 +101,7 @@
 .oneTalkContainer:hover{
     transform: translateY(-2px);
 }
-.oneTalkContainer.dark{
+.dark .oneTalkContainer{
     background-color: #3e3e42;
     color: #e6edf3;
 }
@@ -198,7 +198,7 @@
 .talkDeleteLink:hover{
     filter: saturate(70%);
 }
-.talkDeleteLink.dark{
+.dark .talkDeleteLink{
     color: #cc0000;
 }
 
@@ -222,7 +222,7 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.onePostContainer.dark{
+.dark .onePostContainer{
     background-color: #3e3e42;
     color: #e6edf3;
 }
@@ -242,7 +242,7 @@
     margin: 2em 0 1em 0;
     color: #333;
 }
-.oneTalkRepliesTopContainer.dark{
+.dark .oneTalkRepliesTopContainer{
     color: #e6edf3;
 }
 
@@ -270,7 +270,7 @@
     font-size: 1.25em;
     width: fit-content;
 }
-.onePostLikes.dark{
+.dark .onePostLikes{
     color: #cc0000;
 }
 

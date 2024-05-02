@@ -15,7 +15,7 @@
     padding: 20px;
     margin-bottom: 10px;
 }
-.securityFormContainer.dark form{
+.dark .securityFormContainer form{
     background-color: #3e3e42;
 }
 
@@ -27,7 +27,7 @@
     color: #333333;
     margin-bottom: 20px;
 }
-.securityFormTitle.dark{
+.dark .securityFormTitle{
     color: #e6edf3;
 }
 
@@ -43,7 +43,7 @@
     color: #333333;
     margin-bottom: 0.3em;
 }
-.securityFormRow.dark label{
+.dark .securityFormRow label{
     color: #e6edf3;
 }
 .securityFormRow input[type="text"], .securityFormRow input[type="email"], .securityFormRow input[type="date"],
@@ -78,7 +78,7 @@
     border-radius: 20px;
     cursor: pointer;
 }
-.securityFormRow.dark input[type="file"]::file-selector-button{
+.dark .securityFormRow input[type="file"]::file-selector-button{
     color: #e6edf3;
     background-color: #0099cc;
 }
@@ -99,17 +99,17 @@
     font-size: 0.8em;
 }
 
-.securityFormRow.dark input[type="text"], .securityFormRow.dark input[type="email"], .securityFormRow.dark input[type="date"],
-.securityFormRow.dark input[type="datetime-local"], .securityFormRow.dark input[type="password"], 
-.securityFormRow.dark input[type="radio"], .securityFormRow.dark textarea{
+.dark .securityFormRow input[type="text"], .dark .securityFormRow input[type="email"], .dark .securityFormRow input[type="date"],
+.dark .securityFormRow input[type="datetime-local"], .dark .securityFormRow input[type="password"], 
+.dark .securityFormRow input[type="radio"], .dark .securityFormRow textarea{
     background-color: #1e1e1e;
     border: 1px solid #1e1e1e;
     color: #e6edf3;
 }
-.securityFormRow.dark input[type="file"]{
+.dark .securityFormRow input[type="file"]{
     color: #e6edf3;
 }
-.securityFormRow.dark input[type="date"]::-webkit-calendar-picker-indicator, .securityFormRow.dark input[type="datetime-local"]::-webkit-calendar-picker-indicator{
+.dark .securityFormRow input[type="date"]::-webkit-calendar-picker-indicator, .dark .securityFormRow input[type="datetime-local"]::-webkit-calendar-picker-indicator{
     filter: invert(1);
 }
 
@@ -148,7 +148,7 @@
     transition: all 0.25s ease;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
-.securityFormSubmitButton.dark{
+.dark .securityFormSubmitButton{
     color: #e6edf3;
     background-color: #0099cc;
 }
@@ -167,7 +167,7 @@
     color: #636363;
     margin-top: 1em;
 }
-.securityFormLinkEnd.dark{
+.dark .securityFormLinkEnd{
     color: #e6edf3;
 }
 .securityFormLinkEnd a:hover{

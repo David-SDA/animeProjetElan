@@ -112,7 +112,7 @@
 .animeSynopsisContent a{
     color: #00BFFF;
 }
-.animeSynopsisContent.dark a{
+.dark .animeSynopsisContent a{
     color: #0099cc;
 }
 

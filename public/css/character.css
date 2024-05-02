@@ -20,7 +20,7 @@
 .characterPartTitle{
     color: #333333;
 }
-.characterPartTitle.dark{
+.dark .characterPartTitle{
     color: #e6edf3;
 }
 
