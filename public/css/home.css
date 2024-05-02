@@ -5,7 +5,7 @@
     margin: 0.5em 0;
     padding: 0.5em;
 }
-.title.dark{
+.dark .title{
     color: #e6edf3;
 }
 
@@ -18,7 +18,7 @@
 .simpleText{
     color: #333;
 }
-.simpleText.dark{
+.dark .simpleText{
     color: #e6edf3;
 }
 

@@ -12,7 +12,7 @@
 .adminStatsOneLine{
     color: #333;
 }
-.adminStatsOneLine.dark{
+.dark .adminStatsOneLine{
     color: #e6edf3;
 }
 .adminStatsOneLine:not(:first-child), .adminStatsOneLine:not(:last-child){
@@ -30,7 +30,7 @@
     padding: 3px;
     transition: all 0.25s ease;
 }
-.adminLink.dark{
+.dark .adminLink{
     background-color: #204ac8;
     color: #e6edf3;
 }
@@ -56,7 +56,7 @@
     width: 48%;
     color: #333;
 }
-.adminTable.dark{
+.dark .adminTable{
     color: #e6edf3;
 }
 .adminTable.full{
@@ -67,7 +67,7 @@
     border-collapse: collapse;
     text-align: center;
 }
-.adminTable.dark, .adminTable.dark th, .adminTable.dark td{
+.dark .adminTable, .dark .adminTable th, .dark .adminTable td{
     border: 1px solid #e6edf3;
 }
 .adminTable td{
@@ -79,7 +79,7 @@
     color: #204ac8;
     text-decoration: underline;
 }
-.adminLinkText{
+.dark .adminLinkText{
     color: #4169E1;
 }
 
