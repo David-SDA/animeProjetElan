@@ -18,14 +18,14 @@
         {% else %}
             {% set currentSeason = "FALL" %}
         {% endif %}
-        <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">{{ currentSeason }} {{ currentYear }}</h1>
+        <h1 class="title">{{ currentSeason }} {{ currentYear }}</h1>
         <div class="homeMultipleAnimes autoFill">
         {% for media in dataSeasonalAnimes.data.Page.media %}
             <figure class="homeOneAnime top">
                 <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                     <div class="homeOneAnimeImageInfo">
                         <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
-                        <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
+                        <section class="homeHoverContent">
                             <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji|default('Unknown') }}</h2>
                             {% if media.episodes %}
                                 <p class="homeOneAnimeInfoSmallerInfos"><i>{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</i></p>
@@ -48,7 +48,7 @@
                         </section>
                     </div>
                 </a>
-                <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
         {% endfor %}
         </div>

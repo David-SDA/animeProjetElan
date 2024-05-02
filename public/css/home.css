@@ -112,7 +112,7 @@
     opacity: 0;
     transition: all 0.5s ease;
 }
-.homeHoverContent.dark{
+.dark .homeHoverContent{
     color: #e6edf3;
 }
 
@@ -171,7 +171,7 @@
     color: #333;
     font-weight: 600;
 }
-.homeOneAnimeTitle.dark{
+.dark .homeOneAnimeTitle{
     color: #e6edf3;
 }
 .homeOneAnimeTitle.favorites{
@@ -193,7 +193,7 @@
     color: #fff;
     transform: translate(5px, 5px);
 }
-.homeOneAnimeTopRanking.dark{
+.dark .homeOneAnimeTopRanking{
     background-color: #204ac8;
     color: #e6edf3;
 }

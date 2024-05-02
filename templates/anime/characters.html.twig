@@ -9,16 +9,16 @@
 
 {% block body %}
     <main class="animeCharactersContainer">
-        <h1 class="animeCharactersTitle {{ app.user and app.user.darkMode ? 'dark' }}">Characters of {{ dataAllCharactersThisAnime.title.romaji|default('?') }}</h1>
+        <h1 class="animeCharactersTitle">Characters of {{ dataAllCharactersThisAnime.title.romaji|default('?') }}</h1>
         <div class="animeRemainingRightContentPartCardsContainer">
         {% for character in dataAllCharactersThisAnime.characters.edges %}
-            <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent {{ app.user and app.user.darkMode ? 'dark' }}" title="{{ character.node.name.full|default('Unknown') }}">
+            <a href="{{ path('show_character', { 'id' : character.node.id }) }}" class="animeRemainingRightContentPartCardsContent" title="{{ character.node.name.full|default('Unknown') }}">
                 <figure>
                     <img src="{{ character.node.image.medium }}" alt="{{ character.node.name.full|default('Unknown') }}" class="animeRemainingRightContentPartCardsImage">
                 </figure>
                 <div class="animeRemainingRightContentPartCardsTextContainer">
-                    <h2 class="animeRemainingRightContentPartCardsTop {{ app.user and app.user.darkMode ? 'dark' }}">{{ character.node.name.full|default('Unknown') }}</h2>
-                    <p class="animeRemainingRightContentPartCardsBottom {{ app.user and app.user.darkMode ? 'dark' }}"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
+                    <h2 class="animeRemainingRightContentPartCardsTop">{{ character.node.name.full|default('Unknown') }}</h2>
+                    <p class="animeRemainingRightContentPartCardsBottom"><i>{{ character.role ? character.role|title : 'Unknown' }}</i></p>
                 </div>
             </a>
         {% endfor %}

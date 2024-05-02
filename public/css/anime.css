@@ -50,7 +50,7 @@
     text-align: center;
     transition: all 0.25s ease;
 }
-.animeButtonAddTo.dark{
+.dark .animeButtonAddTo{
     color: #e6edf3;
 }
 .animeButtonAddTo:hover{
@@ -62,7 +62,7 @@
     margin: 1em 0 0.5em 0;
     background-color: #00BFFF;
 }
-.animeButtonAddTo.list.dark{
+.dark .animeButtonAddTo.list{
     background-color: #0099cc;
 }
 /* Le bouton pour ajouter l'animé à ses favoris */
@@ -70,7 +70,7 @@
     margin-top: 0.5em;
     background-color: #FF4136;
 }
-.animeButtonAddTo.favorites.dark{
+.dark .animeButtonAddTo.favorites{
     background-color: #b90a00;
 }
 
@@ -86,7 +86,7 @@
     color: #636363;
     margin-bottom: 0.5em;
 }
-.animeTitle.dark{
+.dark .animeTitle{
     color: #fff;
 }
 
@@ -97,7 +97,7 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
-.animeSynopsisTitle.dark{
+.dark .animeSynopsisTitle{
     color: #e6edf3;
 }
 
@@ -106,7 +106,7 @@
     color: #636363;
     overflow-wrap: anywhere;
 }
-.animeSynopsisContent.dark{
+.dark .animeSynopsisContent{
     color: #e6edf3;
 }
 .animeSynopsisContent a{
@@ -136,7 +136,7 @@
     padding: 0 1em 1em 1em;
     margin-right: 1.5em;
 }
-.animeRemainingLeftContent.dark{
+.dark .animeRemainingLeftContent{
     background-color: #3e3e42;
 }
 
@@ -154,7 +154,7 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
-.animeRemainingLeftContentInfoTitle.dark{
+.dark .animeRemainingLeftContentInfoTitle{
     color: #fff;
 }
 
@@ -163,7 +163,7 @@
     font-weight: 400;
     color: #636363;
 }
-.animeRemainingLeftContentInfoContent.dark{
+.dark .animeRemainingLeftContentInfoContent{
     color: #e6edf3;
 }
 
@@ -180,7 +180,7 @@
     color: #333333;
     margin-bottom: 1em;
 }
-.animeRemainingRightContentTimeBeforeEpisode.dark{
+.dark .animeRemainingRightContentTimeBeforeEpisode{
     color: #e6edf3;
 }
 
@@ -198,7 +198,7 @@
     color: #333333;
     margin-bottom: 0.5em;
 }
-.animeRemainingRightContentPartTitle.dark{
+.dark .animeRemainingRightContentPartTitle{
     color: #e6edf3;
 }
 
@@ -210,13 +210,13 @@
     text-decoration: none;
     align-self: end;
 }
-.animeRemainingRightContentPartMore.dark{
+.dark .animeRemainingRightContentPartMore{
     color: #e6edf3
 }
 .animeRemainingRightContentPartMore:hover{
     color: #00BFFF;
 }
-.animeRemainingRightContentPartMore.dark:hover{
+.dark .animeRemainingRightContentPartMore:hover{
     color: #0099cc;
 }
 
@@ -237,7 +237,7 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: all 0.25s ease;
 }
-.animeRemainingRightContentPartCardsContent.dark{
+.dark .animeRemainingRightContentPartCardsContent{
     background-color: #3e3e42;
 }
 .animeRemainingRightContentPartCardsContent.profile, .animeRemainingRightContentPartCardsContent.talk{
@@ -246,7 +246,7 @@
     display: flex;
     justify-content: space-between;
 }
-.animeRemainingRightContentPartCardsContent.profile.dark{
+.dark .animeRemainingRightContentPartCardsContent.profile{
     background-color: #1e1e1e;
 }
 .animeRemainingRightContentPartCardsContent:hover{
@@ -276,7 +276,7 @@
     font-size: 1.25em;
     color: #636363;
 }
-.animeRemainingRightContentPartCardsTop.dark{
+.dark .animeRemainingRightContentPartCardsTop{
     color: #e6edf3;
 }
 .animeRemainingRightContentPartCardsTop.profile, .animeRemainingRightContentPartCardsTop.anime{
@@ -291,7 +291,7 @@
     font-weight: 400;
     color: #636363;
 }
-.animeRemainingRightContentPartCardsBottom.dark{
+.dark .animeRemainingRightContentPartCardsBottom{
     color: #e6edf3;
 }
 
@@ -305,7 +305,7 @@
 .animeRemainingRightContentPartCardsCommentText{
     color: #636363;
 }
-.animeRemainingRightContentPartCardsCommentText.dark{
+.dark .animeRemainingRightContentPartCardsCommentText{
     color: #e6edf3;
 }
 
@@ -355,7 +355,7 @@
     cursor: pointer;
     transition: all 0.25s ease;
 }
-.animeRemainingRightContentPartYourOpinionSubmit.dark{
+.dark .animeRemainingRightContentPartYourOpinionSubmit{
     color: #e6edf3;
     background-color: #204ac8;
 }
@@ -373,7 +373,7 @@
     font-size: 1em;
     color: #333333;
 }
-.animeRemainingRightContentPartOpinionsFilter.dark{
+.dark .animeRemainingRightContentPartOpinionsFilter{
     color: #e6edf3;
 }
 
@@ -399,7 +399,7 @@
     padding: 1em;
     border-radius: 10px;
 }
-.animeRemainingRightContentPartOpinionsContent.dark{
+.dark .animeRemainingRightContentPartOpinionsContent{
     background-color: #3e3e42;
 }
 
@@ -428,7 +428,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.animeRemainingRightContentPartOpinionsPseudo.dark{
+.dark .animeRemainingRightContentPartOpinionsPseudo{
     color: #e6edf3;
 }
 
@@ -438,7 +438,7 @@
     align-self: flex-start;
     color: #333333;
 }
-.animeRemainingRightContentPartOpinionsPublicationTime.dark{
+.dark .animeRemainingRightContentPartOpinionsPublicationTime{
     color: #e6edf3;
 }
 
@@ -450,7 +450,7 @@
     padding: 1em;
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
-.animeRemainingRightContentPartOpinionsMidContent.dark{
+.dark .animeRemainingRightContentPartOpinionsMidContent{
     color: #e6edf3;
     background-color: #1e1e1e;
 }
@@ -463,7 +463,7 @@
     color: #ff0000;
     cursor: pointer;
 }
-.animeRemainingRightContentPartOpinionsBottomContent.dark{
+.dark .animeRemainingRightContentPartOpinionsBottomContent{
     color: #cc0000;
 }
 
@@ -473,7 +473,7 @@
     font-size: 1em;
     color: #ff0000;
 }
-.animeRemainingRightContentPartOpinionsLikesNumber.dark{
+.dark .animeRemainingRightContentPartOpinionsLikesNumber{
     color: #cc0000;
 }
 
@@ -489,7 +489,7 @@
     text-align: center;
     margin: 0.5em 0;
 }
-.animeCharactersTitle.dark{
+.dark .animeCharactersTitle{
     color: #e6edf3;
 }
 

@@ -5,37 +5,37 @@
 {% block title %}Search Anime{% endblock %}
 
 {% block body %}
-    <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Search</h1>
+    <h1 class="title">Search</h1>
     <main class="homeContainer">
         {{ form_start(form) }}
             <div class="filterElementLine">
-                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="filterElementFormElement">
                     {{ form_label(form.search, 'Search') }}
                     {{ form_errors(form.search) }}
                     {{ form_widget(form.search) }}
                 </div>
-                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="filterElementFormElement">
                     {{ form_label(form.season, 'Season') }}
                     {{ form_errors(form.season) }}
                     {{ form_widget(form.season) }}
                 </div>
-                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="filterElementFormElement">
                     {{ form_label(form.seasonYear, 'Year') }}
                     {{ form_errors(form.seasonYear) }}
                     {{ form_widget(form.seasonYear) }}
                 </div>
-                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="filterElementFormElement">
                     {{ form_label(form.genre, 'Genre') }}
                     {{ form_errors(form.genre) }}
                     {{ form_widget(form.genre) }}
                 </div>
-                <div class="filterElementFormElement {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="filterElementFormElement">
                     {{ form_label(form.format, 'Format') }}
                     {{ form_errors(form.format) }}
                     {{ form_widget(form.format) }}
                 </div>
             </div>
-            <button type="submit" class="filterSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}">Apply Filters</button>
+            <button type="submit" class="filterSubmitButton">Apply Filters</button>
             {{ form_rest(form) }}
         {{ form_end(form) }}
 
@@ -46,7 +46,7 @@
                         <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
                             <div class="homeOneAnimeImageInfo">
                                 <img src="{{ media.coverImage.large }}" alt="Cover Image of {{ media.title.romaji|default('Unknown') }}" class="homeOneAnimeImage">
-                                <section class="homeHoverContent {{ app.user and app.user.darkMode ? 'dark' }}">
+                                <section class="homeHoverContent">
                                     <h2 class="homeOneAnimeInfoTitle">{{ media.title.romaji|default('Unknown') }}</h2>
                                     {% if media.episodes %}
                                         <p class="homeOneAnimeInfoSmallerInfos"><i>{{ media.episodes == 1 ? media.episodes ~ ' episode' : media.episodes ~ ' episodes' }} - {{ media.format|default('?') }}</i></p>
@@ -69,12 +69,12 @@
                                 </section>
                             </div>
                         </a>
-                        <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
+                        <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : media.id }) }}">{{ media.title.romaji|default('Unknown') }}</a></figcaption>
                     </figure>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="title {{ app.user and app.user.darkMode ? 'dark' }}">No results...</p>
+            <p class="title">No results...</p>
         {% endif %}
     </main>
 {% endblock %}

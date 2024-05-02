@@ -53,10 +53,10 @@
 .filterElementFormElement input[type="search"]{
     cursor: unset;
 }
-.filterElementFormElement.dark{
+.dark .filterElementFormElement{
     color: #e6edf3;
 }
-.filterElementFormElement.dark select, .filterElementFormElement.dark input[type="search"]{
+.dark .filterElementFormElement select, .dark .filterElementFormElement input[type="search"]{
     background-color: #3e3e42;
     border: 1px solid #1e1e1e;
     color: #e6edf3;
@@ -79,7 +79,7 @@
     transform: translateY(-2px);
     filter: saturate(150%);
 }
-.filterSubmitButton.dark{
+.dark .filterSubmitButton{
     color: #e6edf3;
     background-color: #0099cc;
 }
