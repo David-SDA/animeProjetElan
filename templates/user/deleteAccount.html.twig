@@ -6,9 +6,9 @@
 
 {% block body %}
     <main class="animeContainer">
-        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="securityFormContainer">
             {{ form_start(confirmationForm) }}
-                <h1 class="title {{ app.user and app.user.darkMode ? 'dark' }}">Do you really want to delete your account ? This action is irrversible</h1>
+                <h1 class="title">Do you really want to delete your account ? This action is irrversible</h1>
                 {{ form_widget(confirmationForm.confirm, { 'attr' : { 'class': 'profileInfosButton settings fit ', 'style' : 'background-color: #FF4136; border: none' } }) }}
             {{ form_end(confirmationForm) }}
         </div>

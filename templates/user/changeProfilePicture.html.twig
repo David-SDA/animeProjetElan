@@ -5,15 +5,15 @@
 {% block body %}
     <main>
         {# Affichage du formulaire de changement d'image de profil #}
-        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="securityFormContainer">
             {{ form_start(form) }}
-                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Change your profile picture</h1>
-                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+                <h1 class="securityFormTitle">Change your profile picture</h1>
+                <div class="securityFormRow">
                     {{ form_label(form.profilePicture, 'Profile picture') }}
                     {{ form_errors(form.profilePicture) }}
                     {{ form_widget(form.profilePicture) }}
                 </div>
-                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Change Profile Picture">Change Profile Picture</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Change Profile Picture">Change Profile Picture</button>
                 {{ form_rest(form) }}
             {{ form_end(form) }}
         </div>

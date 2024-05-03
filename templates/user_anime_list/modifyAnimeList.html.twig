@@ -5,38 +5,38 @@
 {% set idApi = userRegarderAnime.anime.idApi %}
 
 {% block body %}
-    <main class="animeListModifyContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+    <main class="animeListModifyContainer">
         <div>
             <figure>
                 <a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
                     <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="animeImage">
                 </a>
-                <figcaption class="homeOneAnimeTitle {{ app.user and app.user.darkMode ? 'dark' }}"><a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                <figcaption class="homeOneAnimeTitle"><a href="{{ path('show_anime', { 'id' : idApi }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
             </figure>
         </div>
         {{ form_start(form, { 'attr' : { 'class': 'animeListModifyForm' } }) }}
-            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow animeList">
                 {{ form_label(form.startedWatching, 'Started Watching') }}
                 {{ form_errors(form.startedWatching) }}
                 {{ form_widget(form.startedWatching) }}
             </div>
-            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow animeList">
                 {{ form_label(form.endedWatching, 'Finished Watching') }}
                 {{ form_errors(form.endedWatching) }}
                 {{ form_widget(form.endedWatching) }}
             </div>
-            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow animeList">
                 {{ form_label(form.status, 'Status') }}
                 {{ form_errors(form.status) }}
                 {{ form_widget(form.status) }}
             </div>
-            <div class="securityFormRow animeList {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow animeList">
                 {{ form_label(form.nbEpisodesWatched, 'Episodes Watched') }}
                 {{ form_errors(form.nbEpisodesWatched) }}
                 {{ form_widget(form.nbEpisodesWatched) }}
             </div>
-            <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete {{ app.user and app.user.darkMode ? 'dark' }}" title="Delete from list">Delete</a>
-            <button type="submit" class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Save Changes">Save</button>
+            <a href="{{ path('remove_anime_from_list_user', { id : userRegarderAnime.id }) }}" class="animeButtonAddTo delete" title="Delete from list">Delete</a>
+            <button type="submit" class="securityFormSubmitButton " title="Save Changes">Save</button>
             {{ form_rest(form) }}
         {{ form_end(form) }}
     </main>

@@ -21,14 +21,14 @@
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.animeListButton.dark{
+.dark .animeListButton{
     color: #e6edf3;
     background-color: #204ac8;
 }
 .animeListButton.active{
     background-color: #00BFFF;
 }
-.animeListButton.active.dark{
+.dark .animeListButton.active{
     background-color: #0099cc;
 }
 
@@ -45,7 +45,7 @@
     gap: 10px 10px;
     justify-items: center;
 }
-.animeListContainer.dark{
+.dark .animeListContainer{
     background-color: #3e3e42;
 }
 .animeListContainer figure{
@@ -71,7 +71,7 @@
     align-items: center;
     cursor: pointer;
 }
-.animeMenu.dark{
+.dark .animeMenu{
     background-color: #0099cc;
     color: #e6edf3;
 }
@@ -105,14 +105,14 @@
     background-color: #FF4136;
     margin-left: 8px;
 }
-.animeEpisodesWatchedControl.minus.dark{
+.dark .animeEpisodesWatchedControl.minus{
     background-color: #b90a00;
 }
 .animeEpisodesWatchedControl.plus{
     background-color: #2ECC71;
     margin-right: 8px;
 }
-.animeEpisodesWatchedControl.plus.dark{
+.dark .animeEpisodesWatchedControl.plus{
     background-color: #1c7a44;
 }
 
@@ -122,7 +122,7 @@
     color: #fff;
     margin: auto;
 }
-.animeEpisodesWatched.dark{
+.dark .animeEpisodesWatched{
     color: #e6edf3;
 }
 
@@ -145,7 +145,7 @@
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.animeListModifyContainer.dark{
+.dark .animeListModifyContainer{
     background-color: #3e3e42;
 }
 .animeListModifyContainer figure{
@@ -173,12 +173,12 @@
     border: 1px solid #B4B4B4;
     padding: 0 10px;
 }
-.securityFormRow.animeList.dark select, .securityFormRow.animeList.dark input[type="number"], .securityFormRow.animeList.dark input[type="date"]{
+.dark .securityFormRow.animeList select, .dark .securityFormRow.animeList input[type="number"], .dark .securityFormRow.animeList input[type="date"]{
     background-color: #1e1e1e;
     border: 1px solid #1e1e1e;
     color: #e6edf3;
 }
-.securityFormRow.animeList.dark input[type="date"]::-webkit-calendar-picker-indicator{
+.dark .securityFormRow.animeList input[type="date"]::-webkit-calendar-picker-indicator{
     filter: invert(1);
 }
 .securityFormRow.animeList button{

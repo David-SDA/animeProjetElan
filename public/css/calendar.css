@@ -60,7 +60,7 @@
     border-radius: 10px;
     color: #333;
 }
-#calendar.dark{
+.dark #calendar{
     color: #e6edf3;
     background-color: #3e3e42;
 }

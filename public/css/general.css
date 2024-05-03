@@ -70,7 +70,7 @@ footer ul a:hover{
 .flashMessage-success{
     background-color: #4bb543;
 }
-.flashMessage-success.dark{
+.dark .flashMessage-success{
     background-color: #44a33c;
 }
 
@@ -78,7 +78,7 @@ footer ul a:hover{
 .flashMessage-error{
     background-color: #cc0000;
 }
-.flashMessage-error.dark{
+.dark .flashMessage-error{
     background-color: #b80000;
 }
 
@@ -465,7 +465,7 @@ footer ul a:hover{
     .navBar.navBarOpen, .navBarContent.navBarOpen{
         margin-left: 0;
     }
-    .navBarContent.dark{
+    .dark .navBarContent{
         background-color: #2b2a41;
     }
     

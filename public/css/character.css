@@ -4,7 +4,7 @@
     color: #333333;
     margin-bottom: 0.25em;
 }
-.characterTopContentTraitText.dark{
+.dark .characterTopContentTraitText{
     color: #e6edf3;
 }
 
