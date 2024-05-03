@@ -11,23 +11,23 @@
 
 {% block body %}
     <main>
-        <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+        <div class="securityFormContainer">
             {{ form_start(form) }}
             {# On change le titre de la page en fonction de l'existence du post #}
             {% if postExist %}
-                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Edit post</h1>
+                <h1 class="securityFormTitle">Edit post</h1>
             {% else %}
-                <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Create a new post</h1>
+                <h1 class="securityFormTitle">Create a new post</h1>
             {% endif %}
-                <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+                <div class="securityFormRow">
                     {{ form_label(form.content, 'Content*') }}
                     {{ form_errors(form.content) }}
                     {{ form_widget(form.content) }}
                 </div>
             {% if postExist %}
-                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Edit Post">Edit Post</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Edit Post">Edit Post</button>
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large {{ app.user and app.user.darkMode ? 'dark' }}" title="Create Post">Create Post</button>
+                <button type="submit" class="securityFormSubmitButton large" title="Create Post">Create Post</button>
             {% endif %}
             {{ form_rest(form) }}
             {{ form_end(form) }}
