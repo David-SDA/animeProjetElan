@@ -7,16 +7,16 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+    <div class="securityFormContainer">
         {{ form_start(requestForm) }}
-            <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Reset your password</h1>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <h1 class="securityFormTitle">Reset your password</h1>
+            <div class="securityFormRow">
                 {{ form_label(requestForm.email, 'Email*') }}
                 {{ form_widget(requestForm.email) }}
             </div>
             <p><small>Enter your email address, and we will send you a link to reset your password.</small></p>
 
-            <button class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Send Email">Send Email</button>
+            <button class="securityFormSubmitButton" title="Send Email">Send Email</button>
         {{ form_end(requestForm) }}
     </div>
 {% endblock %}

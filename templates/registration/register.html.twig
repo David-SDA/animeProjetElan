@@ -4,31 +4,31 @@
 
 {% block body %}
     {{ form_errors(registrationForm) }}
-    <div class="securityFormContainer {{ app.user and app.user.darkMode ? 'dark' }}">
+    <div class="securityFormContainer">
         {{ form_start(registrationForm) }}
-            <h1 class="securityFormTitle {{ app.user and app.user.darkMode ? 'dark' }}">Register</h1>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <h1 class="securityFormTitle">Register</h1>
+            <div class="securityFormRow">
                 {{ form_label(registrationForm.username, 'Username*') }}
                 {{ form_errors(registrationForm.username) }}
                 {{ form_widget(registrationForm.username) }}
             </div>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow">
                 {{ form_label(registrationForm.email, 'Email*') }}
                 {{ form_errors(registrationForm.email) }}
                 {{ form_widget(registrationForm.email) }}
             </div>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow">
                 {{ form_label(registrationForm.profilePicture, 'Profile picture') }}
                 {{ form_errors(registrationForm.profilePicture) }}
                 {{ form_widget(registrationForm.profilePicture) }}
             </div>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow">
                 {{ form_label(registrationForm.plainPassword.first, 'Password*') }}
                 {{ form_errors(registrationForm.plainPassword.first) }}
                 {{ form_widget(registrationForm.plainPassword.first) }}
-                <p class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
+                <p class="securityFormLinkEnd"><i>Password must contain Uppercase, Lowercase, Number and a special character (12 - 40 characters)</i></p>
             </div>
-            <div class="securityFormRow {{ app.user and app.user.darkMode ? 'dark' }}">
+            <div class="securityFormRow">
                 {{ form_label(registrationForm.plainPassword.second, 'Confirm Password*') }}
                 {{ form_errors(registrationForm.plainPassword.second) }}
                 {{ form_widget(registrationForm.plainPassword.second) }}
@@ -37,9 +37,9 @@
                 {{ form_widget(registrationForm.agreeTerms) }}
                 {{ form_label(registrationForm.agreeTerms, 'Agree Terms of Use') }}
             </div>
-            <a href="{{ path('app_terms_of_use') }}" class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}">Read Terms of Use</a>
-            <button type="submit" class="securityFormSubmitButton {{ app.user and app.user.darkMode ? 'dark' }}" title="Register">REGISTER</button>
-            <a href="{{ path('app_login') }}" class="securityFormLinkEnd {{ app.user and app.user.darkMode ? 'dark' }}">Already have an account ? Login here !</a>
+            <a href="{{ path('app_terms_of_use') }}" class="securityFormLinkEnd">Read Terms of Use</a>
+            <button type="submit" class="securityFormSubmitButton" title="Register">REGISTER</button>
+            <a href="{{ path('app_login') }}" class="securityFormLinkEnd">Already have an account ? Login here !</a>
             {{ form_rest(registrationForm) }}
         {{ form_end(registrationForm) }}
     </div>
