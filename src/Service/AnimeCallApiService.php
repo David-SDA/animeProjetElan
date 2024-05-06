@@ -275,6 +275,13 @@ class AnimeCallApiService{
         $query = '
             query($currentSeason: MediaSeason, $currentYear: Int, $pageNumber: Int){
                 Page(page: $pageNumber, perPage: 50){
+                    pageInfo{
+                        total
+                        perPage
+                        lastPage
+                        currentPage
+                        hasNextPage
+                    }
                     media(type: ANIME, sort: SCORE_DESC, season: $currentSeason, seasonYear: $currentYear, isAdult: false){
                         id
                         title{
