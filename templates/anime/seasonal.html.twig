@@ -52,5 +52,9 @@
             </figure>
         {% endfor %}
         </div>
+        {% if dataSeasonalAnimes.data.Page.pageInfo.hasNextPage %}
+            <button id="loadMoreButton">Load More</button>
+            <input type="hidden" id="currentPage" value="{{ dataSeasonalAnimes.data.Page.pageInfo.currentPage }}">
+        {% endif %}
     </main>
 {% endblock %}
