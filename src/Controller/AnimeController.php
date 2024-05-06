@@ -73,16 +73,19 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/seasonal', name: 'seasonal_anime')]
-    public function seasonal(AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
+    public function seasonal(Request $request,AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
+        /* Recupération du numéro de la page via la requete GET (si vide, on met par défaut la page 1) */
+        $pageNumber = $request->query->getInt('page', 1);
+
         /* Récupération des données de l'API avec une mise en cache */
-        $dataSeasonalAnime = $cache->get('data_seasonal_anime', function(ItemInterface $item) use($animeCallApiService){
+        $dataSeasonalAnime = $cache->get('data_seasonal_anime_' . $pageNumber, function(ItemInterface $item) use($animeCallApiService, $pageNumber){
             $item->expiresAt(new \DateTime('tomorrow'));
-            return $animeCallApiService->getSeasonalAnimes(1);
+            return $animeCallApiService->getSeasonalAnimes($pageNumber);
         });
 
         return $this->render('anime/seasonal.html.twig', [
