@@ -8,6 +8,7 @@ use App\Service\AnimeCallApiService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\UserRegarderAnimeRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -82,11 +83,23 @@ class AnimeController extends AbstractController
         /* Recupération du numéro de la page via la requete GET (si vide, on met par défaut la page 1) */
         $pageNumber = $request->query->getInt('page', 1);
 
+        /* Vérification pageNumber est bien un nombre */
+        if(!is_int($pageNumber) || $pageNumber <= 0){
+            throw $this->createNotFoundException();
+        }
+
         /* Récupération des données de l'API avec une mise en cache */
         $dataSeasonalAnime = $cache->get('data_seasonal_anime_' . $pageNumber, function(ItemInterface $item) use($animeCallApiService, $pageNumber){
             $item->expiresAt(new \DateTime('tomorrow'));
             return $animeCallApiService->getSeasonalAnimes($pageNumber);
         });
+
+        /* Vérification si ce qui a été mis en cache contient des animé */
+        if(!($dataSeasonalAnime['data']['Page']['media'])) {
+            /* On supprime le cache si il n'y a pas d'animés */
+            $cache->delete('data_seasonal_anime_' . $pageNumber);
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('anime/seasonal.html.twig', [
             'dataSeasonalAnimes' => $dataSeasonalAnime,
