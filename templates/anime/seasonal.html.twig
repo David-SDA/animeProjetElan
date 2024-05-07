@@ -19,7 +19,7 @@
             {% set currentSeason = "FALL" %}
         {% endif %}
         <h1 class="title">{{ currentSeason }} {{ currentYear }}</h1>
-        <div class="homeMultipleAnimes autoFill">
+        <div class="homeMultipleAnimes autoFill" id="animeContainer">
         {% for media in dataSeasonalAnimes.data.Page.media %}
             <figure class="homeOneAnime top">
                 <a href="{{ path('show_anime', { 'id' : media.id }) }}" title="{{ media.title.romaji|default('Unknown') }}">
@@ -52,9 +52,16 @@
             </figure>
         {% endfor %}
         </div>
-        {% if dataSeasonalAnimes.data.Page.pageInfo.hasNextPage %}
-            <button id="loadMoreButton">Load More</button>
-            <input type="hidden" id="currentPage" value="{{ dataSeasonalAnimes.data.Page.pageInfo.currentPage }}">
-        {% endif %}
+        
+        <div class="paginationButtons">
+            {% if dataSeasonalAnimes.data.Page.pageInfo.hasNextPage %}
+                <a href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
+            {% endif %}
+
+            {% if dataSeasonalAnimes.data.Page.pageInfo.currentPage > 1 %}
+                <a href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Previous Page</a>
+            {% endif %}
+        </div>
+
     </main>
 {% endblock %}
