@@ -508,6 +508,13 @@
     user-select: none;
 }
 
+/* Les boutons pour la pagination */
+.paginationButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
     /* Partie du haut de la page d'un animé */

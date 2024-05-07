@@ -54,13 +54,13 @@
         </div>
         
         <div class="paginationButtons">
+            {% if dataSeasonalAnimes.data.Page.pageInfo.currentPage > 1 %}
+                <a class="profileInfosButton pagination" href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Prev Page</a>
+            {% endif %}
             {% if dataSeasonalAnimes.data.Page.pageInfo.hasNextPage %}
-                <a href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
+                <a class="profileInfosButton pagination" href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
             {% endif %}
 
-            {% if dataSeasonalAnimes.data.Page.pageInfo.currentPage > 1 %}
-                <a href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Previous Page</a>
-            {% endif %}
         </div>
 
     </main>
