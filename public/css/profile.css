@@ -139,9 +139,6 @@
     margin: 0;
     font-size: 0.8em;
 }
-.profileInfosButton.pagination{
-    margin: 1em 0.5em;
-}
 
 /* La partie des animes favoris d'un utilisateur */
 .profileInfosFavoritesAnimes{

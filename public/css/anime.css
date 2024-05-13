@@ -515,6 +515,59 @@
     align-items: center;
 }
 
+/* Un bouton de la pagination aux extremités */
+.paginationOneButtonExtreme{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin: 0.5em;
+    width: 3em;
+    height: 3em;
+    color: #fff;
+    background-color: #00BFFF;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.paginationOneButtonExtreme:hover{
+    transform: translateY(-2px);
+    filter: saturate(150%);
+}
+.dark .paginationOneButtonExtreme{
+    background-color: #0099cc;
+    color: #e6edf3;
+}
+.paginationOneButtonExtreme.disabled{
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Un bouton de pagination désactivé */
+.paginationOneButtonExtremeDisabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Un nombre de la pagination */
+.paginationOneNumber{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    margin: 0.5em;
+    width: 3em;
+    height: 3em;
+    color: #fff;
+    background-color: #00BFFF;
+    border-radius: 10px;
+}
+.dark .paginationOneNumber{
+    background-color: #0099cc;
+    color: #e6edf3;
+}
+
 /* Pour mobile */
 @media screen and (max-width: 767px){
     /* Partie du haut de la page d'un animé */

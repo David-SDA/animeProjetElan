@@ -45,10 +45,19 @@
         </div>
         <div class="paginationButtons">
             {% if dataTopAnimes.data.Page.pageInfo.currentPage > 1 %}
-                <a class="profileInfosButton pagination" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Prev Page</a>
+                <a class="paginationOneButtonExtreme" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 1 }) }}">&lt;</a>
+            {% else %}
+                <div class="paginationOneButtonExtremeDisabled">
+                    <a class="paginationOneButtonExtreme disabled">&lt;</a>
+                </div>
             {% endif %}
+            <p class="paginationOneNumber">{{ dataTopAnimes.data.Page.pageInfo.currentPage }}</p>
             {% if dataTopAnimes.data.Page.pageInfo.hasNextPage %}
-                <a class="profileInfosButton pagination" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
+                <a class="paginationOneButtonExtreme" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage + 1 }) }}">&gt;</a>
+            {% else %}
+                <div class="paginationOneButtonExtremeDisabled">
+                    <a class="paginationOneButtonExtreme disabled">&gt;</a>
+                </div>
             {% endif %}
         </div>
     </main>
