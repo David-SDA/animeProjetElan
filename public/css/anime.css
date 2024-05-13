@@ -530,6 +530,7 @@
     cursor: pointer;
     transition: all 0.25s ease;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    user-select: none;
 }
 .paginationOneButtonExtreme:hover{
     transform: translateY(-2px);
@@ -562,10 +563,21 @@
     color: #fff;
     background-color: #00BFFF;
     border-radius: 10px;
+    user-select: none;
+}
+.paginationOneNumber.notActive{
+    background-color: transparent;
+    color: #00BFFF;
+    border: solid 2px #00BFFF;
 }
 .dark .paginationOneNumber{
     background-color: #0099cc;
     color: #e6edf3;
+}
+.dark .paginationOneNumber.notActive{
+    background-color: transparent;
+    color: #0099cc;
+    border: solid 2px #0099cc;
 }
 
 /* Pour mobile */
