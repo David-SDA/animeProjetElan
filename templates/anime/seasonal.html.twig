@@ -52,7 +52,6 @@
             </figure>
         {% endfor %}
         </div>
-        
         <div class="paginationButtons">
             {% if dataSeasonalAnimes.data.Page.pageInfo.currentPage > 1 %}
                 <a class="profileInfosButton pagination" href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Prev Page</a>
@@ -60,8 +59,6 @@
             {% if dataSeasonalAnimes.data.Page.pageInfo.hasNextPage %}
                 <a class="profileInfosButton pagination" href="{{ path('seasonal_anime', { 'page': dataSeasonalAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
             {% endif %}
-
         </div>
-
     </main>
 {% endblock %}

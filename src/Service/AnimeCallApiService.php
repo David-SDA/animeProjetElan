@@ -209,12 +209,20 @@ class AnimeCallApiService{
     /**
      * Fonction qui permet d'obtenir les meilleurs animés selon l'API
      */
-    public function getTopAnimes(){
+    public function getTopAnimes(int $pageNumber){
         // Définition de la query
         $query = '
-            query{
-                Page(page: 1, perPage: 50){
+            query($pageNumber: Int){
+                Page(page: $pageNumber, perPage: 50){
+                    pageInfo{
+                        total
+                        perPage
+                        lastPage
+                        currentPage
+                        hasNextPage
+                    }
                     media(type: ANIME, sort: SCORE_DESC, isAdult: false){
+                        
                         id
                         title{
                             romaji
@@ -238,11 +246,17 @@ class AnimeCallApiService{
                 }
             }
         ';
+
+        // Définition des variables utilisées dans la query
+        $variables = [
+            'pageNumber' => $pageNumber
+        ];
         
         // Appel à l'API
         $response = $this->client->request('POST', 'https://graphql.anilist.co', [
             'json' => [
                 'query' => $query,
+                'variables' => $variables,
             ]
         ]);
 

@@ -41,5 +41,13 @@
             </figure>
         {% endfor %}
         </div>
+        <div class="paginationButtons">
+            {% if dataTopAnimes.data.Page.pageInfo.currentPage > 1 %}
+                <a class="profileInfosButton pagination" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 1 }) }}">Prev Page</a>
+            {% endif %}
+            {% if dataTopAnimes.data.Page.pageInfo.hasNextPage %}
+                <a class="profileInfosButton pagination" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage + 1 }) }}">Next Page</a>
+            {% endif %}
+        </div>
     </main>
 {% endblock %}

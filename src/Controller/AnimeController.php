@@ -8,7 +8,6 @@ use App\Service\AnimeCallApiService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\UserRegarderAnimeRepository;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -56,17 +55,27 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/top', name: 'top_anime')]
-    public function top(AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
+    public function top(Request $request, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
+        /* Recupération du numéro de la page via la requete GET (si vide, on met par défaut la page 1) */
+        $pageNumber = $request->query->getInt('page', 1);
+
         /* Récupération des données de l'API avec une mise en cache */
-        $dataTopAnimes = $cache->get('data_top_anime', function(ItemInterface $item) use($animeCallApiService){
+        $dataTopAnimes = $cache->get('data_top_anime_' . $pageNumber, function(ItemInterface $item) use($animeCallApiService, $pageNumber){
             $item->expiresAt(new \DateTime('tomorrow'));
-            return $animeCallApiService->getTopAnimes();
+            return $animeCallApiService->getTopAnimes($pageNumber);
         });
+
+        /* Vérification si ce qui a été mis en cache contient des animé */
+        if(!($dataTopAnimes['data']['Page']['media'])) {
+            /* On supprime le cache si il n'y a pas d'animés */
+            $cache->delete('data_seasonal_anime_' . $pageNumber);
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('anime/top.html.twig', [
             'dataTopAnimes' => $dataTopAnimes,
