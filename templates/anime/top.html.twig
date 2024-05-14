@@ -53,16 +53,16 @@
             {% endif %}
             {% if dataTopAnimes.data.Page.pageInfo.currentPage == 1 %}
                 <p class="paginationOneNumber">1</p>
-                <p class="paginationOneNumber notActive">2</p>
-                <p class="paginationOneNumber notActive">3</p>
-            {% elseif dataTopAnimes.data.Page.pageInfo.hasNextPage %}
-                <p class="paginationOneNumber notActive">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 2 }}</p>
-                <p class="paginationOneNumber notActive">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 1 }}</p>
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': 2 }) }}">2</a>
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': 3 }) }}">3</a>
+            {% elseif dataTopAnimes.data.Page.pageInfo.hasNextPage == false %}
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 2 }) }}">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 2 }}</a>
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 1 }) }}">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 1 }}</a>
                 <p class="paginationOneNumber">{{ dataTopAnimes.data.Page.pageInfo.currentPage }}</p>
             {% else %}
-                <p class="paginationOneNumber notActive">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 1 }}</p>
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage - 1 }) }}">{{ dataTopAnimes.data.Page.pageInfo.currentPage - 1 }}</a>
                 <p class="paginationOneNumber">{{ dataTopAnimes.data.Page.pageInfo.currentPage }}</p>
-                <p class="paginationOneNumber notActive">{{ dataTopAnimes.data.Page.pageInfo.currentPage + 1 }}</p>
+                <a class="paginationOneNumber notActive" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage + 1 }) }}">{{ dataTopAnimes.data.Page.pageInfo.currentPage + 1 }}</a>
             {% endif %}
             {% if dataTopAnimes.data.Page.pageInfo.hasNextPage %}
                 <a class="paginationOneButtonExtreme" href="{{ path('top_anime', { 'page': dataTopAnimes.data.Page.pageInfo.currentPage + 1 }) }}">&gt;</a>

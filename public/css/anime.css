@@ -570,6 +570,9 @@
     color: #00BFFF;
     border: solid 2px #00BFFF;
 }
+.paginationOneNumber.notActive:hover{
+    opacity: 0.7;
+}
 .dark .paginationOneNumber{
     background-color: #0099cc;
     color: #e6edf3;
