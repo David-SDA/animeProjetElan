@@ -554,8 +554,41 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
+        /* On récupère la collection d'animés d'un utilisateur (qui représente les animés favoris d'un utilisateur) */
+        $favoriteAnimes = $user->getAnimes();
+        /* On crée un tableau pour stocker les ids de l'API des animés favoris */
+        $favoriteAnimesApiIds = [];
+        /* Pour chaque animés dans la collection (pour chaque animés favoris) */
+        foreach($favoriteAnimes as $anime){
+            /* On insère l'id de l'API dans le tableau créé */
+            $favoriteAnimesApiIds[] = $anime->getIdApi();
+        }
+
+        /* Cache + appel API pour obtenir les données des animés favoris */
+        $favoriteAnimesData = $cache->get('favorite_animes_data_' . $user->getId(), function(ItemInterface $item) use($animeCallApiService, $favoriteAnimesApiIds){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getMultipleAnimeDetails($favoriteAnimesApiIds);
+        });
+
+        /* On récupère la collection de personnages d'un utilisateur (qui représente les personnages favoris d'un utilisateurs) */
+        $favoriteCharacters = $user->getPersonnages();
+        /* On crée un tableau pour stocker les ids de l'API des personnages favoris */
+        $favoriteCharactersApiIds = [];
+        /* Pour chaque personnages dans la collection (pour chaque personnages favoris) */
+        foreach($favoriteCharacters as $character){
+            /* On insère l'id de l'API dans le tableau crée */
+            $favoriteCharactersApiIds[] = $character->getIdApi();
+        }
+        /* Cache + appel API pour obtenir les données des personnages favoris */
+        $favoriteCharactersData = $cache->get('favorite_characters_data_' . $user->getId(), function(ItemInterface $item) use($characterCallApiService, $favoriteCharactersApiIds){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $characterCallApiService->getMultipleCharactersDetails($favoriteCharactersApiIds);
+        });
+
         return $this->render('user/favorites.html.twig', [
             'user' => $user,
+            'favoriteAnimesData' => $favoriteAnimesData['data']['Page']['media'],
+            'favoriteCharactersData' => $favoriteCharactersData['data']['Page']['characters'],
         ]);
     }
 
