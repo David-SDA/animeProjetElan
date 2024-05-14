@@ -51,6 +51,7 @@
                 </div>
                 <div class="profileInfos buttons">
                     <a href="{{ path('anime_list_user', { id: user.id }) }}" class="profileInfosButton" title="See Anime List">ANIME LIST</a>
+                    <a href="{{ path('show_user_favorites', { id: user.id }) }}" class="profileInfosButton" title="See All Favorites">ALL FAVORITES</a>
                     {% if app.user == user %}
                         <a href="{{ path('calendar_user') }}" class="profileInfosButton" title="See Calendar">CALENDAR</a>
                     {% endif %}
