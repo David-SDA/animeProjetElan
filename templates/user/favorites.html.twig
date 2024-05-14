@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block meta_description %}Discover what {{ user.username }}'s' favorites anime and characters!{% endblock %}
+
+{% block title %}{{ user.username }}'s favorites{% endblock %}
+
+{% block body %}
+    <main class="animeContainer">
+        <h1 class="title">{{ user.username }}'s favorites</h1>
+    </main>
+{% endblock %}

@@ -547,6 +547,18 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}/favorites', name: 'show_user_favorites')]
+    public function showFavorites(User $user, AnimeCallApiService $animeCallApiService, CharacterCallApiService $characterCallApiService, CacheInterface $cache): Response{
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($this->getUser() && $this->getUser()->isBanned()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        return $this->render('user/favorites.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
     #[Route('/addAnimeToFavorites/{idApi}', name: 'add_anime_to_favorites_user')]
     public function addAnimeToFavorites(int $idApi, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* On récupère l'utilisateur actuel */
