@@ -95,7 +95,7 @@
                             </figure>
                         {% endif %}
                         {% if loop.index == 5 %}
-                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}">See More</a>                            
+                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}" class="seeMoreFavoritesCard" title="See More"><i class="fa-solid fa-angles-right"></i></a>                            
                         {% endif %}
                     {% endfor %}
                     </div>
@@ -116,7 +116,7 @@
                             </figure>
                         {% endif %}
                         {% if loop.index == 10 %}
-                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}">See More</a>
+                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}" class="seeMoreFavoritesCard characters" title="See More"><i class="fa-solid fa-angles-right"></i></a>
                         {% endif %}
                     {% endfor %}
                     </div>
