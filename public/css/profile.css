@@ -261,8 +261,10 @@
 
 /* La carte qui permet de voir tout les favoris */
 .seeMoreFavoritesCard{
+    position: relative;
     color: #fff;
     background-color: #3e3e42;
+    font-size: 1.2em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -271,6 +273,7 @@
     border-radius: 10px;
     margin: 0.5em 0;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: hidden;
     transition: all 0.5s ease;
 }
 .seeMoreFavoritesCard.characters{
@@ -287,6 +290,25 @@
 }
 .dark .seeMoreFavoritesCard:hover{
     background-color: #111111;
+}
+.seeMoreFavoritesCard .seeMoreCardIcon{
+    position: absolute;
+    transition: all 0.5s ease;
+}
+.seeMoreFavoritesCard:hover .seeMoreCardIcon{
+    margin-left: 90%;
+    opacity: 0;
+}
+.seeMoreFavoritesCard .seeMoreCardText{
+    white-space: nowrap;
+    position: absolute;
+    margin-right: 90%;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+.seeMoreFavoritesCard:hover .seeMoreCardText{
+    margin-right: 0;
+    opacity: 1;
 }
 
 /* Pour mobile */
@@ -331,6 +353,7 @@
     .seeMoreFavoritesCard{
         width: 100px;
         height: 139px;
+        font-size: 1em;
     }
 }
 
@@ -366,6 +389,7 @@
     .seeMoreFavoritesCard{
         width: 150px;
         height: 210px;
+        font-size: 1.1em;
     }
 }
 
