@@ -63,35 +63,40 @@
                     <h2 class="profileInfosTitle"><i>Favorites Animes</i></h2>
                     <div class="homeMultipleAnimes autoFill profile">
                     {% for anime in favoriteAnimesData %}
-                        <figure class="homeOneAnime">
-                            <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
-                                <div class="homeOneAnimeImageInfo">
-                                    <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="homeOneAnimeImage profile">
-                                    <section class="homeHoverContent">
-                                        <h2 class="homeOneAnimeInfoTitle profile">{{ anime.title.romaji|default('Unknown') }}</h2>
-                                        {% if anime.episodes %}
-                                            <p class="homeOneAnimeInfoSmallerInfos"><i>{{ anime.episodes == 1 ? anime.episodes ~ ' episode' : anime.episodes ~ ' episodes' }} - {{ anime.format|default('?') }}</i></p>
-                                        {% else %}    
-                                            <p class="homeOneAnimeInfoSmallerInfos"><i>? episodes - {{ anime.format|default('?') }}</i></p>
-                                        {% endif %}
-                                        {# On crée un tableau qu'on va remplir de tout les studios principaux (souvent 1 seuls mais possibilité d'en avoir plusieurs) #}
-                                        {% set mainStudios = [] %}
-                                        {% for studio in anime.studios.edges %}
-                                            {% if studio.isMain %}
-                                                {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                        {% if loop.index <= 5 %}
+                            <figure class="homeOneAnime">
+                                <a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">
+                                    <div class="homeOneAnimeImageInfo">
+                                        <img src="{{ anime.coverImage.large }}" alt="Cover Image of {{ anime.title.romaji|default('Unknown') }}" class="homeOneAnimeImage profile">
+                                        <section class="homeHoverContent">
+                                            <h2 class="homeOneAnimeInfoTitle profile">{{ anime.title.romaji|default('Unknown') }}</h2>
+                                            {% if anime.episodes %}
+                                                <p class="homeOneAnimeInfoSmallerInfos"><i>{{ anime.episodes == 1 ? anime.episodes ~ ' episode' : anime.episodes ~ ' episodes' }} - {{ anime.format|default('?') }}</i></p>
+                                            {% else %}    
+                                                <p class="homeOneAnimeInfoSmallerInfos"><i>? episodes - {{ anime.format|default('?') }}</i></p>
                                             {% endif %}
-                                        {% endfor %}
-                                        <p class="homeOneAnimeInfoSmallerInfos"><i>{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</i></p>
-                                        <div class="homeOneAnimeInfoGenres">
-                                        {% for genre in anime.genres %}
-                                            <p class="homeOneAnimeInfoOneGenre profile" style="--media-color: {{ anime.coverImage.color ? anime.coverImage.color : '#4169e1' }};">{{ genre }}</p>
-                                        {% endfor %}
-                                        </div>
-                                    </section>
-                                </div>
-                            </a>
-                            <figcaption class="homeOneAnimeTitle profile"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
-                        </figure>
+                                            {# On crée un tableau qu'on va remplir de tout les studios principaux (souvent 1 seuls mais possibilité d'en avoir plusieurs) #}
+                                            {% set mainStudios = [] %}
+                                            {% for studio in anime.studios.edges %}
+                                                {% if studio.isMain %}
+                                                    {% set mainStudios = mainStudios|merge([studio.node.name]) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <p class="homeOneAnimeInfoSmallerInfos"><i>{{ mainStudios is not empty ? mainStudios|join(' - ') : 'Unknown' }}</i></p>
+                                            <div class="homeOneAnimeInfoGenres">
+                                            {% for genre in anime.genres %}
+                                                <p class="homeOneAnimeInfoOneGenre profile" style="--media-color: {{ anime.coverImage.color ? anime.coverImage.color : '#4169e1' }};">{{ genre }}</p>
+                                            {% endfor %}
+                                            </div>
+                                        </section>
+                                    </div>
+                                </a>
+                                <figcaption class="homeOneAnimeTitle profile"><a href="{{ path('show_anime', { 'id' : anime.id }) }}" title="{{ anime.title.romaji|default('Unknown') }}">{{ anime.title.romaji|default('Unknown') }}</a></figcaption>
+                            </figure>
+                        {% endif %}
+                        {% if loop.index == 5 %}
+                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}">See More</a>                            
+                        {% endif %}
                     {% endfor %}
                     </div>
                 </section>
@@ -102,12 +107,17 @@
                     <h2 class="profileInfosTitle"><i>Favorites Characters</i></h2>
                     <div class="profileInfosFavoritesCharacters">
                     {% for character in favoriteCharactersData %}
-                        <figure class="favoriteCharacter">
-                            <a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">
-                                <img src="{{ character.image.large }}" alt="Image of {{ character.name.full|default('Unknown') }}" class="favoriteCharacterImage">
-                            </a>
-                            <figcaption class="homeOneAnimeTitle favorites"><a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
-                        </figure>
+                        {% if loop.index <= 10 %}
+                            <figure class="favoriteCharacter">
+                                <a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">
+                                    <img src="{{ character.image.large }}" alt="Image of {{ character.name.full|default('Unknown') }}" class="favoriteCharacterImage">
+                                </a>
+                                <figcaption class="homeOneAnimeTitle favorites"><a href="{{ path('show_character', { id: character.id }) }}" title="{{ character.name.full|default('Unknown') }}">{{ character.name.full|default('Unknown') }}</a></figcaption>
+                            </figure>
+                        {% endif %}
+                        {% if loop.index == 10 %}
+                            <a href="{{ path('show_user_favorites', { id: app.user.id }) }}">See More</a>
+                        {% endif %}
                     {% endfor %}
                     </div>
                 </section>
