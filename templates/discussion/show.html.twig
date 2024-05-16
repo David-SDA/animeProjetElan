@@ -172,3 +172,54 @@
         {% endif %}
     </main>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Récupération des boutons de like/unlike
+        var likeButtons = document.querySelectorAll('.onePostLikes');
+
+        // Ajout d'un écouteur d'événements sur ces boutons
+        likeButtons.forEach(function(button){
+            button.addEventListener('click', function(event){
+                // Empechement du comportement par défaut
+                event.preventDefault();
+                // Récupération du lien attribuer au bouton
+                var href = button.getAttribute('href');
+                // Ajax
+                fetch(href, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if(!response.ok){
+                        throw new Error('Action Failed')
+                    }
+
+                    var heart = button.firstElementChild; // Le symbole coeur
+                    var likesNumber = button.lastElementChild; // Le nombre de likes
+                    if(heart.classList.contains('fa-solid')){
+                        // Transformation du logo
+                        heart.classList.remove('fa-solid');
+                        heart.classList.add('fa-regular');
+                        // Modification du lien
+                        button.setAttribute('href', href.replace('/unlike', '/like'));
+                        // Modification du titre
+                        button.setAttribute('title', 'Like this post');
+                        // Modification du nombre de likes
+                        likesNumber.textContent = parseInt(likesNumber.textContent) - 1;
+                    }
+                    else{
+                        heart.classList.remove('fa-regular');
+                        heart.classList.add('fa-solid');
+                        button.setAttribute('href', href.replace('/like', '/unlike'));
+                        button.setAttribute('title', 'Unlike this post');
+                        likesNumber.textContent = parseInt(likesNumber.textContent) + 1;
+                    }
+                })
+                .catch(error => {
+                    alert('Action failed');
+                })
+            })
+        })
+    </script>
+{% endblock %}
