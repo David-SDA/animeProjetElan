@@ -182,13 +182,13 @@
 
             // Ajout d'un écouteur d'événements sur ces boutons
             likeButtons.forEach(function(button){
-                button.addEventListener('click', function(event){
+                button.addEventListener('click', async function(event){
                     // Empechement du comportement par défaut
                     event.preventDefault();
                     // Récupération du lien attribuer au bouton
                     var href = button.getAttribute('href');
                     // Ajax
-                    fetch(href, {
+                    await fetch(href, {
                         method: 'POST'
                     })
                     .then(response => {

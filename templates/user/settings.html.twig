@@ -64,7 +64,7 @@
 
         // Ajout d'un écouteur d'événements pour le clic sur un bouton de changement de thème
         themeToggles.forEach(function(themeToggle){
-            themeToggle.addEventListener('click', function(event) {
+            themeToggle.addEventListener('click', async function(event) {
                 event.preventDefault(); // Empêcher le comportement par défaut du lien
                 
                 // Récupération du thème du bouton
@@ -73,7 +73,7 @@
                 // Si le theme n'est pas celui séléctionné, on le change
                 if(!themeToggle.classList.contains('selectedTheme')){
                     // Envoi d'une requête fetch pour changer le thème
-                    fetch("{{ path('update_theme_user', { theme: '__theme__' }) }}".replace('__theme__', currentTheme), {
+                    await fetch("{{ path('update_theme_user', { theme: '__theme__' }) }}".replace('__theme__', currentTheme), {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
