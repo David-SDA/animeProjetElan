@@ -187,39 +187,31 @@
                     event.preventDefault();
                     // Récupération du lien attribuer au bouton
                     var href = button.getAttribute('href');
-                    // Ajax
-                    await fetch(href, {
-                        method: 'POST'
-                    })
-                    .then(response => {
+                    try{
+                        const response = await fetch(href, { method: 'POST' });
                         if(!response.ok){
-                            throw new Error('Action Failed')
+                            throw new Error('Action Failed');
                         }
-
-                        var heart = button.firstElementChild; // Le symbole coeur
-                        var likesNumber = button.lastElementChild; // Le nombre de likes
-                        if(heart.classList.contains('fa-solid')){
-                            // Transformation du logo
-                            heart.classList.remove('fa-solid');
-                            heart.classList.add('fa-regular');
-                            // Modification du lien
-                            button.setAttribute('href', href.replace('/unlike', '/like'));
-                            // Modification du titre
-                            button.setAttribute('title', 'Like this post');
-                            // Modification du nombre de likes
-                            likesNumber.textContent = parseInt(likesNumber.textContent) - 1;
-                        }
-                        else{
-                            heart.classList.remove('fa-regular');
-                            heart.classList.add('fa-solid');
-                            button.setAttribute('href', href.replace('/like', '/unlike'));
-                            button.setAttribute('title', 'Unlike this post');
-                            likesNumber.textContent = parseInt(likesNumber.textContent) + 1;
-                        }
-                    })
-                    .catch(error => {
+    
+                        // Récupération du logo de like
+                        const heart = button.querySelector('i');
+                        // Récupération du nombre de likes
+                        const likesNumber = button.querySelector('span.onePostLikesNumber');
+                        // Vérification si le post est liker
+                        const isLiked = heart.classList.contains('fa-solid');
+    
+                        // Modification du logo de like en fonction de si le post est like
+                        heart.classList.toggle('fa-solid', !isLiked);
+                        heart.classList.toggle('fa-regular', isLiked);
+                        // Modification du lien en fonction de si le post est like 
+                        button.setAttribute('href', href.replace(isLiked ? '/unlike' : '/like', isLiked ? '/like' : '/unlike'));
+                        // Modification du title en fonction de si le post est like
+                        button.setAttribute('title', isLiked ? 'Like this post' : 'Unlike this post');
+                        // Modification du nombre de likes en fonction de si le post est liker ou pas
+                        likesNumber.textContent = parseInt(likesNumber.textContent) + (isLiked ? -1 : 1);
+                    }catch (error){
                         alert('Action failed');
-                    })
+                    }
                 })
             })        
         </script>
