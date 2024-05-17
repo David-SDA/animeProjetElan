@@ -209,7 +209,7 @@
                         button.setAttribute('title', isLiked ? 'Like this post' : 'Unlike this post');
                         // Modification du nombre de likes en fonction de si le post est liker ou pas
                         likesNumber.textContent = parseInt(likesNumber.textContent) + (isLiked ? -1 : 1);
-                    }catch (error){
+                    }catch(error){
                         alert('Action failed');
                     }
                 })

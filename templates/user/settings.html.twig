@@ -72,36 +72,22 @@
 
                 // Si le theme n'est pas celui séléctionné, on le change
                 if(!themeToggle.classList.contains('selectedTheme')){
-                    // Envoi d'une requête fetch pour changer le thème
-                    await fetch("{{ path('update_theme_user', { theme: '__theme__' }) }}".replace('__theme__', currentTheme), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                    .then(response => {
+                    try{
+                        const response = await fetch("{{ path('update_theme_user', { theme: '__theme__' }) }}".replace('__theme__', currentTheme), { method: 'POST' });
+    
                         if(!response.ok){
                             throw new Error('Failed to update theme');
                         }
-                        // Ajout ou suppression de la classe 'dark' au body en fonction du thème actuel
-                        if(currentTheme == 1) {
-                            document.body.classList.add('dark');
-                        }
-                        else{
-                            document.body.classList.remove('dark');
-                        }
-
-                        // Suppression de la classe selectedTheme aux boutons de thème
-                        document.querySelectorAll('.settingsTheme').forEach(function(element){
-                            element.classList.remove('selectedTheme');
-                        });
-                        // Ajout de la classe selectedTheme au bouton cliqué
+                        
+                        // Modification de la class de body
+                        document.body.classList.toggle('dark', currentTheme === 1);
+                        // Retire la classe qui montre quel thème est séléctionné aux boutons
+                        document.querySelectorAll('.settingsTheme').forEach(el => el.classList.remove('selectedTheme'));
+                        // Modification du bouton du thème séléctionné
                         themeToggle.classList.add('selectedTheme');
-                    })
-                    .catch(error => {
-                        console.error(error);
+                    }catch(e){
                         alert('Failed to update theme');
-                    });
+                    }
                 }
 
             });
