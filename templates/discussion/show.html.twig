@@ -109,7 +109,11 @@
                     <a href="{{ path('add_post', { id: talk.id }) }}" class="profileInfosButton addPost" title="Reply to this discussion">Reply</a>
                 {% endif %}
             </p>
-            <p class="oneTalkFilterText"><span class="oneTalkFilterTextBefore">Filter by :</span> Date - Likes</p>
+            <p class="oneTalkFilterText">
+                <span class="oneTalkFilterTextBefore">Filter by :</span>
+                <a href="{{ path('show_discussion', { id: talk.id, sort: 'date', order: currentOrder == 'asc' ? 'desc' : 'asc' }) }}" class="animeRemainingRightContentPartMore filter-link" data-filter="date" data-order="{{ currentOrder == 'asc' ? 'desc' : 'asc' }}">Date</a> - 
+                <a href="{{ path('show_discussion', { id: talk.id, sort: 'likes', order: currentOrder == 'asc' ? 'desc' : 'asc' }) }}" class="animeRemainingRightContentPartMore filter-link" data-filter="likes" data-order="{{ currentOrder == 'asc' ? 'desc' : 'asc' }}">Likes</a>
+            </p>
         </div>
         {% if talk.posts|length > 1 %}
             {% for post in talk.posts|slice(1) %}
@@ -213,7 +217,51 @@
                         alert('Action failed');
                     }
                 })
-            })        
+            })
+           /**
+           *    A REGLER
+           */ 
+            // Fonction pour trier les posts
+            function sortPosts(filter, order){
+                const container = document.getElementById('posts-container');
+                const posts = Array.from(container.getElementsByClassName('onePostContainer'));
+
+                posts.sort((a, b) => {
+                    let aValue, bValue;
+                    if(filter === 'date'){
+                        aValue = parseInt(a.getAttribute('data-creation-date'));
+                        bValue = parseInt(b.getAttribute('data-creation-date'));
+                    }else if(filter === 'likes'){
+                        aValue = parseInt(a.getAttribute('data-likes'));
+                        bValue = parseInt(b.getAttribute('data-likes'));
+                    }
+
+                    if(order === 'asc'){
+                        return aValue - bValue;
+                    }
+                    else{
+                        return bValue - aValue;
+                    }
+                });
+
+                container.innerHTML = '';
+                posts.forEach(post => container.appendChild(post));
+            }
+
+            // Ajout d'un écouteur d'événements sur les liens de filtrage
+            document.querySelectorAll('.filter-link').forEach(link => {
+                link.addEventListener('click', function(event){
+                    event.preventDefault();
+                    const filter = link.getAttribute('data-filter');
+                    const order = link.getAttribute('data-order');
+
+                    sortPosts(filter, order);
+
+                    // Inversion de l'ordre pour le prochain clic
+                    const newOrder = order === 'asc' ? 'desc' : 'asc';
+                    link.setAttribute('data-order', newOrder);
+                });
+            });
         </script>
     {% endif %}
 {% endblock %}

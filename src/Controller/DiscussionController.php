@@ -329,14 +329,35 @@ class DiscussionController extends AbstractController
     }    
 
     #[Route('/{id}', name: 'show_discussion')]
-    public function show(Discussion $discussion){
+    public function show(Request $request, Discussion $discussion): Response{
         /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
         
+        // A REGLER
+        $sort = $request->query->get('sort', 'date');
+        $order = $request->query->get('order', 'desc');
+    
+        $posts = $discussion->getPosts()->toArray();
+    
+        usort($posts, function($a, $b) use ($sort, $order){
+            if($sort === 'date'){
+                $aValue = $a->getCreationDate()->getTimestamp();
+                $bValue = $b->getCreationDate()->getTimestamp();
+            } elseif($sort === 'likes'){
+                $aValue = $a->getUsers()->count();
+                $bValue = $b->getUsers()->count();
+            }
+    
+            return ($order === 'asc') ? $aValue <=> $bValue : $bValue <=> $aValue;
+        });
+    
         return $this->render('discussion/show.html.twig', [
             'talk' => $discussion,
+            'posts' => $posts,
+            'currentSort' => $sort,
+            'currentOrder' => $order,
         ]);
     }
 }
