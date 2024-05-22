@@ -115,65 +115,67 @@
                 <a href="{{ path('show_discussion', { id: talk.id, sort: 'likes', order: currentOrder == 'asc' ? 'desc' : 'asc' }) }}" class="animeRemainingRightContentPartMore filter-link" data-filter="likes" data-order="{{ currentOrder == 'asc' ? 'desc' : 'asc' }}">Likes</a>
             </p>
         </div>
-        {% if talk.posts|length > 1 %}
-            {% for post in talk.posts|slice(1) %}
-            <div class="onePostContainer">
-                <div class="onePostTopContainer">
-                    <figure class="oneTalkUserContainer">
-                        {% if post.user %}
-                            <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
-                        {% else %}
-                            <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
-                        {% endif %}
-                        <figcaption class="oneTalkUsername post">
+        <div id="posts-container">
+            {% if talk.posts|length > 1 %}
+                {% for post in talk.posts|slice(1) %}
+                <div class="onePostContainer" data-creation-date="{{ post.creationDate|date('U') }}" data-likes="{{ post.users|length }}">
+                    <div class="onePostTopContainer">
+                        <figure class="oneTalkUserContainer">
                             {% if post.user %}
-                                <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.username }}</a>
+                                <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
                             {% else %}
-                                <p>Deleted user</p>
+                                <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
                             {% endif %}
-                        </figcaption>
-                    </figure>
-                    {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
-                    {% set textPublication = _self.textTimeAgo(post.creationDate) %}
-                    <div class="oneTalkTopRightContainer">
-                        <p class="oneTalkUserTime post" title="{{ post.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
-                        <div class="oneTalkTopRightBottomLine">
-                            {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
-                            {% if post.user == app.user and not talk.locked and post.user %}
-                                <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
-                            {% endif %}
-                            {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
-                            {% if (post.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
-                                {% if app.user %}
-                                    <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                            <figcaption class="oneTalkUsername post">
+                                {% if post.user %}
+                                    <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.username }}</a>
+                                {% else %}
+                                    <p>Deleted user</p>
                                 {% endif %}
-                            {% endif %}
+                            </figcaption>
+                        </figure>
+                        {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
+                        {% set textPublication = _self.textTimeAgo(post.creationDate) %}
+                        <div class="oneTalkTopRightContainer">
+                            <p class="oneTalkUserTime post" title="{{ post.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                            <div class="oneTalkTopRightBottomLine">
+                                {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
+                                {% if post.user == app.user and not talk.locked and post.user %}
+                                    <a href="{{ path('edit_post', { discussion_id: talk.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
+                                {% endif %}
+                                {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
+                                {% if (post.user == app.user and not talk.locked) or is_granted('ROLE_ADMIN') %}
+                                    {% if app.user %}
+                                        <a href="{{ path('delete_post', { discussion_id: talk.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
-                <div class="onePostBottomContainer">
-                {% if post.creationDate != post.lastModifiedDate %}
-                    {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
-                    {% set textModified = _self.textTimeAgo(post.lastModifiedDate) %}
-                    <p class="oneTalkUserTime post bottom" title="{{ post.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
-                {% endif %}
-                {% if post.user %}
-                    {% if app.user %}
-                        {# Si le post est liké par l'utilisateur #}
-                        {% if post.users.contains(app.user) %}
-                            <a href="{{ path('unlike_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
-                        {% else %}
-                            <a href="{{ path('like_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
-                        {% endif %}
-                    {% else %}
-                        <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
+                    <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
+                    <div class="onePostBottomContainer">
+                    {% if post.creationDate != post.lastModifiedDate %}
+                        {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
+                        {% set textModified = _self.textTimeAgo(post.lastModifiedDate) %}
+                        <p class="oneTalkUserTime post bottom" title="{{ post.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
                     {% endif %}
-                {% endif %}
+                    {% if post.user %}
+                        {% if app.user %}
+                            {# Si le post est liké par l'utilisateur #}
+                            {% if post.users.contains(app.user) %}
+                                <a href="{{ path('unlike_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                            {% else %}
+                                <a href="{{ path('like_post', { discussion_id: talk.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                            {% endif %}
+                        {% else %}
+                            <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
+                        {% endif %}
+                    {% endif %}
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
-        {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
     </main>
 {% endblock %}
 
@@ -218,48 +220,44 @@
                     }
                 })
             })
-           /**
-           *    A REGLER
-           */ 
-            // Fonction pour trier les posts
-            function sortPosts(filter, order){
-                const container = document.getElementById('posts-container');
-                const posts = Array.from(container.getElementsByClassName('onePostContainer'));
-
-                posts.sort((a, b) => {
-                    let aValue, bValue;
-                    if(filter === 'date'){
-                        aValue = parseInt(a.getAttribute('data-creation-date'));
-                        bValue = parseInt(b.getAttribute('data-creation-date'));
-                    }else if(filter === 'likes'){
-                        aValue = parseInt(a.getAttribute('data-likes'));
-                        bValue = parseInt(b.getAttribute('data-likes'));
-                    }
-
-                    if(order === 'asc'){
-                        return aValue - bValue;
-                    }
-                    else{
-                        return bValue - aValue;
-                    }
-                });
-
-                container.innerHTML = '';
-                posts.forEach(post => container.appendChild(post));
-            }
-
-            // Ajout d'un écouteur d'événements sur les liens de filtrage
-            document.querySelectorAll('.filter-link').forEach(link => {
-                link.addEventListener('click', function(event){
-                    event.preventDefault();
-                    const filter = link.getAttribute('data-filter');
-                    const order = link.getAttribute('data-order');
-
-                    sortPosts(filter, order);
-
-                    // Inversion de l'ordre pour le prochain clic
-                    const newOrder = order === 'asc' ? 'desc' : 'asc';
-                    link.setAttribute('data-order', newOrder);
+           
+            document.addEventListener('DOMContentLoaded', function(){
+                // Fonction pour trier les posts
+                function sortPosts(filter, order){
+                    const container = document.getElementById('posts-container');
+                    const posts = Array.from(container.getElementsByClassName('onePostContainer'));
+            
+                    posts.sort((a, b) => {
+                        let aValue, bValue;
+                        if(filter === 'date'){
+                            aValue = parseInt(a.getAttribute('data-creation-date'));
+                            bValue = parseInt(b.getAttribute('data-creation-date'));
+                        } 
+                        else if(filter === 'likes'){
+                            aValue = parseInt(a.getAttribute('data-likes'));
+                            bValue = parseInt(b.getAttribute('data-likes'));
+                        }
+            
+                        return (order === 'asc') ? aValue - bValue : bValue - aValue;
+                    });
+            
+                    container.innerHTML = '';
+                    posts.forEach(post => container.appendChild(post));
+                }
+            
+                // Ajout d'un écouteur d'événements sur les liens de filtrage
+                document.querySelectorAll('.filter-link').forEach(link => {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        const filter = link.getAttribute('data-filter');
+                        const order = link.getAttribute('data-order');
+            
+                        sortPosts(filter, order);
+            
+                        // Inversion de l'ordre pour le prochain clic
+                        const newOrder = order === 'asc' ? 'desc' : 'asc';
+                        link.setAttribute('data-order', newOrder);
+                    });
                 });
             });
         </script>

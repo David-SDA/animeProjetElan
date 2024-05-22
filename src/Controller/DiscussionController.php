@@ -335,7 +335,6 @@ class DiscussionController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
         
-        // A REGLER
         $sort = $request->query->get('sort', 'date');
         $order = $request->query->get('order', 'desc');
     
