@@ -289,9 +289,17 @@
     <script>
         // Ajout de l'écoute d'événements au chargement de la page
         document.addEventListener('DOMContentLoaded', () => {
-            // Séléction du container des détails d'un anime et du bouton pour montrer plus
+            // Séléction du container des détails d'un anime, du bouton pour montrer plus et le contenu de montrer plus
             const contentContainer = document.querySelector('.animeTopRightContent');
             const showMoreButton = document.querySelector('.animeSynopsisShowMoreButton');
+            const synopsisContent = document.querySelector('.animeSynopsisContent');
+
+            // Vérification si le contenu dépasse la hauteur maximale
+            if(synopsisContent.scrollHeight <= synopsisContent.clientHeight){
+                // Disparition du bouton
+                showMoreButton.style.display = 'none';
+            }
+            
             // Ajout de l'écoute du click sur le bouton montrer plus
             showMoreButton.addEventListener('click', () => {
                 // On ajoute la classe pour montrer plus

@@ -608,6 +608,16 @@
         margin: auto;
     }
 
+    /* Le contenu de la description de l'animé */
+    .animeSynopsisContent{
+        max-height: none;
+    }
+
+    /* Le bouton show more du synopsis */
+    .animeSynopsisShowMoreButton{
+        display: none !important;
+    }
+
     /* L'image de l'animé */
     .animeImage{
         width: 125px;
