@@ -78,6 +78,9 @@
 .animeTopRightContent{
     margin-left: 1.5em;
 }
+.animeTopRightContent.expanded .animeSynopsisContent {
+    max-height: 1000px;
+}
 
 /* Le titre de l'animé */
 .animeTitle{
@@ -105,6 +108,9 @@
 .animeSynopsisContent{
     color: #636363;
     overflow-wrap: anywhere;
+    overflow: hidden;
+    max-height: 270px;
+    transition: max-height 0.5s ease;
 }
 .dark .animeSynopsisContent{
     color: #e6edf3;
@@ -114,6 +120,14 @@
 }
 .dark .animeSynopsisContent a{
     color: #0099cc;
+}
+
+/* Le bouton show more du synopsis */
+.animeSynopsisShowMoreButton{
+    margin: auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
 }
 
 /* Contenu de la partie restante de la page d'un animé */
@@ -604,6 +618,7 @@
     .animeTopRightContent{
         margin-left: 1em;
         margin-top: 10px;
+        max-height: auto;
     }
 
     /* Le titre de l'animé */

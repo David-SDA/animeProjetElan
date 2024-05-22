@@ -27,6 +27,7 @@
                 <h1 class="animeTitle">{{ dataThisAnime.title.romaji|default('Unknown') }}</h1>
                 <h2 class="animeSynopsisTitle"><i>Synopsis</i></h2>
                 <p class="animeSynopsisContent">{{ dataThisAnime.description ? dataThisAnime.description|raw|nl2br : '<i>No synopsis yet</i>' }}</p>
+                <button class="animeSynopsisShowMoreButton profileInfosButton settings fit">Show More</button>
             </div>
         </div>
         <div class="animeRemainingContainer">
@@ -281,4 +282,27 @@
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Ajout de l'écoute d'événements au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Séléction du container des détails d'un anime et du bouton pour montrer plus
+            const contentContainer = document.querySelector('.animeTopRightContent');
+            const showMoreButton = document.querySelector('.animeSynopsisShowMoreButton');
+            // Ajout de l'écoute du click sur le bouton montrer plus
+            showMoreButton.addEventListener('click', () => {
+                // On ajoute la classe pour montrer plus
+                contentContainer.classList.toggle('expanded');
+                if(contentContainer.classList.contains('expanded')){
+                    showMoreButton.textContent = 'Show Less';
+                }
+                else{
+                    showMoreButton.textContent = 'Show More';
+                }
+            });
+        });
+    </script>
 {% endblock %}
