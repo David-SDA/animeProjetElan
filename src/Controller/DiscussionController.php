@@ -335,11 +335,14 @@ class DiscussionController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
         
+        // Séléction de tri et ordre par défaut
         $sort = $request->query->get('sort', 'date');
         $order = $request->query->get('order', 'desc');
     
+        // Obtention des discussion sous forme de tableau
         $posts = $discussion->getPosts()->toArray();
     
+        // Tri des post avec le option de base
         usort($posts, function($a, $b) use ($sort, $order){
             if($sort === 'date'){
                 $aValue = $a->getCreationDate()->getTimestamp();
@@ -348,7 +351,7 @@ class DiscussionController extends AbstractController
                 $aValue = $a->getUsers()->count();
                 $bValue = $b->getUsers()->count();
             }
-    
+            
             return ($order === 'asc') ? $aValue <=> $bValue : $bValue <=> $aValue;
         });
     

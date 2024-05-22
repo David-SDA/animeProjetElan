@@ -224,9 +224,12 @@
             document.addEventListener('DOMContentLoaded', function(){
                 // Fonction pour trier les posts
                 function sortPosts(filter, order){
+                    // Récupération du conteneur des posts d'une discussion
                     const container = document.getElementById('posts-container');
+                    // Récupération des posts sous forme de tableau
                     const posts = Array.from(container.getElementsByClassName('onePostContainer'));
             
+                    // Tri des posts en fonction de la valeur du filtre choisi
                     posts.sort((a, b) => {
                         let aValue, bValue;
                         if(filter === 'date'){
@@ -241,17 +244,20 @@
                         return (order === 'asc') ? aValue - bValue : bValue - aValue;
                     });
             
+                    // Reconstruction du conteneur des posts avec les posts trié
                     container.innerHTML = '';
                     posts.forEach(post => container.appendChild(post));
                 }
             
                 // Ajout d'un écouteur d'événements sur les liens de filtrage
                 document.querySelectorAll('.filter-link').forEach(link => {
-                    link.addEventListener('click', function(event) {
+                    link.addEventListener('click', function(event){
+                        // Empechement du comportement par défaut
                         event.preventDefault();
+                        // Récupération du filtre et de l'ordre
                         const filter = link.getAttribute('data-filter');
                         const order = link.getAttribute('data-order');
-            
+                        // Tri des posts
                         sortPosts(filter, order);
             
                         // Inversion de l'ordre pour le prochain clic
