@@ -334,6 +334,17 @@ class DiscussionController extends AbstractController
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
+
+        /* Si la discussion est liée à un anime, on le redirige vers la page de l'anime en question */
+        if($discussion->getAnime()){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'This discussion is on the anime page'
+            );
+            
+            return $this->redirectToRoute('show_anime', ['id' => $discussion->getAnime()->getIdApi()]);
+        }
         
         // Séléction de tri et ordre par défaut
         $sort = $request->query->get('sort', 'date');
