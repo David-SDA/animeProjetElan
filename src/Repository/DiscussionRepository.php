@@ -22,6 +22,18 @@ class DiscussionRepository extends ServiceEntityRepository
     }
 
     /**
+     * Permet d'obtenir les discussions non liées à un anime (avec option de tri/ordre)
+     */
+    public function discussionsWithoutAnime(string $orderBy, string $order): array{
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.anime','a')
+            ->andWhere('a.id IS NULL')
+            ->orderBy('d.' . $orderBy, $order)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Permet d'obtenir le nombre de discussions
      */
     public function countDiscussions(): int{
@@ -58,8 +70,10 @@ class DiscussionRepository extends ServiceEntityRepository
         /* Query qui permet d'obtenir les discussions dans l'ordre du nombre de posts dans ceux-ci */
         $talks = $this->createQueryBuilder('d') // Création d'un query builder avec un alias pour identifier l'entité actuel
                     ->leftJoin('d.posts', 'p') // Association avec les posts
+                    ->leftJoin('d.anime', 'a') // Association avec les anime
                     ->groupBy('d.id') // Grouper par les discussions
                     ->orderBy('COUNT(p.id)', $sort) // Ordre sur le nombre de posts de chaque discussion
+                    ->andWhere('a.id IS NULL') // Discussion non lié à un anime
                     ->getQuery() // Obtention de la query construite
                     ->getResult(); // Execution de la query et obtention des résultats
 

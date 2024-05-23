@@ -29,8 +29,8 @@ class DiscussionController extends AbstractController
         /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
         $form->handleRequest($request);
         
-        /* On cherche toutes les discussions en fonction */
-        $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
+        /* On cherche toutes les discussions */
+        $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
 
         /* Si le formulaire est soumis et est valide (données entrées sont correct) */
         if($form->isSubmitted() && $form->isValid()){
@@ -38,22 +38,22 @@ class DiscussionController extends AbstractController
             switch($form->get('filter')->getData()){
                 /* Cas des titres de A à Z */
                 case 'titreAsc':
-                    $talks = $discussionRepository->findBy([], ['title' => 'ASC']);
+                    $talks = $discussionRepository->discussionsWithoutAnime('title', 'ASC');
                     break;
                 
                 /* Cas des titres de Z à A */
                 case 'titreDesc':
-                    $talks = $discussionRepository->findBy([], ['title' => 'DESC']);
+                    $talks = $discussionRepository->discussionsWithoutAnime('title', 'DESC');
                     break;
 
                 /* Cas des date de creation des plus ancien aux plus récent */
                 case 'dateCreationAsc':
-                    $talks = $discussionRepository->findBy([], ['creationDate' => 'ASC']);
+                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'ASC');
                     break;
 
                 /* Cas des date de creation des plus récent aux plus ancien */
                 case 'dateCreationDesc':
-                    $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
+                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
                     break;
 
                 /* Cas du nombre de posts du plus petit au plus grand */
@@ -68,7 +68,7 @@ class DiscussionController extends AbstractController
 
                 /* Cas par défaut : cas dateCreationDesc */
                 default:
-                    $talks = $discussionRepository->findBy([], ['creationDate' => 'DESC']);
+                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
                     break;
             }
         }
