@@ -45,7 +45,7 @@ INSERT INTO `anime` (`id`, `id_api`, `discussion_id`) VALUES
 	(12, 21, NULL),
 	(13, 16498, NULL),
 	(14, 161964, NULL),
-	(15, 154587, NULL),
+	(15, 154587, 31),
 	(16, 162314, NULL),
 	(17, 11061, NULL),
 	(18, 99088, NULL),
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `discussion` (
   PRIMARY KEY (`id`),
   KEY `IDX_C0B9F90FA76ED395` (`user_id`),
   CONSTRAINT `FK_C0B9F90FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.discussion : ~10 rows (environ)
 INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) VALUES
@@ -76,7 +76,8 @@ INSERT INTO `discussion` (`id`, `title`, `creation_date`, `user_id`, `locked`) V
 	(14, 'test discussion 1', '2023-11-05 23:47:46', 13, 0),
 	(19, 'blablabla', '2023-11-16 10:58:05', 13, 0),
 	(20, 'title', '2023-11-21 11:11:38', 13, 0),
-	(30, 'user5 talk2', '2024-04-24 15:18:01', 6, 0);
+	(30, 'user5 talk2', '2024-04-24 15:18:01', 6, 0),
+	(31, 'Opinions of ', '2024-05-23 15:42:08', NULL, 0);
 
 -- Listage de la structure de table animeprojetelan. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -146,9 +147,9 @@ CREATE TABLE IF NOT EXISTS `personnage` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_api` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.personnage : ~6 rows (environ)
+-- Listage des données de la table animeprojetelan.personnage : ~15 rows (environ)
 INSERT INTO `personnage` (`id`, `id_api`) VALUES
 	(1, 90169),
 	(2, 124790),
@@ -159,7 +160,13 @@ INSERT INTO `personnage` (`id`, `id_api`) VALUES
 	(7, 5),
 	(8, 176754),
 	(9, 40882),
-	(10, 121104);
+	(10, 121104),
+	(11, 88708),
+	(12, 88915),
+	(13, 183885),
+	(14, 203384),
+	(15, 183965),
+	(16, 184313);
 
 -- Listage de la structure de table animeprojetelan. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -174,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `IDX_5A8A6C8D1ADED311` (`discussion_id`),
   CONSTRAINT `FK_5A8A6C8D1ADED311` FOREIGN KEY (`discussion_id`) REFERENCES `discussion` (`id`),
   CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table animeprojetelan.post : ~21 rows (environ)
 INSERT INTO `post` (`id`, `creation_date`, `last_modified_date`, `content`, `user_id`, `discussion_id`) VALUES
@@ -198,7 +205,9 @@ INSERT INTO `post` (`id`, `creation_date`, `last_modified_date`, `content`, `use
 	(42, '2023-11-21 11:11:38', '2023-11-21 11:11:38', 'eekopkdpokak', 13, 20),
 	(49, '2024-04-19 15:49:02', '2024-04-19 15:49:02', 'test', 13, 12),
 	(58, '2024-04-24 15:18:01', '2024-04-24 15:18:01', 'dedef', 6, 30),
-	(59, '2024-04-24 15:18:05', '2024-04-24 15:18:05', 'vrvvv', 6, 30);
+	(59, '2024-04-24 15:18:05', '2024-04-24 15:18:05', 'vrvvv', 6, 30),
+	(60, '2024-05-22 16:15:38', '2024-05-22 16:15:38', 'testo', 13, 1),
+	(61, '2024-05-23 15:43:18', '2024-05-23 15:43:18', 'Comment 1 opinion', 13, 31);
 
 -- Listage de la structure de table animeprojetelan. reset_password_request
 CREATE TABLE IF NOT EXISTS `reset_password_request` (
@@ -284,15 +293,22 @@ CREATE TABLE IF NOT EXISTS `user_personnage` (
   CONSTRAINT `FK_CD8D8E81A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_personnage : ~7 rows (environ)
+-- Listage des données de la table animeprojetelan.user_personnage : ~12 rows (environ)
 INSERT INTO `user_personnage` (`user_id`, `personnage_id`) VALUES
 	(13, 1),
 	(13, 3),
 	(13, 4),
 	(13, 5),
 	(13, 6),
+	(13, 8),
 	(13, 9),
-	(13, 10);
+	(13, 10),
+	(13, 11),
+	(13, 12),
+	(13, 13),
+	(13, 14),
+	(13, 15),
+	(13, 16);
 
 -- Listage de la structure de table animeprojetelan. user_post
 CREATE TABLE IF NOT EXISTS `user_post` (
@@ -305,10 +321,12 @@ CREATE TABLE IF NOT EXISTS `user_post` (
   CONSTRAINT `FK_200B2044A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table animeprojetelan.user_post : ~5 rows (environ)
+-- Listage des données de la table animeprojetelan.user_post : ~6 rows (environ)
 INSERT INTO `user_post` (`user_id`, `post_id`) VALUES
 	(12, 40),
 	(13, 1),
+	(13, 4),
+	(13, 15),
 	(13, 17),
 	(13, 25),
 	(13, 40);
