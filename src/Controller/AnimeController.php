@@ -151,7 +151,10 @@ class AnimeController extends AbstractController
         
         /* Recherche de l'animé en base de données */
         $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
-
+        
+        /* Recherche de la discussion de l'animé si jamais il en un */
+        $discussion = $animeInDatabase ? $animeInDatabase->getDiscussion() : null;
+        
         try{
             /* Récupération des données de l'API avec une mise en cache */
             $dataOneAnime = $cache->get('data_one_anime_' . $id, function(ItemInterface $item) use($animeCallApiService, $id){
@@ -164,6 +167,7 @@ class AnimeController extends AbstractController
                 'animeIsInList' => $animeIsInList,
                 'animeIsInFavorites' => $animeIsInFavorites,
                 'animeInDatabase' => $animeInDatabase,
+                'discussion' => $discussion
             ]);
         }catch(\Exception $exception){
             return $this->render('home/errorAPI.html.twig');

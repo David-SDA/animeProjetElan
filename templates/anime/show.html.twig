@@ -256,7 +256,7 @@
                         </div>
                     </section>
                 {% endfor %}
-                </div>
+                </div> #}
                 <h2 class="animeRemainingRightContentPartTitle">Give your opinion about this anime !</h2>
                 <div class="animeRemainingRightContentPartYourOpinionContainer">
                     <textarea name="opinion" id="opinion" placeholder="Write your comment here !" class="animeRemainingRightContentPartYourOpinionInput"></textarea>
@@ -266,6 +266,7 @@
                 <p class="animeRemainingRightContentPartOpinionsFilter">Filter by : <span class="animeRemainingRightContentPartOpinionsFilterOption">Date</span> - <span class="animeRemainingRightContentPartOpinionsFilterOption">Likes</span></p>
                 <div class="animeRemainingRightContentPartOpinionsContainer">
                 {% for i in range(1, 5) %}
+                    
                     <div class="animeRemainingRightContentPartOpinionsContent">
                         <div class="animeRemainingRightContentPartOpinionsTopContent">
                             <img src="{{ asset('uploads/baseUser.png') }}" alt="User 'user' profile picture" class="animeRemainingRightContentPartOpinionsProfilePicture">
@@ -278,7 +279,7 @@
                         <p class="animeRemainingRightContentPartOpinionsBottomContent"><i class="fa-solid fa-heart"></i> <span class="animeRemainingRightContentPartOpinionsLikesNumber" >42</span></p>
                     </div>
                 {% endfor %}
-                </div> #}
+                </div>
             </div>
         </div>
     </main>
