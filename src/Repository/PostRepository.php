@@ -22,6 +22,19 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * Permet de trouver le post d'un utilisateur dans une discussion (utiliser pour la discussion d'un anime)
+     */
+    public function findUserPostInDiscussion(int $discussionId, int $userId){
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.discussion = :discussionId')
+            ->andWhere('p.user = :userId')
+            ->setParameter('discussionId', $discussionId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
      * Permet d'obtenir les utilisateurs qui ont créer le plus de post
      */
     public function usersMostPostsCreated(){

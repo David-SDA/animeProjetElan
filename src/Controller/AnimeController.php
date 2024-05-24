@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SearchFormType;
 use App\Repository\AnimeRepository;
+use App\Repository\PostRepository;
 use App\Service\AnimeCallApiService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -116,7 +117,7 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show_anime')]
-    public function show(int $id, AnimeCallApiService $animeCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeRepository $animeRepository, CacheInterface $cache): Response{
+    public function show(int $id, AnimeCallApiService $animeCallApiService, UserRegarderAnimeRepository $userRegarderAnimeRepository, AnimeRepository $animeRepository, PostRepository $postRepository, CacheInterface $cache): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         
@@ -162,12 +163,19 @@ class AnimeController extends AbstractController
                 return $animeCallApiService->getAnimeDetails($id);
             });
 
+            /* Récupération du post de l'utilisateur si il existe */
+            $userPost = null;
+            if($currentUser && $discussion){
+                $userPost = $postRepository->findUserPostInDiscussion($discussion->getId(), $currentUser->getId());
+            }
+
             return $this->render('anime/show.html.twig', [
                 'dataOneAnime' => $dataOneAnime,
                 'animeIsInList' => $animeIsInList,
                 'animeIsInFavorites' => $animeIsInFavorites,
                 'animeInDatabase' => $animeInDatabase,
-                'discussion' => $discussion
+                'discussion' => $discussion,
+                'userPost' => $userPost
             ]);
         }catch(\Exception $exception){
             return $this->render('home/errorAPI.html.twig');
