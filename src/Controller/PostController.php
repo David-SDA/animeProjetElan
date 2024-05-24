@@ -88,8 +88,8 @@ class PostController extends AbstractController
            ou que la discussion est verrouiller
            ou que le post est le premier de la discussion,
            on l'empeche de modifier le post */
-        if(!$user || $user !== $post->getUser() || $discussion_id->isLocked() || $post === $discussion_id->getPosts()->first() || !$post->getUser()){
-            /* On indique l'interdiction */
+        if(!$user || $user !== $post->getUser() || $discussion_id->isLocked() || ($post === $discussion_id->getPosts()->first() && $discussion_id->getAnime() === null) || !$post->getUser()){
+            /* On indique l'interdicti on */
             $this->addFlash(
                 'error',
                 'You are not allowed to edit this post'
@@ -132,7 +132,14 @@ class PostController extends AbstractController
                     'The post has been edited successfully'
                 );
     
-                return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+                /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
+                if($discussion_id->getAnime() !== null){
+                    return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+                }
+                else{
+                    return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+                }
+
             }
         }
 
