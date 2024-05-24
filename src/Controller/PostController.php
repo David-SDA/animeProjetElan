@@ -164,7 +164,7 @@ class PostController extends AbstractController
            ou que le post est le premier de la discussion
            ou que la discussion est verrouillé et que l'utilisateur n'est pas un admin,
            on l'empeche de supprimer le post */
-        if(!$user || $user !== $post->getUser() && !$this->isGranted('ROLE_ADMIN') || $post === $discussion_id->getPosts()->first() || $discussion_id->isLocked() && !$this->isGranted('ROLE_ADMIN')){
+        if(!$user || $user !== $post->getUser() && !$this->isGranted('ROLE_ADMIN') || ($post === $discussion_id->getPosts()->first() && $discussion_id->getAnime() === null) || $discussion_id->isLocked() && !$this->isGranted('ROLE_ADMIN')){
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
@@ -186,7 +186,14 @@ class PostController extends AbstractController
             'The post has been deleted successfully'
         );
 
-        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        
+        /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
+        if($discussion_id->getAnime() !== null){
+            return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        }
+        else{
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
     }
 
     #[Route('/{discussion_id}/post/{id}/like', name: 'like_post')]
@@ -228,8 +235,14 @@ class PostController extends AbstractController
                 'This post from "' . $post->getUser()->getUsername() . '" has been liked successfully'
             );
         }
-
-        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        
+        /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
+        if($discussion_id->getAnime() !== null){
+            return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        }
+        else{
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
     }
 
     #[Route('/{discussion_id}/post/{id}/unlike', name: 'unlike_post')]
@@ -272,6 +285,12 @@ class PostController extends AbstractController
             );
         }
 
-        return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
+        if($discussion_id->getAnime() !== null){
+            return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        }
+        else{
+            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+        }
     }
 }
