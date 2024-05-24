@@ -359,60 +359,6 @@
     flex-direction: column;
 }
 
-/* Contenu de la partie qui contient les opinions sur l'animé */
-.animeRemainingRightContentPartOpinionsContent{
-    flex-basis: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-bottom: 2em;
-    padding: 1em;
-    border-radius: 10px;
-}
-.dark .animeRemainingRightContentPartOpinionsContent{
-    background-color: #3e3e42;
-}
-
-/* Partie du haut de la partie qui contient une opinion sur l'animé */
-.animeRemainingRightContentPartOpinionsTopContent{
-    display: flex;
-    align-items: center;
-    margin-bottom: 1em;
-}
-
-/* Image de profil de l'utilisateur qui a donné son opinion sur l'animé */
-.animeRemainingRightContentPartOpinionsProfilePicture{
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-}
-
-/* Pseudo de l'utilisateur qui a donné son opinion sur l'animé */
-.animeRemainingRightContentPartOpinionsPseudo{
-    margin-left: 0.5em;
-    font-weight: 500;
-    font-size: 1.5em;
-    max-width: 350px;
-    color: #333333;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.dark .animeRemainingRightContentPartOpinionsPseudo{
-    color: #e6edf3;
-}
-
-/* Temps de la publication de l'opinion sur l'animé */
-.animeRemainingRightContentPartOpinionsPublicationTime{
-    margin-left: auto;
-    align-self: flex-start;
-    color: #333333;
-}
-.dark .animeRemainingRightContentPartOpinionsPublicationTime{
-    color: #e6edf3;
-}
-
 /* L'opinion sur l'animé */
 .animeRemainingRightContentPartOpinionsMidContent{
     color: #333333;
@@ -424,28 +370,6 @@
 .dark .animeRemainingRightContentPartOpinionsMidContent{
     color: #e6edf3;
     background-color: #1e1e1e;
-}
-
-/* Partie des likes d'une opinion sur l'animé */
-.animeRemainingRightContentPartOpinionsBottomContent{
-    margin-top: 1em;
-    align-self: end;
-    font-size: 1.5em;
-    color: #ff0000;
-    cursor: pointer;
-}
-.dark .animeRemainingRightContentPartOpinionsBottomContent{
-    color: #cc0000;
-}
-
-/* Le nombre de likes d'une opinion */
-.animeRemainingRightContentPartOpinionsLikesNumber{
-    font-weight: 500;
-    font-size: 1em;
-    color: #ff0000;
-}
-.dark .animeRemainingRightContentPartOpinionsLikesNumber{
-    color: #cc0000;
 }
 
 /* Contenu de toute la page des personnages d'un animé */
@@ -629,12 +553,6 @@
         font-size: 0.8em;
     }
 
-    /* Pseudo de l'utilisateur qui a donné son opinion sur l'animé */
-    .animeRemainingRightContentPartOpinionsPseudo{
-        max-width: 120px;
-        font-size: 1em
-    }
-
     /* Texte du nombre de commentaires d'une discussion */
     .animeRemainingRightContentPartCardsCommentText{
         font-size: 0.875em;
@@ -644,11 +562,6 @@
     .animeRemainingRightContentPartOpinionsMidContent{
         font-size: 0.9em;
         padding: 0.75em;
-    }
-
-    /* Partie des likes d'une opinion sur l'animé */
-    .animeRemainingRightContentPartOpinionsBottomContent{
-        font-size: 1.25em;
     }
 
     /* Contenu de toute la page des personnages d'un animé */
@@ -705,21 +618,10 @@
         max-width: 550px;
     }
 
-    /* Pseudo de l'utilisateur qui a donné son opinion sur l'animé */
-    .animeRemainingRightContentPartOpinionsPseudo{
-        max-width: 500px;
-        font-size: 1.25em
-    }
-
     /* L'opinion sur l'animé */
     .animeRemainingRightContentPartOpinionsMidContent{
         font-size: 0.95em;
         padding: 0.875em;
-    }
-
-    /* Partie des likes d'une opinion sur l'animé */
-    .animeRemainingRightContentPartOpinionsBottomContent{
-        font-size: 1.375em;
     }
 
     /* Contenu de toute la page des personnages d'un animé */
