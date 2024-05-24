@@ -221,6 +221,7 @@
     padding: 1em;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
 }
 .dark .onePostContainer{
     background-color: #3e3e42;
