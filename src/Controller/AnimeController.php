@@ -252,7 +252,6 @@ class AnimeController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-
         /* Recherche de l'animé en base de données */
         $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
 
@@ -260,6 +259,20 @@ class AnimeController extends AbstractController
         if($animeInDatabase){
             /* Recherche de la discussion de l'animé si jamais il en un */
             $discussion = $animeInDatabase ? $animeInDatabase->getDiscussion() : null;
+
+            /* Si il n'y a pas de discussion */
+            if(!$discussion){
+                /* On crée une discussion */
+                $discussion = new Discussion();
+                $discussion->setTitle('Opinions of ');
+                $discussion->setCreationDate(new \DateTime());
+                $discussion->setLocked(false);
+                $discussion->setUser(null);
+
+                /* On assiocie la discussion à l'anime */
+                $animeInDatabase->setDiscussion($discussion);
+                $entityManagerInterface->persist($animeInDatabase);
+            }
         }
         /* Sinon il faut l'ajouter à la base de données et créer la discussion en rapport à l'anime ainsi que le post */
         else{
@@ -272,6 +285,12 @@ class AnimeController extends AbstractController
             $discussion = new Discussion();
             $discussion->setTitle('Opinions of ');
             $discussion->setCreationDate(new \DateTime());
+            $discussion->setLocked(false);
+            $discussion->setUser(null);
+
+            /* On assiocie la discussion à l'anime */
+            $animeInDatabase->setDiscussion($discussion);
+            $entityManagerInterface->persist($animeInDatabase);
         }
 
         /* On crée un post */
