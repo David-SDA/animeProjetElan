@@ -287,7 +287,7 @@
                 {% endfor %}
                 </div> #}
                 {% if userPost %}
-                    <h2 class="animeRemainingRightContentPartTitle">Your opinion about it</h2>
+                    <h2 class="animeRemainingRightContentPartTitle">Your opinion about it!</h2>
                     <div class="animeRemainingRightContentPartOpinionsContainer">
                         <div class="onePostContainer">
                             <div class="onePostTopContainer">
@@ -346,65 +346,75 @@
                         </div>
                     </div>
                 {% endif %}
-                <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it !</h2>
+                {% if discussion %}
+                    {% if not userPost %}
+                        <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it! <a href="" class="profileInfosButton addPost">Post</a></h2>
+                    {% else %}
+                        <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it!</h2>
+                    {% endif %}
+                {% else %}
+                    <p class="animeRemainingRightContentPartTitle">Start giving your opinion! <a href="" class="profileInfosButton addPost">Post</a></p>
+                {% endif %}
                 <div class="animeRemainingRightContentPartOpinionsContainer">
-                {% for post in discussion.posts %}
-                    <div class="onePostContainer">
-                        <div class="onePostTopContainer">
-                            <figure class="oneTalkUserContainer">
-                                {% if post.user %}
-                                    <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
-                                {% else %}
-                                    <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
-                                {% endif %}
-                                <figcaption class="oneTalkUsername post">
+                {% if discussion %}
+                    {% for post in discussion.posts %}
+                        <div class="onePostContainer">
+                            <div class="onePostTopContainer">
+                                <figure class="oneTalkUserContainer">
                                     {% if post.user %}
-                                        <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.username }}</a>
+                                        <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
                                     {% else %}
-                                        <p>Deleted user</p>
+                                        <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
                                     {% endif %}
-                                </figcaption>
-                            </figure>
-                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
-                            {% set textPublication = _self.textTimeAgo(post.creationDate) %}
-                            <div class="oneTalkTopRightContainer">
-                                <p class="oneTalkUserTime post" title="{{ post.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
-                                <div class="oneTalkTopRightBottomLine">
-                                    {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
-                                    {% if post.user == app.user and not discussion.locked and post.user %}
-                                        <a href="{{ path('edit_post', { discussion_id: discussion.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
-                                    {% endif %}
-                                    {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
-                                    {% if (post.user == app.user and not discussion.locked) or is_granted('ROLE_ADMIN') %}
-                                        {% if app.user %}
-                                            <a href="{{ path('delete_post', { discussion_id: discussion.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                    <figcaption class="oneTalkUsername post">
+                                        {% if post.user %}
+                                            <a href="{{ path('show_user', { id: post.user.id }) }}">{{ post.user.username }}</a>
+                                        {% else %}
+                                            <p>Deleted user</p>
                                         {% endif %}
-                                    {% endif %}
+                                    </figcaption>
+                                </figure>
+                                {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création du post et maintenant #}
+                                {% set textPublication = _self.textTimeAgo(post.creationDate) %}
+                                <div class="oneTalkTopRightContainer">
+                                    <p class="oneTalkUserTime post" title="{{ post.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textPublication }}</i></p>
+                                    <div class="oneTalkTopRightBottomLine">
+                                        {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
+                                        {% if post.user == app.user and not discussion.locked and post.user %}
+                                            <a href="{{ path('edit_post', { discussion_id: discussion.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
+                                        {% endif %}
+                                        {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, le peut être supprimer #}
+                                        {% if (post.user == app.user and not discussion.locked) or is_granted('ROLE_ADMIN') %}
+                                            {% if app.user %}
+                                                <a href="{{ path('delete_post', { discussion_id: discussion.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
-                        <div class="onePostBottomContainer">
-                        {% if post.creationDate != post.lastModifiedDate %}
-                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
-                            {% set textModified = _self.textTimeAgo(post.lastModifiedDate) %}
-                            <p class="oneTalkUserTime post bottom" title="{{ post.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
-                        {% endif %}
-                        {% if post.user %}
-                            {% if app.user %}
-                                {# Si le post est liké par l'utilisateur #}
-                                {% if post.users.contains(app.user) %}
-                                    <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
-                                {% else %}
-                                    <a href="{{ path('like_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
-                                {% endif %}
-                            {% else %}
-                                <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
+                            <p class="animeRemainingRightContentPartOpinionsMidContent">{{ post.content }}</p>
+                            <div class="onePostBottomContainer">
+                            {% if post.creationDate != post.lastModifiedDate %}
+                                {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la dernière modification du post et maintenant #}
+                                {% set textModified = _self.textTimeAgo(post.lastModifiedDate) %}
+                                <p class="oneTalkUserTime post bottom" title="{{ post.lastModifiedDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Modified {{ textModified }}</i></p>
                             {% endif %}
-                        {% endif %}
+                            {% if post.user %}
+                                {% if app.user %}
+                                    {# Si le post est liké par l'utilisateur #}
+                                    {% if post.users.contains(app.user) %}
+                                        <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                                    {% else %}
+                                        <a href="{{ path('like_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>
+                                {% endif %}
+                            {% endif %}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
                 </div>
             </div>
         </div>
