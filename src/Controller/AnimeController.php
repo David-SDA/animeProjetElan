@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Entity\Anime;
+use App\Entity\Discussion;
+use App\Form\PostFormType;
 use App\Form\SearchFormType;
-use App\Repository\AnimeRepository;
 use App\Repository\PostRepository;
+use App\Repository\AnimeRepository;
 use App\Service\AnimeCallApiService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\UserRegarderAnimeRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 
 #[Route('/anime')]
 class AnimeController extends AbstractController
@@ -226,4 +231,85 @@ class AnimeController extends AbstractController
         }
     }
 
+    #[Route('/{id}/post', name: 'post_about_anime')]
+    public function postAnime(int $id, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, Request $request, CacheInterface $cache): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+        
+        /* Si l'utilisateur n'est pas connecté, on l'empeche de poster */
+        if(!$currentUser){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'You are allowed to post'
+            );
+
+            return $this->redirectToRoute('show_anime', ['id' => $id]);
+        }
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isBanned()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+
+        /* Recherche de l'animé en base de données */
+        $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
+
+        /* Si il y a l'animé dans la base de données, il y a peut être un discussion sur celui-ci */
+        if($animeInDatabase){
+            /* Recherche de la discussion de l'animé si jamais il en un */
+            $discussion = $animeInDatabase ? $animeInDatabase->getDiscussion() : null;
+        }
+        /* Sinon il faut l'ajouter à la base de données et créer la discussion en rapport à l'anime ainsi que le post */
+        else{
+            /* On crée une instance d'animé dans lequel on y définit l'id de l'API */
+            $animeInDatabase = new Anime();
+            $animeInDatabase->setIdApi($id);
+            $entityManagerInterface->persist($animeInDatabase);
+
+            /* On crée une discussion */
+            $discussion = new Discussion();
+            $discussion->setTitle('Opinions of ');
+            $discussion->setCreationDate(new \DateTime());
+        }
+
+        /* On crée un post */
+        $post = new Post();
+
+        /* Création du formulaire */
+        $form = $this->createForm(PostFormType::class);
+        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
+        $form->handleRequest($request);
+
+        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
+        if($form->isSubmitted() && $form->isValid()){
+            /* Ajout des données à l'entité post */
+            $post->setCreationDate(new \DateTime());
+            $post->setLastModifiedDate(new \DateTime());
+            $post->setContent($form->get('content')->getData());
+            $post->setUser($currentUser);
+            $post->setDiscussion($discussion);
+
+            /* On sauvegarde ces changements dans la base de données */
+            $entityManagerInterface->persist($discussion);
+            $entityManagerInterface->persist($post);
+            $entityManagerInterface->flush();
+
+            $cache->delete('users_most_talks_created');
+
+            /* On indique le succès de la création */
+            $this->addFlash(
+                'success',
+                'Your opinion has been posted'
+            );
+
+            return $this->redirectToRoute('show_anime', ['id' => $id]);
+        }
+
+        return $this->render('post/add.html.twig', [
+            'form' => $form->createView(),
+            'postExist' => false
+        ]);
+    }
 }
