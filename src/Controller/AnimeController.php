@@ -232,7 +232,7 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/{id}/post', name: 'post_about_anime')]
-    public function postAnime(int $id, AnimeRepository $animeRepository, EntityManagerInterface $entityManagerInterface, Request $request, CacheInterface $cache): Response{
+    public function postAnime(int $id, AnimeRepository $animeRepository, PostRepository $postRepository, EntityManagerInterface $entityManagerInterface, Request $request, CacheInterface $cache): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
         
@@ -272,6 +272,16 @@ class AnimeController extends AbstractController
                 /* On assiocie la discussion à l'anime */
                 $animeInDatabase->setDiscussion($discussion);
                 $entityManagerInterface->persist($animeInDatabase);
+            }
+            /* Si l'utilisateur à déjà poster une opinion, on l'empeche de le refaire */
+            else if($postRepository->findUserPostInDiscussion($discussion->getId(), $currentUser->getId())){
+                /* On indique l'interdiction */
+                $this->addFlash(
+                    'error',
+                    'You are not allowed'
+                );
+
+                return $this->redirectToRoute('show_anime', ['id' => $id]);
             }
         }
         /* Sinon il faut l'ajouter à la base de données et créer la discussion en rapport à l'anime ainsi que le post */
