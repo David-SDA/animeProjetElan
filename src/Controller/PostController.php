@@ -173,9 +173,23 @@ class PostController extends AbstractController
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
         }
+        
+        /* On vérifie si la discussion est lié à un animé */
+        $linkedToAnime = $discussion_id->getAnime() !== null;
 
-        /* On supprime le post et on sauvegarde ces changements dans la base de données */
+        /* On récupère soit l'id de l'anime soit celui de la discussion */
+        $idForReturn = $linkedToAnime ? $discussion_id->getAnime()->getIdApi() : $discussion_id->getId();
+
+        /* On supprime le post */
         $entityManagerInterface->remove($post);
+
+        /* Si il reste un post et que c'est celui que l'on veut supprimer, on supprime la discussion */
+        if($discussion_id->getPosts()->count() === 1 && $discussion_id->getPosts()->contains($post)){
+            $discussion_id->setAnime(null);
+            $entityManagerInterface->remove($discussion_id);
+        }
+        
+        /* On sauvegarde les changements en base de données */
         $entityManagerInterface->flush();
 
         $cache->delete('users_most_posts_created');
@@ -188,11 +202,11 @@ class PostController extends AbstractController
 
         
         /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
-        if($discussion_id->getAnime() !== null){
-            return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        if($linkedToAnime){
+            return $this->redirectToRoute('show_anime', ['id' => $idForReturn]);
         }
         else{
-            return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
+            return $this->redirectToRoute('show_discussion', ['id' => $idForReturn]);
         }
     }
 
