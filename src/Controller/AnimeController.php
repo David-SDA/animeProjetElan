@@ -344,7 +344,7 @@ class AnimeController extends AbstractController
     }
 
     #[Route('/{id}/opinions', name: 'show_opinion_anime')]
-    public function showOpinionAnime(int $id, AnimeCallApiService $animeCallApiService, CacheInterface $cache, ItemInterface $item, AnimeRepository $animeRepository): Response{
+    public function showOpinionAnime(int $id, AnimeCallApiService $animeCallApiService, CacheInterface $cache, AnimeRepository $animeRepository): Response{
         /* On recupère l'utilisateur actuel */
         $currentUser = $this->getUser();
 
@@ -388,6 +388,7 @@ class AnimeController extends AbstractController
         return $this->render('anime/show_opinions.html.twig', [
             'discussion' => $discussion,
             'animeTitle' => $dataOneAnime['data']['Media']['title']['romaji'],
+            'animeId' => $dataOneAnime['data']['Media']['id'],
         ]);
     }
 }
