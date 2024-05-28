@@ -3,9 +3,17 @@
 {% block title %}
     {# On change le titre de la page en fonction de l'existence du post #}
     {% if postExist %}
-        Edit post
+        {% if linkedToAnime %}
+            Edit opinion
+        {% else %}
+            Edit post
+        {% endif %}
     {% else %}
-        Create a new post
+        {% if linkedToAnime %}
+            Give your opinion
+        {% else %}
+            Create a new post
+        {% endif %}
     {% endif %}
 {% endblock %}
 
@@ -13,11 +21,19 @@
     <main>
         <div class="securityFormContainer">
             {{ form_start(form) }}
-            {# On change le titre de la page en fonction de l'existence du post #}
+            {# On change le titre de la page en fonction de l'existence du post et de si il est lié à un anime #}
             {% if postExist %}
-                <h1 class="securityFormTitle">Edit post</h1>
+                {% if linkedToAnime %}
+                    <h1 class="securityFormTitle">Edit opinion</h1>
+                {% else %}
+                    <h1 class="securityFormTitle">Edit post</h1>
+                {% endif %}
             {% else %}
-                <h1 class="securityFormTitle">Create a new post</h1>
+                {% if linkedToAnime %}
+                    <h1 class="securityFormTitle">Give your opinion</h1>
+                {% else %}
+                    <h1 class="securityFormTitle">Create a new post</h1>
+                {% endif %}
             {% endif %}
                 <div class="securityFormRow">
                     {{ form_label(form.content, 'Content*') }}
@@ -25,9 +41,17 @@
                     {{ form_widget(form.content) }}
                 </div>
             {% if postExist %}
-                <button type="submit" class="securityFormSubmitButton large" title="Edit Post">Edit Post</button>
+                {% if linkedToAnime %}
+                    <button type="submit" class="securityFormSubmitButton large" title="Edit your opinion">Edit Opinion</button>
+                {% else %}
+                    <button type="submit" class="securityFormSubmitButton large" title="Edit your post">Edit Post</button>
+                {% endif %}
             {% else %}
-                <button type="submit" class="securityFormSubmitButton large" title="Create Post">Create Post</button>
+                {% if linkedToAnime %}
+                    <button type="submit" class="securityFormSubmitButton large" title="Give your opinion">Give Opinion</button>
+                {% else %}
+                    <button type="submit" class="securityFormSubmitButton large" title="Create a new post">Create Post</button>
+                {% endif %}
             {% endif %}
             {{ form_rest(form) }}
             {{ form_end(form) }}
