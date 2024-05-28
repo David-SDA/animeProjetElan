@@ -342,4 +342,52 @@ class AnimeController extends AbstractController
             'linkedToAnime' => true,
         ]);
     }
+
+    #[Route('/{id}/opinions', name: 'show_opinion_anime')]
+    public function showOpinionAnime(int $id, AnimeCallApiService $animeCallApiService, CacheInterface $cache, ItemInterface $item, AnimeRepository $animeRepository): Response{
+        /* On recupère l'utilisateur actuel */
+        $currentUser = $this->getUser();
+
+        /* Si l'utilisateur est banni, on le redirige vers la page d'un banni */
+        if($currentUser && $currentUser->isBanned()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        /* Récupération des données de l'API avec une mise en cache */
+        $dataOneAnime = $cache->get('data_one_anime_' . $id, function(ItemInterface $item) use($animeCallApiService, $id){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getAnimeDetails($id);
+        });
+
+        /* Recherche de l'animé en base de données */
+        $animeInDatabase = $animeRepository->findOneBy(['idApi' =>  $id]);
+
+        /* Si l'anime n'est pas en base de données, impossible qu'il y a des opinions */
+        if(!$animeInDatabase){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'No opinion has been posted'
+            );
+            return $this->redirectToRoute('show_anime', ['id' => $id]);
+        }
+        
+        /* Recherche de la discussion de l'animé si jamais il en un */
+        $discussion = $animeInDatabase ? $animeInDatabase->getDiscussion() : null;
+
+        /* Si l'anime n'a pas de discussion, impossible d'y accéder */
+        if(!$animeInDatabase){
+            /* On indique l'interdiction */
+            $this->addFlash(
+                'error',
+                'No opinion has been posted'
+            );
+            return $this->redirectToRoute('show_anime', ['id' => $id]);
+        }
+
+        return $this->render('anime/show_opinions.html.twig', [
+            'discussion' => $discussion,
+            'animeTitle' => $dataOneAnime['data']['Media']['title']['romaji'],
+        ]);
+    }
 }
