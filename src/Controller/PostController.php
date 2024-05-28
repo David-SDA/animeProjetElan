@@ -69,7 +69,8 @@ class PostController extends AbstractController
 
         return $this->render('post/add.html.twig', [
             'form' => $form->createView(),
-            'postExist' => false
+            'postExist' => false,
+            'linkedToAnime' => false,
         ]);
     }
 
@@ -97,6 +98,9 @@ class PostController extends AbstractController
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion_id->getId()]);
         }
+
+        /* Savoir si la discussion est lié à un anime */
+        $linkedToAnime = $discussion_id->getAnime() !== null;
 
         /* Création du formulaire */
         $form = $this->createForm(PostFormType::class, null, [
@@ -146,6 +150,7 @@ class PostController extends AbstractController
         return $this->render('post/add.html.twig', [
             'form' => $form->createView(),
             'postExist' => true,
+            'linkedToAnime' => $linkedToAnime,
         ]);
     }
 

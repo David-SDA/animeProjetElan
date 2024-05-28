@@ -338,7 +338,8 @@ class AnimeController extends AbstractController
 
         return $this->render('post/add.html.twig', [
             'form' => $form->createView(),
-            'postExist' => false
+            'postExist' => false,
+            'linkedToAnime' => true,
         ]);
     }
 }
