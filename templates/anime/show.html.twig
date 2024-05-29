@@ -316,9 +316,9 @@
                             {% if app.user %}
                                 {# Si le post est liké par l'utilisateur #}
                                 {% if userPost.users.contains(app.user) %}
-                                    <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: userPost.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ userPost.users|length }}</span></a>
+                                    <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: userPost.id, redirect: 'anime' }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ userPost.users|length }}</span></a>
                                 {% else %}
-                                    <a href="{{ path('like_post', { discussion_id: discussion.id, id: userPost.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ userPost.users|length }}</span></a>
+                                    <a href="{{ path('like_post', { discussion_id: discussion.id, id: userPost.id, redirect: 'anime' }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ userPost.users|length }}</span></a>
                                 {% endif %}
                             {% else %}
                                 <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ userPost.users|length }}</span></p>
@@ -385,9 +385,9 @@
                                 {% if app.user %}
                                     {# Si le post est liké par l'utilisateur #}
                                     {% if post.users.contains(app.user) %}
-                                        <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                                        <a href="{{ path('unlike_post', { discussion_id: discussion.id, id: post.id, redirect: 'anime' }) }}" class="onePostLikes" title="Unlike this post"><i class="fa-solid fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
                                     {% else %}
-                                        <a href="{{ path('like_post', { discussion_id: discussion.id, id: post.id }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
+                                        <a href="{{ path('like_post', { discussion_id: discussion.id, id: post.id, redirect: 'anime' }) }}" class="onePostLikes" title="Like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></a>
                                     {% endif %}
                                 {% else %}
                                     <p class="onePostLikes" title="Log in to like this post"><i class="fa-regular fa-heart"></i> <span class="onePostLikesNumber">{{ post.users|length }}</span></p>

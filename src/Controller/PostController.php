@@ -216,7 +216,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{discussion_id}/post/{id}/like', name: 'like_post')]
-    public function like(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+    public function like(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -255,6 +255,12 @@ class PostController extends AbstractController
             );
         }
         
+        /* Vérification du paramètre de redirection */
+        $redirect = $request->query->get('redirect');
+        if($redirect === 'all_opinions'){
+            return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        }
+
         /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
         if($discussion_id->getAnime() !== null){
             return $this->redirectToRoute('show_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
@@ -265,7 +271,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{discussion_id}/post/{id}/unlike', name: 'unlike_post')]
-    public function unlike(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post): Response{
+    public function unlike(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -302,6 +308,12 @@ class PostController extends AbstractController
                 'success',
                 'This post from "' . $post->getUser()->getUsername() . '" has been unliked successfully'
             );
+        }
+
+        /* Vérification du paramètre de redirection */
+        $redirect = $request->query->get('redirect');
+        if($redirect === 'all_opinions'){
+            return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
         }
 
         /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
