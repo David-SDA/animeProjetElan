@@ -337,10 +337,10 @@
             {% else %}
                 <p class="animeRemainingRightContentPartTitle">Start giving your opinion! <a href={{ path('post_about_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">Post</a></p>
             {% endif %}
-                <div class="animeRemainingRightContentPartOpinionsContainer">
+                <div class="animeRemainingRightContentPartOpinionsContainer" id="posts-container">
                 {% if discussion %}
-                    {% for post in discussion.posts|slice(0, 6) %}
-                        <div class="onePostContainer">
+                    {% for post in discussion.posts %}
+                        <div class="onePostContainer" data-likes="{{ post.users|length }}">
                             <div class="onePostTopContainer">
                                 <figure class="oneTalkUserContainer">
                                     {% if post.user %}
@@ -429,6 +429,21 @@
                 else{
                     showMoreButton.textContent = 'Show More';
                 }
+            });
+
+            // Récupération du conteneur des posts et les posts sous forme de tableau
+            let postsContainer = document.getElementById('posts-container');
+            let posts = Array.from(postsContainer.getElementsByClassName('onePostContainer'));
+
+            // Tri des posts par nombre de likes
+            posts.sort((a, b) => {
+                return parseInt(b.dataset.likes) - parseInt(a.dataset.likes);
+            });
+
+            // Reécriture du conteneur et ajout des posts triés
+            postsContainer.innerHTML = '';
+            posts.slice(0, 3).forEach(post => {
+                postsContainer.appendChild(post);
             });
         });
     </script>
