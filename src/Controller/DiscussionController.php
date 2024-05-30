@@ -340,7 +340,7 @@ class DiscussionController extends AbstractController
             /* On indique l'interdiction */
             $this->addFlash(
                 'error',
-                'This discussion is on the anime page'
+                'Action failed'
             );
             
             return $this->redirectToRoute('show_anime', ['id' => $discussion->getAnime()->getIdApi()]);

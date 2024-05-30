@@ -25,7 +25,7 @@ class PostController extends AbstractController
             return $this->redirectToRoute('app_banned');
         }
 
-        /* Si l'utilisateur n'est pas connecté, on l'empeche de créer des discussions */
+        /* Si l'utilisateur n'est pas connecté, on l'empeche de créer le post */
         if(!$user || $discussion->isLocked()){
             /* On indique l'interdiction */
             $this->addFlash(
@@ -34,6 +34,11 @@ class PostController extends AbstractController
             );
 
             return $this->redirectToRoute('show_discussion', ['id' => $discussion->getId()]);
+        }
+
+        /* Si la discussion est lié à un anime, on redirige vers la route qui le gère */
+        if($discussion->getAnime() !== null){
+            return $this->redirectToRoute('post_about_anime', ['id' => $discussion->getAnime()->getIdApi()]);
         }
 
         /* On crée un nouveau post */

@@ -40,10 +40,9 @@
             {% set opinionsNumber = discussion.posts|length %}
             <p class="oneTalkRepliesNumber">
                 {{ opinionsNumber }} {{ opinionsNumber > 1 ? 'Opinions' : 'Opinion' }}
-                {# Si l'utilisateur est connecté et la discussion n'est pas verrouiller, l'utilisateur peut créer une discussion #}
-                {# {% if app.user and not discussion.locked %}
-                    <a href="{{ path('add_post', { id: discussion.id }) }}" class="profileInfosButton addPost" title="Reply to this discussion">Reply</a>
-                {% endif %} #}
+                {% if not userPost %}
+                    <a href={{ path('post_about_anime', { id: animeId }) }} class="profileInfosButton addPost">Post</a>
+                {% endif %}
             </p>
             <p class="oneTalkFilterText">
                 <span class="oneTalkFilterTextBefore">Filter by :</span>
