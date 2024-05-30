@@ -135,6 +135,12 @@ class PostController extends AbstractController
                     'success',
                     'The post has been edited successfully'
                 );
+
+                /* Vérification du paramètre de redirection */
+                $redirect = $request->query->get('redirect');
+                if($redirect === 'all_opinions'){
+                    return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+                }
     
                 /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
                 if($discussion_id->getAnime() !== null){
@@ -155,7 +161,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{discussion_id}/post/{id}/delete', name: 'delete_post')]
-    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, CacheInterface $cache): Response{
+    public function delete(EntityManagerInterface $entityManagerInterface, Discussion $discussion_id, Post $post, CacheInterface $cache, Request $request): Response{
         /* On récupère l'utilisateur actuel */
         $user = $this->getUser();
 
@@ -205,6 +211,11 @@ class PostController extends AbstractController
             'The post has been deleted successfully'
         );
 
+        /* Vérification du paramètre de redirection */
+        $redirect = $request->query->get('redirect');
+        if($redirect === 'all_opinions'){
+            return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        }
         
         /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
         if($linkedToAnime){

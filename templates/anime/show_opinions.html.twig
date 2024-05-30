@@ -76,12 +76,12 @@
                         <div class="oneTalkTopRightBottomLine">
                             {# Si le post appartient à l'utilisateur et n'est pas verrouillé, il pourra le modifier #}
                             {% if post.user == app.user and not discussion.locked and post.user %}
-                                <a href="{{ path('edit_post', { discussion_id: discussion.id, id: post.id }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
+                                <a href="{{ path('edit_post', { discussion_id: discussion.id, id: post.id, redirect: 'all_opinions' }) }}" class="settingsChangePseudo" title="Edit this post"><i class="fa-solid fa-pen-to-square"></i></a>            
                             {% endif %}
                             {# Si le post appartient à l'utilisateur et n'est pas verrouiller, ou si l'utilisateur est un admin, il peut être supprimer #}
                             {% if (post.user == app.user and not discussion.locked) or is_granted('ROLE_ADMIN') %}
                                 {% if app.user %}
-                                    <a href="{{ path('delete_post', { discussion_id: discussion.id, id: post.id }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
+                                    <a href="{{ path('delete_post', { discussion_id: discussion.id, id: post.id, redirect: 'all_opinions' }) }}" class="talkDeleteLink" title="Delete this post"><i class="fa-solid fa-trash-can"></i></a>
                                 {% endif %}
                             {% endif %}
                         </div>
