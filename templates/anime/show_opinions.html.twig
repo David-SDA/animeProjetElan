@@ -106,14 +106,14 @@
             </p>
             <p class="oneTalkFilterText">
                 <span class="oneTalkFilterTextBefore">Filter by :</span>
-                <a class="animeRemainingRightContentPartMore filter-link">Date</a> - 
-                <a class="animeRemainingRightContentPartMore filter-link">Likes</a>
+                <a href="" class="animeRemainingRightContentPartMore filter-link" data-filter="date">Date</a> - 
+                <a href="" class="animeRemainingRightContentPartMore filter-link" data-filter="like">Likes</a>
             </p>
         </div>
         <div id="posts-container">
             {% for post in discussion.posts %}
             <div class="onePostContainer">
-                <div class="onePostTopContainer">
+                <div class="onePostTopContainer" data-likes="{{ post.users|length }}" data-date="{{ post.creationDate|date('Y-m-d H:i:s') }}">
                     <figure class="oneTalkUserContainer">
                         {% if post.user %}
                             <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
@@ -174,4 +174,52 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // Fonction pour trier les posts
+            function sortPosts(filter, order){
+                // Récupération du conteneur des posts d'une discussion
+                const container = document.getElementById('posts-container');
+                // Récupération des posts sous forme de tableau
+                const posts = Array.from(container.getElementsByClassName('onePostContainer'));
+        
+                // Tri des posts en fonction de la valeur du filtre choisi
+                posts.sort((a, b) => {
+                    let aValue, bValue;
+                    if(filter === 'date'){
+                        aValue = parseInt(a.getAttribute('data-date'));
+                        bValue = parseInt(b.getAttribute('data-date'));
+                    } 
+                    else if(filter === 'like'){
+                        aValue = parseInt(a.getAttribute('data-likes'));
+                        bValue = parseInt(b.getAttribute('data-likes'));
+                    }
+        
+                    return (order === 'asc') ? aValue - bValue : bValue - aValue;
+                });
+        
+                // Reconstruction du conteneur des posts avec les posts trié
+                container.innerHTML = '';
+                posts.forEach(post => container.appendChild(post));
+            }
+        
+            // Ordre de base
+            let order = 'asc';
+
+            // Ajout d'un écouteur d'événements sur les liens de filtrage
+            document.querySelectorAll('.filter-link').forEach(link => {
+                link.addEventListener('click', function(event){
+                    // Empechement du comportement par défaut
+                    event.preventDefault();
+                    // Récupération du filtre et de l'ordre
+                    const filter = link.getAttribute('data-filter');
+                    // Tri des posts
+                    sortPosts(filter, order);
+        
+                    // Inversion de l'ordre pour le prochain clic
+                    order = (order === 'asc') ? 'desc' : 'asc';
+                });
+            });
+        });
+    </script>
 {% endblock %}
