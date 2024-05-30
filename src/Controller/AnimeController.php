@@ -333,7 +333,14 @@ class AnimeController extends AbstractController
                 'Your opinion has been posted'
             );
 
-            return $this->redirectToRoute('show_anime', ['id' => $id]);
+            /* Vérification du paramètre de redirection */
+            $redirect = $request->query->get('redirect');
+            if($redirect === 'all_opinions'){
+                return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion->getAnime()->getIdApi()]);
+            }
+            else{
+                return $this->redirectToRoute('show_anime', ['id' => $id]);
+            }
         }
 
         return $this->render('post/add.html.twig', [
