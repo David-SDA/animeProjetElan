@@ -106,14 +106,14 @@
             </p>
             <p class="oneTalkFilterText">
                 <span class="oneTalkFilterTextBefore">Filter by :</span>
-                <a href="" class="animeRemainingRightContentPartMore filter-link" data-filter="date">Date</a> - 
-                <a href="" class="animeRemainingRightContentPartMore filter-link" data-filter="like">Likes</a>
+                <a href="#" class="animeRemainingRightContentPartMore filter-link" data-filter="date">Date</a> - 
+                <a href="#" class="animeRemainingRightContentPartMore filter-link" data-filter="like">Likes</a>
             </p>
         </div>
         <div id="posts-container">
             {% for post in discussion.posts %}
-            <div class="onePostContainer">
-                <div class="onePostTopContainer" data-likes="{{ post.users|length }}" data-date="{{ post.creationDate|date('Y-m-d H:i:s') }}">
+            <div class="onePostContainer" data-likes="{{ post.users|length }}" data-date="{{ post.creationDate|date('Y-m-d H:i:s') }}">
+                <div class="onePostTopContainer">
                     <figure class="oneTalkUserContainer">
                         {% if post.user %}
                             <img src="{{ post.user.profilePicture ? asset('uploads/' ~ post.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ post.user.username }} profile picture" class="oneTalkUserImage">
