@@ -71,6 +71,18 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/animeTalks', name: 'anime_talks_admin')]
+    public function animeTalks(DiscussionRepository $discussionRepository): Response{
+        /* Si l'admin est banni, on le redirige vers la page d'un banni */
+        if($this->getUser()->isBanned()){
+            return $this->redirectToRoute('app_banned');
+        }
+
+        return $this->render('admin/animeTalks.html.twig', [
+            'animeTalks' => $discussionRepository->discussionsWithAnime('creationDate', 'desc'),
+        ]);
+    }
+
     #[Route('/admin/user/{id}/ban', name: 'ban_user_admin')]
     public function ban(EntityManagerInterface $entityManagerInterface, User $user): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */

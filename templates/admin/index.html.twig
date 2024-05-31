@@ -7,7 +7,7 @@
     <h1 class="title">Admin Space : {{ app.user.username }}</h1>
     <div class="adminStats">
         <p class="adminStatsOneLine"><i>Number of users:</i> <b>{{ totalUsers }}</b> <a href="{{ path('users_admin') }}" title="See all users" class="adminLink">See all users</a></p>
-        <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> </p>
+        <p class="adminStatsOneLine"><i>Number of talks:</i> <b>{{ totalTalks }}</b> <a href="{{ path('anime_talks_admin') }}" title="See all anime talks" class="adminLink">See all anime talks</a></p>
         <p class="adminStatsOneLine"><i>Number of animes in our database:</i> <b>{{ totalAnimes }}</b></p>
         <p class="adminStatsOneLine"><i>Number of characters in our database:</i> <b>{{ totalCharacters }}</b></p>
     </div>

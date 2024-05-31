@@ -22,6 +22,18 @@ class DiscussionRepository extends ServiceEntityRepository
     }
 
     /**
+     * Permet d'obtenir toutes les discussions liées à un anime (avec option de tri/ordre)
+     */
+    public function discussionsWithAnime(string $orderBy, string $order): array{
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.anime','a')
+            ->andWhere('a.id IS NOT NULL')
+            ->orderBy('d.' . $orderBy, $order)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Permet d'obtenir les discussions non liées à un anime (avec option de tri/ordre)
      */
     public function discussionsWithoutAnime(string $orderBy, string $order): array{

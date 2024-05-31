@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Space : anime Talks{% endblock %}
+
+{% block body %}
+    <main>
+        <h1 class="title">Admin Space : anime Talks</h1>
+        <section class="adminSection">
+            {% for talk in animeTalks %}
+                <p>{{ talk.title }}</p>
+            {% endfor %}
+        </section>
+    </main>
+{% endblock %}
