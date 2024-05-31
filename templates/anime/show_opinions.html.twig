@@ -112,7 +112,7 @@
         </div>
         <div id="posts-container">
             {% for post in discussion.posts %}
-            <div class="onePostContainer" data-likes="{{ post.users|length }}" data-date="{{ post.creationDate|date('Y-m-d H:i:s') }}">
+            <div class="onePostContainer" data-likes="{{ post.users|length }}" data-date="{{ post.creationDate|date('U') }}">
                 <div class="onePostTopContainer">
                     <figure class="oneTalkUserContainer">
                         {% if post.user %}
