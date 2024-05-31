@@ -1,5 +1,34 @@
 {% extends 'base.html.twig' %}
 
+{% macro textTimeAgo(date) %}
+    {# Calcul de l'écart entre la date et maintenant (grâce au temps unix) #}
+    {% set now = 'now'|date("U") %}
+    {% set dateTime = date|date("U") %}
+    {% set timeDifference = now - dateTime %}
+    {% set years = (timeDifference / (365 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set months = (timeDifference / (30 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set weeks = (timeDifference / (7 * 24 * 60 * 60))|round(0, 'floor') %}
+    {% set days = (timeDifference / (24 * 60 * 60))|round(0, 'floor') %}
+    {% set hours = (timeDifference / (3600))|round(0, 'floor') %}
+    {% set minutes = (timeDifference / 60)|round(0, 'floor') %}
+    {# On crée un texte en fonction du temps manquant #}
+    {% if years > 0 %}
+        {{ years ~ ' year' ~ (years > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif months > 0 %}
+        {{ months ~ ' month' ~ (months > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif weeks > 0 %}
+        {{ weeks ~ ' week' ~ (weeks > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif days > 0 %}
+        {{ days ~ ' day' ~ (days > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif hours > 0 %}
+        {{ hours ~ ' hour' ~ (hours > 1 ? 's' : '') ~ ' ago' }}
+    {% elseif minutes > 0 %}
+        {{ minutes ~ ' minute' ~ (minutes > 1 ? 's' : '') ~ ' ago' }}
+    {% else %}
+        {{ 'just now' }}
+    {% endif %}
+{% endmacro %}
+
 {% block title %}Admin Space : anime Talks{% endblock %}
 
 {% block body %}
@@ -7,7 +36,32 @@
         <h1 class="title">Admin Space : anime Talks</h1>
         <section class="adminSection">
             {% for talk in animeTalks %}
-                <p>{{ talk.title }}</p>
+                <section>
+                    <a href="{{ path('show_opinion_anime', { 'id': talk.anime.idApi }) }}" class="oneTalkContainer" title="{{ talk.title }}">
+                        <div class="oneTalkPartContainer">
+                            <h2 class="oneTalkTitle">{{ talk.title }}{{ talk.anime.idApi }}</h2>
+                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
+                            {% set textCreation = _self.textTimeAgo(talk.creationDate) %}
+                            <p class="oneTalkUserTime" title="{{ talk.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
+                        </div>
+                        <div class="oneTalkPartContainer">
+                            <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
+                            {% set lastPost = talk.posts|last %}
+                            <figure class="oneTalkUserContainer right">
+                                {% if lastPost.user %}
+                                    <img src="{{ lastPost.user.profilePicture ? asset('uploads/' ~ lastPost.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.username|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
+                                    <figcaption class="oneTalkUsername small">{{ lastPost.user.username }}</figcaption>
+                                {% else %}
+                                    <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted User profile picture" class="oneTalkUserImage small">
+                                    <figcaption class="oneTalkUsername small">Deleted User</figcaption>
+                                {% endif %}
+                            </figure>
+                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la publication du dernier post et maintenant #}
+                            {% set textPublication = _self.textTimeAgo(lastPost.creationDate) %}
+                            <p class="oneTalkUserTime small" title="{{ lastPost.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
+                        </div>
+                    </a>
+                </section>
             {% endfor %}
         </section>
     </main>
