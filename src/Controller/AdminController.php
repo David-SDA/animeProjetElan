@@ -7,6 +7,7 @@ use App\Security\EmailVerifier;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\AnimeRepository;
+use App\Service\AnimeCallApiService;
 use Symfony\Component\Mime\Address;
 use App\Repository\DiscussionRepository;
 use App\Repository\PersonnageRepository;
@@ -72,14 +73,27 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/animeTalks', name: 'anime_talks_admin')]
-    public function animeTalks(DiscussionRepository $discussionRepository): Response{
+    public function animeTalks(DiscussionRepository $discussionRepository, AnimeCallApiService $animeCallApiService): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
         if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
 
+        /* On récupère toutes les discussions lié à un anime */
+        $animeTalks = $discussionRepository->discussionsWithAnime('creationDate', 'desc');
+
+        /* On récupère les ids des animes */
+        $idsApi = [];
+        foreach($animeTalks as $animeTalk){
+            $idsApi[$animeTalk->getAnime()->getIdApi()] = $animeTalk->getAnime()->getIdApi();
+        }
+
+        /* On récupère les données des animes */
+        $animeData = $animeCallApiService->getAnimesFromList($idsApi);
+
         return $this->render('admin/animeTalks.html.twig', [
-            'animeTalks' => $discussionRepository->discussionsWithAnime('creationDate', 'desc'),
+            'animeTalks' => $animeTalks,
+            'animeData' => $animeData
         ]);
     }
 

@@ -36,10 +36,12 @@
         <h1 class="title">Admin Space : anime Talks</h1>
         <section class="adminSection">
             {% for talk in animeTalks %}
+                {% set idApi = talk.anime.idApi %}
+                {% set anime = animeData['data']['Page']['media'] | filter(item => item.id == idApi) | first %}
                 <section>
                     <a href="{{ path('show_opinion_anime', { 'id': talk.anime.idApi }) }}" class="oneTalkContainer" title="{{ talk.title }}">
                         <div class="oneTalkPartContainer">
-                            <h2 class="oneTalkTitle">{{ talk.title }}{{ talk.anime.idApi }}</h2>
+                            <h2 class="oneTalkTitle">{{ talk.title }} {{ anime.title.romaji|default('unknown') }}</h2>
                             {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
                             {% set textCreation = _self.textTimeAgo(talk.creationDate) %}
                             <p class="oneTalkUserTime" title="{{ talk.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
