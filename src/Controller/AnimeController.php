@@ -272,6 +272,9 @@ class AnimeController extends AbstractController
                 /* On assiocie la discussion à l'anime */
                 $animeInDatabase->setDiscussion($discussion);
                 $entityManagerInterface->persist($animeInDatabase);
+
+                $cache->delete('users_most_posts_created');
+                $cache->delete('data_admin_anime_talks');
             }
             /* Si l'utilisateur à déjà poster une opinion, on l'empeche de le refaire */
             else if($postRepository->findUserPostInDiscussion($discussion->getId(), $currentUser->getId())){
@@ -301,6 +304,9 @@ class AnimeController extends AbstractController
             /* On assiocie la discussion à l'anime */
             $animeInDatabase->setDiscussion($discussion);
             $entityManagerInterface->persist($animeInDatabase);
+
+            $cache->delete('data_most_posts_created');
+            $cache->delete('data_admin_anime_talks');
         }
 
         /* On crée un post */
@@ -325,7 +331,7 @@ class AnimeController extends AbstractController
             $entityManagerInterface->persist($post);
             $entityManagerInterface->flush();
 
-            $cache->delete('users_most_talks_created');
+            $cache->delete('users_most_posts_created');
 
             /* On indique le succès de la création */
             $this->addFlash(
