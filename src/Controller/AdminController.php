@@ -73,7 +73,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/animeTalks', name: 'anime_talks_admin')]
-    public function animeTalks(DiscussionRepository $discussionRepository, AnimeCallApiService $animeCallApiService): Response{
+    public function animeTalks(DiscussionRepository $discussionRepository, AnimeCallApiService $animeCallApiService, CacheInterface $cache): Response{
         /* Si l'admin est banni, on le redirige vers la page d'un banni */
         if($this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
@@ -89,7 +89,10 @@ class AdminController extends AbstractController
         }
 
         /* On récupère les données des animes */
-        $animeData = $animeCallApiService->getAnimesFromList($idsApi);
+        $animeData = $cache->get('data_admin_anime_talks', function(ItemInterface $item) use($animeCallApiService, $idsApi){
+            $item->expiresAt(new \DateTime('tomorrow'));
+            return $animeCallApiService->getAnimesFromList($idsApi);
+        });
 
         return $this->render('admin/animeTalks.html.twig', [
             'animeTalks' => $animeTalks,
