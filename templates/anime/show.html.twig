@@ -330,7 +330,11 @@
             {% endif %}
             {% if discussion %}
                 {% if not userPost %}
-                    <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it! <a href={{ path('post_about_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">Post</a> <a href={{ path('show_opinion_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">All Opinions</a></h2>
+                    <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it!
+                        {% if app.user %}
+                            <a href={{ path('post_about_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">Post</a>
+                        {% endif %}
+                        <a href={{ path('show_opinion_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">All Opinions</a></h2>
                 {% else %}
                     <h2 class="animeRemainingRightContentPartTitle">Here's what people think about it! <a href={{ path('show_opinion_anime', { id: dataThisAnime.id }) }} class="profileInfosButton addPost">All Opinions</a></h2>
                 {% endif %}
