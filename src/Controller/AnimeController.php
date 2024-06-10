@@ -272,7 +272,7 @@ class AnimeController extends AbstractController
                 /* On assiocie la discussion à l'anime */
                 $animeInDatabase->setDiscussion($discussion);
                 $entityManagerInterface->persist($animeInDatabase);
-
+                /* Mise à jour du cache */
                 $cache->delete('users_most_posts_created');
                 $cache->delete('data_admin_anime_talks');
             }
@@ -304,7 +304,7 @@ class AnimeController extends AbstractController
             /* On assiocie la discussion à l'anime */
             $animeInDatabase->setDiscussion($discussion);
             $entityManagerInterface->persist($animeInDatabase);
-
+            /* Mise à jour du cache */
             $cache->delete('data_most_posts_created');
             $cache->delete('data_admin_anime_talks');
         }
@@ -330,7 +330,7 @@ class AnimeController extends AbstractController
             $entityManagerInterface->persist($discussion);
             $entityManagerInterface->persist($post);
             $entityManagerInterface->flush();
-
+            /* Mise à jour du cache */
             $cache->delete('users_most_posts_created');
 
             /* On indique le succès de la création */

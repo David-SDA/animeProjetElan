@@ -128,7 +128,7 @@ class DiscussionController extends AbstractController
             $entityManagerInterface->persist($discussion);
             $entityManagerInterface->persist($firstPost);
             $entityManagerInterface->flush();
-
+            /* Mise à jour du cache */
             $cache->delete('users_most_talks_created');
 
             /* On indique le succès de la création */
@@ -248,7 +248,7 @@ class DiscussionController extends AbstractController
         /* On supprime la discussion et on sauvegarde ces changements dans la base de données */
         $entityManagerInterface->remove($discussion);
         $entityManagerInterface->flush();
-
+        /* Mise à jour du cache */
         $cache->delete('users_most_talks_created');
 
         /* On indique la réussite de la suppression */

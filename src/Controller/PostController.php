@@ -60,7 +60,7 @@ class PostController extends AbstractController
             /* On sauvegarde ces changements dans la base de données */
             $entityManagerInterface->persist($post);
             $entityManagerInterface->flush();
-
+            /* Mise à jour du cache */
             $cache->delete('users_most_posts_created');
 
             /* On indique le succès de la création */
@@ -203,11 +203,13 @@ class PostController extends AbstractController
         if($discussion_id->getPosts()->count() === 1 && $discussion_id->getPosts()->contains($post)){
             $discussion_id->setAnime(null);
             $entityManagerInterface->remove($discussion_id);
+            /* Mise à jour du cache */
+            $cache->delete('data_admin_anime_talks');
         }
         
         /* On sauvegarde les changements en base de données */
         $entityManagerInterface->flush();
-
+        /* Mise à jour du cache */
         $cache->delete('users_most_posts_created');
 
         /* On indique la réussite de la suppression */
