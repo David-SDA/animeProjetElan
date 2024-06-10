@@ -220,12 +220,14 @@ class PostController extends AbstractController
 
         /* Vérification du paramètre de redirection */
         $redirect = $request->query->get('redirect');
-        if($redirect === 'all_opinions'){
-            return $this->redirectToRoute('show_opinion_anime', ['id' => $discussion_id->getAnime()->getIdApi()]);
+        /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas ou bien si la redirection est vers les opinions d'un anime */
+        if($linkedToAnime && $redirect === 'all_opinions' && $discussion_id->getPosts()->count() > 1){
+            return $this->redirectToRoute('show_opinion_anime', ['id' => $idForReturn]);
         }
-        
-        /* Adaptation de la redirection en fonction de si la discusssion est liée à un anime ou pas */
-        if($linkedToAnime){
+        else if($linkedToAnime && $redirect === 'all_opinions' && $discussion_id->getPosts()->count() === 1){
+            return $this->redirectToRoute('show_anime', ['id' => $idForReturn]);
+        }
+        else if($linkedToAnime && $redirect !== 'all_opinions'){
             return $this->redirectToRoute('show_anime', ['id' => $idForReturn]);
         }
         else{
