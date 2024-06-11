@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Discussion;
 use App\Entity\Post;
-use App\Form\DiscussionFilterFormType;
 use App\Form\DiscussionFormType;
 use App\Repository\DiscussionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,58 +22,11 @@ class DiscussionController extends AbstractController
         if($this->getUser() && $this->getUser()->isBanned()){
             return $this->redirectToRoute('app_banned');
         }
-
-        /* Création du formulaire pour le filtre */
-        $form = $this->createForm(DiscussionFilterFormType::class);
-        /* Vérification de la requête qui permet de verifier si le formulaire est soumis */
-        $form->handleRequest($request);
         
         /* On cherche toutes les discussions */
         $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
 
-        /* Si le formulaire est soumis et est valide (données entrées sont correct) */
-        if($form->isSubmitted() && $form->isValid()){
-            /* On traite les différents choix */
-            switch($form->get('filter')->getData()){
-                /* Cas des titres de A à Z */
-                case 'titreAsc':
-                    $talks = $discussionRepository->discussionsWithoutAnime('title', 'ASC');
-                    break;
-                
-                /* Cas des titres de Z à A */
-                case 'titreDesc':
-                    $talks = $discussionRepository->discussionsWithoutAnime('title', 'DESC');
-                    break;
-
-                /* Cas des date de creation des plus ancien aux plus récent */
-                case 'dateCreationAsc':
-                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'ASC');
-                    break;
-
-                /* Cas des date de creation des plus récent aux plus ancien */
-                case 'dateCreationDesc':
-                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
-                    break;
-
-                /* Cas du nombre de posts du plus petit au plus grand */
-                case 'postsAsc':
-                    $talks = $discussionRepository->talksByPostsNumber('ASC');
-                    break;
-                
-                /* Cas du nombre de posts du plus grand au plus petit */
-                case 'postsDesc':
-                    $talks = $discussionRepository->talksByPostsNumber('DESC');
-                    break;
-
-                /* Cas par défaut : cas dateCreationDesc */
-                default:
-                    $talks = $discussionRepository->discussionsWithoutAnime('creationDate', 'DESC');
-                    break;
-            }
-        }
-
         return $this->render('discussion/index.html.twig', [
-            'form' => $form->createView(),
             'talks' => $talks,
         ]);
     }

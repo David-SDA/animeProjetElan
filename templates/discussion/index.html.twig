@@ -39,15 +39,19 @@
         {% if app.user %}
             <a href="{{ path('add_discussion') }}" class="profileInfosButton talks" title="Create Talk">Create Talk</a>
         {% endif %}
-        {{ form_start(form, {'attr': {'class': 'filterForm'}}) }}
+        <div class="filterForm">
             <div class="filterElementFormElement">
-                {{ form_label(form.filter, 'Filter by') }}
-                {{ form_errors(form.filter) }}
-                {{ form_widget(form.filter) }}
+                <label for="sort-select">Sort by :</label>
+                <select id="sort-select">
+                    <option value="date_desc">Date (New > Old)</option>
+                    <option value="date_asc">Date (Old > New)</option>
+                    <option value="posts_desc">Number of Posts (Most)</option>
+                    <option value="posts_asc">Number of Posts (Least)</option>
+                    <option value="title_asc">Title (A > Z)</option>
+                    <option value="title_desc">Title (Z > A)</option>
+                </select>
             </div>
-            <button type="submit" class="filterSubmitButton" title="Apply Filter">Apply Filter</button>
-            {{ form_rest(form) }}
-        {{ form_end(form) }}
+        </div>
         {% for talk in talks %}
         <section>
             <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer" title="{{ talk.title }}">
