@@ -52,48 +52,84 @@
                 </select>
             </div>
         </div>
-        {% for talk in talks %}
-        <section>
-            <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer" title="{{ talk.title }}">
-                <div class="oneTalkPartContainer">
-                    <h2 class="oneTalkTitle">{{ talk.title }}</h2>
-                    <figure class="oneTalkUserContainer">
-                        {% if talk.user %}
-                            <img src="{{ talk.user.profilePicture ? asset('uploads/' ~ talk.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.username|default('Deleted user') }} profile picture" class="oneTalkUserImage">
-                            <figcaption class="oneTalkUsername">{{ talk.user.username }}</figcaption>
-                        {% else %}
-                            <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
-                            <figcaption class="oneTalkUsername">Deleted User</figcaption>
-                        {% endif %}
-                    </figure>
-                    {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
-                    {% set textCreation = _self.textTimeAgo(talk.creationDate) %}
-                    <p class="oneTalkUserTime" title="{{ talk.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
-                </div>
-                <div class="oneTalkPartContainer">
-                    <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
-                    {% set lastPost = talk.posts|last %}
-                    <figure class="oneTalkUserContainer right">
-                        {% if lastPost.user %}
-                            <img src="{{ lastPost.user.profilePicture ? asset('uploads/' ~ lastPost.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.username|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
-                            <figcaption class="oneTalkUsername small">{{ lastPost.user.username }}</figcaption>
-                        {% else %}
-                            <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted User profile picture" class="oneTalkUserImage small">
-                            <figcaption class="oneTalkUsername small">Deleted User</figcaption>
-                        {% endif %}
-                    </figure>
-                    {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la publication du dernier post et maintenant #}
-                    {% set textPublication = _self.textTimeAgo(lastPost.creationDate) %}
-                    <p class="oneTalkUserTime small" title="{{ lastPost.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
-                </div>
-            </a>
-        </section>
-        {% endfor %}
+        <div id="talks-container">
+            {% for talk in talks %}
+                <section class="talk-item" data-date="{{ talk.creationDate|date('U') }}" data-posts="{{ talk.posts|length }}" data-title="{{ talk.title }}">
+                    <a href="{{ path('show_discussion', { id: talk.id }) }}" class="oneTalkContainer" title="{{ talk.title }}">
+                        <div class="oneTalkPartContainer">
+                            <h2 class="oneTalkTitle">{{ talk.title }}</h2>
+                            <figure class="oneTalkUserContainer">
+                                {% if talk.user %}
+                                    <img src="{{ talk.user.profilePicture ? asset('uploads/' ~ talk.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ talk.user.username|default('Deleted user') }} profile picture" class="oneTalkUserImage">
+                                    <figcaption class="oneTalkUsername">{{ talk.user.username }}</figcaption>
+                                {% else %}
+                                    <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted user profile picture" class="oneTalkUserImage">
+                                    <figcaption class="oneTalkUsername">Deleted User</figcaption>
+                                {% endif %}
+                            </figure>
+                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la création de la discussion et maintenant #}
+                            {% set textCreation = _self.textTimeAgo(talk.creationDate) %}
+                            <p class="oneTalkUserTime" title="{{ talk.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Created {{ textCreation }}</i></p>
+                        </div>
+                        <div class="oneTalkPartContainer">
+                            <p class="oneTalkComments"><i class="fa-solid fa-comments"></i> {{ talk.posts|length }}</p>
+                            {% set lastPost = talk.posts|last %}
+                            <figure class="oneTalkUserContainer right">
+                                {% if lastPost.user %}
+                                    <img src="{{ lastPost.user.profilePicture ? asset('uploads/' ~ lastPost.user.profilePicture) : asset('uploads/baseUser.png') }}" alt="User {{ lastPost.user.username|default('Deleted User') }} profile picture" class="oneTalkUserImage small">
+                                    <figcaption class="oneTalkUsername small">{{ lastPost.user.username }}</figcaption>
+                                {% else %}
+                                    <img src="{{ asset('uploads/baseUser.png') }}" alt="Deleted User profile picture" class="oneTalkUserImage small">
+                                    <figcaption class="oneTalkUsername small">Deleted User</figcaption>
+                                {% endif %}
+                            </figure>
+                            {# Appel de la macro (fonction) pour l'affichage de la différence de temps entre la publication du dernier post et maintenant #}
+                            {% set textPublication = _self.textTimeAgo(lastPost.creationDate) %}
+                            <p class="oneTalkUserTime small" title="{{ lastPost.creationDate|date('D, d M Y,  H:i', 'UTC') }} (UTC)"><i>Posted {{ textPublication }}</i></p>
+                        </div>
+                    </a>
+                </section>
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        // Ajout d'un listener sur le changement de filtre
+        document.getElementById('sort-select').addEventListener('change', function (){
+            // On récupère la valeur du filtre
+            let sortValue = this.value;
+            // On recupère le conteneur des discussions
+            let container = document.getElementById('talks-container');
+            // On recupère les discussions sous forme de tableau
+            let talks = Array.from(container.getElementsByClassName('talk-item'));
 
-
+            // Tri des discussions
+            talks.sort((a, b) => {
+                if(sortValue === 'date_desc'){
+                    return b.dataset.date - a.dataset.date;
+                }
+                else if(sortValue === 'date_asc'){
+                    return a.dataset.date - b.dataset.date;
+                }
+                else if(sortValue === 'posts_desc'){
+                    return b.dataset.posts - a.dataset.posts;
+                }
+                else if(sortValue === 'posts_asc'){
+                    return a.dataset.posts - b.dataset.posts;
+                }
+                else if (sortValue === 'title_asc'){
+                    return a.dataset.title.localeCompare(b.dataset.title);
+                }
+                else if (sortValue === 'title_desc'){
+                    return b.dataset.title.localeCompare(a.dataset.title);
+                }
+            });
+            
+            // Reconstruction du conteneur des discussions avec les discussions triées
+            talks.forEach(talk => container.appendChild(talk));
+        });
+    </script>
 {% endblock %}
